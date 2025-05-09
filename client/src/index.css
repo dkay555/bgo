@@ -23,6 +23,14 @@
 --destructive-foreground: 60 9.1% 97.8%;
 --ring: 20 14.3% 4.1%;
 --radius: 0.5rem;
+
+/* babixGO custom colors */
+--cyan: #00CFFF;
+--darkblue: #0A3A68;
+--orange: #FF4C00;
+--orange-hover: #cc3b00;
+--white: #ffffff;
+--gray: #f0f0f0;
   }
   .dark {
       --background: 240 10% 3.9%;
@@ -55,4 +63,34 @@
   body {
     @apply font-sans antialiased bg-background text-foreground;
   }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animation-delay-100 {
+  animation-delay: 100ms;
+}
+
+.animation-delay-200 {
+  animation-delay: 200ms;
+}
+
+.animation-delay-300 {
+  animation-delay: 300ms;
+}
+
+.animation-delay-400 {
+  animation-delay: 400ms;
+}
+
+.animation-delay-500 {
+  animation-delay: 500ms;
+}
+
+.animation-delay-600 {
+  animation-delay: 600ms;
 }

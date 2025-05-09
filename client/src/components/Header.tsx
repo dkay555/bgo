@@ -29,10 +29,8 @@ export function Header() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             <div className="flex items-center">
-              <Link href="/">
-                <a className="flex-shrink-0 flex items-center">
-                  <span className="text-white font-bold text-xl md:text-2xl font-['Baloo_2']">babixGO</span>
-                </a>
+              <Link href="/" className="flex-shrink-0 flex items-center">
+                <span className="text-white font-bold text-xl md:text-2xl font-['Baloo_2']">babixGO</span>
               </Link>
             </div>
             <div className="hidden md:flex items-center space-x-4">
