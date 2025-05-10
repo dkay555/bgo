@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'wouter';
+import { Link, useLocation } from 'wouter';
 import { NAV_LINKS } from '@/lib/constants';
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [location] = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -34,15 +35,25 @@ export function Header() {
               </Link>
             </div>
             <div className="hidden md:flex items-center space-x-4">
-              {NAV_LINKS.map((link) => (
-                <a 
-                  key={link.name}
-                  href={link.href} 
-                  className="text-white hover:text-[#FF4C00] font-bold px-3 py-2 rounded-md transition duration-300"
-                >
-                  {link.name}
-                </a>
-              ))}
+              {NAV_LINKS.map((link) => 
+                link.href.startsWith('#') ? (
+                  <a 
+                    key={link.name}
+                    href={link.href} 
+                    className="text-white hover:text-[#FF4C00] font-bold px-3 py-2 rounded-md transition duration-300"
+                  >
+                    {link.name}
+                  </a>
+                ) : (
+                  <Link 
+                    key={link.name}
+                    href={link.href.startsWith('/') ? link.href : `/${link.href}`}
+                    className="text-white hover:text-[#FF4C00] font-bold px-3 py-2 rounded-md transition duration-300"
+                  >
+                    {link.name}
+                  </Link>
+                )
+              )}
             </div>
             <div className="flex md:hidden items-center">
               <button 

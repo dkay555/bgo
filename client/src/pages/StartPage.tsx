@@ -98,7 +98,7 @@ export default function StartPage() {
                       <a href={CONTACT.whatsapp} target="_blank" rel="noreferrer">Schreib uns</a>
                     </Button>
                     <Button variant="darkblue" asChild className="flex-1 font-bold">
-                      <a href={CONTACT.whatsapp} target="_blank" rel="noreferrer">Sticker wählen</a>
+                      <Link href="/blog">Beispiel-Blog</Link>
                     </Button>
                   </div>
                 </div>
