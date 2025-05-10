@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import BackToTop from '@/components/BackToTop';
+import FloatingContact from '@/components/FloatingContact';
 import { Button } from '@/components/ui/button';
 import { Link } from 'wouter';
 import { CONTACT } from '@/lib/constants';
@@ -45,8 +46,9 @@ export default function StartPage() {
       
       <main className="px-4 py-6 md:py-10 flex-grow">
         {/* Hero Section */}
-        <section className="text-center py-8 md:py-12">
-          <div className="max-w-4xl mx-auto">
+        <section className="text-center py-8 md:py-12 relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-r from-[#00CFFF]/10 to-[#FF4C00]/10 animate-gradient-x"></div>
+          <div className="max-w-4xl mx-auto relative">
             <h1 className="font-['Baloo_2'] font-bold text-2xl md:text-3xl bg-[#00CFFF]/10 px-6 py-3 rounded-xl inline-block mx-auto mb-4 border-b-2 border-[#00CFFF] text-[#FF4C00]">
               Willkommen bei babixGO
             </h1>
@@ -208,6 +210,7 @@ export default function StartPage() {
       </main>
       
       <BackToTop />
+      <FloatingContact />
       <Footer />
     </div>
   );
