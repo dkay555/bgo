@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200">
+  <!-- Background -->
+  <rect width="300" height="200" fill="#f8f8f8" rx="10" ry="10"/>
+  
+  <!-- Sticker Album -->
+  <rect x="85" y="55" width="130" height="140" rx="5" ry="5" fill="#0A3A68"/>
+  <rect x="90" y="60" width="120" height="130" rx="3" ry="3" fill="white"/>
+  
+  <!-- Stickers -->
+  <rect x="100" y="70" width="40" height="40" rx="5" ry="5" fill="#FFD700" opacity="0.8"/>
+  <rect x="150" y="70" width="40" height="40" rx="5" ry="5" fill="#00CFFF" opacity="0.8"/>
+  <rect x="100" y="120" width="40" height="40" rx="5" ry="5" fill="#FF4C00" opacity="0.8"/>
+  <rect x="150" y="120" width="40" height="40" rx="5" ry="5" fill="#4CAF50" opacity="0.8"/>
+  
+  <!-- Sticker Details -->
+  <circle cx="120" cy="90" r="10" fill="white" opacity="0.6"/>
+  <circle cx="170" cy="90" r="10" fill="white" opacity="0.6"/>
+  <circle cx="120" cy="140" r="10" fill="white" opacity="0.6"/>
+  <circle cx="170" cy="140" r="10" fill="white" opacity="0.6"/>
+  
+  <!-- Album Binding -->
+  <rect x="80" y="55" width="10" height="140" fill="#0A3A68" rx="2" ry="2"/>
+  <line x1="85" y1="70" x2="85" y2="180" stroke="white" stroke-width="2" stroke-dasharray="5 5"/>
+  
+  <!-- Sparkle -->
+  <path d="M230,40 L240,30 L250,40 L240,50 Z" fill="#FFD700" transform="rotate(15 240 40)"/>
+  <circle cx="230" cy="40" r="3" fill="white"/>
+</svg>
