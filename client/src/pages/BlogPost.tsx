@@ -27,22 +27,22 @@ export default function BlogPost() {
     <div className="min-h-screen flex flex-col bg-gray-50 font-['Nunito_Sans'] text-[#0A3A68]">
       <Header />
       
-      <main className="max-w-4xl mx-auto px-4 py-6 md:py-10 flex-grow">
+      <main className="w-full max-w-4xl mx-auto px-3 sm:px-4 py-4 md:py-10 flex-grow">
         <article className="bg-white rounded-xl shadow-md overflow-hidden">
           {/* Hero Image */}
           <div className="relative">
             <div className="aspect-video bg-gradient-to-r from-[#0A3A68] to-[#00CFFF] flex items-center justify-center">
               <span className="material-icons text-white text-8xl">article</span>
             </div>
-            <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/60 to-transparent p-6">
-              <div className="flex gap-2 mb-2">
-                <span className="bg-[#FF4C00] text-white px-3 py-1 rounded-full text-sm font-bold">Tutorial</span>
-                <span className="bg-[#00CFFF] text-white px-3 py-1 rounded-full text-sm font-bold">Formatierung</span>
+            <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/60 to-transparent p-4 sm:p-6">
+              <div className="flex flex-wrap gap-2 mb-2">
+                <span className="bg-[#FF4C00] text-white px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-bold">Tutorial</span>
+                <span className="bg-[#00CFFF] text-white px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-bold">Formatierung</span>
               </div>
-              <h1 className="text-white text-2xl md:text-4xl font-['Baloo_2'] font-bold">
+              <h1 className="text-white text-xl sm:text-2xl md:text-4xl font-['Baloo_2'] font-bold">
                 Styling-Optionen für deinen Blogbeitrag
               </h1>
-              <div className="flex items-center gap-3 mt-2 text-white/80">
+              <div className="flex flex-wrap items-center gap-2 sm:gap-3 mt-2 text-white/80 text-xs sm:text-sm">
                 <div className="flex items-center gap-1">
                   <span className="material-icons text-sm">calendar_today</span>
                   <span className="text-sm">9. Mai 2025</span>
@@ -60,10 +60,10 @@ export default function BlogPost() {
           </div>
 
           {/* Content */}
-          <div className="p-6 md:p-8">
+          <div className="p-4 sm:p-6 md:p-8">
             {/* Introduction */}
-            <div className="mb-8">
-              <p className="text-lg leading-relaxed mb-4">
+            <div className="mb-6 sm:mb-8">
+              <p className="text-base sm:text-lg leading-relaxed mb-4">
                 Ein ansprechender Blogbeitrag lebt von guter Formatierung. In diesem Beispielartikel zeigen wir dir verschiedene Styling-Optionen, die du in deinen eigenen Beiträgen verwenden kannst.
               </p>
               <p className="text-lg italic text-gray-600 border-l-4 border-[#00CFFF] pl-4 py-2">
@@ -418,8 +418,8 @@ export default function BlogPost() {
                 Tabellen sind ideal, um strukturierte Daten oder Vergleiche übersichtlich darzustellen:
               </p>
 
-              <div className="overflow-x-auto bg-gray-50 p-4 rounded-md">
-                <table className="w-full border-collapse">
+              <div className="overflow-x-auto -mx-4 sm:mx-0 bg-gray-50 p-2 sm:p-4 rounded-md">
+                <table className="w-full min-w-[600px] border-collapse">
                   <thead>
                     <tr className="bg-[#0A3A68] text-white">
                       <th className="border border-gray-300 px-4 py-2 text-left">Produkt</th>
@@ -571,7 +571,7 @@ Server running at http://localhost:3000`}</code>
               <h3 className="font-['Baloo_2'] font-bold text-lg text-[#0A3A68] mb-4">
                 Verwandte Beiträge
               </h3>
-              <div className="grid md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 <a href="#" className="block bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow">
                   <div className="h-32 bg-gradient-to-r from-[#0A3A68] to-[#00CFFF] flex items-center justify-center">
                     <span className="material-icons text-white text-3xl">article</span>
