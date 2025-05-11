@@ -155,8 +155,8 @@ export function Header() {
           </div>
           
           <div className="px-2 pt-4 pb-3">
-            {/* Hauptnavigation: Start und Kontakt */}
-            <div className="grid grid-cols-2 gap-2 mb-4">
+            {/* Hauptnavigation: Start, Hilfe und Kontakt */}
+            <div className="grid grid-cols-3 gap-2 mb-4">
               <Link 
                 href="/"
                 className="text-white hover:bg-white/10 hover:text-[#FF4C00] py-2 px-3 rounded-md font-bold text-center transition duration-300 border border-white/10"
@@ -164,6 +164,15 @@ export function Header() {
               >
                 <span className="material-icons mb-1 text-[#00CFFF] block mx-auto">home</span>
                 Start
+              </Link>
+              
+              <Link 
+                href="/hilfe"
+                className="text-white hover:bg-white/10 hover:text-[#FF4C00] py-2 px-3 rounded-md font-bold text-center transition duration-300 border border-white/10"
+                onClick={closeMobileMenu}
+              >
+                <span className="material-icons mb-1 text-[#00CFFF] block mx-auto">help</span>
+                Hilfe
               </Link>
               
               <Link 
@@ -181,95 +190,47 @@ export function Header() {
               Leistungen
             </div>
             
-            {/* Dienste mit Kompaktem Layout */}
-            <div className="space-y-1">
-              {/* Würfel Dienste */}
-              <div className="flex items-center border-b border-white/5 pb-1">
-                <div className="text-white font-bold w-1/3">Würfel:</div>
-                <div className="flex space-x-1 w-2/3">
-                  <Link 
-                    href="/produkte/wuerfel"
-                    className="text-white/90 hover:text-[#FF4C00] py-1 px-2 text-sm transition duration-300 flex-1 text-center"
-                    onClick={closeMobileMenu}
-                  >
-                    Shop
-                  </Link>
-                  <span className="text-white/30">|</span>
-                  <Link 
-                    href="/hilfe/wuerfel"
-                    className="text-white/90 hover:text-[#FF4C00] py-1 px-2 text-sm transition duration-300 flex-1 text-center"
-                    onClick={closeMobileMenu}
-                  >
-                    Hilfe
-                  </Link>
-                </div>
-              </div>
+            {/* Dienste mit Symbol und Name */}
+            <div className="grid grid-cols-2 gap-2 p-1">
+              {/* Würfel */}
+              <Link 
+                href="/produkte/wuerfel"
+                className="text-white hover:bg-white/10 hover:text-[#FF4C00] p-2 rounded-md transition duration-300 border border-white/10 flex flex-col items-center"
+                onClick={closeMobileMenu}
+              >
+                <span className="material-icons text-[#00CFFF] text-xl mb-1">casino</span>
+                <span className="font-bold">Würfel</span>
+              </Link>
               
-              {/* Sticker Dienste */}
-              <div className="flex items-center border-b border-white/5 pb-1">
-                <div className="text-white font-bold w-1/3">Sticker:</div>
-                <div className="flex space-x-1 w-2/3">
-                  <Link 
-                    href="/produkte/sticker"
-                    className="text-white/90 hover:text-[#FF4C00] py-1 px-2 text-sm transition duration-300 flex-1 text-center"
-                    onClick={closeMobileMenu}
-                  >
-                    Shop
-                  </Link>
-                  <span className="text-white/30">|</span>
-                  <Link 
-                    href="/hilfe/sticker"
-                    className="text-white/90 hover:text-[#FF4C00] py-1 px-2 text-sm transition duration-300 flex-1 text-center"
-                    onClick={closeMobileMenu}
-                  >
-                    Hilfe
-                  </Link>
-                </div>
-              </div>
+              {/* Sticker */}
+              <Link 
+                href="/produkte/sticker"
+                className="text-white hover:bg-white/10 hover:text-[#FF4C00] p-2 rounded-md transition duration-300 border border-white/10 flex flex-col items-center"
+                onClick={closeMobileMenu}
+              >
+                <span className="material-icons text-[#00CFFF] text-xl mb-1">collections_bookmark</span>
+                <span className="font-bold">Sticker</span>
+              </Link>
               
-              {/* Partnerevent Dienste */}
-              <div className="flex items-center border-b border-white/5 pb-1">
-                <div className="text-white font-bold w-1/3">Partner:</div>
-                <div className="flex space-x-1 w-2/3">
-                  <Link 
-                    href="/produkte/partner"
-                    className="text-white/90 hover:text-[#FF4C00] py-1 px-2 text-sm transition duration-300 flex-1 text-center"
-                    onClick={closeMobileMenu}
-                  >
-                    Shop
-                  </Link>
-                  <span className="text-white/30">|</span>
-                  <Link 
-                    href="/hilfe/partner"
-                    className="text-white/90 hover:text-[#FF4C00] py-1 px-2 text-sm transition duration-300 flex-1 text-center"
-                    onClick={closeMobileMenu}
-                  >
-                    Hilfe
-                  </Link>
-                </div>
-              </div>
+              {/* Partnerevent */}
+              <Link 
+                href="/produkte/partner"
+                className="text-white hover:bg-white/10 hover:text-[#FF4C00] p-2 rounded-md transition duration-300 border border-white/10 flex flex-col items-center"
+                onClick={closeMobileMenu}
+              >
+                <span className="material-icons text-[#00CFFF] text-xl mb-1">people</span>
+                <span className="font-bold">Partner</span>
+              </Link>
               
-              {/* Race Dienste */}
-              <div className="flex items-center pb-1">
-                <div className="text-white font-bold w-1/3">Race:</div>
-                <div className="flex space-x-1 w-2/3">
-                  <Link 
-                    href="/produkte/race"
-                    className="text-white/90 hover:text-[#FF4C00] py-1 px-2 text-sm transition duration-300 flex-1 text-center"
-                    onClick={closeMobileMenu}
-                  >
-                    Shop
-                  </Link>
-                  <span className="text-white/30">|</span>
-                  <Link 
-                    href="/hilfe/race"
-                    className="text-white/90 hover:text-[#FF4C00] py-1 px-2 text-sm transition duration-300 flex-1 text-center"
-                    onClick={closeMobileMenu}
-                  >
-                    Hilfe
-                  </Link>
-                </div>
-              </div>
+              {/* Race */}
+              <Link 
+                href="/produkte/race"
+                className="text-white hover:bg-white/10 hover:text-[#FF4C00] p-2 rounded-md transition duration-300 border border-white/10 flex flex-col items-center"
+                onClick={closeMobileMenu}
+              >
+                <span className="material-icons text-[#00CFFF] text-xl mb-1">emoji_events</span>
+                <span className="font-bold">Race</span>
+              </Link>
             </div>
           </div>
           

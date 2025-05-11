@@ -51,13 +51,20 @@ export const NAV_LINKS = [
     href: '/produkte',
     isDropdown: true,
     dropdownItems: [
-      { name: 'Würfel Shop', href: '/produkte/wuerfel' },
+      { name: 'Würfel', href: '/produkte/wuerfel', icon: 'casino' },
+      { name: 'Sticker', href: '/produkte/sticker', icon: 'collections_bookmark' },
+      { name: 'Partnerevent', href: '/produkte/partner', icon: 'people' },
+      { name: 'Race', href: '/produkte/race', icon: 'emoji_events' },
+    ]
+  },
+  { 
+    name: 'Hilfe',
+    href: '/hilfe', 
+    isDropdown: true,
+    dropdownItems: [
       { name: 'Würfel Hilfe', href: '/hilfe/wuerfel' },
-      { name: 'Sticker Shop', href: '/produkte/sticker' },
       { name: 'Sticker Hilfe', href: '/hilfe/sticker' },
-      { name: 'Partnerevent Shop', href: '/produkte/partner' },
       { name: 'Partnerevent Hilfe', href: '/hilfe/partner' },
-      { name: 'Race Shop', href: '/produkte/race' },
       { name: 'Race Hilfe', href: '/hilfe/race' },
     ]
   },
