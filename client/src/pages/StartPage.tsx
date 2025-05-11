@@ -19,10 +19,10 @@ export default function StartPage() {
       {/* Was gibt's Neues Sektion */}
       <section className="py-6 bg-gray-50">
         <div className="max-w-4xl mx-auto">
-          <h2 className="babix-info-header mb-4 text-center text-lg md:text-xl mx-auto">Was gibt's Neues?</h2>
+          <h2 className="babix-info-header mb-4 text-center text-base md:text-lg mx-auto">Was gibt's Neues?</h2>
           
           <div className="bg-white rounded-lg shadow-md p-4">
-            <h3 className="text-[#0A3A68] font-bold mb-2 border-b border-[#00CFFF] pb-1 inline-block">Angebot und Preisanpassung</h3>
+            <h3 className="text-[#0A3A68] font-bold mb-2 border-b border-[#00CFFF] pb-1 inline-block text-sm">Angebot und Preisanpassung</h3>
             <p className="text-[#0A3A68]/80 mb-3">
               Aufgrund der hohen Nachfrage und um unseren Service weiterhin in gewohnter Qualität anbieten zu können, 
               haben wir unsere Preisstruktur angepasst. Die neuen Preise gelten ab sofort für alle Dienste.
