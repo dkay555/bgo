@@ -12,7 +12,22 @@ export default function StartPage() {
           <h1 className="font-['Baloo_2'] font-bold text-2xl md:text-3xl bg-[#00CFFF]/10 px-6 py-3 rounded-xl inline-block mx-auto mb-4 border-b-2 border-[#00CFFF] text-[#FF4C00]">
             Willkommen bei babixGO
           </h1>
-          <p className="text-lg md:text-xl">Würfel, Events, Sticker & mehr – alles für dein Monopoly GO Abenteuer.</p>
+          <p className="text-lg md:text-xl mb-8">Würfel, Events, Sticker & mehr – alles für dein Monopoly GO Abenteuer.</p>
+          
+          <div className="bg-white/80 backdrop-blur-sm p-4 rounded-lg shadow-md border border-[#00CFFF]/40 mx-auto max-w-2xl">
+            <div className="flex flex-col items-center">
+              <h3 className="text-lg font-bold text-[#0A3A68] mb-2 flex items-center">
+                <span className="material-icons mr-2 text-[#FF4C00]">new_releases</span>
+                Was gibt es Neues?
+              </h3>
+              <p className="mb-3 text-[#0A3A68]/80">Angebot und Preisanpassung</p>
+              <Link href="/news/angebot_und_preisanpassung">
+                <Button variant="darkblue" className="text-sm px-3 py-1 h-auto">
+                  Weiterlesen
+                </Button>
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
 
