@@ -155,126 +155,122 @@ export function Header() {
           </div>
           
           <div className="px-2 pt-4 pb-3">
-            {/* Start Link */}
-            <Link 
-              href="/"
-              className="text-white hover:bg-white/10 hover:text-[#FF4C00] block px-4 py-3 rounded-md font-bold transition duration-300 flex items-center mb-4"
-              onClick={closeMobileMenu}
-            >
-              <span className="material-icons mr-3 text-[#00CFFF]">home</span>
-              Start
-            </Link>
+            {/* Hauptnavigation: Start und Kontakt */}
+            <div className="grid grid-cols-2 gap-2 mb-4">
+              <Link 
+                href="/"
+                className="text-white hover:bg-white/10 hover:text-[#FF4C00] py-2 px-3 rounded-md font-bold text-center transition duration-300 border border-white/10"
+                onClick={closeMobileMenu}
+              >
+                <span className="material-icons mb-1 text-[#00CFFF] block mx-auto">home</span>
+                Start
+              </Link>
+              
+              <Link 
+                href="/kontakt"
+                className="text-white hover:bg-white/10 hover:text-[#FF4C00] py-2 px-3 rounded-md font-bold text-center transition duration-300 border border-white/10"
+                onClick={closeMobileMenu}
+              >
+                <span className="material-icons mb-1 text-[#00CFFF] block mx-auto">contact_support</span>
+                Kontakt
+              </Link>
+            </div>
             
             {/* Leistungen Kategorie-Überschrift */}
-            <div className="text-white/70 px-2 py-1 mb-1 text-sm uppercase tracking-wider border-b border-white/10">
+            <div className="text-white/70 py-1 mb-2 text-sm uppercase tracking-wider border-b border-white/10 text-center font-bold">
               Leistungen
             </div>
             
-            {/* Würfel Dienste */}
-            <div className="mb-2 pl-2">
-              <div className="flex items-center">
-                <div className="text-white font-bold px-2 py-1">Würfel</div>
-                <div className="flex space-x-2">
+            {/* Dienste mit Kompaktem Layout */}
+            <div className="space-y-1">
+              {/* Würfel Dienste */}
+              <div className="flex items-center border-b border-white/5 pb-1">
+                <div className="text-white font-bold w-1/3">Würfel:</div>
+                <div className="flex space-x-1 w-2/3">
                   <Link 
                     href="/produkte/wuerfel"
-                    className="text-white/80 hover:text-[#FF4C00] py-1 px-2 text-sm rounded-md transition duration-300 border border-white/10"
+                    className="text-white/90 hover:text-[#FF4C00] py-1 px-2 text-sm transition duration-300 flex-1 text-center"
                     onClick={closeMobileMenu}
                   >
-                    <span className="text-[#00CFFF] mr-1">→</span> Shop
+                    Shop
                   </Link>
-                  <span className="text-white/50">|</span>
+                  <span className="text-white/30">|</span>
                   <Link 
                     href="/hilfe/wuerfel"
-                    className="text-white/80 hover:text-[#FF4C00] py-1 px-2 text-sm rounded-md transition duration-300 border border-white/10"
+                    className="text-white/90 hover:text-[#FF4C00] py-1 px-2 text-sm transition duration-300 flex-1 text-center"
                     onClick={closeMobileMenu}
                   >
-                    <span className="text-[#00CFFF] mr-1">→</span> Hilfe
+                    Hilfe
                   </Link>
                 </div>
               </div>
-            </div>
-            
-            {/* Sticker Dienste */}
-            <div className="mb-2 pl-2">
-              <div className="flex items-center">
-                <div className="text-white font-bold px-2 py-1">Sticker</div>
-                <div className="flex space-x-2">
+              
+              {/* Sticker Dienste */}
+              <div className="flex items-center border-b border-white/5 pb-1">
+                <div className="text-white font-bold w-1/3">Sticker:</div>
+                <div className="flex space-x-1 w-2/3">
                   <Link 
                     href="/produkte/sticker"
-                    className="text-white/80 hover:text-[#FF4C00] py-1 px-2 text-sm rounded-md transition duration-300 border border-white/10"
+                    className="text-white/90 hover:text-[#FF4C00] py-1 px-2 text-sm transition duration-300 flex-1 text-center"
                     onClick={closeMobileMenu}
                   >
-                    <span className="text-[#00CFFF] mr-1">→</span> Shop
+                    Shop
                   </Link>
-                  <span className="text-white/50">|</span>
+                  <span className="text-white/30">|</span>
                   <Link 
                     href="/hilfe/sticker"
-                    className="text-white/80 hover:text-[#FF4C00] py-1 px-2 text-sm rounded-md transition duration-300 border border-white/10"
+                    className="text-white/90 hover:text-[#FF4C00] py-1 px-2 text-sm transition duration-300 flex-1 text-center"
                     onClick={closeMobileMenu}
                   >
-                    <span className="text-[#00CFFF] mr-1">→</span> Hilfe
+                    Hilfe
                   </Link>
                 </div>
               </div>
-            </div>
-            
-            {/* Partnerevent Dienste */}
-            <div className="mb-2 pl-2">
-              <div className="flex items-center">
-                <div className="text-white font-bold px-2 py-1">Partnerevent</div>
-                <div className="flex space-x-2">
+              
+              {/* Partnerevent Dienste */}
+              <div className="flex items-center border-b border-white/5 pb-1">
+                <div className="text-white font-bold w-1/3">Partner:</div>
+                <div className="flex space-x-1 w-2/3">
                   <Link 
                     href="/produkte/partner"
-                    className="text-white/80 hover:text-[#FF4C00] py-1 px-2 text-sm rounded-md transition duration-300 border border-white/10"
+                    className="text-white/90 hover:text-[#FF4C00] py-1 px-2 text-sm transition duration-300 flex-1 text-center"
                     onClick={closeMobileMenu}
                   >
-                    <span className="text-[#00CFFF] mr-1">→</span> Shop
+                    Shop
                   </Link>
-                  <span className="text-white/50">|</span>
+                  <span className="text-white/30">|</span>
                   <Link 
                     href="/hilfe/partner"
-                    className="text-white/80 hover:text-[#FF4C00] py-1 px-2 text-sm rounded-md transition duration-300 border border-white/10"
+                    className="text-white/90 hover:text-[#FF4C00] py-1 px-2 text-sm transition duration-300 flex-1 text-center"
                     onClick={closeMobileMenu}
                   >
-                    <span className="text-[#00CFFF] mr-1">→</span> Hilfe
+                    Hilfe
                   </Link>
                 </div>
               </div>
-            </div>
-            
-            {/* Race Dienste */}
-            <div className="mb-2 pl-2">
-              <div className="flex items-center">
-                <div className="text-white font-bold px-2 py-1">Race</div>
-                <div className="flex space-x-2">
+              
+              {/* Race Dienste */}
+              <div className="flex items-center pb-1">
+                <div className="text-white font-bold w-1/3">Race:</div>
+                <div className="flex space-x-1 w-2/3">
                   <Link 
                     href="/produkte/race"
-                    className="text-white/80 hover:text-[#FF4C00] py-1 px-2 text-sm rounded-md transition duration-300 border border-white/10"
+                    className="text-white/90 hover:text-[#FF4C00] py-1 px-2 text-sm transition duration-300 flex-1 text-center"
                     onClick={closeMobileMenu}
                   >
-                    <span className="text-[#00CFFF] mr-1">→</span> Shop
+                    Shop
                   </Link>
-                  <span className="text-white/50">|</span>
+                  <span className="text-white/30">|</span>
                   <Link 
                     href="/hilfe/race"
-                    className="text-white/80 hover:text-[#FF4C00] py-1 px-2 text-sm rounded-md transition duration-300 border border-white/10"
+                    className="text-white/90 hover:text-[#FF4C00] py-1 px-2 text-sm transition duration-300 flex-1 text-center"
                     onClick={closeMobileMenu}
                   >
-                    <span className="text-[#00CFFF] mr-1">→</span> Hilfe
+                    Hilfe
                   </Link>
                 </div>
               </div>
             </div>
-            
-            {/* Kontakt Link */}
-            <Link 
-              href="/kontakt"
-              className="text-white hover:bg-white/10 hover:text-[#FF4C00] block px-4 py-3 rounded-md font-bold transition duration-300 flex items-center mt-4"
-              onClick={closeMobileMenu}
-            >
-              <span className="material-icons mr-3 text-[#00CFFF]">contact_support</span>
-              Kontakt
-            </Link>
           </div>
           
           <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-white/10">
