@@ -79,7 +79,7 @@ export function Header() {
         
         {/* Mobile menu sidebar */}
         <div 
-          className={`fixed top-0 left-0 h-full w-72 bg-[#0A3A68]/95 backdrop-blur-md md:hidden z-50 transform transition-transform duration-300 ease-in-out shadow-xl ${
+          className={`fixed top-0 left-0 h-full w-72 bg-[#0A3A68] md:hidden z-50 transform transition-transform duration-300 ease-in-out shadow-xl ${
             mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
           }`}
         >
