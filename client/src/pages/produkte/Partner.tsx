@@ -52,6 +52,19 @@ export default function Partner() {
       </div>
       
       <div className="max-w-4xl mx-auto">
+        <div className="bg-[#E6F7FF] border-l-4 border-[#00CFFF] p-4 rounded-r-md mb-6 flex justify-between items-center">
+          <div>
+            <h4 className="font-bold text-[#0A3A68] mb-2">Hilfe zu Partnerevents</h4>
+            <p className="text-gray-700">Erfahre mehr über Ablauf, Belohnungen und Tipps zu Partnerevents.</p>
+          </div>
+          <Link href="/hilfe/partner">
+            <button className="bg-[#0A3A68] hover:bg-[#00CFFF] text-white py-2 px-4 rounded-md transition-colors inline-flex items-center">
+              <span className="material-icons mr-1">help</span>
+              Zur Hilfe
+            </button>
+          </Link>
+        </div>
+      
         <div className="bg-white rounded-lg shadow-lg overflow-hidden mb-8">
           <div className="grid grid-cols-1 md:grid-cols-2">
             <div className="p-6 flex flex-col justify-center">
