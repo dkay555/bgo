@@ -135,16 +135,9 @@ export default function LoginHilfe() {
             </div>
           </div>
           
-          <div className="mb-8">
-            <div className="bg-[#FFEBCC] border-l-4 border-[#FF4C00] p-4 rounded-r-md">
-              <h4 className="font-bold text-[#0A3A68] mb-2 border-b-2 border-[#FF4C00] pb-2 inline-block">⚠️ Wichtiger Hinweis</h4>
-              <p className="text-gray-700">Unabhängig von der gewählten Methode bitten wir dich, das Spiel während des Boosts nicht zu öffnen, um Konflikte zu vermeiden.</p>
-            </div>
-          </div>
-          
           <div className="bg-[#E6F7FF] border-l-4 border-[#00CFFF] p-4 rounded-r-md">
-            <h4 className="font-bold text-[#0A3A68] mb-2 border-b-2 border-[#00CFFF] pb-2 inline-block">Benötigst du Hilfe beim Login?</h4>
-            <p className="text-gray-700 mb-3">Wenn du Probleme mit dem Login oder der Kontoverknüpfung hast, kontaktiere uns gerne. Wir helfen dir dabei, deinen Spielstand zu sichern und den Würfelboost optimal zu nutzen.</p>
+            <h4 className="font-bold text-[#0A3A68] mb-2 border-b-2 border-[#00CFFF] pb-2 inline-block">Hast du noch Fragen?</h4>
+            <p className="text-gray-700 mb-3">Falls du Hilfe benötigst oder noch Fragen zu dem Thema hast zögere nicht uns anzuschreiben.</p>
             <Link href="/kontakt">
               <button className="bg-[#0A3A68] hover:bg-[#00CFFF] text-white py-2 px-4 rounded-md transition-colors inline-flex items-center">
                 <span className="material-icons mr-1">contact_support</span>
