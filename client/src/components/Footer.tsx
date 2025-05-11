@@ -13,8 +13,7 @@ export function Footer() {
             size="lg"
           >
             <a href={CONTACT.whatsapp} target="_blank" rel="noreferrer" className="flex items-center justify-center">
-              <span className="material-icons mr-2">whatsapp</span>
-              WhatsApp
+              <span className="material-icons">whatsapp</span>
             </a>
           </Button>
           
@@ -25,8 +24,7 @@ export function Footer() {
             size="lg"
           >
             <a href={CONTACT.facebook} target="_blank" rel="noreferrer" className="flex items-center justify-center">
-              <span className="material-icons mr-2">facebook</span>
-              Facebook
+              <span className="material-icons">facebook</span>
             </a>
           </Button>
           
@@ -37,8 +35,7 @@ export function Footer() {
             size="lg"
           >
             <a href={CONTACT.email} className="flex items-center justify-center">
-              <span className="material-icons mr-2">email</span>
-              Email
+              <span className="material-icons">email</span>
             </a>
           </Button>
         </div>
