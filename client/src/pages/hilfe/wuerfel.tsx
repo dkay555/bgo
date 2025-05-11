@@ -47,8 +47,8 @@ export default function WuerfelHilfe() {
               <li>
                 <p><strong>Login:</strong> Wir loggen uns ein, dafür gibt es 2 Möglichkeiten:</p>
                 <ul className="list-disc pl-5 mt-2 space-y-2">
-                  <li><span className="font-medium">Einfach und schnell:</span> Über deine Facebook / Google Zugangsdaten. Je nach deinen Account Einstellungen musst Du den LogIn bestätigen.</li>
-                  <li><span className="font-medium">Über den FB-Authtoken:</span> Um an diesen zu gelangen musst du 4 einfache Schritte ausführen. Gerne sind wir dabei behilflich.</li>
+                  <li><span className="font-medium">Einfach und schnell:</span> Über deine Facebook / Google Zugangsdaten. Je nach deinen Account Einstellungen musst Du den LogIn bestätigen. <Link href="/hilfe/login" className="text-[#00CFFF] hover:text-[#FF4C00] underline">Mehr zu Login-Methoden</Link></li>
+                  <li><span className="font-medium">Über den FB-Authtoken:</span> Um an diesen zu gelangen musst du 4 einfache Schritte ausführen. Gerne sind wir dabei behilflich. <Link href="/hilfe/login" className="text-[#00CFFF] hover:text-[#FF4C00] underline">Mehr Infos hier</Link></li>
                 </ul>
               </li>
               <li>
@@ -150,15 +150,25 @@ export default function WuerfelHilfe() {
                 </div>
               </div>
               
-              <div>
-                <h4 className="font-bold text-[#0A3A68] mb-1">Können größere Würfelboost Pakete aufgeteilt werden?</h4>
-                <p className="text-gray-700">Natürlich, vorausgesetzt unsere Kapazitäten lassen es zu. Ab 60.000 Würfeln kann der Boost auf zwei Mal verteilt werden. So kannst du z.B. das Top- und Bahnhofsevent ein weiteres Mal abgeschlossen bekommen. Frag uns einfach beim Kauf ob und wie es passt.</p>
+              <div className="border border-gray-200 rounded-lg mb-2">
+                <div className="bg-gray-50 p-4 rounded-t-lg cursor-pointer flex justify-between items-center">
+                  <h4 className="font-bold text-[#0A3A68]">Können größere Würfelboost Pakete aufgeteilt werden?</h4>
+                  <span className="material-icons text-[#00CFFF]">expand_more</span>
+                </div>
+                <div className="p-4 border-t border-gray-200">
+                  <p className="text-gray-700">Natürlich, vorausgesetzt unsere Kapazitäten lassen es zu. Ab 60.000 Würfeln kann der Boost auf zwei Mal verteilt werden. So kannst du z.B. das Top- und Bahnhofsevent ein weiteres Mal abgeschlossen bekommen. Frag uns einfach beim Kauf ob und wie es passt.</p>
+                </div>
               </div>
               
-              <div>
-                <h4 className="font-bold text-[#0A3A68] mb-1">Kann ich dafür gesperrt werden?</h4>
-                <p className="text-gray-700">Ja! Die Gefahr besteht. Wir räumen durch diverse Maßnahmen einige Gefahren aus dem Weg. Komplett ausschließen können wir sie aber nicht. Bisher ist uns in fast 24 Monaten allerdings nur 1 Fall bekannt in dem ein Account gesperrt wurde in dem wir aktiv waren.</p>
-                <p className="text-gray-700 mt-1">Dazu und zum Thema Accountsicherheit folgt "mit Sicherheit" noch ein größerer Beitrag.</p>
+              <div className="border border-gray-200 rounded-lg mb-2">
+                <div className="bg-gray-50 p-4 rounded-t-lg cursor-pointer flex justify-between items-center">
+                  <h4 className="font-bold text-[#0A3A68]">Kann ich dafür gesperrt werden?</h4>
+                  <span className="material-icons text-[#00CFFF]">expand_more</span>
+                </div>
+                <div className="p-4 border-t border-gray-200">
+                  <p className="text-gray-700">Ja! Die Gefahr besteht. Wir räumen durch diverse Maßnahmen einige Gefahren aus dem Weg. Komplett ausschließen können wir sie aber nicht. Bisher ist uns in fast 24 Monaten allerdings nur 1 Fall bekannt in dem ein Account gesperrt wurde in dem wir aktiv waren.</p>
+                  <p className="text-gray-700 mt-1">Dazu und zum Thema Accountsicherheit folgt "mit Sicherheit" noch ein größerer Beitrag.</p>
+                </div>
               </div>
             </div>
           </div>
