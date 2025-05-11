@@ -132,20 +132,6 @@ export default function LoginHilfe() {
                   <p className="text-gray-700">Du musst den Login unter Umständen auf deinem Gerät bestätigen.</p>
                 </div>
               </div>
-              
-              <div className="border border-gray-200 rounded-lg mt-6">
-                <div className="bg-gray-50 p-4 rounded-t-lg">
-                  <h4 className="font-bold text-[#0A3A68] flex items-center">
-                    <span className="material-icons mr-2 text-[#00CFFF]">screen_share</span>
-                    Methode 4: Fernwartung via TeamViewer/AnyDesk
-                  </h4>
-                </div>
-                <div className="p-4 border-t border-gray-200">
-                  <p className="text-gray-700 mb-3">Für Kunden, die maximale Transparenz wünschen, bieten wir eine beaufsichtigte Fernwartungssitzung an.</p>
-                  
-                  <p className="text-gray-700 mb-3">Wir vereinbaren einen Termin für die Fernwartung, bei dem du TeamViewer oder AnyDesk auf deinem Gerät installierst und uns die Zugangsdaten übermittelst. So kannst du den gesamten Prozess live verfolgen und die Verbindung jederzeit unterbrechen.</p>
-                </div>
-              </div>
             </div>
           </div>
           
