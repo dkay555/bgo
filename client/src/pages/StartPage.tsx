@@ -133,7 +133,7 @@ export default function StartPage() {
         {/* About Section */}
         <section id="ueber" className="py-8 bg-gray-100 my-12 rounded-xl scroll-mt-20">
           <div className="max-w-4xl mx-auto px-4">
-            <h2 className="font-['Baloo_2'] font-bold text-xl md:text-2xl bg-[#00CFFF]/10 px-6 py-3 rounded-xl inline-block mx-auto mb-6 border-b-2 border-[#00CFFF] text-[#FF4C00] text-center">
+            <h2 className="babix-info-header mx-auto mb-6 text-center">
               Über babixGO
             </h2>
             <div className="bg-white p-6 rounded-xl shadow-md">
@@ -160,7 +160,7 @@ export default function StartPage() {
         {/* Contact Section */}
         <section id="kontakt" className="py-8 scroll-mt-20">
           <div className="max-w-4xl mx-auto">
-            <h2 className="font-['Baloo_2'] font-bold text-xl md:text-2xl bg-[#00CFFF]/10 px-6 py-3 rounded-xl inline-block mx-auto mb-6 border-b-2 border-[#00CFFF] text-[#FF4C00] text-center">
+            <h2 className="babix-info-header mx-auto mb-6 text-center">
               Kontaktiere uns
             </h2>
             

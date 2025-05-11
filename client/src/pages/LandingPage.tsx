@@ -34,7 +34,7 @@ export default function LandingPage() {
           {/* Hero Section */}
           <section className="relative">
             <div className="text-center">
-              <h1 className="font-['Baloo_2'] font-bold text-2xl md:text-3xl bg-[#00CFFF]/10 px-6 py-3 rounded-xl inline-block mx-auto mb-4 border-b-2 border-[#00CFFF] text-[#FF4C00] animate-[fadeIn_0.5s_ease-out_forwards]">
+              <h1 className="babix-info-header text-2xl md:text-3xl mx-auto mb-4 text-center animate-[fadeIn_0.5s_ease-out_forwards]">
                 Willkommen bei babixGO!
               </h1>
               <div className="bg-white rounded-xl p-6 md:p-8 shadow-[0_4px_10px_rgba(0,0,0,0.1)] animate-[fadeIn_0.5s_ease-out_forwards] animation-delay-100">
@@ -54,7 +54,7 @@ export default function LandingPage() {
 
           {/* Vorteile Section */}
           <section id="vorteile" className="scroll-mt-20 animate-[fadeIn_0.5s_ease-out_forwards] animation-delay-200">
-            <h2 className="font-['Baloo_2'] font-bold text-xl md:text-2xl bg-[#00CFFF]/10 px-6 py-3 rounded-xl inline-block mx-auto my-4 border-b-2 border-[#00CFFF] text-[#FF4C00] text-center">
+            <h2 className="babix-info-header mx-auto my-4 text-center">
               Deine Vorteile mit babixGO
             </h2>
             <div className="grid md:grid-cols-3 gap-6">
