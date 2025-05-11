@@ -65,7 +65,8 @@ export default function WuerfelHilfe() {
           
           <div className="mb-8">
             <h3 className="text-xl font-bold text-[#0A3A68] mb-4 border-b pb-2">Preise</h3>
-            <p className="mb-3 text-gray-700">Grundsätzlich ist jede Würfelmenge möglich.</p>
+            <p className="mb-3 text-gray-700">Grundsätzlich ist jede Würfelmenge möglich. <strong>Hinweis:</strong> Würfelangaben haben eine Toleranz von ±2.500 Würfeln.</p>
+            <p className="mb-3 text-sm text-gray-600">Beispiel: Bei 25.000 Würfeln erhaltet ihr zwischen 22.500 und 27.500.</p>
             
             <div className="overflow-x-auto">
               <table className="w-full border-collapse">
@@ -77,27 +78,25 @@ export default function WuerfelHilfe() {
                 </thead>
                 <tbody>
                   <tr className="border-b border-gray-200 hover:bg-gray-50">
-                    <td className="py-3 px-4 font-medium">11.500 Würfel</td>
+                    <td className="py-3 px-4 font-medium">25.000 Würfel 🎲</td>
                     <td className="py-3 px-4">25€</td>
                   </tr>
                   <tr className="border-b border-gray-200 hover:bg-gray-50">
-                    <td className="py-3 px-4 font-medium">25.000 Würfel</td>
+                    <td className="py-3 px-4 font-medium">35.000 Würfel 🎲</td>
                     <td className="py-3 px-4">35€</td>
                   </tr>
                   <tr className="border-b border-gray-200 hover:bg-gray-50">
-                    <td className="py-3 px-4 font-medium">40.000 Würfel</td>
-                    <td className="py-3 px-4">55€</td>
-                  </tr>
-                  <tr className="border-b border-gray-200 hover:bg-gray-50">
-                    <td className="py-3 px-4 font-medium">60.000 Würfel</td>
-                    <td className="py-3 px-4">80€</td>
-                  </tr>
-                  <tr className="border-b border-gray-200 hover:bg-gray-50">
-                    <td className="py-3 px-4 font-medium">80.000 Würfel</td>
-                    <td className="py-3 px-4">105€</td>
+                    <td className="py-3 px-4 font-medium">45.000 Würfel 🎲</td>
+                    <td className="py-3 px-4">45€</td>
                   </tr>
                 </tbody>
               </table>
+            </div>
+            
+            <div className="mt-6 bg-[#FFEBEB] border-l-4 border-[#FF4C00] p-4 rounded-r-md">
+              <h4 className="font-bold text-[#FF4C00] mb-2">💥 Sonderangebot</h4>
+              <p className="mb-1 text-gray-700">(während „Lucky Chance" oder „Dice Roll", nach Absprache)</p>
+              <p className="font-bold text-lg">40.000–50.000 Würfel → 30€ 🎲</p>
             </div>
           </div>
           
@@ -112,22 +111,27 @@ export default function WuerfelHilfe() {
               
               <div>
                 <h4 className="font-bold text-[#0A3A68] mb-1">Wie kann ich wissen ob noch ein High Roller im Turnier folgt?</h4>
-                <p className="text-gray-700">Kontaktiere uns gerne direkt, wir helfen dir bei der Überprüfung.</p>
+                <p className="text-gray-700">Besuche <a href="https://monopolygo.wiki/" target="_blank" rel="noopener noreferrer" className="text-[#00CFFF] hover:text-[#FF4C00] underline transition-colors">https://monopolygo.wiki/</a> für eine aktuelle Liste der Turnierbelohnungen oder um kommende Special Events in Erfahrung zu bringen.</p>
               </div>
               
               <div>
                 <h4 className="font-bold text-[#0A3A68] mb-1">Wie lange dauert der Boost?</h4>
-                <p className="text-gray-700">Die Dauer hängt von der Würfelmenge ab. Kleinere Boosts (11.500) können in wenigen Stunden erledigt sein, während größere Pakete bis zu 24 Stunden dauern können.</p>
+                <p className="text-gray-700">Um ein paar Werte zu nennen:</p>
+                <ul className="list-disc pl-5 mt-2 text-gray-700">
+                  <li>25.000 Würfel dauern im Durchschnitt 15, maximal 30 Minuten sobald man im Spiel ist.</li>
+                  <li>40.000 Würfel 30 Minuten im Durchschnitt, bis zu maximal 45 Minuten.</li>
+                </ul>
               </div>
               
               <div>
                 <h4 className="font-bold text-[#0A3A68] mb-1">Können größere Würfelboost Pakete aufgeteilt werden?</h4>
-                <p className="text-gray-700">Ja, nach Absprache können wir größere Pakete auf mehrere Sessions aufteilen.</p>
+                <p className="text-gray-700">Natürlich, vorausgesetzt unsere Kapazitäten lassen es zu. Ab 60.000 Würfeln kann der Boost auf zwei Mal verteilt werden. So kannst du z.B. das Top- und Bahnhofsevent ein weiteres Mal abgeschlossen bekommen. Frag uns einfach beim Kauf ob und wie es passt.</p>
               </div>
               
               <div>
                 <h4 className="font-bold text-[#0A3A68] mb-1">Kann ich dafür gesperrt werden?</h4>
-                <p className="text-gray-700">Wir arbeiten mit größter Sorgfalt, um das Risiko einer Sperrung zu minimieren. Durch die Nutzung unserer "ungenutzten Umgebung" werden Multi-Account-Flags vermieden. Bisher gab es keine Sperrungen durch unsere Würfelboosts.</p>
+                <p className="text-gray-700">Ja! Die Gefahr besteht. Wir räumen durch diverse Maßnahmen einige Gefahren aus dem Weg. Komplett ausschließen können wir sie aber nicht. Bisher ist uns in fast 24 Monaten allerdings nur 1 Fall bekannt in dem ein Account gesperrt wurde in dem wir aktiv waren.</p>
+                <p className="text-gray-700 mt-1">Dazu und zum Thema Accountsicherheit folgt "mit Sicherheit" noch ein größerer Beitrag.</p>
               </div>
             </div>
           </div>
