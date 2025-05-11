@@ -1,145 +1,97 @@
-import { useEffect } from 'react';
 import { Link } from 'wouter';
+import { useEffect } from 'react';
 
 export default function Hilfe() {
   useEffect(() => {
     document.title = 'Hilfe | babixGO';
   }, []);
 
-  const faqItems = [
-    {
-      question: "Was ist babixGO?",
-      answer: "babixGO ist ein Service, der Spielern von Monopoly GO bei verschiedenen Aspekten des Spiels hilft, wie Würfelboosts, Sticker-Sammlungen, Partner-Vermittlung und Race-Events."
-    },
-    {
-      question: "Wie funktionieren Würfelboosts?",
-      answer: "Würfelboosts erhöhen die Anzahl der Würfel in Ihrem Monopoly GO-Konto. Nach dem Kauf benötigen wir Ihre Spieler-ID und weitere Informationen, um die Würfel innerhalb von 24 Stunden auf Ihr Konto zu übertragen."
-    },
-    {
-      question: "Wie erhalte ich Sticker?",
-      answer: "Über unseren Sticker-Service können Sie bestimmte Sticker für Ihre Sammlung erhalten. Wir helfen Ihnen dabei, schwer zu findende Sticker zu bekommen, um Ihre Alben zu vervollständigen."
-    },
-    {
-      question: "Wie finde ich Spielpartner?",
-      answer: "Unser Partner-Service vermittelt Ihnen aktive Spieler für gemeinsame Aktivitäten wie Geschenketausch oder gegenseitige Besuche im Spiel. Alle Partner werden vorher überprüft."
-    },
-    {
-      question: "Was ist der Race-Service?",
-      answer: "Unser Race-Service unterstützt Sie bei den zeitlich begrenzten Events in Monopoly GO. Wir können Ihnen helfen, bestimmte Meilensteine zu erreichen und Belohnungen freizuschalten."
-    },
-    {
-      question: "Ist die Nutzung von babixGO sicher?",
-      answer: "Wir legen größten Wert auf die Sicherheit Ihrer Daten und Ihres Spielkontos. Alle Transaktionen werden diskret und sicher durchgeführt. Wir benötigen niemals Ihr Passwort oder andere sensible Zugangsdaten."
-    },
-    {
-      question: "Wie lange dauert die Bearbeitung meiner Bestellung?",
-      answer: "Nach Zahlungseingang beginnen wir umgehend mit der Bearbeitung Ihrer Bestellung. Die meisten Dienste werden innerhalb von 24 Stunden abgeschlossen."
-    },
-    {
-      question: "Kann ich meine Bestellung stornieren?",
-      answer: "Sobald wir mit der Bearbeitung Ihrer Bestellung begonnen haben, ist eine Stornierung nicht mehr möglich. Vor Bearbeitungsbeginn können Sie Ihre Bestellung unter bestimmten Bedingungen stornieren. Weitere Details finden Sie in unseren AGB."
-    }
-  ];
-
-  const helpCategories = [
-    {
-      title: "Würfelboost",
-      path: "/hilfe/wuerfel",
-      icon: "icon_wuerfel_trans_150_150.webp",
-      description: "Alles über unseren Würfelboost-Service"
-    },
-    {
-      title: "Sticker",
-      path: "/hilfe/sticker",
-      icon: "icon_chance_trans_150_150.webp",
-      description: "Hilfe zum Sticker-Service"
-    },
-    {
-      title: "Partner",
-      path: "/hilfe/partner",
-      icon: "icon_account_trans_150_150.webp",
-      description: "Informationen zur Partner-Vermittlung"
-    },
-    {
-      title: "Race",
-      path: "/hilfe/race",
-      icon: "icon_spielbrett_trans_150_150.webp",
-      description: "Unterstützung bei Race-Events"
-    }
-  ];
-
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="babix-info-header text-3xl md:text-4xl font-bold mb-8 text-center">Hilfe & Support</h1>
+      <h1 className="babix-info-header text-3xl md:text-4xl font-bold mb-8 text-center">Hilfe & Informationen</h1>
       
-      {/* Hilfekategorien */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-        {helpCategories.map((category, index) => (
-          <Link key={index} href={category.path}>
-            <div className="bg-white rounded-lg shadow-lg p-6 transition-transform hover:scale-105 cursor-pointer hover:shadow-xl border border-gray-200">
-              <div className="flex flex-col items-center text-center">
-                <div className="w-16 h-16 mb-4 flex items-center justify-center">
-                  <span className="material-icons text-5xl text-[#00CFFF]">
-                    {category.title === "Würfelboost" ? "casino" : 
-                     category.title === "Sticker" ? "collections_bookmark" :
-                     category.title === "Partner" ? "people" :
-                     "emoji_events"}
-                  </span>
-                </div>
-                <h3 className="text-xl font-bold text-[#0A3A68] mb-2">{category.title}</h3>
-                <p className="text-gray-600">{category.description}</p>
-              </div>
-            </div>
-          </Link>
-        ))}
-      </div>
-      
-      {/* FAQ-Bereich */}
-      <div className="max-w-4xl mx-auto mb-12">
-        <h2 className="text-2xl font-bold text-[#0A3A68] mb-6 text-center">Häufig gestellte Fragen</h2>
-        
-        <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-          {faqItems.map((item, index) => (
-            <div key={index} className="border-b border-gray-200 last:border-b-0">
-              <details className="group">
-                <summary className="flex justify-between items-center font-bold p-4 cursor-pointer text-[#0A3A68] hover:bg-gray-50">
-                  {item.question}
-                  <span className="material-icons transition-transform group-open:rotate-180">expand_more</span>
-                </summary>
-                <div className="p-4 pt-0 bg-gray-50">
-                  <p className="text-gray-700">{item.answer}</p>
-                </div>
-              </details>
-            </div>
-          ))}
-        </div>
-      </div>
-      
-      {/* Kontaktbereich */}
-      <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-6 mb-8">
-        <h2 className="text-2xl font-bold text-[#0A3A68] mb-4 text-center">Noch Fragen?</h2>
-        <p className="text-center text-gray-600 mb-6">
-          Wenn Sie weitere Fragen haben oder Hilfe benötigen, kontaktieren Sie uns gerne direkt.
-        </p>
-        
-        <div className="flex flex-col md:flex-row justify-center items-center gap-4">
-          <a
-            href="/kontakt"
-            className="bg-[#0A3A68] text-white py-3 px-6 rounded-md hover:bg-[#FF4C00] transition-colors flex items-center justify-center"
-          >
-            <span className="material-icons mr-2">mail</span>
-            Kontaktformular
-          </a>
+      <div className="max-w-4xl mx-auto">
+        <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
+          <h2 className="text-2xl font-bold text-[#0A3A68] mb-6">Hilfe zu unseren Diensten</h2>
           
-          <a
-            href="https://wa.me/491234567890"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-[#25D366] text-white py-3 px-6 rounded-md hover:bg-opacity-90 transition-colors flex items-center justify-center"
-          >
-            <span className="material-icons mr-2">whatsapp</span>
-            WhatsApp Support
-          </a>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="bg-gray-50 p-5 rounded-lg shadow-sm border border-gray-200 hover:border-[#00CFFF] transition-colors">
+              <h3 className="text-xl font-bold text-[#0A3A68] mb-3 flex items-center">
+                <span className="material-icons mr-2 text-[#00CFFF]">casino</span>
+                Würfelboost
+              </h3>
+              <p className="text-gray-700 mb-4">
+                Erfahre alles über unseren Würfelboost-Service: Wie er funktioniert, Preise und häufig gestellte Fragen.
+              </p>
+              <Link href="/hilfe/wuerfel">
+                <button className="bg-[#0A3A68] hover:bg-[#00CFFF] text-white py-2 px-4 rounded-md transition-colors inline-flex items-center">
+                  <span className="material-icons mr-1">help</span>
+                  Zur Würfelboost-Hilfe
+                </button>
+              </Link>
+            </div>
+            
+            <div className="bg-gray-50 p-5 rounded-lg shadow-sm border border-gray-200 hover:border-[#00CFFF] transition-colors">
+              <h3 className="text-xl font-bold text-[#0A3A68] mb-3 flex items-center">
+                <span className="material-icons mr-2 text-[#00CFFF]">collections_bookmark</span>
+                Sticker
+              </h3>
+              <p className="text-gray-700 mb-4">
+                Informationen zu unserem Sticker-Service: Verfügbare Sticker, Preise und Lieferbedingungen.
+              </p>
+              <Link href="/hilfe/sticker">
+                <button className="bg-[#0A3A68] hover:bg-[#00CFFF] text-white py-2 px-4 rounded-md transition-colors inline-flex items-center">
+                  <span className="material-icons mr-1">help</span>
+                  Zur Sticker-Hilfe
+                </button>
+              </Link>
+            </div>
+            
+            <div className="bg-gray-50 p-5 rounded-lg shadow-sm border border-gray-200 hover:border-[#00CFFF] transition-colors">
+              <h3 className="text-xl font-bold text-[#0A3A68] mb-3 flex items-center">
+                <span className="material-icons mr-2 text-[#00CFFF]">people</span>
+                Partnerevents
+              </h3>
+              <p className="text-gray-700 mb-4">
+                Alles zu unseren Partnerevent-Angeboten: Voraussetzungen, Ablauf und was du darüber wissen solltest.
+              </p>
+              <Link href="/hilfe/partner">
+                <button className="bg-[#0A3A68] hover:bg-[#00CFFF] text-white py-2 px-4 rounded-md transition-colors inline-flex items-center">
+                  <span className="material-icons mr-1">help</span>
+                  Zur Partnerevent-Hilfe
+                </button>
+              </Link>
+            </div>
+            
+            <div className="bg-gray-50 p-5 rounded-lg shadow-sm border border-gray-200 hover:border-[#00CFFF] transition-colors">
+              <h3 className="text-xl font-bold text-[#0A3A68] mb-3 flex items-center">
+                <span className="material-icons mr-2 text-[#00CFFF]">emoji_events</span>
+                Race Events
+              </h3>
+              <p className="text-gray-700 mb-4">
+                Informationen zu unseren Race-Event-Angeboten: Was wir anbieten und wie du teilnehmen kannst.
+              </p>
+              <Link href="/hilfe/race">
+                <button className="bg-[#0A3A68] hover:bg-[#00CFFF] text-white py-2 px-4 rounded-md transition-colors inline-flex items-center">
+                  <span className="material-icons mr-1">help</span>
+                  Zur Race-Event-Hilfe
+                </button>
+              </Link>
+            </div>
+          </div>
+        </div>
+        
+        <div className="bg-[#E6F7FF] border-l-4 border-[#00CFFF] p-4 rounded-r-md mb-8">
+          <h3 className="font-bold text-[#0A3A68] mb-2">Noch Fragen?</h3>
+          <p className="text-gray-700 mb-3">
+            Falls du hier nicht die Antwort auf deine Frage findest, kontaktiere uns einfach direkt. Wir helfen dir gerne weiter!
+          </p>
+          <Link href="/kontakt">
+            <button className="bg-[#0A3A68] hover:bg-[#FF4C00] text-white py-2 px-4 rounded-md transition-colors inline-flex items-center">
+              <span className="material-icons mr-1">contact_support</span>
+              Kontakt aufnehmen
+            </button>
+          </Link>
         </div>
       </div>
     </div>

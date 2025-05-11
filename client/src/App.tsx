@@ -26,6 +26,12 @@ const PartnerPage = lazy(() => import('@/pages/produkte/Partner'));
 const RacePage = lazy(() => import('@/pages/produkte/Race'));
 const WeiterePage = lazy(() => import('@/pages/produkte/Weitere'));
 
+// Lazy-loaded help pages
+const WuerfelHilfePage = lazy(() => import('@/pages/hilfe/wuerfel'));
+const StickerHilfePage = lazy(() => import('@/pages/hilfe/sticker'));
+const PartnerHilfePage = lazy(() => import('@/pages/hilfe/partner'));
+const RaceHilfePage = lazy(() => import('@/pages/hilfe/race'));
+
 const Ladebildschirm = () => (
   <div className="flex items-center justify-center min-h-screen">
     <div className="text-center">
@@ -55,6 +61,10 @@ function Router() {
           
           {/* Hilfebereich */}
           <Route path="/hilfe" component={Hilfe} />
+          <Route path="/hilfe/wuerfel" component={WuerfelHilfePage} />
+          <Route path="/hilfe/sticker" component={StickerHilfePage} />
+          <Route path="/hilfe/partner" component={PartnerHilfePage} />
+          <Route path="/hilfe/race" component={RaceHilfePage} />
           
           {/* Produkt-Unterseiten */}
           <Route path="/produkte/wuerfel" component={WuerfelPage} />
