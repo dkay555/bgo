@@ -5,29 +5,31 @@ import { CONTACT } from '@/lib/constants';
 export default function StartPage() {
   return (
     <main className="px-4 py-6 md:py-10 flex-grow font-['Nunito_Sans'] text-[#0A3A68]">
-      {/* Hero Section */}
-      <section className="text-center py-6 md:py-10 relative overflow-hidden">
+      {/* Hero Section - Noch kleiner */}
+      <section className="text-center py-4 md:py-6 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-[#00CFFF]/10 to-[#FF4C00]/10 animate-gradient-x"></div>
         <div className="max-w-4xl mx-auto relative">
-          <h1 className="font-['Baloo_2'] font-bold text-2xl md:text-3xl bg-[#00CFFF]/10 px-6 py-3 rounded-xl inline-block mx-auto mb-4 border-b-2 border-[#00CFFF] text-[#FF4C00]">
+          <h1 className="font-['Baloo_2'] font-bold text-xl md:text-2xl bg-[#00CFFF]/10 px-4 py-2 rounded-xl inline-block mx-auto mb-2 border-b-2 border-[#00CFFF] text-[#FF4C00]">
             Willkommen bei babixGO
           </h1>
-          <p className="text-lg md:text-xl">Würfel, Events, Sticker & mehr – alles für dein Monopoly GO Abenteuer.</p>
+          <p className="text-base md:text-lg">Würfel, Events, Sticker & mehr – alles für dein Monopoly GO Abenteuer.</p>
         </div>
       </section>
       
-      {/* Aktuelles-Box zwischen Hero und Produkte */}
-      <section className="pb-6 pt-0">
+      {/* Was gibt's Neues Sektion */}
+      <section className="py-6 bg-gray-50">
         <div className="max-w-4xl mx-auto">
-          <div className="bg-white/90 py-2 px-4 rounded-lg shadow-md border border-[#00CFFF]/40 mx-auto">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <span className="material-icons text-sm mr-2 text-[#FF4C00]">new_releases</span>
-                <span className="font-bold text-[#0A3A68] text-sm mr-2">Was gibt es Neues:</span>
-                <span className="text-[#0A3A68]/80 text-sm">Angebot und Preisanpassung</span>
-              </div>
+          <h2 className="babix-info-header mb-4 text-center text-lg md:text-xl mx-auto">Was gibt's Neues?</h2>
+          
+          <div className="bg-white rounded-lg shadow-md p-4">
+            <h3 className="text-[#0A3A68] font-bold mb-2 border-b border-[#00CFFF] pb-1 inline-block">Angebot und Preisanpassung</h3>
+            <p className="text-[#0A3A68]/80 mb-3">
+              Aufgrund der hohen Nachfrage und um unseren Service weiterhin in gewohnter Qualität anbieten zu können, 
+              haben wir unsere Preisstruktur angepasst. Die neuen Preise gelten ab sofort für alle Dienste.
+            </p>
+            <div className="flex justify-end">
               <Link href="/news/angebot_und_preisanpassung">
-                <Button variant="darkblue" className="text-xs px-2 py-1 h-auto ml-2">
+                <Button variant="darkblue" className="text-xs px-3 py-1">
                   Weiterlesen
                 </Button>
               </Link>
