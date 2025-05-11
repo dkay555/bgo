@@ -6,15 +6,20 @@ export default function StartPage() {
   return (
     <main className="px-4 py-6 md:py-10 flex-grow font-['Nunito_Sans'] text-[#0A3A68]">
       {/* Hero Section */}
-      <section className="text-center py-8 md:py-12 relative overflow-hidden">
+      <section className="text-center py-6 md:py-10 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-[#00CFFF]/10 to-[#FF4C00]/10 animate-gradient-x"></div>
         <div className="max-w-4xl mx-auto relative">
           <h1 className="font-['Baloo_2'] font-bold text-2xl md:text-3xl bg-[#00CFFF]/10 px-6 py-3 rounded-xl inline-block mx-auto mb-4 border-b-2 border-[#00CFFF] text-[#FF4C00]">
             Willkommen bei babixGO
           </h1>
-          <p className="text-lg md:text-xl mb-8">Würfel, Events, Sticker & mehr – alles für dein Monopoly GO Abenteuer.</p>
-          
-          <div className="bg-white/80 backdrop-blur-sm py-2 px-4 rounded-lg shadow-md border border-[#00CFFF]/40 mx-auto max-w-4xl">
+          <p className="text-lg md:text-xl">Würfel, Events, Sticker & mehr – alles für dein Monopoly GO Abenteuer.</p>
+        </div>
+      </section>
+      
+      {/* Aktuelles-Box zwischen Hero und Produkte */}
+      <section className="pb-6 pt-0">
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-white/90 py-2 px-4 rounded-lg shadow-md border border-[#00CFFF]/40 mx-auto">
             <div className="flex items-center justify-between">
               <div className="flex items-center">
                 <span className="material-icons text-sm mr-2 text-[#FF4C00]">new_releases</span>
