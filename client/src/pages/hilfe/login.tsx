@@ -88,19 +88,19 @@ export default function LoginHilfe() {
                   
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-5">
                     <div className="border border-gray-200 p-2 rounded-lg">
-                      <img src="/images/auth-token/step1.webp" alt="Schritt 1: Den Link im Messenger verschicken & anklicken" className="w-full h-auto" />
+                      <img src="https://replit.babixgo.de/images/auth-token/step1.webp" alt="Schritt 1: Den Link im Messenger verschicken & anklicken" className="w-full h-auto" />
                       <p className="text-center mt-2 text-sm text-gray-700">1. Den Link im Messenger verschicken & anklicken</p>
                     </div>
                     <div className="border border-gray-200 p-2 rounded-lg">
-                      <img src="/images/auth-token/step2.webp" alt="Schritt 2: Fortfahren" className="w-full h-auto" />
+                      <img src="https://replit.babixgo.de/images/auth-token/step2.webp" alt="Schritt 2: Fortfahren" className="w-full h-auto" />
                       <p className="text-center mt-2 text-sm text-gray-700">2. Fortfahren</p>
                     </div>
                     <div className="border border-gray-200 p-2 rounded-lg">
-                      <img src="/images/auth-token/step3.webp" alt="Schritt 3: Es öffnet sich eine weiße Seite. Oben rechts auf die 3 Punkte klicken" className="w-full h-auto" />
+                      <img src="https://replit.babixgo.de/images/auth-token/step3.webp" alt="Schritt 3: Es öffnet sich eine weiße Seite. Oben rechts auf die 3 Punkte klicken" className="w-full h-auto" />
                       <p className="text-center mt-2 text-sm text-gray-700">3. Es öffnet sich eine weiße Seite. Oben rechts auf die 3 Punkte klicken</p>
                     </div>
                     <div className="border border-gray-200 p-2 rounded-lg">
-                      <img src="/images/auth-token/step4.webp" alt="Schritt 4: Link kopieren wählen & mir diesen schicken" className="w-full h-auto" />
+                      <img src="https://replit.babixgo.de/images/auth-token/step4.webp" alt="Schritt 4: Link kopieren wählen & mir diesen schicken" className="w-full h-auto" />
                       <p className="text-center mt-2 text-sm text-gray-700">4. Link kopieren wählen & mir diesen schicken</p>
                     </div>
                   </div>
