@@ -8,15 +8,17 @@ export default function Hilfe() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="babix-info-header text-3xl md:text-4xl font-bold mb-8 text-center">Hilfe & Informationen</h1>
+      <h1 className="font-['Baloo_2'] font-bold text-2xl md:text-3xl bg-[#00CFFF]/10 px-6 py-3 rounded-xl inline-block mx-auto mb-4 border-b-2 border-[#00CFFF] text-[#FF4C00] text-center">
+        Hilfe & Informationen
+      </h1>
       
       <div className="max-w-4xl mx-auto">
         <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-          <h2 className="text-2xl font-bold text-[#0A3A68] mb-6">Hilfe zu unseren Diensten</h2>
+          <h2 className="babix-info-header mx-auto mb-6">Hilfe zu unseren Diensten</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="bg-gray-50 p-5 rounded-lg shadow-sm border border-gray-200 hover:border-[#00CFFF] transition-colors">
-              <h3 className="text-xl font-bold text-[#0A3A68] mb-3 flex items-center">
+              <h3 className="text-xl font-bold text-[#0A3A68] mb-3 flex items-center border-b-2 border-[#00CFFF] pb-2">
                 <span className="material-icons mr-2 text-[#00CFFF]">casino</span>
                 Würfelboost
               </h3>
@@ -32,7 +34,7 @@ export default function Hilfe() {
             </div>
             
             <div className="bg-gray-50 p-5 rounded-lg shadow-sm border border-gray-200 hover:border-[#00CFFF] transition-colors">
-              <h3 className="text-xl font-bold text-[#0A3A68] mb-3 flex items-center">
+              <h3 className="text-xl font-bold text-[#0A3A68] mb-3 flex items-center border-b-2 border-[#00CFFF] pb-2">
                 <span className="material-icons mr-2 text-[#00CFFF]">collections_bookmark</span>
                 Sticker
               </h3>
@@ -82,7 +84,7 @@ export default function Hilfe() {
         </div>
         
         <div className="bg-[#E6F7FF] border-l-4 border-[#00CFFF] p-4 rounded-r-md mb-8">
-          <h3 className="font-bold text-[#0A3A68] mb-2">Noch Fragen?</h3>
+          <h3 className="font-bold text-[#0A3A68] mb-2 border-b-2 border-[#00CFFF] pb-2 inline-block">Noch Fragen?</h3>
           <p className="text-gray-700 mb-3">
             Falls du hier nicht die Antwort auf deine Frage findest, kontaktiere uns einfach direkt. Wir helfen dir gerne weiter!
           </p>

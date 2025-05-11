@@ -20,13 +20,13 @@ export default function PartnerHilfe() {
       
       <div className="max-w-3xl mx-auto">
         <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-          <h2 className="text-2xl font-bold text-[#0A3A68] mb-6">Hilfe zu Partnerevents</h2>
+          <h2 className="babix-info-header mx-auto mb-6">Hilfe zu Partnerevents</h2>
           <p className="mb-6">
             Dieser Bereich wird in Kürze mit detaillierten Hilfe-Informationen zu Partnerevents gefüllt.
           </p>
           
           <div className="bg-[#E6F7FF] border-l-4 border-[#00CFFF] p-4 rounded-r-md">
-            <h4 className="font-bold text-[#0A3A68] mb-2">Partnerevent-Plätze kaufen</h4>
+            <h4 className="font-bold text-[#0A3A68] mb-2 border-b-2 border-[#00CFFF] pb-2 inline-block">Partnerevent-Plätze kaufen</h4>
             <p className="text-gray-700 mb-3">In der Zwischenzeit können Sie bereits unsere Partnerevent-Angebote durchsuchen und bestellen.</p>
             <Link href="/produkte/partner">
               <button className="bg-[#0A3A68] hover:bg-[#00CFFF] text-white py-2 px-4 rounded-md transition-colors inline-flex items-center">
