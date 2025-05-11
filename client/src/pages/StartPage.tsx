@@ -14,15 +14,15 @@ export default function StartPage() {
           </h1>
           <p className="text-lg md:text-xl mb-8">Würfel, Events, Sticker & mehr – alles für dein Monopoly GO Abenteuer.</p>
           
-          <div className="bg-white/80 backdrop-blur-sm p-4 rounded-lg shadow-md border border-[#00CFFF]/40 mx-auto max-w-2xl">
-            <div className="flex flex-col items-center">
-              <h3 className="text-lg font-bold text-[#0A3A68] mb-2 flex items-center">
-                <span className="material-icons mr-2 text-[#FF4C00]">new_releases</span>
-                Was gibt es Neues?
-              </h3>
-              <p className="mb-3 text-[#0A3A68]/80">Angebot und Preisanpassung</p>
+          <div className="bg-white/80 backdrop-blur-sm py-2 px-4 rounded-lg shadow-md border border-[#00CFFF]/40 mx-auto max-w-4xl">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                <span className="material-icons text-sm mr-2 text-[#FF4C00]">new_releases</span>
+                <span className="font-bold text-[#0A3A68] text-sm mr-2">Was gibt es Neues:</span>
+                <span className="text-[#0A3A68]/80 text-sm">Angebot und Preisanpassung</span>
+              </div>
               <Link href="/news/angebot_und_preisanpassung">
-                <Button variant="darkblue" className="text-sm px-3 py-1 h-auto">
+                <Button variant="darkblue" className="text-xs px-2 py-1 h-auto ml-2">
                   Weiterlesen
                 </Button>
               </Link>
