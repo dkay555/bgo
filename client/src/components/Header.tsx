@@ -155,56 +155,114 @@ export function Header() {
           </div>
           
           <div className="px-2 pt-4 pb-3">
-            {NAV_LINKS.map((link, index) => (
-              <div key={index}>
-                {link.isDropdown ? (
-                  <div className="mb-2">
-                    <button
-                      className="text-white hover:bg-white/10 hover:text-[#FF4C00] w-full px-4 py-3 rounded-md font-bold transition duration-300 flex items-center justify-between"
-                      onClick={() => toggleDropdown(link.name)}
-                    >
-                      <div className="flex items-center">
-                        <span className="material-icons mr-3 text-[#00CFFF]">category</span>
-                        {link.name}
-                      </div>
-                      <span className={`material-icons transition-transform duration-200 ${openDropdown === link.name ? 'rotate-180' : ''}`}>
-                        expand_more
-                      </span>
-                    </button>
-                    
-                    {/* Mobile Dropdown Items */}
-                    <div className={`pl-10 space-y-1 overflow-hidden transition-all duration-300 ${openDropdown === link.name ? 'max-h-96 mt-1 mb-2' : 'max-h-0'}`}>
-                      {link.dropdownItems?.map((item, idx) => (
-                        <Link 
-                          key={idx}
-                          href={item.href}
-                          className="text-white/80 hover:text-[#FF4C00] block py-2 px-4 text-sm rounded-md transition duration-300"
-                          onClick={closeMobileMenu}
-                        >
-                          {item.name}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                ) : (
-                  <a
-                    href={link.href}
-                    className="text-white hover:bg-white/10 hover:text-[#FF4C00] block px-4 py-3 rounded-md font-bold transition duration-300 flex items-center mb-2"
-                    onClick={closeMobileMenu}
-                  >
-                    <span className="material-icons mr-3 text-[#00CFFF]">
-                      {link.name === "Home" ? "home" : 
-                       link.name === "Preise" ? "payments" :
-                       link.name === "Blog" ? "article" :
-                       link.name === "Hilfe" ? "help" :
-                       link.name === "Kontakt" ? "contact_support" :
-                       "arrow_forward"}
-                    </span>
-                    {link.name}
-                  </a>
-                )}
+            {/* Start Link */}
+            <Link 
+              href="/"
+              className="text-white hover:bg-white/10 hover:text-[#FF4C00] block px-4 py-3 rounded-md font-bold transition duration-300 flex items-center mb-4"
+              onClick={closeMobileMenu}
+            >
+              <span className="material-icons mr-3 text-[#00CFFF]">home</span>
+              Start
+            </Link>
+            
+            {/* Leistungen Kategorie-Überschrift */}
+            <div className="text-white/70 px-4 py-2 mb-1 text-sm uppercase tracking-wider border-b border-white/10">
+              Leistungen
+            </div>
+            
+            {/* Würfel Dienste */}
+            <div className="mb-3 pl-4">
+              <div className="text-white font-bold px-4 py-2">Würfel</div>
+              <div className="grid grid-cols-2 gap-2 pl-4">
+                <Link 
+                  href="/produkte/wuerfel"
+                  className="text-white/80 hover:text-[#FF4C00] block py-2 px-3 text-sm rounded-md transition duration-300 border border-white/10"
+                  onClick={closeMobileMenu}
+                >
+                  <span className="text-[#00CFFF] mr-1">→</span> Shop
+                </Link>
+                <Link 
+                  href="/hilfe/wuerfel"
+                  className="text-white/80 hover:text-[#FF4C00] block py-2 px-3 text-sm rounded-md transition duration-300 border border-white/10"
+                  onClick={closeMobileMenu}
+                >
+                  <span className="text-[#00CFFF] mr-1">→</span> Hilfe
+                </Link>
               </div>
-            ))}
+            </div>
+            
+            {/* Sticker Dienste */}
+            <div className="mb-3 pl-4">
+              <div className="text-white font-bold px-4 py-2">Sticker</div>
+              <div className="grid grid-cols-2 gap-2 pl-4">
+                <Link 
+                  href="/produkte/sticker"
+                  className="text-white/80 hover:text-[#FF4C00] block py-2 px-3 text-sm rounded-md transition duration-300 border border-white/10"
+                  onClick={closeMobileMenu}
+                >
+                  <span className="text-[#00CFFF] mr-1">→</span> Shop
+                </Link>
+                <Link 
+                  href="/hilfe/sticker"
+                  className="text-white/80 hover:text-[#FF4C00] block py-2 px-3 text-sm rounded-md transition duration-300 border border-white/10"
+                  onClick={closeMobileMenu}
+                >
+                  <span className="text-[#00CFFF] mr-1">→</span> Hilfe
+                </Link>
+              </div>
+            </div>
+            
+            {/* Partnerevent Dienste */}
+            <div className="mb-3 pl-4">
+              <div className="text-white font-bold px-4 py-2">Partnerevent</div>
+              <div className="grid grid-cols-2 gap-2 pl-4">
+                <Link 
+                  href="/produkte/partner"
+                  className="text-white/80 hover:text-[#FF4C00] block py-2 px-3 text-sm rounded-md transition duration-300 border border-white/10"
+                  onClick={closeMobileMenu}
+                >
+                  <span className="text-[#00CFFF] mr-1">→</span> Shop
+                </Link>
+                <Link 
+                  href="/hilfe/partner"
+                  className="text-white/80 hover:text-[#FF4C00] block py-2 px-3 text-sm rounded-md transition duration-300 border border-white/10"
+                  onClick={closeMobileMenu}
+                >
+                  <span className="text-[#00CFFF] mr-1">→</span> Hilfe
+                </Link>
+              </div>
+            </div>
+            
+            {/* Race Dienste */}
+            <div className="mb-3 pl-4">
+              <div className="text-white font-bold px-4 py-2">Race</div>
+              <div className="grid grid-cols-2 gap-2 pl-4">
+                <Link 
+                  href="/produkte/race"
+                  className="text-white/80 hover:text-[#FF4C00] block py-2 px-3 text-sm rounded-md transition duration-300 border border-white/10"
+                  onClick={closeMobileMenu}
+                >
+                  <span className="text-[#00CFFF] mr-1">→</span> Shop
+                </Link>
+                <Link 
+                  href="/hilfe/race"
+                  className="text-white/80 hover:text-[#FF4C00] block py-2 px-3 text-sm rounded-md transition duration-300 border border-white/10"
+                  onClick={closeMobileMenu}
+                >
+                  <span className="text-[#00CFFF] mr-1">→</span> Hilfe
+                </Link>
+              </div>
+            </div>
+            
+            {/* Kontakt Link */}
+            <Link 
+              href="/kontakt"
+              className="text-white hover:bg-white/10 hover:text-[#FF4C00] block px-4 py-3 rounded-md font-bold transition duration-300 flex items-center mt-4"
+              onClick={closeMobileMenu}
+            >
+              <span className="material-icons mr-3 text-[#00CFFF]">contact_support</span>
+              Kontakt
+            </Link>
           </div>
           
           <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-white/10">

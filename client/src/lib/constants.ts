@@ -45,8 +45,7 @@ export const SPECIAL_OFFER = {
 
 // Navigation links
 export const NAV_LINKS = [
-  { name: 'Home', href: '/' },
-  { name: 'Preise', href: '/preise' },
+  { name: 'Start', href: '/' },
   { 
     name: 'Leistungen', 
     href: '/produkte',
@@ -62,8 +61,6 @@ export const NAV_LINKS = [
       { name: 'Race Hilfe', href: '/hilfe/race' },
     ]
   },
-  { name: 'Blog', href: '/blog' },
-  { name: 'Hilfe', href: '/hilfe' },
   { name: 'Kontakt', href: '/kontakt' },
 ];
 
