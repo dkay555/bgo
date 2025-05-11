@@ -13,7 +13,9 @@ export default function PartnerHilfe() {
           <span className="material-icons mr-1">arrow_back</span>
           Zurück zur Hilfe
         </Link>
-        <h1 className="babix-info-header text-3xl md:text-4xl font-bold mb-8 text-center">Partnerevent - Hilfe & Informationen</h1>
+        <h1 className="font-['Baloo_2'] font-bold text-2xl md:text-3xl bg-[#00CFFF]/10 px-6 py-3 rounded-xl inline-block mx-auto mb-4 border-b-2 border-[#00CFFF] text-[#FF4C00]">
+          Partnerevent - Hilfe & Informationen
+        </h1>
       </div>
       
       <div className="max-w-3xl mx-auto">
