@@ -86,7 +86,7 @@ export default function LandingPage() {
 
           {/* Über Uns Section */}
           <section id="ueber" className="scroll-mt-20 animate-[fadeIn_0.5s_ease-out_forwards] animation-delay-300">
-            <h2 className="font-['Baloo_2'] font-bold text-xl md:text-2xl bg-[#00CFFF]/10 px-6 py-3 rounded-xl inline-block mx-auto my-4 border-b-2 border-[#00CFFF] text-[#FF4C00] text-center">
+            <h2 className="babix-info-header mx-auto my-4 text-center">
               Über uns
             </h2>
             <div className="bg-white rounded-xl p-6 md:p-8 shadow-[0_4px_10px_rgba(0,0,0,0.1)] border-l-4 border-[#FF4C00]">
@@ -100,7 +100,7 @@ export default function LandingPage() {
 
           {/* Angebote Section */}
           <section id="angebote" className="scroll-mt-20 animate-[fadeIn_0.5s_ease-out_forwards] animation-delay-400">
-            <h2 className="font-['Baloo_2'] font-bold text-xl md:text-2xl bg-[#00CFFF]/10 px-6 py-3 rounded-xl inline-block mx-auto my-4 border-b-2 border-[#00CFFF] text-[#FF4C00] text-center">
+            <h2 className="babix-info-header mx-auto my-4 text-center">
               Unsere Angebote
             </h2>
             <div className="bg-white rounded-xl p-6 md:p-8 shadow-[0_4px_10px_rgba(0,0,0,0.1)]">
@@ -148,7 +148,7 @@ export default function LandingPage() {
 
           {/* Testimonials */}
           <section id="testimonials" className="scroll-mt-20 animate-[fadeIn_0.5s_ease-out_forwards] animation-delay-500">
-            <h2 className="font-['Baloo_2'] font-bold text-xl md:text-2xl bg-[#00CFFF]/10 px-6 py-3 rounded-xl inline-block mx-auto my-4 border-b-2 border-[#00CFFF] text-[#FF4C00] text-center">
+            <h2 className="babix-info-header mx-auto my-4 text-center">
               Das sagen unsere Kunden
             </h2>
             <div className="grid md:grid-cols-2 gap-6">
