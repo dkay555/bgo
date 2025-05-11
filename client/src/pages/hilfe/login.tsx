@@ -30,7 +30,7 @@ export default function LoginHilfe() {
 
             <div className="bg-[#E6F7FF] border-l-4 border-[#00CFFF] p-4 mb-6 rounded-r-md">
               <h4 className="font-bold text-[#0A3A68] mb-2 border-b-2 border-[#00CFFF] pb-2 inline-block">💡 Wichtiger Hinweis</h4>
-              <p className="text-gray-700">Deine Kontosicherheit hat für uns höchste Priorität. Wir verwenden sichere Methoden und deine Zugangsdaten werden niemals gespeichert.</p>
+              <p className="text-gray-700">Wir verstehen, dass es für manche ein sensibles Thema ist und garantieren, dass wir den Login nur nutzen, um die nötigen Spieldaten zu erhalten. In aller Regel kann das Passwort wenige Minuten nach dem Login von dir geändert werden.</p>
             </div>
           </div>
           
@@ -46,21 +46,25 @@ export default function LoginHilfe() {
                   </h4>
                 </div>
                 <div className="p-4 border-t border-gray-200">
-                  <p className="text-gray-700 mb-3">Die einfachste und schnellste Methode ist die Übermittlung deiner Facebook- oder Google-Zugangsdaten an uns.</p>
+                  <p className="text-gray-700 mb-4 font-semibold">Login mit deinen Zugangsdaten</p>
+                  <p className="text-gray-700 mb-3">Was wir von dir benötigen:</p>
                   
-                  <h5 className="font-semibold text-[#0A3A68] mb-2">Vorteile:</h5>
-                  <ul className="list-disc pl-5 mb-3 text-gray-700">
-                    <li>Schnellster Start des Würfelboosts</li>
-                    <li>Keine technischen Kenntnisse erforderlich</li>
-                    <li>Wir können auch bei zusätzlichen Verifizierungen helfen</li>
+                  <ul className="mb-5 space-y-2 text-gray-700">
+                    <li className="pl-4">Die hinterlegte E-Mail Adresse oder Handynummer</li>
+                    <li className="pl-4">Dein Passwort</li>
                   </ul>
                   
-                  <h5 className="font-semibold text-[#0A3A68] mb-2">Sicherheitshinweise:</h5>
-                  <ul className="list-disc pl-5 text-gray-700">
-                    <li>Deine Zugangsdaten werden nur für die Dauer des Boosts verwendet</li>
-                    <li>Wir empfehlen, dein Passwort nach dem Boost zu ändern</li>
-                    <li>Du erhältst eine Benachrichtigung über einen neuen Login auf deinem Konto</li>
+                  <p className="text-gray-700 mb-3">Wenn du eine 2 Faktor Authentifizierung nutzt benötigen wir außerdem noch:</p>
+                  
+                  <ul className="mb-5 space-y-2 text-gray-700">
+                    <li className="pl-4">2 Wiederherstellungscodes</li>
                   </ul>
+                  
+                  <p className="text-gray-700 mb-3">Die Wiederherstellungscodes benötigen wir um die 2 Faktor Authentifizierung zu umgehen.</p>
+                  
+                  <p className="text-gray-700 mb-3">Wie du die Codes erhältst, ob deine 2 FA überhaupt aktiv ist und weitere Informationen dazu findest du direkt bei Facebook unter folgenden Link: <a href="https://m.facebook.com/help/148104135383285/?locale=de_DE" target="_blank" rel="noopener noreferrer" className="text-[#00CFFF] hover:text-[#FF4C00] underline transition-colors">https://m.facebook.com/help/148104135383285/?locale=de_DE</a></p>
+                  
+                  <p className="text-gray-700">Alternativ zu den Codes kannst du den Login auch selbst bestätigen. Dafür muss man im Moment des Logins in Kontakt stehen, daher nutzen wir diese Möglichkeit nur bei Käufen über WhatsApp oder dem Messenger.</p>
                 </div>
               </div>
               
@@ -72,49 +76,74 @@ export default function LoginHilfe() {
                   </h4>
                 </div>
                 <div className="p-4 border-t border-gray-200">
-                  <p className="text-gray-700 mb-3">Der Facebook Auth-Token ist eine sicherere Alternative, bei der du deine Login-Daten nicht direkt weitergeben musst.</p>
+                  <p className="text-gray-700 mb-4 font-semibold">Login mit dem Authtoken</p>
+                  <p className="text-gray-700 mb-3">Dieser Token wird nach deinem Anmeldevorgang generiert. Monopoly schickt diesen an Facebook als Beweis dafür, dass du die erforderlichen Berechtigungen erteilt hast. Er ist nur für Monopoly Go gültig!</p>
                   
-                  <h5 className="font-semibold text-[#0A3A68] mb-2">Vorteile:</h5>
-                  <ul className="list-disc pl-5 mb-3 text-gray-700">
-                    <li>Höhere Sicherheit, da keine Passwörter weitergegeben werden</li>
-                    <li>Der Token hat eine begrenzte Gültigkeitsdauer</li>
-                    <li>Du behältst volle Kontrolle über deine Zugangsdaten</li>
+                  <p className="text-gray-700 mb-3">Was wir von dir benötigen:</p>
+                  <ul className="mb-5 space-y-2 text-gray-700">
+                    <li className="pl-4">Deinen Authtoken</li>
                   </ul>
                   
-                  <h5 className="font-semibold text-[#0A3A68] mb-2">So erhältst du den Auth-Token:</h5>
-                  <ol className="list-decimal pl-5 text-gray-700">
-                    <li>Öffne die Facebook-Website in deinem Browser und melde dich an</li>
-                    <li>Folge unserer detaillierten Anleitung, die wir dir im Chat zusenden</li>
-                    <li>Kopiere den generierten Token und sende ihn uns zu</li>
-                    <li>Wir verwenden diesen Token für den einmaligen Login</li>
-                  </ol>
+                  <p className="text-gray-700 mb-4">So erhältst du den Token:</p>
+                  
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-5">
+                    <div className="border border-gray-200 p-2 rounded-lg">
+                      <img src="/images/auth-token/step1.webp" alt="Schritt 1: Den Link im Messenger verschicken & anklicken" className="w-full h-auto" />
+                      <p className="text-center mt-2 text-sm text-gray-700">1. Den Link im Messenger verschicken & anklicken</p>
+                    </div>
+                    <div className="border border-gray-200 p-2 rounded-lg">
+                      <img src="/images/auth-token/step2.webp" alt="Schritt 2: Fortfahren" className="w-full h-auto" />
+                      <p className="text-center mt-2 text-sm text-gray-700">2. Fortfahren</p>
+                    </div>
+                    <div className="border border-gray-200 p-2 rounded-lg">
+                      <img src="/images/auth-token/step3.webp" alt="Schritt 3: Es öffnet sich eine weiße Seite. Oben rechts auf die 3 Punkte klicken" className="w-full h-auto" />
+                      <p className="text-center mt-2 text-sm text-gray-700">3. Es öffnet sich eine weiße Seite. Oben rechts auf die 3 Punkte klicken</p>
+                    </div>
+                    <div className="border border-gray-200 p-2 rounded-lg">
+                      <img src="/images/auth-token/step4.webp" alt="Schritt 4: Link kopieren wählen & mir diesen schicken" className="w-full h-auto" />
+                      <p className="text-center mt-2 text-sm text-gray-700">4. Link kopieren wählen & mir diesen schicken</p>
+                    </div>
+                  </div>
+                  
+                  <p className="text-gray-700 mb-3">Den Link den ihr erhaltet hat dieses Format:</p>
+                  <div className="bg-gray-100 p-3 rounded-lg mb-4 overflow-x-auto">
+                    <code className="text-sm text-gray-800">https://m.facebook.com/dialog/return/arbiter?protocol=https&response=%7B%22access_token%22%3A%22EAAEDOsLhrQsBOzRy2O1iBmrfaTY9jvAk2Vk4mUlKiogi4XZCWjfqndrLXUfhfghcdvxfvfXIFow1dnrMnbfnRDrCKHPm3qFGcGlFXMnHrZAcqlJXZghgggfgh......</code>
+                  </div>
                 </div>
               </div>
               
               <div className="border border-gray-200 rounded-lg">
                 <div className="bg-gray-50 p-4 rounded-t-lg">
                   <h4 className="font-bold text-[#0A3A68] flex items-center">
+                    <span className="material-icons mr-2 text-[#00CFFF]">phone_android</span>
+                    Methode 3: Google Play Games
+                  </h4>
+                </div>
+                <div className="p-4 border-t border-gray-200">
+                  <p className="text-gray-700 mb-4 font-semibold">Google Play Games</p>
+                  <p className="text-gray-700 mb-4">Sollte dein Account mit Google Play Games verknüpft sein, schreibe uns bitte über WhatsApp oder über Facebook.</p>
+                  
+                  <p className="text-gray-700 mb-3">Was wir von dir benötigen:</p>
+                  <ul className="mb-5 space-y-2 text-gray-700">
+                    <li className="pl-4">Deine Gmail-Adresse</li>
+                    <li className="pl-4">Dein Google-Konto-Passwort</li>
+                  </ul>
+                  
+                  <p className="text-gray-700">Du musst den Login unter Umständen auf deinem Gerät bestätigen.</p>
+                </div>
+              </div>
+              
+              <div className="border border-gray-200 rounded-lg mt-6">
+                <div className="bg-gray-50 p-4 rounded-t-lg">
+                  <h4 className="font-bold text-[#0A3A68] flex items-center">
                     <span className="material-icons mr-2 text-[#00CFFF]">screen_share</span>
-                    Methode 3: Fernwartung via TeamViewer/AnyDesk
+                    Methode 4: Fernwartung via TeamViewer/AnyDesk
                   </h4>
                 </div>
                 <div className="p-4 border-t border-gray-200">
                   <p className="text-gray-700 mb-3">Für Kunden, die maximale Transparenz wünschen, bieten wir eine beaufsichtigte Fernwartungssitzung an.</p>
                   
-                  <h5 className="font-semibold text-[#0A3A68] mb-2">Vorteile:</h5>
-                  <ul className="list-disc pl-5 mb-3 text-gray-700">
-                    <li>Du kannst den gesamten Prozess live verfolgen</li>
-                    <li>Wir können dir die einzelnen Schritte erklären</li>
-                    <li>Die Verbindung kann jederzeit von dir unterbrochen werden</li>
-                  </ul>
-                  
-                  <h5 className="font-semibold text-[#0A3A68] mb-2">Ablauf der Fernwartung:</h5>
-                  <ol className="list-decimal pl-5 text-gray-700">
-                    <li>Wir vereinbaren einen Termin für die Fernwartung</li>
-                    <li>Du installierst TeamViewer oder AnyDesk auf deinem Gerät</li>
-                    <li>Du übermittelst uns die Zugangsdaten für die Fernwartungssoftware</li>
-                    <li>Wir führen den Würfelboost durch, während du zuschauen kannst</li>
-                  </ol>
+                  <p className="text-gray-700 mb-3">Wir vereinbaren einen Termin für die Fernwartung, bei dem du TeamViewer oder AnyDesk auf deinem Gerät installierst und uns die Zugangsdaten übermittelst. So kannst du den gesamten Prozess live verfolgen und die Verbindung jederzeit unterbrechen.</p>
                 </div>
               </div>
             </div>
