@@ -26,7 +26,7 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50">
-      <nav className={`bg-[#0A3A68]/90 backdrop-blur-md transition-shadow duration-300 ${scrolled ? 'shadow-md' : ''}`}>
+      <nav className={`bg-[#0A3A68] transition-shadow duration-300 ${scrolled ? 'shadow-md' : ''}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             <div className="flex items-center">
@@ -79,9 +79,10 @@ export function Header() {
         
         {/* Mobile menu sidebar */}
         <div 
-          className={`fixed top-0 left-0 h-full w-72 bg-[#0A3A68] md:hidden z-50 transform transition-transform duration-300 ease-in-out shadow-xl ${
+          className={`fixed top-0 left-0 h-full w-72 bg-[#0A3A68] md:hidden z-50 transform transition-transform duration-300 ease-in-out shadow-xl !opacity-100 ${
             mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
           }`}
+          style={{backgroundColor: '#0A3A68', opacity: 1}}
         >
           <div className="flex justify-between items-center px-4 pt-4 pb-2 border-b border-white/10">
             <span className="text-white font-bold text-xl font-['Baloo_2']">babixGO</span>
