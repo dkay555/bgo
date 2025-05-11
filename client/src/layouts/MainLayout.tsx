@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import BackToTop from '@/components/BackToTop';
-import FloatingContact from '@/components/FloatingContact';
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -49,7 +48,6 @@ export function MainLayout({ children }: MainLayoutProps) {
       {children}
       
       <BackToTop />
-      <FloatingContact />
       <Footer />
     </div>
   );
