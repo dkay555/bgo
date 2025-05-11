@@ -172,85 +172,97 @@ export function Header() {
             
             {/* Würfel Dienste */}
             <div className="mb-2 pl-2">
-              <div className="text-white font-bold px-2 py-1">Würfel</div>
-              <div className="grid grid-cols-2 gap-1 pl-2">
-                <Link 
-                  href="/produkte/wuerfel"
-                  className="text-white/80 hover:text-[#FF4C00] block py-1 px-2 text-sm rounded-md transition duration-300 border border-white/10"
-                  onClick={closeMobileMenu}
-                >
-                  <span className="text-[#00CFFF] mr-1">→</span> Shop
-                </Link>
-                <Link 
-                  href="/hilfe/wuerfel"
-                  className="text-white/80 hover:text-[#FF4C00] block py-1 px-2 text-sm rounded-md transition duration-300 border border-white/10"
-                  onClick={closeMobileMenu}
-                >
-                  <span className="text-[#00CFFF] mr-1">→</span> Hilfe
-                </Link>
+              <div className="flex items-center">
+                <div className="text-white font-bold px-2 py-1">Würfel</div>
+                <div className="flex space-x-2">
+                  <Link 
+                    href="/produkte/wuerfel"
+                    className="text-white/80 hover:text-[#FF4C00] py-1 px-2 text-sm rounded-md transition duration-300 border border-white/10"
+                    onClick={closeMobileMenu}
+                  >
+                    <span className="text-[#00CFFF] mr-1">→</span> Shop
+                  </Link>
+                  <span className="text-white/50">|</span>
+                  <Link 
+                    href="/hilfe/wuerfel"
+                    className="text-white/80 hover:text-[#FF4C00] py-1 px-2 text-sm rounded-md transition duration-300 border border-white/10"
+                    onClick={closeMobileMenu}
+                  >
+                    <span className="text-[#00CFFF] mr-1">→</span> Hilfe
+                  </Link>
+                </div>
               </div>
             </div>
             
             {/* Sticker Dienste */}
             <div className="mb-2 pl-2">
-              <div className="text-white font-bold px-2 py-1">Sticker</div>
-              <div className="grid grid-cols-2 gap-1 pl-2">
-                <Link 
-                  href="/produkte/sticker"
-                  className="text-white/80 hover:text-[#FF4C00] block py-1 px-2 text-sm rounded-md transition duration-300 border border-white/10"
-                  onClick={closeMobileMenu}
-                >
-                  <span className="text-[#00CFFF] mr-1">→</span> Shop
-                </Link>
-                <Link 
-                  href="/hilfe/sticker"
-                  className="text-white/80 hover:text-[#FF4C00] block py-1 px-2 text-sm rounded-md transition duration-300 border border-white/10"
-                  onClick={closeMobileMenu}
-                >
-                  <span className="text-[#00CFFF] mr-1">→</span> Hilfe
-                </Link>
+              <div className="flex items-center">
+                <div className="text-white font-bold px-2 py-1">Sticker</div>
+                <div className="flex space-x-2">
+                  <Link 
+                    href="/produkte/sticker"
+                    className="text-white/80 hover:text-[#FF4C00] py-1 px-2 text-sm rounded-md transition duration-300 border border-white/10"
+                    onClick={closeMobileMenu}
+                  >
+                    <span className="text-[#00CFFF] mr-1">→</span> Shop
+                  </Link>
+                  <span className="text-white/50">|</span>
+                  <Link 
+                    href="/hilfe/sticker"
+                    className="text-white/80 hover:text-[#FF4C00] py-1 px-2 text-sm rounded-md transition duration-300 border border-white/10"
+                    onClick={closeMobileMenu}
+                  >
+                    <span className="text-[#00CFFF] mr-1">→</span> Hilfe
+                  </Link>
+                </div>
               </div>
             </div>
             
             {/* Partnerevent Dienste */}
             <div className="mb-2 pl-2">
-              <div className="text-white font-bold px-2 py-1">Partnerevent</div>
-              <div className="grid grid-cols-2 gap-1 pl-2">
-                <Link 
-                  href="/produkte/partner"
-                  className="text-white/80 hover:text-[#FF4C00] block py-1 px-2 text-sm rounded-md transition duration-300 border border-white/10"
-                  onClick={closeMobileMenu}
-                >
-                  <span className="text-[#00CFFF] mr-1">→</span> Shop
-                </Link>
-                <Link 
-                  href="/hilfe/partner"
-                  className="text-white/80 hover:text-[#FF4C00] block py-1 px-2 text-sm rounded-md transition duration-300 border border-white/10"
-                  onClick={closeMobileMenu}
-                >
-                  <span className="text-[#00CFFF] mr-1">→</span> Hilfe
-                </Link>
+              <div className="flex items-center">
+                <div className="text-white font-bold px-2 py-1">Partnerevent</div>
+                <div className="flex space-x-2">
+                  <Link 
+                    href="/produkte/partner"
+                    className="text-white/80 hover:text-[#FF4C00] py-1 px-2 text-sm rounded-md transition duration-300 border border-white/10"
+                    onClick={closeMobileMenu}
+                  >
+                    <span className="text-[#00CFFF] mr-1">→</span> Shop
+                  </Link>
+                  <span className="text-white/50">|</span>
+                  <Link 
+                    href="/hilfe/partner"
+                    className="text-white/80 hover:text-[#FF4C00] py-1 px-2 text-sm rounded-md transition duration-300 border border-white/10"
+                    onClick={closeMobileMenu}
+                  >
+                    <span className="text-[#00CFFF] mr-1">→</span> Hilfe
+                  </Link>
+                </div>
               </div>
             </div>
             
             {/* Race Dienste */}
             <div className="mb-2 pl-2">
-              <div className="text-white font-bold px-2 py-1">Race</div>
-              <div className="grid grid-cols-2 gap-1 pl-2">
-                <Link 
-                  href="/produkte/race"
-                  className="text-white/80 hover:text-[#FF4C00] block py-1 px-2 text-sm rounded-md transition duration-300 border border-white/10"
-                  onClick={closeMobileMenu}
-                >
-                  <span className="text-[#00CFFF] mr-1">→</span> Shop
-                </Link>
-                <Link 
-                  href="/hilfe/race"
-                  className="text-white/80 hover:text-[#FF4C00] block py-1 px-2 text-sm rounded-md transition duration-300 border border-white/10"
-                  onClick={closeMobileMenu}
-                >
-                  <span className="text-[#00CFFF] mr-1">→</span> Hilfe
-                </Link>
+              <div className="flex items-center">
+                <div className="text-white font-bold px-2 py-1">Race</div>
+                <div className="flex space-x-2">
+                  <Link 
+                    href="/produkte/race"
+                    className="text-white/80 hover:text-[#FF4C00] py-1 px-2 text-sm rounded-md transition duration-300 border border-white/10"
+                    onClick={closeMobileMenu}
+                  >
+                    <span className="text-[#00CFFF] mr-1">→</span> Shop
+                  </Link>
+                  <span className="text-white/50">|</span>
+                  <Link 
+                    href="/hilfe/race"
+                    className="text-white/80 hover:text-[#FF4C00] py-1 px-2 text-sm rounded-md transition duration-300 border border-white/10"
+                    onClick={closeMobileMenu}
+                  >
+                    <span className="text-[#00CFFF] mr-1">→</span> Hilfe
+                  </Link>
+                </div>
               </div>
             </div>
             
