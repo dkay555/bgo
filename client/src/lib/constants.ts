@@ -47,7 +47,21 @@ export const SPECIAL_OFFER = {
 export const NAV_LINKS = [
   { name: 'Home', href: '/' },
   { name: 'Preise', href: '/preise' },
-  { name: 'Produkte', href: '/produkte' },
+  { 
+    name: 'Leistungen', 
+    href: '/produkte',
+    isDropdown: true,
+    dropdownItems: [
+      { name: 'Würfel Shop', href: '/produkte/wuerfel' },
+      { name: 'Würfel Hilfe', href: '/hilfe/wuerfel' },
+      { name: 'Sticker Shop', href: '/produkte/sticker' },
+      { name: 'Sticker Hilfe', href: '/hilfe/sticker' },
+      { name: 'Partnerevent Shop', href: '/produkte/partner' },
+      { name: 'Partnerevent Hilfe', href: '/hilfe/partner' },
+      { name: 'Race Shop', href: '/produkte/race' },
+      { name: 'Race Hilfe', href: '/hilfe/race' },
+    ]
+  },
   { name: 'Blog', href: '/blog' },
   { name: 'Hilfe', href: '/hilfe' },
   { name: 'Kontakt', href: '/kontakt' },

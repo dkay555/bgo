@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'wouter';
 import { NAV_LINKS } from '@/lib/constants';
 
@@ -6,6 +6,8 @@ export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [location] = useLocation();
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const dropdownRefs = useRef<{[key: string]: HTMLDivElement | null}>({});
 
   useEffect(() => {
     const handleScroll = () => {
@@ -13,8 +15,23 @@ export function Header() {
     };
 
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    
+    // Close dropdown when clicking outside
+    const handleClickOutside = (event: MouseEvent) => {
+      if (openDropdown && 
+          dropdownRefs.current[openDropdown] && 
+          !dropdownRefs.current[openDropdown]?.contains(event.target as Node)) {
+        setOpenDropdown(null);
+      }
+    };
+    
+    document.addEventListener('mousedown', handleClickOutside);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [openDropdown]);
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
@@ -22,6 +39,14 @@ export function Header() {
 
   const closeMobileMenu = () => {
     setMobileMenuOpen(false);
+  };
+  
+  const toggleDropdown = (name: string) => {
+    if (openDropdown === name) {
+      setOpenDropdown(null);
+    } else {
+      setOpenDropdown(name);
+    }
   };
 
   return (
@@ -36,7 +61,41 @@ export function Header() {
             </div>
             <div className="hidden md:flex items-center space-x-4">
               {NAV_LINKS.map((link) => 
-                link.href.startsWith('#') ? (
+                link.isDropdown ? (
+                  <div 
+                    key={link.name}
+                    className="relative"
+                    ref={el => dropdownRefs.current[link.name] = el}
+                  >
+                    <button
+                      onClick={() => toggleDropdown(link.name)}
+                      className="text-white hover:text-[#FF4C00] font-bold px-3 py-2 rounded-md transition duration-300 flex items-center"
+                    >
+                      {link.name}
+                      <span className={`material-icons ml-1 transition-transform duration-200 ${openDropdown === link.name ? 'rotate-180' : ''}`}>
+                        expand_more
+                      </span>
+                    </button>
+                    
+                    {/* Dropdown Menu */}
+                    {openDropdown === link.name && (
+                      <div className="absolute left-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50">
+                        <div className="py-1">
+                          {link.dropdownItems?.map((item, idx) => (
+                            <Link 
+                              key={idx}
+                              href={item.href}
+                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#FF4C00] transition-colors"
+                              onClick={() => setOpenDropdown(null)}
+                            >
+                              {item.name}
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ) : link.href.startsWith('#') ? (
                   <a 
                     key={link.name}
                     href={link.href} 
@@ -95,22 +154,56 @@ export function Header() {
             </button>
           </div>
           
-          <div className="px-2 pt-4 pb-3 space-y-1">
-            {NAV_LINKS.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                className="text-white hover:bg-white/10 hover:text-[#FF4C00] block px-4 py-3 rounded-md font-bold transition duration-300 flex items-center"
-                onClick={closeMobileMenu}
-              >
-                <span className="material-icons mr-3 text-[#00CFFF]">
-                  {link.name === "Home" ? "home" : 
-                   link.name === "Preise" ? "payments" :
-                   link.name === "Blog" ? "article" :
-                   "arrow_forward"}
-                </span>
-                {link.name}
-              </a>
+          <div className="px-2 pt-4 pb-3">
+            {NAV_LINKS.map((link, index) => (
+              <div key={index}>
+                {link.isDropdown ? (
+                  <div className="mb-2">
+                    <button
+                      className="text-white hover:bg-white/10 hover:text-[#FF4C00] w-full px-4 py-3 rounded-md font-bold transition duration-300 flex items-center justify-between"
+                      onClick={() => toggleDropdown(link.name)}
+                    >
+                      <div className="flex items-center">
+                        <span className="material-icons mr-3 text-[#00CFFF]">category</span>
+                        {link.name}
+                      </div>
+                      <span className={`material-icons transition-transform duration-200 ${openDropdown === link.name ? 'rotate-180' : ''}`}>
+                        expand_more
+                      </span>
+                    </button>
+                    
+                    {/* Mobile Dropdown Items */}
+                    <div className={`pl-10 space-y-1 overflow-hidden transition-all duration-300 ${openDropdown === link.name ? 'max-h-96 mt-1 mb-2' : 'max-h-0'}`}>
+                      {link.dropdownItems?.map((item, idx) => (
+                        <Link 
+                          key={idx}
+                          href={item.href}
+                          className="text-white/80 hover:text-[#FF4C00] block py-2 px-4 text-sm rounded-md transition duration-300"
+                          onClick={closeMobileMenu}
+                        >
+                          {item.name}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                ) : (
+                  <a
+                    href={link.href}
+                    className="text-white hover:bg-white/10 hover:text-[#FF4C00] block px-4 py-3 rounded-md font-bold transition duration-300 flex items-center mb-2"
+                    onClick={closeMobileMenu}
+                  >
+                    <span className="material-icons mr-3 text-[#00CFFF]">
+                      {link.name === "Home" ? "home" : 
+                       link.name === "Preise" ? "payments" :
+                       link.name === "Blog" ? "article" :
+                       link.name === "Hilfe" ? "help" :
+                       link.name === "Kontakt" ? "contact_support" :
+                       "arrow_forward"}
+                    </span>
+                    {link.name}
+                  </a>
+                )}
+              </div>
             ))}
           </div>
           
