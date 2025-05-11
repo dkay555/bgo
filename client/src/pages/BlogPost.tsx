@@ -141,7 +141,7 @@ export default function BlogPost() {
 
             {/* Blockquotes */}
             <section id="blockquotes" className="mb-10 scroll-mt-20">
-              <h2 className="font-['Baloo_2'] font-bold text-xl md:text-2xl text-[#FF4C00] mb-4 pb-2 border-b-2 border-[#00CFFF]/50">
+              <h2 className="babix-info-header mb-4">
                 Zitate
               </h2>
               <p className="mb-6">
