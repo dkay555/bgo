@@ -5,21 +5,23 @@ import { CONTACT } from '@/lib/constants';
 export default function StartPage() {
   return (
     <main className="px-4 py-6 md:py-10 flex-grow font-['Nunito_Sans'] text-[#0A3A68]">
-      {/* Hero Section - Noch kleiner */}
-      <section className="text-center py-4 md:py-6 relative overflow-hidden">
+      {/* Hero Section - Noch kleiner und mittig */}
+      <section className="text-center py-4 md:py-6 relative overflow-hidden flex items-center justify-center">
         <div className="absolute inset-0 bg-gradient-to-r from-[#00CFFF]/10 to-[#FF4C00]/10 animate-gradient-x"></div>
         <div className="max-w-4xl mx-auto relative">
-          <h1 className="font-['Baloo_2'] font-bold text-xl md:text-2xl bg-[#00CFFF]/10 px-4 py-2 rounded-xl inline-block mx-auto mb-2 border-b-2 border-[#00CFFF] text-[#FF4C00]">
-            Willkommen bei babixGO
-          </h1>
-          <p className="text-base md:text-lg">Würfel, Events, Sticker & mehr – alles für dein Monopoly GO Abenteuer.</p>
+          <div className="flex flex-col items-center justify-center">
+            <h1 className="font-['Baloo_2'] font-bold text-xl md:text-2xl bg-[#00CFFF]/10 px-4 py-2 rounded-xl inline-block mx-auto mb-2 border-b-2 border-[#00CFFF] text-[#FF4C00]">
+              Willkommen bei babixGO
+            </h1>
+            <p className="text-base md:text-lg">Würfel, Events, Sticker & mehr – alles für dein Monopoly GO Abenteuer.</p>
+          </div>
         </div>
       </section>
       
       {/* Was gibt's Neues Sektion */}
       <section className="py-6 bg-gray-50">
         <div className="max-w-4xl mx-auto">
-          <h2 className="babix-info-header mb-4 text-center text-base md:text-lg mx-auto">Was gibt's Neues?</h2>
+          <h2 className="babix-info-header mx-auto mb-8 text-center">Was gibt's Neues?</h2>
           
           <div className="bg-white rounded-lg shadow-md p-4">
             <h3 className="text-[#0A3A68] font-bold mb-2 border-b border-[#00CFFF] pb-1 inline-block text-sm">Angebot und Preisanpassung</h3>
