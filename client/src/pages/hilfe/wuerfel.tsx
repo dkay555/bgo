@@ -70,6 +70,11 @@ export default function WuerfelHilfe() {
             <p className="mb-3 text-gray-700">Grundsätzlich ist jede Würfelmenge möglich. <strong>Hinweis:</strong> Würfelangaben haben eine Toleranz von ±2.500 Würfeln.</p>
             <p className="mb-3 text-sm text-gray-600">Beispiel: Bei 25.000 Würfeln erhaltet ihr zwischen 22.500 und 27.500.</p>
             
+            <div className="mt-5 mb-5 bg-[#E6F7FF] border-l-4 border-[#00CFFF] p-4 rounded-r-md">
+              <h4 className="font-bold text-[#0A3A68] mb-2 border-b-2 border-[#00CFFF] pb-2 inline-block">💡 Zu wenig Würfel?</h4>
+              <p className="text-gray-700">Lässt sich ein Set vervollständigen? Ist der Freundschaftsbalken gefüllt? Schreib uns und wir finden gemeinsam auch dann eine Lösung wenn es schnell gehen muss.</p>
+            </div>
+            
             <div className="overflow-x-auto">
               <table className="w-full border-collapse">
                 <thead>
@@ -103,26 +108,46 @@ export default function WuerfelHilfe() {
           </div>
           
           <div className="mb-8">
-            <h3 className="text-xl font-bold text-[#0A3A68] mb-4 border-b pb-2">Häufig gestellte Fragen</h3>
+            <h3 className="text-xl font-bold text-[#0A3A68] mb-4 border-b-2 border-[#00CFFF] pb-2 inline-block">Häufig gestellte Fragen</h3>
+            
+            <div className="mt-5 mb-5 bg-[#FFEBCC] border-l-4 border-[#FF4C00] p-4 rounded-r-md">
+              <h4 className="font-bold text-[#0A3A68] mb-2 border-b-2 border-[#FF4C00] pb-2 inline-block">⚠️ Wichtiger Hinweis</h4>
+              <p className="text-gray-700 font-semibold">Öffne nicht die Monopoly Go App solange der Würfelboost läuft - warte damit auf unsere Rückmeldung.</p>
+            </div>
             
             <div className="space-y-4">
-              <div>
-                <h4 className="font-bold text-[#0A3A68] mb-1">Werden das Top- und Bahnhofsevent mit abgeschlossen?</h4>
-                <p className="text-gray-700">Ab dem Paket mit 25.000 Würfeln sind die Eventabschlüsse (Topevent + 1 Tages Bahnhofsturnier) mit inbegriffen.</p>
+              <div className="border border-gray-200 rounded-lg mb-2">
+                <div className="bg-gray-50 p-4 rounded-t-lg cursor-pointer flex justify-between items-center">
+                  <h4 className="font-bold text-[#0A3A68]">Werden das Top- und Bahnhofsevent mit abgeschlossen?</h4>
+                  <span className="material-icons text-[#00CFFF]">expand_more</span>
+                </div>
+                <div className="p-4 border-t border-gray-200">
+                  <p className="text-gray-700">Ab dem Paket mit 25.000 Würfeln sind die Eventabschlüsse (Topevent + 1 Tages Bahnhofsturnier) mit inbegriffen.</p>
+                </div>
               </div>
               
-              <div>
-                <h4 className="font-bold text-[#0A3A68] mb-1">Wie kann ich wissen ob noch ein High Roller im Turnier folgt?</h4>
-                <p className="text-gray-700">Besuche <a href="https://monopolygo.wiki/" target="_blank" rel="noopener noreferrer" className="text-[#00CFFF] hover:text-[#FF4C00] underline transition-colors">https://monopolygo.wiki/</a> für eine aktuelle Liste der Turnierbelohnungen oder um kommende Special Events in Erfahrung zu bringen.</p>
+              <div className="border border-gray-200 rounded-lg mb-2">
+                <div className="bg-gray-50 p-4 rounded-t-lg cursor-pointer flex justify-between items-center">
+                  <h4 className="font-bold text-[#0A3A68]">Wie kann ich wissen ob noch ein High Roller im Turnier folgt?</h4>
+                  <span className="material-icons text-[#00CFFF]">expand_more</span>
+                </div>
+                <div className="p-4 border-t border-gray-200">
+                  <p className="text-gray-700">Besuche <a href="https://monopolygo.wiki/" target="_blank" rel="noopener noreferrer" className="text-[#00CFFF] hover:text-[#FF4C00] underline transition-colors">https://monopolygo.wiki/</a> für eine aktuelle Liste der Turnierbelohnungen oder um kommende Special Events in Erfahrung zu bringen.</p>
+                </div>
               </div>
               
-              <div>
-                <h4 className="font-bold text-[#0A3A68] mb-1">Wie lange dauert der Boost?</h4>
-                <p className="text-gray-700">Um ein paar Werte zu nennen:</p>
-                <ul className="list-disc pl-5 mt-2 text-gray-700">
-                  <li>25.000 Würfel dauern im Durchschnitt 15, maximal 30 Minuten sobald man im Spiel ist.</li>
-                  <li>40.000 Würfel 30 Minuten im Durchschnitt, bis zu maximal 45 Minuten.</li>
-                </ul>
+              <div className="border border-gray-200 rounded-lg mb-2">
+                <div className="bg-gray-50 p-4 rounded-t-lg cursor-pointer flex justify-between items-center">
+                  <h4 className="font-bold text-[#0A3A68]">Wie lange dauert der Boost?</h4>
+                  <span className="material-icons text-[#00CFFF]">expand_more</span>
+                </div>
+                <div className="p-4 border-t border-gray-200">
+                  <p className="text-gray-700">Um ein paar Werte zu nennen:</p>
+                  <ul className="list-disc pl-5 mt-2 text-gray-700">
+                    <li>25.000 Würfel dauern im Durchschnitt 15, maximal 30 Minuten sobald man im Spiel ist.</li>
+                    <li>40.000 Würfel 30 Minuten im Durchschnitt, bis zu maximal 45 Minuten.</li>
+                  </ul>
+                </div>
               </div>
               
               <div>
