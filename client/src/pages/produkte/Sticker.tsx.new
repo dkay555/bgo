@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'wouter';
 import { Sticker, stickersWithSets, getAvailableSets, getStickersBySet, calculatePrice } from '@/lib/stickerData';
+import { CONTACT } from '@/lib/constants';
 
 export default function StickerPage() {
   useEffect(() => {
@@ -12,6 +13,7 @@ export default function StickerPage() {
   const [stickerDetails, setStickerDetails] = useState<Sticker | null>(null);
   const [cart, setCart] = useState<Sticker[]>([]);
   const [availableSets, setAvailableSets] = useState<number[]>([]);
+  const [showModal, setShowModal] = useState(false);
 
   // Lade verfügbare Sets
   useEffect(() => {
@@ -84,9 +86,6 @@ export default function StickerPage() {
     return cart.reduce((total, item) => total + calculatePrice(item), 0).toFixed(2);
   };
 
-  // Öffnet das Kauf-Modal
-  const [showModal, setShowModal] = useState(false);
-
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex flex-col items-center mb-8">
@@ -109,31 +108,27 @@ export default function StickerPage() {
                 <select 
                   id="stickerSet" 
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#00CFFF]"
-                  value={selectedSet}
-                  onChange={(e) => {
-                    setSelectedSet(e.target.value);
-                    setSelectedSticker('');
-                    setStickerDetails({ stars: 0, isGold: false, price: 0 });
-                  }}
+                  value={selectedSetNumber || ''}
+                  onChange={handleSetChange}
                 >
                   <option value="">-- Bitte wählen --</option>
-                  {stickerSets.map(set => (
-                    <option key={set.id} value={set.id}>{set.name}</option>
+                  {availableSets.map(setNumber => (
+                    <option key={setNumber} value={setNumber}>Set {setNumber}</option>
                   ))}
                 </select>
               </div>
               
-              {selectedSet && (
+              {selectedSetNumber && (
                 <div className="mb-4">
                   <label htmlFor="sticker" className="block text-sm font-medium text-gray-700 mb-1">Sticker auswählen</label>
                   <select 
                     id="sticker" 
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#00CFFF]"
-                    value={selectedSticker}
+                    value={selectedStickerId || ''}
                     onChange={handleStickerChange}
                   >
                     <option value="">-- Bitte wählen --</option>
-                    {stickersInSet[selectedSet].map(sticker => (
+                    {getStickersBySet(selectedSetNumber).map(sticker => (
                       <option key={sticker.id} value={sticker.id}>
                         {sticker.name} ({sticker.stars} {sticker.stars === 1 ? 'Stern' : 'Sterne'}{sticker.isGold ? ' - Gold' : ''})
                       </option>
@@ -143,7 +138,7 @@ export default function StickerPage() {
               )}
               
               {/* Sticker-Details */}
-              {selectedSticker && (
+              {stickerDetails && (
                 <div className="bg-gray-50 p-4 rounded-md mb-4">
                   <h3 className="font-bold text-lg mb-2">Sticker-Details</h3>
                   <div className="flex items-center mb-2">
@@ -162,7 +157,7 @@ export default function StickerPage() {
                   </div>
                   <div className="mb-4">
                     <span className="text-gray-700 mr-2">Preis:</span>
-                    <span className="font-bold text-[#0A3A68]">{stickerDetails.price.toFixed(2)} €</span>
+                    <span className="font-bold text-[#0A3A68]">{calculatePrice(stickerDetails).toFixed(2).replace('.', ',')} €</span>
                   </div>
                   
                   {/* Hinweis bei Goldstickern */}
@@ -205,7 +200,7 @@ export default function StickerPage() {
                       {cart.map((item, index) => (
                         <li key={index} className="py-3 flex justify-between items-center">
                           <div>
-                            <p className="font-medium">{item.name}</p>
+                            <p className="font-medium">{item.name} (Set {Math.ceil(item.id / 9)})</p>
                             <div className="flex items-center">
                               <div className="flex mr-2">
                                 {[...Array(item.stars)].map((_, i) => (
@@ -218,7 +213,7 @@ export default function StickerPage() {
                             </div>
                           </div>
                           <div className="flex items-center">
-                            <span className="font-bold mr-3">{item.price.toFixed(2)} €</span>
+                            <span className="font-bold mr-3">{calculatePrice(item).toFixed(2).replace('.', ',')} €</span>
                             <button 
                               onClick={() => removeFromCart(index)}
                               className="text-red-500 hover:text-red-700"
@@ -234,7 +229,7 @@ export default function StickerPage() {
                     <div className="mt-4 pt-4 border-t border-gray-200">
                       <div className="flex justify-between font-bold">
                         <span>Gesamtpreis:</span>
-                        <span>{calculateTotal()} €</span>
+                        <span>{calculateTotal().replace('.', ',')} €</span>
                       </div>
                     </div>
                   </div>
@@ -299,28 +294,55 @@ export default function StickerPage() {
             </p>
             
             <div className="space-y-3">
-              <a
-                href="https://wa.me/491234567890?text=Ich%20möchte%20folgende%20Sticker%20bestellen:%20"
+              {/* Formatierte WhatsApp-Nachricht mit Stickerliste erstellen */}
+              {(() => {
+                const itemsList = cart.map(item => `${item.name} (${item.stars}★) - ${calculatePrice(item).toFixed(2).replace('.', ',')}€`).join(", ");
+                const whatsappMessage = encodeURIComponent(`Hallo, ich möchte folgende Sticker kaufen: ${itemsList}. Gesamtpreis: ${calculateTotal().replace('.', ',')}€`);
+                
+                return (
+                  <a
+                    href={`${CONTACT.whatsapp}&text=${whatsappMessage}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block w-full bg-[#25D366] hover:bg-opacity-90 text-white py-3 px-4 rounded-md transition-colors text-center"
+                  >
+                    <span className="flex items-center justify-center">
+                      <span className="material-icons mr-2">whatsapp</span>
+                      Über WhatsApp bestellen
+                    </span>
+                  </a>
+                );
+              })()}
+              
+              <a 
+                href={CONTACT.facebook}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block w-full bg-[#25D366] hover:bg-opacity-90 text-white py-3 px-4 rounded-md transition-colors text-center"
+                className="block w-full bg-[#1877F2] hover:bg-opacity-90 text-white py-3 px-4 rounded-md transition-colors text-center"
               >
                 <span className="flex items-center justify-center">
-                  <span className="material-icons mr-2">whatsapp</span>
-                  Über WhatsApp bestellen
+                  <span className="material-icons mr-2">facebook</span>
+                  Über Facebook bestellen
+                </span>
+              </a>
+              
+              <a 
+                href="/kontakt"
+                className="block w-full bg-[#0A3A68] hover:bg-[#00CFFF] text-white py-3 px-4 rounded-md transition-colors text-center"
+              >
+                <span className="flex items-center justify-center">
+                  <span className="material-icons mr-2">email</span>
+                  Über Formular bestellen
                 </span>
               </a>
               
               <button
-                onClick={() => {
-                  alert('Hier würde jetzt der normale Bestellprozess starten.');
-                  setShowModal(false);
-                }}
-                className="w-full bg-[#0A3A68] hover:bg-[#FF4C00] text-white py-3 px-4 rounded-md transition-colors"
+                onClick={() => setShowModal(false)}
+                className="w-full bg-gray-200 hover:bg-gray-300 text-gray-800 py-3 px-4 rounded-md transition-colors text-center"
               >
                 <span className="flex items-center justify-center">
-                  <span className="material-icons mr-2">shopping_cart</span>
-                  Zum Bestellformular
+                  <span className="material-icons mr-2">close</span>
+                  Abbrechen
                 </span>
               </button>
             </div>
