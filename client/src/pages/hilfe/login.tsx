@@ -136,54 +136,9 @@ export default function LoginHilfe() {
           </div>
           
           <div className="mb-8">
-            <h3 className="text-xl font-bold text-[#0A3A68] mb-4 border-b-2 border-[#00CFFF] pb-2 inline-block">Welche Methode ist die Richtige für mich?</h3>
-            <p className="text-gray-700 mb-3">
-              Jede Methode hat ihre Vor- und Nachteile. Wir empfehlen:
-            </p>
-            <ul className="list-disc pl-5 text-gray-700 mb-4">
-              <li><strong>Für Neukunden:</strong> Methode 1 (Direkte Zugangsdaten) ist am einfachsten für den Einstieg</li>
-              <li><strong>Für sicherheitsbewusste Kunden:</strong> Methode 2 (Facebook Auth-Token) bietet mehr Sicherheit</li>
-              <li><strong>Für Kunden, die den Prozess verstehen möchten:</strong> Methode 3 (Fernwartung) bietet maximale Transparenz</li>
-            </ul>
             <div className="bg-[#FFEBCC] border-l-4 border-[#FF4C00] p-4 rounded-r-md">
               <h4 className="font-bold text-[#0A3A68] mb-2 border-b-2 border-[#FF4C00] pb-2 inline-block">⚠️ Wichtiger Hinweis</h4>
               <p className="text-gray-700">Unabhängig von der gewählten Methode bitten wir dich, das Spiel während des Boosts nicht zu öffnen, um Konflikte zu vermeiden.</p>
-            </div>
-          </div>
-          
-          <div className="mb-8">
-            <h3 className="text-xl font-bold text-[#0A3A68] mb-4 border-b-2 border-[#00CFFF] pb-2 inline-block">Häufig gestellte Fragen</h3>
-            <div className="space-y-4">
-              <div className="border border-gray-200 rounded-lg mb-2">
-                <div className="bg-gray-50 p-4 rounded-t-lg cursor-pointer flex justify-between items-center">
-                  <h4 className="font-bold text-[#0A3A68]">Ist mein Account sicher, wenn ich meine Daten weitergebe?</h4>
-                  <span className="material-icons text-[#00CFFF]">expand_more</span>
-                </div>
-                <div className="p-4 border-t border-gray-200">
-                  <p className="text-gray-700 mb-3">Wir legen höchsten Wert auf die Sicherheit deiner Daten. Wir:</p>
-                  <ul className="list-disc pl-5 text-gray-700">
-                    <li>Speichern deine Zugangsdaten niemals dauerhaft</li>
-                    <li>Verwenden deine Daten ausschließlich für den Würfelboost</li>
-                    <li>Haben in über 24 Monaten keine Accountsperrungen durch unsere Boosts erlebt</li>
-                    <li>Empfehlen, dein Passwort nach dem Boost zu ändern</li>
-                  </ul>
-                </div>
-              </div>
-              
-              <div className="border border-gray-200 rounded-lg mb-2">
-                <div className="bg-gray-50 p-4 rounded-t-lg cursor-pointer flex justify-between items-center">
-                  <h4 className="font-bold text-[#0A3A68]">Kann ich auch die Scopely ID / E-Mail-Login nutzen?</h4>
-                  <span className="material-icons text-[#00CFFF]">expand_more</span>
-                </div>
-                <div className="p-4 border-t border-gray-200">
-                  <p className="text-gray-700 mb-3">Ja, wenn dein Account über eine Scopely ID verfügt, können wir auch diese für den Login verwenden. Teile uns einfach deine:</p>
-                  <ul className="list-disc pl-5 text-gray-700">
-                    <li>E-Mail-Adresse</li>
-                    <li>Dein Scopely-Passwort</li>
-                  </ul>
-                  <p className="text-gray-700 mt-3">Beachte, dass bei dieser Methode möglicherweise zusätzliche Verifizierungsschritte erforderlich sind.</p>
-                </div>
-              </div>
             </div>
           </div>
           
