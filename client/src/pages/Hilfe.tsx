@@ -95,7 +95,7 @@ export default function Hilfe() {
               <p className="text-gray-700 mb-4">
                 Informationen zu aktuellen Angeboten und Preisanpassungen unserer Dienstleistungen.
               </p>
-              <Link href="/hilfe/preise">
+              <Link href="/preise">
                 <button className="bg-[#0A3A68] hover:bg-[#00CFFF] text-white py-2 px-4 rounded-md transition-colors inline-flex items-center">
                   <span className="material-icons mr-1">info</span>
                   Mehr erfahren
@@ -125,21 +125,7 @@ export default function Hilfe() {
               </Link>
             </div>
             
-            <div className="bg-gray-50 p-5 rounded-lg shadow-sm border border-gray-200 hover:border-[#00CFFF] transition-colors">
-              <h3 className="text-xl font-bold text-[#0A3A68] mb-3 flex items-center border-b-2 border-[#00CFFF] pb-2">
-                <span className="material-icons mr-2 text-[#00CFFF]">monetization_on</span>
-                Preise & Bedingungen
-              </h3>
-              <p className="text-gray-700 mb-4">
-                Übersicht über unsere Preise, Bedingungen und wichtige Hinweise zu allen unseren Dienstleistungen.
-              </p>
-              <Link href="/hilfe/preise">
-                <button className="bg-[#0A3A68] hover:bg-[#00CFFF] text-white py-2 px-4 rounded-md transition-colors inline-flex items-center">
-                  <span className="material-icons mr-1">help</span>
-                  Zur Preisübersicht
-                </button>
-              </Link>
-            </div>
+
           </div>
         </div>
         
