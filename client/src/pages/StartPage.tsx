@@ -23,11 +23,11 @@ export default function StartPage() {
             Unsere Bestseller
           </h2>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {/* Product Card 1 */}
             <div className="bg-[#00CFFF]/20 rounded-md overflow-hidden shadow-lg transition-transform duration-300 hover:-translate-y-1">
               <div className="relative">
-                <img src="/images/dice.svg" alt="Würfelboosts" className="w-full h-40 object-contain" />
+                <img src="/images/kategorie_wuerfel_trans.png" alt="Würfelboosts" className="w-full h-40 object-contain" />
                 <span className="absolute bottom-0 left-4 transform translate-y-1/2 bg-[#0A3A68]/70 text-white font-['Baloo_2'] font-bold px-4 py-2 rounded-md shadow-md">
                   Würfelboosts
                 </span>
@@ -48,7 +48,7 @@ export default function StartPage() {
             {/* Product Card 2 */}
             <div className="bg-[#00CFFF]/20 rounded-md overflow-hidden shadow-lg transition-transform duration-300 hover:-translate-y-1">
               <div className="relative">
-                <img src="/images/sticker.svg" alt="Sticker" className="w-full h-40 object-contain" />
+                <img src="/images/kategorie_sticker_trans.png" alt="Sticker" className="w-full h-40 object-contain" />
                 <span className="absolute bottom-0 left-4 transform translate-y-1/2 bg-[#0A3A68]/70 text-white font-['Baloo_2'] font-bold px-4 py-2 rounded-md shadow-md">
                   Sticker
                 </span>
@@ -69,7 +69,7 @@ export default function StartPage() {
             {/* Product Card 3 */}
             <div className="bg-[#00CFFF]/20 rounded-md overflow-hidden shadow-lg transition-transform duration-300 hover:-translate-y-1">
               <div className="relative">
-                <img src="/images/partners.svg" alt="Partnerevents" className="w-full h-40 object-contain" />
+                <img src="/images/kategorie_partner_trans.png" alt="Partnerevents" className="w-full h-40 object-contain" />
                 <span className="absolute bottom-0 left-4 transform translate-y-1/2 bg-[#0A3A68]/70 text-white font-['Baloo_2'] font-bold px-4 py-2 rounded-md shadow-md">
                   Partnerevents
                 </span>
@@ -82,6 +82,27 @@ export default function StartPage() {
                   </Button>
                   <Button variant="darkblue" asChild className="flex-1 font-bold">
                     <Link href="/produkte/partner">Zum Shop</Link>
+                  </Button>
+                </div>
+              </div>
+            </div>
+            
+            {/* Product Card 4 - Tycoon Racers */}
+            <div className="bg-[#00CFFF]/20 rounded-md overflow-hidden shadow-lg transition-transform duration-300 hover:-translate-y-1">
+              <div className="relative">
+                <img src="/images/dice.svg" alt="Tycoon Racers" className="w-full h-40 object-contain" />
+                <span className="absolute bottom-0 left-4 transform translate-y-1/2 bg-[#0A3A68]/70 text-white font-['Baloo_2'] font-bold px-4 py-2 rounded-md shadow-md">
+                  Tycoon Racers
+                </span>
+              </div>
+              <div className="p-6 pt-8">
+                <p className="mb-6">Erreiche höhere Platzierungen bei Tycoon Racers Events und sichere dir exklusive Belohnungen!</p>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <Button variant="orange" asChild className="flex-1 font-bold">
+                    <a href={CONTACT.whatsapp} target="_blank" rel="noreferrer">Schreib uns</a>
+                  </Button>
+                  <Button variant="darkblue" asChild className="flex-1 font-bold">
+                    <Link href="/produkte/race">Zum Shop</Link>
                   </Button>
                 </div>
               </div>
