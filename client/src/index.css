@@ -63,6 +63,27 @@
   body {
     @apply font-sans antialiased bg-background text-foreground;
   }
+
+  /* Custom Babix Header Style */
+  .babix-info-header {
+    position: relative;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+    display: inline-block;
+    font-size: 1.6rem;
+    font-family: 'Baloo 2', cursive;
+    color: #FF4C00;
+  }
+
+  .babix-info-header::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(to right, #00CFFF, transparent);
+    margin-top: 0.4rem;
+    border-radius: 3px;
+  }
 }
 
 /* Animations */

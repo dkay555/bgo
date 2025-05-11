@@ -59,7 +59,7 @@ export default function StartPage() {
         {/* Products Section */}
         <section id="angebote" className="py-8 scroll-mt-20">
           <div className="max-w-6xl mx-auto">
-            <h2 className="font-['Baloo_2'] font-bold text-xl md:text-2xl bg-[#00CFFF]/10 px-6 py-3 rounded-xl inline-block mx-auto mb-8 border-b-2 border-[#00CFFF] text-[#FF4C00] text-center">
+            <h2 className="babix-info-header mx-auto mb-8 text-center">
               Unsere Bestseller
             </h2>
             

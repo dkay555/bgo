@@ -5,13 +5,14 @@ export function Footer() {
   return (
     <footer className="bg-[#0A3A68] text-white mt-14 py-8 px-4">
       <div className="max-w-4xl mx-auto">
-        <div className="flex flex-wrap justify-center gap-4 mb-6">
+        <div className="grid grid-cols-3 gap-4 max-w-md mx-auto mb-6">
           <Button 
             variant="whatsapp" 
             asChild 
-            className="flex items-center rounded-lg font-bold"
+            className="flex items-center justify-center rounded-lg font-bold w-full"
+            size="lg"
           >
-            <a href={CONTACT.whatsapp} target="_blank" rel="noreferrer">
+            <a href={CONTACT.whatsapp} target="_blank" rel="noreferrer" className="flex items-center justify-center">
               <span className="material-icons mr-2">whatsapp</span>
               WhatsApp
             </a>
@@ -20,9 +21,10 @@ export function Footer() {
           <Button 
             variant="facebook" 
             asChild 
-            className="flex items-center rounded-lg font-bold"
+            className="flex items-center justify-center rounded-lg font-bold w-full"
+            size="lg"
           >
-            <a href={CONTACT.facebook} target="_blank" rel="noreferrer">
+            <a href={CONTACT.facebook} target="_blank" rel="noreferrer" className="flex items-center justify-center">
               <span className="material-icons mr-2">facebook</span>
               Facebook
             </a>
@@ -31,9 +33,10 @@ export function Footer() {
           <Button 
             variant="email" 
             asChild 
-            className="flex items-center rounded-lg font-bold"
+            className="flex items-center justify-center rounded-lg font-bold w-full"
+            size="lg"
           >
-            <a href={CONTACT.email}>
+            <a href={CONTACT.email} className="flex items-center justify-center">
               <span className="material-icons mr-2">email</span>
               Email
             </a>
