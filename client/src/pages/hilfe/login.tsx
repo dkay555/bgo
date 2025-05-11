@@ -14,23 +14,23 @@ export default function LoginHilfe() {
           Zurück zur Hilfe
         </Link>
         <h1 className="font-['Baloo_2'] font-bold text-2xl md:text-3xl bg-[#00CFFF]/10 px-6 py-3 rounded-xl inline-block mx-auto mb-4 border-b-2 border-[#00CFFF] text-[#FF4C00]">
-          Die verschiedenen Login Möglichkeiten in Monopoly GO
+          Login-Methoden für den Würfelboost
         </h1>
       </div>
       
       <div className="max-w-3xl mx-auto">
         <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-          <h2 className="babix-info-header mx-auto mb-6">Übersicht der Anmeldemethoden</h2>
+          <h2 className="babix-info-header mx-auto mb-6">Verfügbare Login-Methoden für Würfelboosts</h2>
           <p className="text-gray-600 text-sm mb-6">Zuletzt aktualisiert: 11. Mai 2025</p>
           
           <div className="mb-8">
             <p className="text-gray-700 mb-4">
-              In Monopoly GO gibt es verschiedene Möglichkeiten, sich anzumelden und seine Spieldaten zu sichern. Hier erfährst du alles über die verschiedenen Login-Optionen und ihre Vor- und Nachteile.
+              Für unseren Würfelboost-Service benötigen wir Zugriff auf deinen Monopoly GO Account. Hier erklären wir dir die verschiedenen Methoden, wie wir uns sicher in deinen Account einloggen können.
             </p>
 
             <div className="bg-[#E6F7FF] border-l-4 border-[#00CFFF] p-4 mb-6 rounded-r-md">
               <h4 className="font-bold text-[#0A3A68] mb-2 border-b-2 border-[#00CFFF] pb-2 inline-block">💡 Wichtiger Hinweis</h4>
-              <p className="text-gray-700">Um deinen Spielfortschritt zu sichern, ist es immer empfehlenswert, dein Spiel mit einem Account zu verknüpfen. So kannst du auch bei Gerätewechsel oder Neuinstallation auf deine Spieldaten zugreifen.</p>
+              <p className="text-gray-700">Deine Kontosicherheit hat für uns höchste Priorität. Wir verwenden sichere Methoden und deine Zugangsdaten werden niemals gespeichert.</p>
             </div>
           </div>
           
@@ -41,26 +41,52 @@ export default function LoginHilfe() {
               <div className="border border-gray-200 rounded-lg">
                 <div className="bg-gray-50 p-4 rounded-t-lg">
                   <h4 className="font-bold text-[#0A3A68] flex items-center">
-                    <span className="material-icons mr-2 text-[#00CFFF]">facebook</span>
-                    Facebook-Login
+                    <span className="material-icons mr-2 text-[#00CFFF]">login</span>
+                    Methode 1: Direkte Zugangsdaten
                   </h4>
                 </div>
                 <div className="p-4 border-t border-gray-200">
-                  <p className="text-gray-700 mb-3">Der Facebook-Login ist eine der einfachsten und verbreitetsten Methoden, um dein Monopoly GO-Konto zu sichern.</p>
+                  <p className="text-gray-700 mb-3">Die einfachste und schnellste Methode ist die Übermittlung deiner Facebook- oder Google-Zugangsdaten an uns.</p>
                   
                   <h5 className="font-semibold text-[#0A3A68] mb-2">Vorteile:</h5>
                   <ul className="list-disc pl-5 mb-3 text-gray-700">
-                    <li>Einfache Einrichtung – nur wenige Klicks erforderlich</li>
-                    <li>Automatische Synchronisierung beim Gerätewechsel</li>
-                    <li>Ermöglicht das Senden und Empfangen von Geschenken mit Facebook-Freunden</li>
+                    <li>Schnellster Start des Würfelboosts</li>
+                    <li>Keine technischen Kenntnisse erforderlich</li>
+                    <li>Wir können auch bei zusätzlichen Verifizierungen helfen</li>
                   </ul>
                   
-                  <h5 className="font-semibold text-[#0A3A68] mb-2">So richtest du den Facebook-Login ein:</h5>
+                  <h5 className="font-semibold text-[#0A3A68] mb-2">Sicherheitshinweise:</h5>
+                  <ul className="list-disc pl-5 text-gray-700">
+                    <li>Deine Zugangsdaten werden nur für die Dauer des Boosts verwendet</li>
+                    <li>Wir empfehlen, dein Passwort nach dem Boost zu ändern</li>
+                    <li>Du erhältst eine Benachrichtigung über einen neuen Login auf deinem Konto</li>
+                  </ul>
+                </div>
+              </div>
+              
+              <div className="border border-gray-200 rounded-lg">
+                <div className="bg-gray-50 p-4 rounded-t-lg">
+                  <h4 className="font-bold text-[#0A3A68] flex items-center">
+                    <span className="material-icons mr-2 text-[#00CFFF]">token</span>
+                    Methode 2: Facebook Auth-Token
+                  </h4>
+                </div>
+                <div className="p-4 border-t border-gray-200">
+                  <p className="text-gray-700 mb-3">Der Facebook Auth-Token ist eine sicherere Alternative, bei der du deine Login-Daten nicht direkt weitergeben musst.</p>
+                  
+                  <h5 className="font-semibold text-[#0A3A68] mb-2">Vorteile:</h5>
+                  <ul className="list-disc pl-5 mb-3 text-gray-700">
+                    <li>Höhere Sicherheit, da keine Passwörter weitergegeben werden</li>
+                    <li>Der Token hat eine begrenzte Gültigkeitsdauer</li>
+                    <li>Du behältst volle Kontrolle über deine Zugangsdaten</li>
+                  </ul>
+                  
+                  <h5 className="font-semibold text-[#0A3A68] mb-2">So erhältst du den Auth-Token:</h5>
                   <ol className="list-decimal pl-5 text-gray-700">
-                    <li>Öffne Monopoly GO und tippe auf das Einstellungs-Icon (⚙️)</li>
-                    <li>Wähle "Mit Facebook verbinden"</li>
-                    <li>Melde dich mit deinen Facebook-Zugangsdaten an</li>
-                    <li>Bestätige die Berechtigungen, die Monopoly GO benötigt</li>
+                    <li>Öffne die Facebook-Website in deinem Browser und melde dich an</li>
+                    <li>Folge unserer detaillierten Anleitung, die wir dir im Chat zusenden</li>
+                    <li>Kopiere den generierten Token und sende ihn uns zu</li>
+                    <li>Wir verwenden diesen Token für den einmaligen Login</li>
                   </ol>
                 </div>
               </div>
@@ -68,52 +94,26 @@ export default function LoginHilfe() {
               <div className="border border-gray-200 rounded-lg">
                 <div className="bg-gray-50 p-4 rounded-t-lg">
                   <h4 className="font-bold text-[#0A3A68] flex items-center">
-                    <span className="material-icons mr-2 text-[#00CFFF]">phone_android</span>
-                    Apple Game Center / Google Play Games
+                    <span className="material-icons mr-2 text-[#00CFFF]">screen_share</span>
+                    Methode 3: Fernwartung via TeamViewer/AnyDesk
                   </h4>
                 </div>
                 <div className="p-4 border-t border-gray-200">
-                  <p className="text-gray-700 mb-3">Je nach Betriebssystem deines Smartphones kannst du dein Spiel mit Apple Game Center (iOS) oder Google Play Games (Android) verknüpfen.</p>
+                  <p className="text-gray-700 mb-3">Für Kunden, die maximale Transparenz wünschen, bieten wir eine beaufsichtigte Fernwartungssitzung an.</p>
                   
                   <h5 className="font-semibold text-[#0A3A68] mb-2">Vorteile:</h5>
                   <ul className="list-disc pl-5 mb-3 text-gray-700">
-                    <li>Keine zusätzliche Anmeldung nötig, wenn du bereits mit deinem Apple/Google-Konto angemeldet bist</li>
-                    <li>Automatische Synchronisierung auf allen Geräten mit demselben Apple/Google-Konto</li>
-                    <li>Keine Weitergabe von Daten an Facebook</li>
+                    <li>Du kannst den gesamten Prozess live verfolgen</li>
+                    <li>Wir können dir die einzelnen Schritte erklären</li>
+                    <li>Die Verbindung kann jederzeit von dir unterbrochen werden</li>
                   </ul>
                   
-                  <h5 className="font-semibold text-[#0A3A68] mb-2">So richtest du die Verknüpfung ein:</h5>
+                  <h5 className="font-semibold text-[#0A3A68] mb-2">Ablauf der Fernwartung:</h5>
                   <ol className="list-decimal pl-5 text-gray-700">
-                    <li>Öffne Monopoly GO und tippe auf das Einstellungs-Icon (⚙️)</li>
-                    <li>Wähle je nach Gerät "Mit Apple Game Center verbinden" oder "Mit Google Play Games verbinden"</li>
-                    <li>Folge den Anweisungen auf dem Bildschirm</li>
-                  </ol>
-                </div>
-              </div>
-              
-              <div className="border border-gray-200 rounded-lg">
-                <div className="bg-gray-50 p-4 rounded-t-lg">
-                  <h4 className="font-bold text-[#0A3A68] flex items-center">
-                    <span className="material-icons mr-2 text-[#00CFFF]">email</span>
-                    Email-Login (Scopely ID)
-                  </h4>
-                </div>
-                <div className="p-4 border-t border-gray-200">
-                  <p className="text-gray-700 mb-3">Du kannst dein Spiel auch mit einer E-Mail-Adresse verknüpfen und so eine Scopely ID erstellen.</p>
-                  
-                  <h5 className="font-semibold text-[#0A3A68] mb-2">Vorteile:</h5>
-                  <ul className="list-disc pl-5 mb-3 text-gray-700">
-                    <li>Keine Abhängigkeit von Drittanbietern wie Facebook oder Google</li>
-                    <li>Einfacher Geräte- und Plattformwechsel möglich</li>
-                    <li>Höhere Privatsphäre</li>
-                  </ul>
-                  
-                  <h5 className="font-semibold text-[#0A3A68] mb-2">So richtest du die E-Mail-Verknüpfung ein:</h5>
-                  <ol className="list-decimal pl-5 text-gray-700">
-                    <li>Öffne Monopoly GO und tippe auf das Einstellungs-Icon (⚙️)</li>
-                    <li>Wähle "Mit E-Mail verbinden"</li>
-                    <li>Gib deine E-Mail-Adresse ein und erstelle ein Passwort</li>
-                    <li>Bestätige deine E-Mail-Adresse über den Bestätigungslink, den du per E-Mail erhältst</li>
+                    <li>Wir vereinbaren einen Termin für die Fernwartung</li>
+                    <li>Du installierst TeamViewer oder AnyDesk auf deinem Gerät</li>
+                    <li>Du übermittelst uns die Zugangsdaten für die Fernwartungssoftware</li>
+                    <li>Wir führen den Würfelboost durch, während du zuschauen kannst</li>
                   </ol>
                 </div>
               </div>
@@ -121,46 +121,52 @@ export default function LoginHilfe() {
           </div>
           
           <div className="mb-8">
-            <h3 className="text-xl font-bold text-[#0A3A68] mb-4 border-b-2 border-[#00CFFF] pb-2 inline-block">Mehrere Login-Methoden gleichzeitig?</h3>
+            <h3 className="text-xl font-bold text-[#0A3A68] mb-4 border-b-2 border-[#00CFFF] pb-2 inline-block">Welche Methode ist die Richtige für mich?</h3>
             <p className="text-gray-700 mb-3">
-              Es ist tatsächlich möglich, mehrere Login-Methoden für dasselbe Monopoly GO-Konto einzurichten. Dies kann als zusätzliche Sicherung dienen, falls eine Methode nicht mehr funktioniert.
+              Jede Methode hat ihre Vor- und Nachteile. Wir empfehlen:
             </p>
-            <p className="text-gray-700">
-              Beachte jedoch: Wenn du dein Spiel bereits mit einer Methode verknüpft hast und dann eine andere hinzufügst, werden diese miteinander verbunden. Das bedeutet, du kannst nicht verschiedene Spielstände auf demselben Gerät mit unterschiedlichen Login-Methoden haben.
-            </p>
+            <ul className="list-disc pl-5 text-gray-700 mb-4">
+              <li><strong>Für Neukunden:</strong> Methode 1 (Direkte Zugangsdaten) ist am einfachsten für den Einstieg</li>
+              <li><strong>Für sicherheitsbewusste Kunden:</strong> Methode 2 (Facebook Auth-Token) bietet mehr Sicherheit</li>
+              <li><strong>Für Kunden, die den Prozess verstehen möchten:</strong> Methode 3 (Fernwartung) bietet maximale Transparenz</li>
+            </ul>
+            <div className="bg-[#FFEBCC] border-l-4 border-[#FF4C00] p-4 rounded-r-md">
+              <h4 className="font-bold text-[#0A3A68] mb-2 border-b-2 border-[#FF4C00] pb-2 inline-block">⚠️ Wichtiger Hinweis</h4>
+              <p className="text-gray-700">Unabhängig von der gewählten Methode bitten wir dich, das Spiel während des Boosts nicht zu öffnen, um Konflikte zu vermeiden.</p>
+            </div>
           </div>
           
           <div className="mb-8">
-            <h3 className="text-xl font-bold text-[#0A3A68] mb-4 border-b-2 border-[#00CFFF] pb-2 inline-block">Probleme beim Login?</h3>
+            <h3 className="text-xl font-bold text-[#0A3A68] mb-4 border-b-2 border-[#00CFFF] pb-2 inline-block">Häufig gestellte Fragen</h3>
             <div className="space-y-4">
               <div className="border border-gray-200 rounded-lg mb-2">
                 <div className="bg-gray-50 p-4 rounded-t-lg cursor-pointer flex justify-between items-center">
-                  <h4 className="font-bold text-[#0A3A68]">Ich kann mich nicht mit Facebook anmelden</h4>
+                  <h4 className="font-bold text-[#0A3A68]">Ist mein Account sicher, wenn ich meine Daten weitergebe?</h4>
                   <span className="material-icons text-[#00CFFF]">expand_more</span>
                 </div>
                 <div className="p-4 border-t border-gray-200">
-                  <p className="text-gray-700 mb-2">Versuche folgende Schritte:</p>
-                  <ol className="list-decimal pl-5 text-gray-700">
-                    <li>Stelle sicher, dass die Facebook-App auf deinem Gerät installiert und du dort angemeldet bist</li>
-                    <li>Überprüfe deine Internetverbindung</li>
-                    <li>Schließe Monopoly GO vollständig und starte es neu</li>
-                    <li>Aktualisiere sowohl die Facebook-App als auch Monopoly GO auf die neueste Version</li>
-                  </ol>
+                  <p className="text-gray-700 mb-3">Wir legen höchsten Wert auf die Sicherheit deiner Daten. Wir:</p>
+                  <ul className="list-disc pl-5 text-gray-700">
+                    <li>Speichern deine Zugangsdaten niemals dauerhaft</li>
+                    <li>Verwenden deine Daten ausschließlich für den Würfelboost</li>
+                    <li>Haben in über 24 Monaten keine Accountsperrungen durch unsere Boosts erlebt</li>
+                    <li>Empfehlen, dein Passwort nach dem Boost zu ändern</li>
+                  </ul>
                 </div>
               </div>
               
               <div className="border border-gray-200 rounded-lg mb-2">
                 <div className="bg-gray-50 p-4 rounded-t-lg cursor-pointer flex justify-between items-center">
-                  <h4 className="font-bold text-[#0A3A68]">Ich habe mein Spiel mit Facebook verknüpft, aber mein Spielstand ist weg</h4>
+                  <h4 className="font-bold text-[#0A3A68]">Kann ich auch die Scopely ID / E-Mail-Login nutzen?</h4>
                   <span className="material-icons text-[#00CFFF]">expand_more</span>
                 </div>
                 <div className="p-4 border-t border-gray-200">
-                  <p className="text-gray-700 mb-2">Dies kann passieren, wenn:</p>
-                  <ul className="list-disc pl-5 text-gray-700 mb-3">
-                    <li>Du dich mit einem anderen Facebook-Konto angemeldet hast als zuvor</li>
-                    <li>Das Spiel eine neue Spielsitzung gestartet hat, bevor die Verknüpfung vollständig abgeschlossen war</li>
+                  <p className="text-gray-700 mb-3">Ja, wenn dein Account über eine Scopely ID verfügt, können wir auch diese für den Login verwenden. Teile uns einfach deine:</p>
+                  <ul className="list-disc pl-5 text-gray-700">
+                    <li>E-Mail-Adresse</li>
+                    <li>Dein Scopely-Passwort</li>
                   </ul>
-                  <p className="text-gray-700">Kontaktiere in diesem Fall den Scopely-Support direkt im Spiel über das Einstellungsmenü.</p>
+                  <p className="text-gray-700 mt-3">Beachte, dass bei dieser Methode möglicherweise zusätzliche Verifizierungsschritte erforderlich sind.</p>
                 </div>
               </div>
             </div>
