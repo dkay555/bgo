@@ -106,7 +106,7 @@ export default function BlogPost() {
 
               <div className="space-y-4 mt-6">
                 <div className="p-4 bg-gray-50 rounded-md">
-                  <h2 className="font-['Baloo_2'] font-bold text-2xl text-[#FF4C00] mb-2">Überschrift Stufe 2</h2>
+                  <h2 className="babix-info-header mb-2 inline-block">Überschrift Stufe 2</h2>
                   <p className="text-gray-500 text-sm">Wird verwendet für Hauptabschnitte</p>
                 </div>
 
@@ -119,7 +119,7 @@ export default function BlogPost() {
 
             {/* Text Formatting */}
             <section id="text-formatting" className="mb-10 scroll-mt-20">
-              <h2 className="font-['Baloo_2'] font-bold text-xl md:text-2xl text-[#FF4C00] mb-4 pb-2 border-b-2 border-[#00CFFF]/50">
+              <h2 className="babix-info-header mb-4">
                 Textformatierung
               </h2>
               <p className="mb-6">
