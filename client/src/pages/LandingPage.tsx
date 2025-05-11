@@ -99,8 +99,8 @@ export default function LandingPage() {
               </div>
               
               <div className="bg-gray-50 p-5 rounded-lg border border-[#00CFFF]/20">
-                <div className="flex justify-between items-start mb-4">
-                  <h3 className="font-['Baloo_2'] font-bold text-lg text-[#0A3A68]">
+                <div className="flex flex-col mb-4">
+                  <h3 className="font-['Baloo_2'] font-bold text-lg text-[#0A3A68] mb-2">
                     Warum keine größeren Boosts?
                   </h3>
                   <p>Es mag verlockend sein, einen riesigen Würfelboost zu wollen, aber wir begrenzen unsere Angebote bewusst auf eine sichere Menge.</p>
