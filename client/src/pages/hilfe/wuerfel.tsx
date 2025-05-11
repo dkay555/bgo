@@ -13,16 +13,18 @@ export default function WuerfelHilfe() {
           <span className="material-icons mr-1">arrow_back</span>
           Zurück zur Hilfe
         </Link>
-        <h1 className="babix-info-header text-3xl md:text-4xl font-bold mb-8 text-center">Würfelboost - Hilfe & Informationen</h1>
+        <h1 className="font-['Baloo_2'] font-bold text-2xl md:text-3xl bg-[#00CFFF]/10 px-6 py-3 rounded-xl inline-block mx-auto mb-4 border-b-2 border-[#00CFFF] text-[#FF4C00]">
+          Würfelboost - Hilfe & Informationen
+        </h1>
       </div>
       
       <div className="max-w-3xl mx-auto">
         <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-          <h2 className="text-2xl font-bold text-[#0A3A68] mb-6">Der Würfelboost - Würfel für deinen Monopoly GO Account</h2>
+          <h2 className="babix-info-header mx-auto mb-6">Der Würfelboost - Würfel für deinen Monopoly GO Account</h2>
           <p className="text-gray-600 text-sm mb-6">Zuletzt aktualisiert: 2. März</p>
           
           <div className="mb-8">
-            <h3 className="text-xl font-bold text-[#0A3A68] mb-4 border-b pb-2">Voraussetzungen</h3>
+            <h3 className="text-xl font-bold text-[#0A3A68] mb-4 border-b-2 border-[#00CFFF] pb-2 inline-block">Voraussetzungen</h3>
             <ul className="list-disc pl-5 space-y-4 text-gray-700">
               <li>
                 <p><strong>Event-Status:</strong> Topevent oder Bahnhofsturnier sollten maximal bis kurz vor dem 1. High Roller bespielt sein oder müssen einen späteren High Roller als nächste Belohnung haben.</p>
@@ -37,7 +39,7 @@ export default function WuerfelHilfe() {
           </div>
           
           <div className="mb-8">
-            <h3 className="text-xl font-bold text-[#0A3A68] mb-4 border-b pb-2">Ablauf</h3>
+            <h3 className="text-xl font-bold text-[#0A3A68] mb-4 border-b-2 border-[#00CFFF] pb-2 inline-block">Ablauf</h3>
             <ol className="list-decimal pl-5 space-y-4 text-gray-700">
               <li>
                 <p><strong>Vorbereitung:</strong> Wir bereiten eine "ungenutzte Umgebung" für deinen Account vor. Für Scopely wirkt es also so, als würdest Du auf einem neuen Gerät spielen. Dadurch verhindern wir unnötige Multi-Account-Flags auf deinen Account.</p>
@@ -64,7 +66,7 @@ export default function WuerfelHilfe() {
           </div>
           
           <div className="mb-8">
-            <h3 className="text-xl font-bold text-[#0A3A68] mb-4 border-b pb-2">Preise</h3>
+            <h3 className="text-xl font-bold text-[#0A3A68] mb-4 border-b-2 border-[#00CFFF] pb-2 inline-block">Preise</h3>
             <p className="mb-3 text-gray-700">Grundsätzlich ist jede Würfelmenge möglich. <strong>Hinweis:</strong> Würfelangaben haben eine Toleranz von ±2.500 Würfeln.</p>
             <p className="mb-3 text-sm text-gray-600">Beispiel: Bei 25.000 Würfeln erhaltet ihr zwischen 22.500 und 27.500.</p>
             
