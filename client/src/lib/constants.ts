@@ -45,15 +45,51 @@ export const SPECIAL_OFFER = {
 
 // Navigation links
 export const NAV_LINKS = [
-  { name: 'Start', href: '#' },
-  { name: 'Produkte', href: '#angebot' },
-  { name: 'Über uns', href: '#ueber' },
-  { name: 'Kontakt', href: '#kontakt' },
+  { name: 'Home', href: '/' },
+  { name: 'Preise', href: '/preise' },
+  { name: 'Produkte', href: '/produkte' },
+  { name: 'Blog', href: '/blog' },
+  { name: 'Hilfe', href: '/hilfe' },
+  { name: 'Kontakt', href: '/kontakt' },
 ];
 
 // Footer links
 export const FOOTER_LINKS = [
-  { name: 'Impressum', href: 'impressum.html' },
-  { name: 'Datenschutz', href: 'datenschutz.html' },
-  { name: 'Kontakt', href: 'kontakt.html' },
+  { name: 'Impressum', href: '/impressum' },
+  { name: 'Datenschutz', href: '/datenschutz' },
+  { name: 'AGB', href: '/agb' },
+  { name: 'Kontakt', href: '/kontakt' },
+  { name: 'Hilfe', href: '/hilfe' },
+];
+
+// Produkt-Kategorien
+export const PRODUCT_CATEGORIES = [
+  { 
+    name: 'Würfelboost', 
+    path: '/produkte/wuerfel',
+    icon: 'casino',
+    image: 'kategorie_wuerfel_300_300.webp',
+    description: 'Erhöhen Sie Ihre Würfelzahl im Spiel'
+  },
+  { 
+    name: 'Sticker', 
+    path: '/produkte/sticker',
+    icon: 'collections_bookmark',
+    image: 'kategorie_sticker_300_300.webp',
+    description: 'Vervollständigen Sie Ihre Sammlungen'
+  },
+  { 
+    name: 'Partner', 
+    path: '/produkte/partner',
+    icon: 'people',
+    image: 'kategorie_partner_300_300.webp',
+    description: 'Finden Sie aktive Spielpartner'
+  },
+  { 
+    name: 'Race', 
+    path: '/produkte/race',
+    icon: 'emoji_events',
+    image: 'kategorie_racers_200_300.webp',
+    description: 'Unterstützung bei Events'
+  }
 ];
