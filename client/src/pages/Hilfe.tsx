@@ -84,6 +84,28 @@ export default function Hilfe() {
         </div>
         
         <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
+          <h2 className="babix-info-header mx-auto mb-6">Aktuelles</h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="bg-gray-50 p-5 rounded-lg shadow-sm border border-gray-200 hover:border-[#00CFFF] transition-colors">
+              <h3 className="text-xl font-bold text-[#0A3A68] mb-3 flex items-center border-b-2 border-[#00CFFF] pb-2">
+                <span className="material-icons mr-2 text-[#00CFFF]">new_releases</span>
+                Angebot und Preisanpassung
+              </h3>
+              <p className="text-gray-700 mb-4">
+                Informationen zu aktuellen Angeboten und Preisanpassungen unserer Dienstleistungen.
+              </p>
+              <Link href="/news/angebot_und_preisanpassung">
+                <button className="bg-[#0A3A68] hover:bg-[#00CFFF] text-white py-2 px-4 rounded-md transition-colors inline-flex items-center">
+                  <span className="material-icons mr-1">info</span>
+                  Mehr erfahren
+                </button>
+              </Link>
+            </div>
+          </div>
+        </div>
+          
+        <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
           <h2 className="babix-info-header mx-auto mb-6">Weitere Hilfsartikel</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -99,22 +121,6 @@ export default function Hilfe() {
                 <button className="bg-[#0A3A68] hover:bg-[#00CFFF] text-white py-2 px-4 rounded-md transition-colors inline-flex items-center">
                   <span className="material-icons mr-1">help</span>
                   Zur Login-Hilfe
-                </button>
-              </Link>
-            </div>
-            
-            <div className="bg-gray-50 p-5 rounded-lg shadow-sm border border-gray-200 hover:border-[#00CFFF] transition-colors">
-              <h3 className="text-xl font-bold text-[#0A3A68] mb-3 flex items-center border-b-2 border-[#00CFFF] pb-2">
-                <span className="material-icons mr-2 text-[#00CFFF]">account_circle</span>
-                Accounts-Hilfe
-              </h3>
-              <p className="text-gray-700 mb-4">
-                Informationen zu Monopoly GO Accounts: Was du beim Kauf beachten solltest und wie wir für Sicherheit sorgen.
-              </p>
-              <Link href="/hilfe/accounts">
-                <button className="bg-[#0A3A68] hover:bg-[#00CFFF] text-white py-2 px-4 rounded-md transition-colors inline-flex items-center">
-                  <span className="material-icons mr-1">help</span>
-                  Zur Account-Hilfe
                 </button>
               </Link>
             </div>
