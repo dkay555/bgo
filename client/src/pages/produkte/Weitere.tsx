@@ -18,7 +18,8 @@ export default function Weitere() {
       title: "Account-Service",
       description: "Professionelle Verwaltung und Optimierung Ihres Spielkontos für maximalen Fortschritt.",
       icon: "manage_accounts",
-      soon: true
+      soon: false,
+      link: "/hilfe/accounts"
     },
     {
       title: "Spielberatung",
@@ -58,9 +59,11 @@ export default function Weitere() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
           {upcomingServices.map((service, index) => (
             <div key={index} className="bg-white rounded-lg shadow-lg p-6 border border-gray-200 relative overflow-hidden">
-              <div className="absolute -right-10 -top-10 bg-[#FF4C00] text-white transform rotate-45 w-40 text-center text-xs py-1">
-                <span>Coming Soon</span>
-              </div>
+              {service.soon && (
+                <div className="absolute -right-10 -top-10 bg-[#FF4C00] text-white transform rotate-45 w-40 text-center text-xs py-1">
+                  <span>Coming Soon</span>
+                </div>
+              )}
               
               <div className="flex items-start">
                 <div className="flex-shrink-0 mr-4">
@@ -68,9 +71,17 @@ export default function Weitere() {
                     <span className="material-icons text-[#0A3A68]">{service.icon}</span>
                   </div>
                 </div>
-                <div>
+                <div className="flex-grow">
                   <h3 className="font-bold text-lg mb-2 text-[#0A3A68]">{service.title}</h3>
                   <p className="text-gray-600 mb-4">{service.description}</p>
+                  {service.link && (
+                    <Link href={service.link}>
+                      <button className="bg-[#0A3A68] hover:bg-[#00CFFF] text-white py-1 px-3 rounded-md transition-colors text-sm inline-flex items-center">
+                        <span className="material-icons text-sm mr-1">info</span>
+                        Mehr Informationen
+                      </button>
+                    </Link>
+                  )}
                 </div>
               </div>
             </div>
