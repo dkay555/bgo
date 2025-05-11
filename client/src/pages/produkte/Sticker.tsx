@@ -49,24 +49,6 @@ export default function StickerPage() {
     }
   }, [selectedStickerId]);
 
-  // Handler für Set-Auswahl
-  const handleSetChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    if (!e.target.value) return;
-    const setNumber = parseInt(e.target.value, 10);
-    if (!isNaN(setNumber)) {
-      setSelectedSetNumber(setNumber);
-    }
-  };
-
-  // Handler für Sticker-Auswahl
-  const handleStickerChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    if (!e.target.value) return;
-    const stickerId = parseInt(e.target.value, 10);
-    if (!isNaN(stickerId)) {
-      setSelectedStickerId(stickerId);
-    }
-  };
-
   // Fügt den ausgewählten Sticker zum Warenkorb hinzu
   const addToCart = () => {
     if (stickerDetails) {
@@ -109,29 +91,16 @@ export default function StickerPage() {
             <div>
               <h2 className="text-xl font-bold text-[#0A3A68] mb-4">Sticker auswählen</h2>
               
-              {/* Mobile: Dropdown für Set-Auswahl */}
-              <div className="md:hidden mb-4">
+              {/* Set-Auswahl */}
+              <div className="mb-4">
                 <h3 className="block text-sm font-medium text-gray-700 mb-2">Set auswählen</h3>
-                <select 
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#00CFFF]"
-                  value={selectedSetNumber || ''}
-                  onChange={handleSetChange}
-                >
-                  <option value="">-- Bitte wählen --</option>
-                  {availableSets.map(setNumber => (
-                    <option key={setNumber} value={setNumber.toString()}>Set {setNumber}</option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Desktop: Button-Grid für Set-Auswahl */}
-              <div className="hidden md:block mb-4">
-                <h3 className="block text-sm font-medium text-gray-700 mb-2">Set auswählen</h3>
-                <div className="grid grid-cols-4 lg:grid-cols-5 gap-2">
+                
+                {/* Mobile und Desktop: Buttons für Set-Auswahl */}
+                <div className="flex flex-wrap gap-2">
                   {availableSets.map(setNumber => (
                     <button
                       key={setNumber}
-                      className={`p-2 rounded text-center transition-colors ${
+                      className={`px-3 py-2 rounded text-center transition-colors ${
                         selectedSetNumber === setNumber 
                           ? 'bg-[#0A3A68] text-white' 
                           : 'bg-gray-100 hover:bg-gray-200 text-gray-800'
@@ -145,58 +114,40 @@ export default function StickerPage() {
               </div>
               
               {selectedSetNumber && (
-                <>
-                  {/* Mobile: Dropdown für Sticker-Auswahl */}
-                  <div className="md:hidden mb-4">
-                    <h3 className="block text-sm font-medium text-gray-700 mb-2">Sticker auswählen</h3>
-                    <select 
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#00CFFF]"
-                      value={selectedStickerId || ''}
-                      onChange={handleStickerChange}
-                    >
-                      <option value="">-- Bitte wählen --</option>
-                      {getStickersBySet(selectedSetNumber).map(sticker => (
-                        <option key={sticker.id} value={sticker.id.toString()}>
-                          {sticker.name} ({sticker.stars} {sticker.stars === 1 ? 'Stern' : 'Sterne'}{sticker.isGold ? ' - Gold' : ''})
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  {/* Desktop: Button-Grid für Sticker-Auswahl */}
-                  <div className="hidden md:block mb-4">
-                    <h3 className="block text-sm font-medium text-gray-700 mb-2">Sticker auswählen</h3>
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 max-h-[300px] overflow-y-auto p-1">
-                      {getStickersBySet(selectedSetNumber).map(sticker => (
-                        <button
-                          key={sticker.id}
-                          className={`p-2 rounded text-left transition-colors flex items-center ${
-                            selectedStickerId === sticker.id
-                              ? 'bg-[#0A3A68] text-white' 
-                              : sticker.isGold 
-                                ? 'bg-yellow-50 hover:bg-yellow-100 text-gray-800 border border-yellow-200'
-                                : 'bg-gray-50 hover:bg-gray-100 text-gray-800 border border-gray-200'
-                          }`}
-                          onClick={() => setSelectedStickerId(sticker.id)}
-                        >
-                          <div className="mr-2">
-                            {sticker.isGold && (
-                              <span className="material-icons text-yellow-500 text-lg">workspace_premium</span>
-                            )}
+                <div className="mb-4">
+                  <h3 className="block text-sm font-medium text-gray-700 mb-2">Sticker auswählen</h3>
+                  
+                  {/* Mobile und Desktop: Liste von Stickern mit Scroll */}
+                  <div className="max-h-[300px] overflow-y-auto border border-gray-200 rounded-md">
+                    {getStickersBySet(selectedSetNumber).map(sticker => (
+                      <button
+                        key={sticker.id}
+                        className={`w-full p-2 border-b border-gray-200 text-left transition-colors flex items-center ${
+                          selectedStickerId === sticker.id
+                            ? 'bg-[#0A3A68] text-white' 
+                            : sticker.isGold 
+                              ? 'bg-yellow-50 hover:bg-yellow-100 text-gray-800'
+                              : 'bg-white hover:bg-gray-50 text-gray-800'
+                        }`}
+                        onClick={() => setSelectedStickerId(sticker.id)}
+                      >
+                        <div className="mr-2">
+                          {sticker.isGold && (
+                            <span className="material-icons text-yellow-500 text-lg">workspace_premium</span>
+                          )}
+                        </div>
+                        <div className="flex-1">
+                          <div className="font-medium">{sticker.name}</div>
+                          <div className="flex items-center">
+                            {[...Array(sticker.stars)].map((_, i) => (
+                              <span key={i} className="material-icons text-yellow-500 text-sm">star</span>
+                            ))}
                           </div>
-                          <div className="flex-1">
-                            <div className="font-medium">{sticker.name}</div>
-                            <div className="flex items-center">
-                              {[...Array(sticker.stars)].map((_, i) => (
-                                <span key={i} className="material-icons text-yellow-500 text-sm">star</span>
-                              ))}
-                            </div>
-                          </div>
-                        </button>
-                      ))}
-                    </div>
+                        </div>
+                      </button>
+                    ))}
                   </div>
-                </>
+                </div>
               )}
               
               {/* Sticker-Details */}
