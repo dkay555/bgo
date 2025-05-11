@@ -166,24 +166,24 @@ export function Header() {
             </Link>
             
             {/* Leistungen Kategorie-Überschrift */}
-            <div className="text-white/70 px-4 py-2 mb-1 text-sm uppercase tracking-wider border-b border-white/10">
+            <div className="text-white/70 px-2 py-1 mb-1 text-sm uppercase tracking-wider border-b border-white/10">
               Leistungen
             </div>
             
             {/* Würfel Dienste */}
-            <div className="mb-3 pl-4">
-              <div className="text-white font-bold px-4 py-2">Würfel</div>
-              <div className="grid grid-cols-2 gap-2 pl-4">
+            <div className="mb-2 pl-2">
+              <div className="text-white font-bold px-2 py-1">Würfel</div>
+              <div className="grid grid-cols-2 gap-1 pl-2">
                 <Link 
                   href="/produkte/wuerfel"
-                  className="text-white/80 hover:text-[#FF4C00] block py-2 px-3 text-sm rounded-md transition duration-300 border border-white/10"
+                  className="text-white/80 hover:text-[#FF4C00] block py-1 px-2 text-sm rounded-md transition duration-300 border border-white/10"
                   onClick={closeMobileMenu}
                 >
                   <span className="text-[#00CFFF] mr-1">→</span> Shop
                 </Link>
                 <Link 
                   href="/hilfe/wuerfel"
-                  className="text-white/80 hover:text-[#FF4C00] block py-2 px-3 text-sm rounded-md transition duration-300 border border-white/10"
+                  className="text-white/80 hover:text-[#FF4C00] block py-1 px-2 text-sm rounded-md transition duration-300 border border-white/10"
                   onClick={closeMobileMenu}
                 >
                   <span className="text-[#00CFFF] mr-1">→</span> Hilfe
@@ -192,19 +192,19 @@ export function Header() {
             </div>
             
             {/* Sticker Dienste */}
-            <div className="mb-3 pl-4">
-              <div className="text-white font-bold px-4 py-2">Sticker</div>
-              <div className="grid grid-cols-2 gap-2 pl-4">
+            <div className="mb-2 pl-2">
+              <div className="text-white font-bold px-2 py-1">Sticker</div>
+              <div className="grid grid-cols-2 gap-1 pl-2">
                 <Link 
                   href="/produkte/sticker"
-                  className="text-white/80 hover:text-[#FF4C00] block py-2 px-3 text-sm rounded-md transition duration-300 border border-white/10"
+                  className="text-white/80 hover:text-[#FF4C00] block py-1 px-2 text-sm rounded-md transition duration-300 border border-white/10"
                   onClick={closeMobileMenu}
                 >
                   <span className="text-[#00CFFF] mr-1">→</span> Shop
                 </Link>
                 <Link 
                   href="/hilfe/sticker"
-                  className="text-white/80 hover:text-[#FF4C00] block py-2 px-3 text-sm rounded-md transition duration-300 border border-white/10"
+                  className="text-white/80 hover:text-[#FF4C00] block py-1 px-2 text-sm rounded-md transition duration-300 border border-white/10"
                   onClick={closeMobileMenu}
                 >
                   <span className="text-[#00CFFF] mr-1">→</span> Hilfe
@@ -213,19 +213,19 @@ export function Header() {
             </div>
             
             {/* Partnerevent Dienste */}
-            <div className="mb-3 pl-4">
-              <div className="text-white font-bold px-4 py-2">Partnerevent</div>
-              <div className="grid grid-cols-2 gap-2 pl-4">
+            <div className="mb-2 pl-2">
+              <div className="text-white font-bold px-2 py-1">Partnerevent</div>
+              <div className="grid grid-cols-2 gap-1 pl-2">
                 <Link 
                   href="/produkte/partner"
-                  className="text-white/80 hover:text-[#FF4C00] block py-2 px-3 text-sm rounded-md transition duration-300 border border-white/10"
+                  className="text-white/80 hover:text-[#FF4C00] block py-1 px-2 text-sm rounded-md transition duration-300 border border-white/10"
                   onClick={closeMobileMenu}
                 >
                   <span className="text-[#00CFFF] mr-1">→</span> Shop
                 </Link>
                 <Link 
                   href="/hilfe/partner"
-                  className="text-white/80 hover:text-[#FF4C00] block py-2 px-3 text-sm rounded-md transition duration-300 border border-white/10"
+                  className="text-white/80 hover:text-[#FF4C00] block py-1 px-2 text-sm rounded-md transition duration-300 border border-white/10"
                   onClick={closeMobileMenu}
                 >
                   <span className="text-[#00CFFF] mr-1">→</span> Hilfe
@@ -234,19 +234,19 @@ export function Header() {
             </div>
             
             {/* Race Dienste */}
-            <div className="mb-3 pl-4">
-              <div className="text-white font-bold px-4 py-2">Race</div>
-              <div className="grid grid-cols-2 gap-2 pl-4">
+            <div className="mb-2 pl-2">
+              <div className="text-white font-bold px-2 py-1">Race</div>
+              <div className="grid grid-cols-2 gap-1 pl-2">
                 <Link 
                   href="/produkte/race"
-                  className="text-white/80 hover:text-[#FF4C00] block py-2 px-3 text-sm rounded-md transition duration-300 border border-white/10"
+                  className="text-white/80 hover:text-[#FF4C00] block py-1 px-2 text-sm rounded-md transition duration-300 border border-white/10"
                   onClick={closeMobileMenu}
                 >
                   <span className="text-[#00CFFF] mr-1">→</span> Shop
                 </Link>
                 <Link 
                   href="/hilfe/race"
-                  className="text-white/80 hover:text-[#FF4C00] block py-2 px-3 text-sm rounded-md transition duration-300 border border-white/10"
+                  className="text-white/80 hover:text-[#FF4C00] block py-1 px-2 text-sm rounded-md transition duration-300 border border-white/10"
                   onClick={closeMobileMenu}
                 >
                   <span className="text-[#00CFFF] mr-1">→</span> Hilfe
