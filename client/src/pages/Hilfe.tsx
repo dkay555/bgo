@@ -8,7 +8,7 @@ export default function Hilfe() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="babix-info-header">
+      <h1 className="font-['Baloo_2'] font-bold text-2xl md:text-3xl bg-[#00CFFF]/10 px-6 py-3 rounded-xl inline-block mx-auto mb-4 border-b-2 border-[#00CFFF] text-[#FF4C00] text-center babix-info-header">
         Hilfe & Informationen
       </h1>
       

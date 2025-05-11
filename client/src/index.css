@@ -68,17 +68,11 @@
   .babix-info-header {
     position: relative;
     padding-bottom: 0.5rem;
-    padding-top: 0.5rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
     margin-bottom: 1rem;
     display: inline-block;
     font-size: 1.6rem;
     font-family: 'Baloo 2', cursive;
-    font-weight: bold;
     color: #FF4C00;
-    background-color: rgba(0, 207, 255, 0.1);
-    border-radius: 0.75rem;
   }
 
   .babix-info-header::after {
@@ -89,7 +83,6 @@
     background: linear-gradient(to right, #00CFFF, transparent);
     margin-top: 0.4rem;
     border-radius: 3px;
-    border-bottom: 2px solid #00CFFF;
   }
 }
 

@@ -10,7 +10,7 @@ export default function StartPage() {
         <div className="absolute inset-0 bg-gradient-to-r from-[#00CFFF]/10 to-[#FF4C00]/10 animate-gradient-x"></div>
         <div className="max-w-4xl mx-auto relative">
           <div className="inline-block text-center">
-            <h1 className="babix-info-header">
+            <h1 className="font-['Baloo_2'] font-bold text-xl md:text-2xl bg-[#00CFFF]/10 px-4 py-2 rounded-xl mb-2 border-b-2 border-[#00CFFF] text-[#FF4C00] babix-info-header">
               Willkommen bei babixGO
             </h1>
             <p className="text-base md:text-lg">Würfel, Events, Sticker & mehr – alles für dein Monopoly GO Abenteuer.</p>

@@ -3,7 +3,7 @@ import { PricingGrid } from '@/components/PricingCard';
 export default function PreiseHilfe() {
   return (
     <div className="max-w-4xl mx-auto px-4">
-      <h1 className="babix-info-header">
+      <h1 className="font-['Baloo_2'] font-bold text-2xl md:text-3xl bg-[#00CFFF]/10 px-6 py-3 rounded-xl inline-block mx-auto my-4 border-b-2 border-[#00CFFF] text-[#FF4C00] babix-info-header">
         Preise & Bedingungen
       </h1>
 
