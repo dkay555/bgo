@@ -32,6 +32,7 @@ const PartnerHilfePage = lazy(() => import('@/pages/hilfe/partner'));
 const RaceHilfePage = lazy(() => import('@/pages/hilfe/race'));
 const LoginHilfePage = lazy(() => import('@/pages/hilfe/login'));
 const AccountsHilfePage = lazy(() => import('@/pages/hilfe/accounts'));
+const NewsPreiseAngebotPage = lazy(() => import('@/pages/hilfe/news_preise_angebot'));
 
 const Ladebildschirm = () => (
   <div className="flex items-center justify-center min-h-screen">
@@ -67,6 +68,7 @@ function Router() {
           <Route path="/hilfe/race" component={RaceHilfePage} />
           <Route path="/hilfe/login" component={LoginHilfePage} />
           <Route path="/hilfe/accounts" component={AccountsHilfePage} />
+          <Route path="/hilfe/news_preise_angebot.html" component={NewsPreiseAngebotPage} />
           
           {/* Produkt-Unterseiten */}
           <Route path="/produkte/wuerfel" component={WuerfelPage} />

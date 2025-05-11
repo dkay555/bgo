@@ -95,7 +95,7 @@ export default function Hilfe() {
               <p className="text-gray-700 mb-4">
                 Informationen zu aktuellen Angeboten und Preisanpassungen unserer Dienstleistungen.
               </p>
-              <Link href="/preise">
+              <Link href="/hilfe/news_preise_angebot.html">
                 <button className="bg-[#0A3A68] hover:bg-[#00CFFF] text-white py-2 px-4 rounded-md transition-colors inline-flex items-center">
                   <span className="material-icons mr-1">info</span>
                   Mehr erfahren

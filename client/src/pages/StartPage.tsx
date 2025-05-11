@@ -30,7 +30,7 @@ export default function StartPage() {
               haben wir unsere Preisstruktur angepasst. Die neuen Preise gelten ab sofort für alle Dienste.
             </p>
             <div className="flex justify-end">
-              <Link href="/news/angebot_und_preisanpassung">
+              <Link href="/hilfe/news_preise_angebot.html">
                 <Button variant="darkblue" className="text-xs px-3 py-1">
                   Weiterlesen
                 </Button>
