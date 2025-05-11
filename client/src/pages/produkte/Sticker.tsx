@@ -51,14 +51,20 @@ export default function StickerPage() {
 
   // Handler für Set-Auswahl
   const handleSetChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    if (!e.target.value) return;
     const setNumber = parseInt(e.target.value, 10);
-    setSelectedSetNumber(setNumber);
+    if (!isNaN(setNumber)) {
+      setSelectedSetNumber(setNumber);
+    }
   };
 
   // Handler für Sticker-Auswahl
   const handleStickerChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    if (!e.target.value) return;
     const stickerId = parseInt(e.target.value, 10);
-    setSelectedStickerId(stickerId);
+    if (!isNaN(stickerId)) {
+      setSelectedStickerId(stickerId);
+    }
   };
 
   // Fügt den ausgewählten Sticker zum Warenkorb hinzu
@@ -113,7 +119,7 @@ export default function StickerPage() {
                 >
                   <option value="">-- Bitte wählen --</option>
                   {availableSets.map(setNumber => (
-                    <option key={setNumber} value={setNumber}>Set {setNumber}</option>
+                    <option key={setNumber} value={setNumber.toString()}>Set {setNumber}</option>
                   ))}
                 </select>
               </div>
@@ -150,7 +156,7 @@ export default function StickerPage() {
                     >
                       <option value="">-- Bitte wählen --</option>
                       {getStickersBySet(selectedSetNumber).map(sticker => (
-                        <option key={sticker.id} value={sticker.id}>
+                        <option key={sticker.id} value={sticker.id.toString()}>
                           {sticker.name} ({sticker.stars} {sticker.stars === 1 ? 'Stern' : 'Sterne'}{sticker.isGold ? ' - Gold' : ''})
                         </option>
                       ))}
