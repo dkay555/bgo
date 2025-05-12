@@ -119,7 +119,7 @@ export default function StartPage() {
                     <a href={CONTACT.whatsapp} target="_blank" rel="noreferrer">Schreib uns</a>
                   </Button>
                   <Button variant="darkblue" asChild className="flex-1 font-bold">
-                    <Link href="/produkte/partner">Zum Shop</Link>
+                    <Link href="/produkte/partner#top">Zum Shop</Link>
                   </Button>
                 </div>
               </div>
@@ -140,7 +140,7 @@ export default function StartPage() {
                     <a href={CONTACT.whatsapp} target="_blank" rel="noreferrer">Schreib uns</a>
                   </Button>
                   <Button variant="darkblue" asChild className="flex-1 font-bold">
-                    <Link href="/produkte/race">Zum Shop</Link>
+                    <Link href="/produkte/race#top">Zum Shop</Link>
                   </Button>
                 </div>
               </div>
