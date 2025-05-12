@@ -50,10 +50,13 @@ export default function Wuerfel() {
       <div className="max-w-4xl mx-auto mb-12">
         <div className="bg-white rounded-lg shadow-lg overflow-hidden mb-8">
           <div className="p-6 flex flex-col justify-center">
-            <h2 className="text-2xl font-bold text-[#0A3A68] mb-4">Mehr Würfel für Ihr Spiel</h2>
+            <h2 className="text-2xl font-bold text-[#0A3A68] mb-4">Würfel für deinen Monopoly Go Account!</h2>
             <p className="text-gray-700 mb-4">
-              Mit unserem Würfelboost-Service erhöhen wir die Anzahl der Würfel in Ihrem Monopoly GO-Konto, 
-              damit Sie mehr Möglichkeiten im Spiel haben und schneller vorankommen.
+              Bitte beachte die Voraussetzungen wie auf <Link href="/hilfe/wuerfel" className="text-[#00CFFF] hover:underline">"Hilfe Würfelboost"</Link> beschrieben. 
+              Dort findest du auch weitere Informationen zum Ablauf.
+            </p>
+            <p className="text-gray-700 mb-4">
+              Folgende Pakete bieten wir an:
             </p>
             <ul className="space-y-2 mb-6">
               <li className="flex items-start">
