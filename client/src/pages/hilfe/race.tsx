@@ -133,7 +133,7 @@ export default function RaceHilfe() {
           </div>
           
           <div className="bg-[#E6F7FF] border-l-4 border-[#00CFFF] p-4 rounded-r-md">
-            <h4 className="font-bold text-[#0A3A68] mb-2 border-b-2 border-[#00CFFF] pb-2 inline-block">Race-Plätze kaufen</h4>
+            <h4 className="babix-info-header text-[#0A3A68] mb-2">Race-Plätze kaufen</h4>
             <p className="text-gray-700 mb-3">In der Zwischenzeit können Sie bereits unsere Race-Event-Angebote durchsuchen und bestellen.</p>
             <Link href="/produkte/race">
               <button className="bg-[#0A3A68] hover:bg-[#00CFFF] text-white py-2 px-4 rounded-md transition-colors inline-flex items-center">

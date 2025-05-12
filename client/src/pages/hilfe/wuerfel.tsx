@@ -138,7 +138,7 @@ export default function WuerfelHilfe() {
               
               <div className="border border-gray-200 rounded-lg mb-2">
                 <div className="bg-gray-50 p-4 rounded-t-lg cursor-pointer flex justify-between items-center">
-                  <h4 className="font-bold text-[#0A3A68]">Wie lange dauert der Boost?</h4>
+                  <h4 className="babix-info-header text-[#0A3A68]">Wie lange dauert der Boost?</h4>
                   <span className="material-icons text-[#00CFFF]">expand_more</span>
                 </div>
                 <div className="p-4 border-t border-gray-200">
@@ -152,7 +152,7 @@ export default function WuerfelHilfe() {
               
               <div className="border border-gray-200 rounded-lg mb-2">
                 <div className="bg-gray-50 p-4 rounded-t-lg cursor-pointer flex justify-between items-center">
-                  <h4 className="font-bold text-[#0A3A68]">Können größere Würfelboost Pakete aufgeteilt werden?</h4>
+                  <h4 className="babix-info-header text-[#0A3A68]">Können größere Würfelboost Pakete aufgeteilt werden?</h4>
                   <span className="material-icons text-[#00CFFF]">expand_more</span>
                 </div>
                 <div className="p-4 border-t border-gray-200">
@@ -162,7 +162,7 @@ export default function WuerfelHilfe() {
               
               <div className="border border-gray-200 rounded-lg mb-2">
                 <div className="bg-gray-50 p-4 rounded-t-lg cursor-pointer flex justify-between items-center">
-                  <h4 className="font-bold text-[#0A3A68]">Kann ich dafür gesperrt werden?</h4>
+                  <h4 className="babix-info-header text-[#0A3A68]">Kann ich dafür gesperrt werden?</h4>
                   <span className="material-icons text-[#00CFFF]">expand_more</span>
                 </div>
                 <div className="p-4 border-t border-gray-200">
@@ -174,7 +174,7 @@ export default function WuerfelHilfe() {
           </div>
           
           <div className="bg-[#E6F7FF] border-l-4 border-[#00CFFF] p-4 rounded-r-md">
-            <h4 className="font-bold text-[#0A3A68] mb-2">Noch Fragen?</h4>
+            <h4 className="babix-info-header text-[#0A3A68] mb-2">Noch Fragen?</h4>
             <p className="text-gray-700 mb-3">Gerne beantworten wir deine Fragen zum Würfelboost und helfen dir bei der Auswahl des richtigen Pakets.</p>
             <Link href="/kontakt">
               <button className="bg-[#0A3A68] hover:bg-[#00CFFF] text-white py-2 px-4 rounded-md transition-colors inline-flex items-center">
