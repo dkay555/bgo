@@ -51,6 +51,7 @@ export default function WuerfelCheckout() {
   // Funktion zur Handhabung von Formulareingaben
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
+    // Keine Abhängigkeit zwischen den Checkboxen
     setFormData({
       ...formData,
       [name]: type === 'checkbox' ? checked : value
@@ -359,7 +360,10 @@ export default function WuerfelCheckout() {
                       id="agreedToWithdrawalNotice" 
                       className="h-4 w-4 mt-1 accent-[#00CFFF]"
                       checked={formData.agreedToWithdrawalNotice}
-                      onChange={() => {}}
+                      onChange={(e) => {
+                        e.stopPropagation();
+                        setFormData({...formData, agreedToWithdrawalNotice: e.target.checked});
+                      }}
                     />
                     <Label htmlFor="agreedToWithdrawalNotice" className="text-sm cursor-pointer">
                       Ich bin ausdrücklich damit einverstanden, dass mit der Ausführung des Auftrags vor Ablauf der Widerrufsfrist begonnen wird. Mir ist bekannt, dass mein <Link href="/widerruf" className="text-[#00CFFF] hover:underline">Widerrufsrecht</Link> mit Beginn der Ausführung erlischt.
@@ -377,7 +381,10 @@ export default function WuerfelCheckout() {
                       id="agreedToTerms" 
                       className="h-4 w-4 mt-1 accent-[#00CFFF]"
                       checked={formData.agreedToTerms}
-                      onChange={() => {}}
+                      onChange={(e) => {
+                        e.stopPropagation();
+                        setFormData({...formData, agreedToTerms: e.target.checked});
+                      }}
                     />
                     <Label htmlFor="agreedToTerms" className="text-sm cursor-pointer">
                       Ich habe die <Link href="/agb" className="text-[#00CFFF] hover:underline">AGB</Link> und <Link href="/datenschutz" className="text-[#00CFFF] hover:underline">Datenschutzbestimmungen</Link> gelesen und akzeptiere diese.
