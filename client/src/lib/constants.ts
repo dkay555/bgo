@@ -51,10 +51,10 @@ export const NAV_LINKS = [
     href: '/produkte',
     isDropdown: true,
     dropdownItems: [
-      { name: 'Würfel', href: '/produkte/wuerfel', icon: 'casino' },
-      { name: 'Sticker', href: '/produkte/sticker', icon: 'collections_bookmark' },
-      { name: 'Partnerevent', href: '/produkte/partner', icon: 'people' },
-      { name: 'Race', href: '/produkte/race', icon: 'emoji_events' },
+      { name: 'Würfel', href: '/produkte/wuerfel#top', icon: 'casino' },
+      { name: 'Sticker', href: '/produkte/sticker#top', icon: 'collections_bookmark' },
+      { name: 'Partnerevent', href: '/produkte/partner#top', icon: 'people' },
+      { name: 'Race', href: '/produkte/race#top', icon: 'emoji_events' },
     ]
   },
   { 
@@ -62,10 +62,10 @@ export const NAV_LINKS = [
     href: '/hilfe', 
     isDropdown: true,
     dropdownItems: [
-      { name: 'Würfel Hilfe', href: '/hilfe/wuerfel' },
-      { name: 'Sticker Hilfe', href: '/hilfe/sticker' },
-      { name: 'Partnerevent Hilfe', href: '/hilfe/partner' },
-      { name: 'Race Hilfe', href: '/hilfe/race' },
+      { name: 'Würfel Hilfe', href: '/hilfe/wuerfel#top' },
+      { name: 'Sticker Hilfe', href: '/hilfe/sticker#top' },
+      { name: 'Partnerevent Hilfe', href: '/hilfe/partner#top' },
+      { name: 'Race Hilfe', href: '/hilfe/race#top' },
     ]
   },
   { name: 'Kontakt', href: '/kontakt' },
@@ -73,39 +73,39 @@ export const NAV_LINKS = [
 
 // Footer links
 export const FOOTER_LINKS = [
-  { name: 'Impressum', href: '/impressum' },
-  { name: 'Datenschutz', href: '/datenschutz' },
-  { name: 'AGB', href: '/agb' },
-  { name: 'Kontakt', href: '/kontakt' },
-  { name: 'Hilfe', href: '/hilfe' },
+  { name: 'Impressum', href: '/impressum#top' },
+  { name: 'Datenschutz', href: '/datenschutz#top' },
+  { name: 'AGB', href: '/agb#top' },
+  { name: 'Kontakt', href: '/kontakt#top' },
+  { name: 'Hilfe', href: '/hilfe#top' },
 ];
 
 // Produkt-Kategorien
 export const PRODUCT_CATEGORIES = [
   { 
     name: 'Würfelboost', 
-    path: '/produkte/wuerfel',
+    path: '/produkte/wuerfel#top',
     icon: 'casino',
     image: 'kategorie_wuerfel_300_300.webp',
     description: 'Erhöhen Sie Ihre Würfelzahl im Spiel'
   },
   { 
     name: 'Sticker', 
-    path: '/produkte/sticker',
+    path: '/produkte/sticker#top',
     icon: 'collections_bookmark',
     image: 'kategorie_sticker_300_300.webp',
     description: 'Vervollständigen Sie Ihre Sammlungen'
   },
   { 
     name: 'Partner', 
-    path: '/produkte/partner',
+    path: '/produkte/partner#top',
     icon: 'people',
     image: 'kategorie_partner_300_300.webp',
     description: 'Finden Sie aktive Spielpartner'
   },
   { 
     name: 'Race', 
-    path: '/produkte/race',
+    path: '/produkte/race#top',
     icon: 'emoji_events',
     image: 'kategorie_racers_200_300.webp',
     description: 'Unterstützung bei Events'
