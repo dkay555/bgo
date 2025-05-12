@@ -10,7 +10,7 @@ export default function Wuerfel() {
     document.title = 'Würfelboost | babixGO';
   }, []);
   
-  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleSelectChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setSelectedOption(value);
     
@@ -70,19 +70,53 @@ export default function Wuerfel() {
             <div className="mt-4 mb-8">
               <h3 className="babix-info-header text-[#0A3A68] mb-4">Wählen Sie Ihre Würfelmenge</h3>
               
-              <div className="relative w-full md:w-2/3 mb-6">
-                <select 
-                  className="w-full p-3 pe-10 bg-gray-100 border border-gray-300 rounded-md appearance-none focus:outline-none focus:ring-2 focus:ring-[#00CFFF]"
-                  value={selectedOption}
-                  onChange={handleSelectChange}
-                >
-                  <option value="25000">25.000 Würfel - 25€</option>
-                  <option value="35000">35.000 Würfel - 35€</option>
-                  <option value="45000">45.000 Würfel - 45€</option>
-                </select>
-                <span className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
-                  <span className="material-icons text-gray-600">expand_more</span>
-                </span>
+              <div className="w-full md:w-2/3 mb-6">
+                <div className="space-y-3">
+                  <div className="flex items-center">
+                    <input 
+                      type="radio" 
+                      id="dice-25000" 
+                      name="dice-amount" 
+                      value="25000" 
+                      checked={selectedOption === "25000"} 
+                      onChange={handleSelectChange}
+                      className="w-5 h-5 text-[#00CFFF] border-gray-300 focus:ring-[#00CFFF]" 
+                    />
+                    <label htmlFor="dice-25000" className="ml-3 block font-medium text-gray-700">
+                      25.000 Würfel - 25€
+                    </label>
+                  </div>
+                  
+                  <div className="flex items-center">
+                    <input 
+                      type="radio" 
+                      id="dice-35000" 
+                      name="dice-amount" 
+                      value="35000" 
+                      checked={selectedOption === "35000"} 
+                      onChange={handleSelectChange}
+                      className="w-5 h-5 text-[#00CFFF] border-gray-300 focus:ring-[#00CFFF]" 
+                    />
+                    <label htmlFor="dice-35000" className="ml-3 block font-medium text-gray-700">
+                      35.000 Würfel - 35€
+                    </label>
+                  </div>
+                  
+                  <div className="flex items-center">
+                    <input 
+                      type="radio" 
+                      id="dice-45000" 
+                      name="dice-amount" 
+                      value="45000" 
+                      checked={selectedOption === "45000"} 
+                      onChange={handleSelectChange}
+                      className="w-5 h-5 text-[#00CFFF] border-gray-300 focus:ring-[#00CFFF]" 
+                    />
+                    <label htmlFor="dice-45000" className="ml-3 block font-medium text-gray-700">
+                      45.000 Würfel - 45€
+                    </label>
+                  </div>
+                </div>
               </div>
               
               <div className="flex flex-col sm:flex-row gap-4 items-center">
