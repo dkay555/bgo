@@ -8,7 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import PayPalButton from '@/components/PayPalButton';
+import { PayPalButtonWrapper } from '@/components/PayPalButtonWrapper';
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 
@@ -530,12 +530,53 @@ export default function WuerfelCheckout() {
         
         {/* Kaufen Button und PayPal */}
         <div className="mb-6 grid grid-cols-1 gap-4">
-          <Button 
-            type="submit" 
-            className="w-full bg-[#FF4C00] hover:bg-[#FF4C00]/80 text-white font-bold py-3"
-          >
-            Jetzt kaufen
-          </Button>
+          {/* Wenn wir noch keine Bestellung erstellt haben, zeigen wir den Bestellbutton an */}
+          {!showPayPal ? (
+            <Button 
+              type="submit" 
+              className="w-full bg-[#FF4C00] hover:bg-[#FF4C00]/80 text-white font-bold py-3"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? (
+                <span className="flex items-center justify-center">
+                  <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Wird verarbeitet...
+                </span>
+              ) : 'Jetzt kaufen'}
+            </Button>
+          ) : (
+            /* Wenn wir eine Bestellung erstellt haben, zeigen wir die PayPal-Zahlung an */
+            <div className="mb-4">
+              <div className="bg-[#00CFFF]/10 p-4 border border-[#00CFFF] rounded-lg mb-4 text-center">
+                <h3 className="font-bold text-lg mb-2">Bestellung erstellt!</h3>
+                <p>Bitte schließen Sie Ihre Bestellung durch Zahlung über PayPal ab.</p>
+              </div>
+              
+              <div className="py-4 px-4 border border-gray-200 rounded-lg mb-4">
+                <div className="flex justify-between items-center mb-2 border-b pb-2">
+                  <span className="font-medium">Produkt:</span>
+                  <span>{formData.selectedPackage} Würfel</span>
+                </div>
+                <div className="flex justify-between items-center font-bold text-lg">
+                  <span>Gesamt:</span>
+                  <span className="text-[#FF4C00]">{orderAmount}€</span>
+                </div>
+              </div>
+              
+              <div className="my-4 mx-auto max-w-xs h-12">
+                <PayPalButtonWrapper 
+                  amount={orderAmount} 
+                  currency="EUR" 
+                  intent="CAPTURE" 
+                  orderId={orderId ?? undefined}
+                  onPaymentComplete={updateOrderPayment}
+                />
+              </div>
+            </div>
+          )}
 
           <div className="relative">
             <div className="absolute inset-0 flex items-center">

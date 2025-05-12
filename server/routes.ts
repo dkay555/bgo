@@ -8,16 +8,48 @@ import { ZodError } from "zod";
 export async function registerRoutes(app: Express): Promise<Server> {
   // PayPal integration routes
   app.get("/setup", async (req, res) => {
-    await loadPaypalDefault(req, res);
+    try {
+      await loadPaypalDefault(req, res);
+    } catch (error) {
+      console.error("PayPal Setup Error:", error);
+      res.status(500).json({
+        isConfigured: false,
+        error: "PayPal configuration failed: " + (error as Error).message
+      });
+    }
   });
 
   app.post("/order", async (req, res) => {
-    // Request body should contain: { intent, amount, currency }
-    await createPaypalOrder(req, res);
+    try {
+      // Request body should contain: { intent, amount, currency }
+      await createPaypalOrder(req, res);
+    } catch (error) {
+      console.error("PayPal Order Creation Error:", error);
+      res.status(500).json({
+        success: false,
+        error: "Failed to create PayPal order: " + (error as Error).message
+      });
+    }
   });
 
   app.post("/order/:orderID/capture", async (req, res) => {
-    await capturePaypalOrder(req, res);
+    try {
+      await capturePaypalOrder(req, res);
+      
+      // Hole die ID aus dem Request-Body (optional)
+      const { orderId } = req.body;
+      
+      // Wenn wir eine Bestellungs-ID haben, aktualisieren wir den Zahlungsstatus
+      if (orderId) {
+        await storage.updateOrderPaymentStatus(orderId, "completed", req.params.orderID);
+      }
+    } catch (error) {
+      console.error("PayPal Order Capture Error:", error);
+      res.status(500).json({
+        success: false,
+        error: "Failed to capture PayPal order: " + (error as Error).message
+      });
+    }
   });
 
   // API routes (prefix all with /api)
