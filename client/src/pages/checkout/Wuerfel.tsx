@@ -9,17 +9,21 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Separator } from '@/components/ui/separator';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import PayPalButton from '@/components/PayPalButton';
+import { apiRequest } from "@/lib/queryClient";
+import { useToast } from "@/hooks/use-toast";
 
 
 export default function WuerfelCheckout() {
   // URL-Parameter auslesen
   const [location] = useLocation();
   const searchParams = new URLSearchParams(location.split('?')[1] || '');
+  const { toast } = useToast();
   
-  // Direkter Test der Parameterwerte im Konsolenprotokoll
-  console.log("Vollständige URL:", location);
-  console.log("Query-Teil:", location.split('?')[1] || 'keine Query');
-  console.log("Alle Parameter:", Object.fromEntries(searchParams.entries()));
+  // States für Zahlungs- und Bestellungsablauf
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showPayPal, setShowPayPal] = useState(false);
+  const [orderAmount, setOrderAmount] = useState("25.00");
+  const [orderId, setOrderId] = useState<number | null>(null);
   
   // Parameter für das Würfelpaket
   const packageParam = searchParams.get('package');
@@ -69,6 +73,18 @@ export default function WuerfelCheckout() {
     };
   }, []);
 
+  // Aktualisiert den Bestellbetrag basierend auf der Würfelpaketauswahl
+  useEffect(() => {
+    // Setze den Bestellbetrag basierend auf dem ausgewählten Paket
+    if (formData.selectedPackage === "25000") {
+      setOrderAmount("25.00");
+    } else if (formData.selectedPackage === "35000") {
+      setOrderAmount("35.00");
+    } else if (formData.selectedPackage === "45000") {
+      setOrderAmount("45.00");
+    }
+  }, [formData.selectedPackage]);
+
   // Funktion zur Handhabung von Formulareingaben
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
@@ -84,8 +100,75 @@ export default function WuerfelCheckout() {
     setAuthMethod(method);
   };
 
+  // Erzeugt eine strukturierte Order aus den Formulardaten
+  const createOrderData = () => {
+    return {
+      // Persönliche Daten
+      name: formData.name,
+      email: formData.email,
+      whatsapp: formData.whatsapp || null,
+      
+      // Bestelldetails
+      package: formData.selectedPackage,
+      price: parseFloat(orderAmount),
+      
+      // Monopoly Daten
+      authMethod: authMethod,
+      ingameName: authMethod === 'authtoken' ? formData.ingameName : formData.loginIngameName,
+      
+      // Auth-spezifische Daten
+      authtoken: authMethod === 'authtoken' ? formData.authtoken : null,
+      loginEmail: authMethod === 'login' ? formData.loginEmail : null,
+      password: authMethod === 'login' ? formData.password : null,
+      recoveryCode1: authMethod === 'login' ? formData.recoveryCode1 : null,
+      recoveryCode2: authMethod === 'login' ? formData.recoveryCode2 : null,
+      
+      // Zahlungsdetails
+      paymentMethod: "paypal", // Erstmal immer PayPal
+      paymentStatus: "pending",
+      
+      // Zustimmungen
+      agreedToTerms: formData.agreedToTerms,
+      agreedToWithdrawalNotice: formData.agreedToWithdrawalNotice
+    };
+  };
+
+  // Sendet die Bestellung an den Server und bereitet PayPal-Zahlung vor
+  const createOrder = async () => {
+    try {
+      setIsSubmitting(true);
+      
+      const orderData = createOrderData();
+      const response = await apiRequest("POST", "/api/orders", orderData);
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Fehler beim Erstellen der Bestellung");
+      }
+      
+      const data = await response.json();
+      setOrderId(data.order.id);
+      setShowPayPal(true);
+      
+      toast({
+        title: "Bestellung erstellt",
+        description: "Bitte fahren Sie mit der Zahlung fort",
+      });
+      
+      return data.order;
+    } catch (error: any) {
+      toast({
+        title: "Fehler",
+        description: error.message || "Etwas ist schiefgelaufen",
+        variant: "destructive",
+      });
+      setIsSubmitting(false);
+      return null;
+    }
+  };
+
   // Funktion zur Handhabung der Formularübermittlung
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     // Validierung der Checkboxen
@@ -94,9 +177,51 @@ export default function WuerfelCheckout() {
       return;
     }
     
+    // Validiere auth-spezifische Felder
+    if (authMethod === 'authtoken') {
+      if (!formData.ingameName || !formData.authtoken) {
+        setFormError('Bitte füllen Sie alle Pflichtfelder aus.');
+        return;
+      }
+    } else if (authMethod === 'login') {
+      if (!formData.loginIngameName || !formData.loginEmail || !formData.password || 
+          !formData.recoveryCode1 || !formData.recoveryCode2) {
+        setFormError('Bitte füllen Sie alle Pflichtfelder aus.');
+        return;
+      }
+    }
+    
     setFormError('');
-    console.log('Formular übermittelt:', formData);
-    // Hier würde die tatsächliche Checkout-Logik implementiert werden
+    await createOrder();
+  };
+  
+  // Aktualisiert den Zahlungsstatus einer Bestellung nach erfolgreicher PayPal-Zahlung
+  const updateOrderPayment = async (paymentId: string) => {
+    if (!orderId) return;
+    
+    try {
+      const response = await apiRequest("PATCH", `/api/orders/${orderId}/payment`, {
+        status: "completed",
+        reference: paymentId
+      });
+      
+      if (!response.ok) {
+        throw new Error("Fehler beim Aktualisieren des Zahlungsstatus");
+      }
+      
+      toast({
+        title: "Zahlung erfolgreich",
+        description: "Vielen Dank für Ihren Einkauf! Wir bearbeiten Ihre Bestellung umgehend.",
+      });
+      
+      // Hier könnte eine Weiterleitung zur Bestellbestätigungsseite erfolgen
+    } catch (error: any) {
+      toast({
+        title: "Fehler",
+        description: error.message || "Fehler beim Aktualisieren des Zahlungsstatus",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
