@@ -71,7 +71,30 @@ export default function PayPalButton({
     console.log("onError", data);
   };
 
+  const [isPayPalConfigured, setIsPayPalConfigured] = React.useState<boolean | null>(null);
+  const [payPalError, setPayPalError] = React.useState<string | null>(null);
+
   useEffect(() => {
+    const checkPayPalConfiguration = async () => {
+      try {
+        const response = await fetch("/setup");
+        const data = await response.json();
+        
+        if (response.status !== 200 || !data.isConfigured) {
+          setIsPayPalConfigured(false);
+          setPayPalError(data.error || "PayPal is not available at this time");
+          return;
+        }
+        
+        setIsPayPalConfigured(true);
+        loadPayPalSDK();
+      } catch (e) {
+        console.error("Failed to check PayPal configuration", e);
+        setIsPayPalConfigured(false);
+        setPayPalError("Could not connect to PayPal services");
+      }
+    };
+
     const loadPayPalSDK = async () => {
       try {
         if (!(window as any).paypal) {
@@ -87,10 +110,11 @@ export default function PayPalButton({
         }
       } catch (e) {
         console.error("Failed to load PayPal SDK", e);
+        setPayPalError("Failed to load PayPal services");
       }
     };
 
-    loadPayPalSDK();
+    checkPayPalConfiguration();
   }, []);
   const initPayPal = async () => {
     try {
@@ -139,6 +163,25 @@ export default function PayPalButton({
     }
   };
 
+  if (isPayPalConfigured === null) {
+    // Loading state
+    return (
+      <div className="w-full h-full flex justify-center items-center">
+        <div className="animate-spin h-5 w-5 border-2 border-gray-500 rounded-full border-t-transparent"></div>
+      </div>
+    );
+  }
+
+  if (isPayPalConfigured === false) {
+    // Error state
+    return (
+      <div className="w-full h-full flex justify-center items-center">
+        <span className="text-gray-500 text-sm">{payPalError || "PayPal nicht verfügbar"}</span>
+      </div>
+    );
+  }
+
+  // PayPal is configured
   return <paypal-button id="paypal-button"></paypal-button>;
 }
 // <END_EXACT_CODE>

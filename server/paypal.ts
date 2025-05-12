@@ -20,38 +20,51 @@ import { Request, Response } from "express";
 const { PAYPAL_CLIENT_ID, PAYPAL_CLIENT_SECRET } = process.env;
 
 // Prüfe, ob die Umgebungsvariablen vorhanden sind, aber wirf keinen Fehler
-const isPayPalConfigured = PAYPAL_CLIENT_ID && PAYPAL_CLIENT_SECRET;
+const isPayPalConfigured = Boolean(PAYPAL_CLIENT_ID && PAYPAL_CLIENT_SECRET);
 
 // Gib eine Warnung aus, falls die Konfiguration fehlt
 if (!isPayPalConfigured) {
   console.warn("PayPal API credentials missing - PayPal features will be disabled");
 }
-const client = new Client({
-  clientCredentialsAuthCredentials: {
-    oAuthClientId: PAYPAL_CLIENT_ID,
-    oAuthClientSecret: PAYPAL_CLIENT_SECRET,
-  },
-  timeout: 0,
-  environment:
-                process.env.NODE_ENV === "production"
-                  ? Environment.Production
-                  : Environment.Sandbox,
-  logging: {
-    logLevel: LogLevel.Info,
-    logRequest: {
-      logBody: true,
+
+// Client nur initialisieren, wenn die Konfiguration vorhanden ist
+let client = null;
+let ordersController = null;
+let oAuthAuthorizationController = null;
+
+if (isPayPalConfigured) {
+  client = new Client({
+    clientCredentialsAuthCredentials: {
+      oAuthClientId: PAYPAL_CLIENT_ID!,
+      oAuthClientSecret: PAYPAL_CLIENT_SECRET!,
     },
-    logResponse: {
-      logHeaders: true,
+    timeout: 0,
+    environment:
+                  process.env.NODE_ENV === "production"
+                    ? Environment.Production
+                    : Environment.Sandbox,
+    logging: {
+      logLevel: LogLevel.Info,
+      logRequest: {
+        logBody: true,
+      },
+      logResponse: {
+        logHeaders: true,
+      },
     },
-  },
-});
-const ordersController = new OrdersController(client);
-const oAuthAuthorizationController = new OAuthAuthorizationController(client);
+  });
+  
+  ordersController = new OrdersController(client);
+  oAuthAuthorizationController = new OAuthAuthorizationController(client);
+}
 
 /* Token generation helpers */
 
 export async function getClientToken() {
+  if (!isPayPalConfigured || !oAuthAuthorizationController) {
+    throw new Error("PayPal is not configured");
+  }
+  
   const auth = Buffer.from(
     `${PAYPAL_CLIENT_ID}:${PAYPAL_CLIENT_SECRET}`,
   ).toString("base64");
@@ -69,6 +82,13 @@ export async function getClientToken() {
 /*  Process transactions */
 
 export async function createPaypalOrder(req: Request, res: Response) {
+  if (!isPayPalConfigured || !ordersController) {
+    return res.status(503).json({
+      error: "PayPal is not configured. Please contact the administrator.",
+      isConfigured: false
+    });
+  }
+  
   try {
     const { amount, currency, intent } = req.body;
 
@@ -121,6 +141,13 @@ export async function createPaypalOrder(req: Request, res: Response) {
 }
 
 export async function capturePaypalOrder(req: Request, res: Response) {
+  if (!isPayPalConfigured || !ordersController) {
+    return res.status(503).json({
+      error: "PayPal is not configured. Please contact the administrator.",
+      isConfigured: false
+    });
+  }
+  
   try {
     const { orderID } = req.params;
     const collect = {
