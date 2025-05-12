@@ -1,144 +1,98 @@
 import sgMail from '@sendgrid/mail';
-import { type Order } from '@shared/schema';
+import { Order } from '@shared/schema';
 
-// Initialisierung des SendGrid SDK mit dem API-Key
-if (process.env.SENDGRID_API_KEY) {
-  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+// SendGrid-Konfiguration
+if (!process.env.SENDGRID_API_KEY) {
+  console.warn('SENDGRID_API_KEY nicht gesetzt. E-Mail-Benachrichtigungen werden nicht gesendet.');
 } else {
-  console.warn('SendGrid API-Key fehlt. E-Mail-Funktionen sind deaktiviert.');
+  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 }
 
-// Email-Absender-Adresse
-const FROM_EMAIL = 'noreply@babixgo.com';
+const ADMIN_EMAIL = 'admin@babixgo.de';
+const FROM_EMAIL = 'noreply@babixgo.de';
 
-// Admin-Email-Adresse für Benachrichtigungen
-const ADMIN_EMAIL = 'admin@babixgo.com'; // Dies sollte durch Ihre tatsächliche E-Mail-Adresse ersetzt werden
+/**
+ * Formatiert eine Bestellung für die E-Mail-Anzeige
+ */
+function formatOrderDetails(order: Order): string {
+  const authInfo = order.authMethod === 'authtoken'
+    ? `Auth-Token: ${order.authtoken}`
+    : `Login-E-Mail: ${order.loginEmail}\nPasswort: ********`;
+
+  return `
+Bestellnummer: #${order.id}
+Datum: ${new Date(order.createdAt).toLocaleString('de-DE')}
+
+Kundeninformationen:
+-------------------
+Name: ${order.name}
+E-Mail: ${order.email}
+${order.whatsapp ? `WhatsApp: ${order.whatsapp}` : ''}
+
+Bestelldetails:
+-------------
+Paket: ${order.package} Würfel
+Preis: ${order.price} €
+Zahlungsmethode: ${order.paymentMethod}
+Zahlungsstatus: ${order.paymentStatus}
+
+Monopoly-Kontodaten:
+------------------
+Spielername: ${order.ingameName}
+Auth-Methode: ${order.authMethod}
+${authInfo}
+`;
+}
 
 /**
  * Sendet eine Benachrichtigung über eine neue Bestellung an den Administrator
  */
 export async function sendNewOrderNotification(order: Order): Promise<boolean> {
   if (!process.env.SENDGRID_API_KEY) {
-    console.warn('SendGrid API-Key fehlt. Keine E-Mail gesendet.');
+    console.warn('SENDGRID_API_KEY nicht gesetzt. Neue Bestellungsbenachrichtigung wird nicht gesendet.');
     return false;
   }
-
+  
   try {
-    // Formatieren der Preisangabe
-    const formattedPrice = order.price.toString().replace('.', ',');
-    
-    // Formatieren der Zahlungsmethode für die Anzeige
-    const paymentMethodDisplay = order.paymentMethod === 'paypal' ? 'PayPal' : 
-                                (order.paymentMethod === 'bank_transfer' ? 'Banküberweisung' : order.paymentMethod);
-    
-    // Formatieren des Zahlungsstatus für die Anzeige
-    const paymentStatusDisplay = order.paymentStatus === 'completed' ? 'Bezahlt' : 
-                                (order.paymentStatus === 'pending' ? 'Ausstehend' : 
-                                (order.paymentStatus === 'failed' ? 'Fehlgeschlagen' : order.paymentStatus));
-    
-    // Erstellen der E-Mail
-    const message = {
+    const msg = {
       to: ADMIN_EMAIL,
       from: FROM_EMAIL,
-      subject: `Neue Bestellung (#${order.id}): ${order.package} Würfel`,
-      text: `
-Neue Bestellung bei babixGO!
-
-Bestellnummer: #${order.id}
-Produkt: ${order.package} Würfel
-Preis: ${formattedPrice}€
-
-Kundeninformationen:
-- Name: ${order.name}
-- E-Mail: ${order.email}
-${order.whatsapp ? `- WhatsApp: ${order.whatsapp}` : ''}
-
-Monopoly GO! Informationen:
-- Ingame-Name: ${order.ingameName}
-- Auth-Methode: ${order.authMethod === 'authtoken' ? 'Authtoken' : 'Login'}
-
-Zahlungsinformationen:
-- Zahlungsmethode: ${paymentMethodDisplay}
-- Status: ${paymentStatusDisplay}
-${order.paymentReference ? `- Referenz: ${order.paymentReference}` : ''}
-
-Bestellung jetzt verwalten: https://babixgo.com/admin/bestellungen
-
---
-Diese E-Mail wurde automatisch gesendet.
-      `,
+      subject: `Neue Bestellung #${order.id} - ${order.package} Würfel`,
+      text: `Eine neue Bestellung wurde aufgegeben!\n\n${formatOrderDetails(order)}`,
       html: `
-<!DOCTYPE html>
-<html>
-<head>
-  <style>
-    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-    .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-    .header { background-color: #00CFFF; color: white; padding: 15px; text-align: center; border-radius: 5px 5px 0 0; }
-    .content { padding: 20px; border: 1px solid #ddd; border-top: none; border-radius: 0 0 5px 5px; }
-    .section { margin-bottom: 20px; }
-    .section-title { color: #0A3A68; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-bottom: 10px; }
-    .footer { margin-top: 30px; font-size: 12px; color: #777; text-align: center; }
-    .button { background-color: #FF4C00; color: white; padding: 10px 15px; text-decoration: none; border-radius: 4px; display: inline-block; }
-    .info-row { margin-bottom: 5px; }
-    .label { font-weight: bold; }
-    .status-completed { color: #28a745; }
-    .status-pending { color: #ffc107; }
-    .status-failed { color: #dc3545; }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <div class="header">
-      <h2>Neue Bestellung bei babixGO!</h2>
-    </div>
-    <div class="content">
-      <div class="section">
-        <h3 class="section-title">Bestelldetails</h3>
-        <div class="info-row"><span class="label">Bestellnummer:</span> #${order.id}</div>
-        <div class="info-row"><span class="label">Produkt:</span> ${order.package} Würfel</div>
-        <div class="info-row"><span class="label">Preis:</span> ${formattedPrice}€</div>
-      </div>
-      
-      <div class="section">
-        <h3 class="section-title">Kundeninformationen</h3>
-        <div class="info-row"><span class="label">Name:</span> ${order.name}</div>
-        <div class="info-row"><span class="label">E-Mail:</span> ${order.email}</div>
-        ${order.whatsapp ? `<div class="info-row"><span class="label">WhatsApp:</span> ${order.whatsapp}</div>` : ''}
-      </div>
-      
-      <div class="section">
-        <h3 class="section-title">Monopoly GO! Informationen</h3>
-        <div class="info-row"><span class="label">Ingame-Name:</span> ${order.ingameName}</div>
-        <div class="info-row"><span class="label">Auth-Methode:</span> ${order.authMethod === 'authtoken' ? 'Authtoken' : 'Login'}</div>
-      </div>
-      
-      <div class="section">
-        <h3 class="section-title">Zahlungsinformationen</h3>
-        <div class="info-row"><span class="label">Zahlungsmethode:</span> ${paymentMethodDisplay}</div>
-        <div class="info-row">
-          <span class="label">Status:</span> 
-          <span class="status-${order.paymentStatus}">${paymentStatusDisplay}</span>
+        <h1>Neue Bestellung eingegangen!</h1>
+        <p>Es wurde eine neue Bestellung aufgegeben.</p>
+        
+        <div style="background-color: #f8f9fa; padding: 15px; border-radius: 5px; margin: 20px 0;">
+          <h2 style="color: #0A3A68; margin-top: 0;">Bestellung #${order.id}</h2>
+          <p><strong>Datum:</strong> ${new Date(order.createdAt).toLocaleString('de-DE')}</p>
+          
+          <h3 style="color: #00CFFF;">Kundeninformationen</h3>
+          <p><strong>Name:</strong> ${order.name}</p>
+          <p><strong>E-Mail:</strong> ${order.email}</p>
+          ${order.whatsapp ? `<p><strong>WhatsApp:</strong> ${order.whatsapp}</p>` : ''}
+          
+          <h3 style="color: #00CFFF;">Bestelldetails</h3>
+          <p><strong>Paket:</strong> ${order.package} Würfel</p>
+          <p><strong>Preis:</strong> ${order.price} €</p>
+          <p><strong>Zahlungsmethode:</strong> ${order.paymentMethod}</p>
+          <p><strong>Zahlungsstatus:</strong> <span style="background-color: ${order.paymentStatus === 'completed' ? '#d1fae5' : '#fef3c7'}; padding: 2px 8px; border-radius: 9999px;">${order.paymentStatus}</span></p>
+          
+          <h3 style="color: #00CFFF;">Monopoly-Kontodaten</h3>
+          <p><strong>Spielername:</strong> ${order.ingameName}</p>
+          <p><strong>Auth-Methode:</strong> ${order.authMethod}</p>
+          ${order.authMethod === 'authtoken' 
+            ? `<p><strong>Auth-Token:</strong> ${order.authtoken}</p>` 
+            : `<p><strong>Login-E-Mail:</strong> ${order.loginEmail}</p>
+               <p><strong>Passwort:</strong> ********</p>`
+          }
         </div>
-        ${order.paymentReference ? `<div class="info-row"><span class="label">Referenz:</span> ${order.paymentReference}</div>` : ''}
-      </div>
-      
-      <div style="text-align: center; margin-top: 30px;">
-        <a href="https://babixgo.com/admin/bestellungen" class="button">Bestellung verwalten</a>
-      </div>
-      
-      <div class="footer">
-        <p>Diese E-Mail wurde automatisch gesendet.</p>
-      </div>
-    </div>
-  </div>
-</body>
-</html>
-      `
+        
+        <p>Bitte bearbeiten Sie diese Bestellung im <a href="https://babixgo.de/admin/bestellungen" style="color: #00CFFF;">Admin-Bereich</a>.</p>
+      `,
     };
-
-    // Senden der E-Mail
-    await sgMail.send(message);
+    
+    await sgMail.send(msg);
     console.log(`Bestellungsbenachrichtigung für Bestellung #${order.id} gesendet.`);
     return true;
   } catch (error) {
@@ -152,82 +106,86 @@ Diese E-Mail wurde automatisch gesendet.
  */
 export async function sendOrderConfirmation(order: Order): Promise<boolean> {
   if (!process.env.SENDGRID_API_KEY) {
-    console.warn('SendGrid API-Key fehlt. Keine E-Mail gesendet.');
+    console.warn('SENDGRID_API_KEY nicht gesetzt. Bestellbestätigung wird nicht gesendet.');
     return false;
   }
-
+  
   try {
-    // Formatieren der Preisangabe
-    const formattedPrice = order.price.toString().replace('.', ',');
-    
-    // Erstellen der E-Mail
-    const message = {
+    const msg = {
       to: order.email,
       from: FROM_EMAIL,
-      subject: `Bestellbestätigung - babixGO #${order.id}`,
+      subject: `Deine babixGO Bestellung #${order.id} - Zahlung erhalten`,
       text: `
-Vielen Dank für Ihre Bestellung bei babixGO!
+Hallo ${order.name},
 
-Bestellnummer: #${order.id}
-Produkt: ${order.package} Würfel
-Preis: ${formattedPrice}€
+vielen Dank für deine Bestellung bei babixGO!
 
-Wir werden Ihren Auftrag so schnell wie möglich bearbeiten.
+Wir haben deine Zahlung für ${order.package} Würfel erfolgreich erhalten und werden diese in Kürze deinem Monopoly GO-Konto gutschreiben.
 
-Bei Fragen können Sie uns jederzeit unter support@babixgo.com kontaktieren.
+${formatOrderDetails(order)}
 
-Mit freundlichen Grüßen,
-Ihr babixGO-Team
-      `,
+Bei Fragen zu deiner Bestellung antworte einfach auf diese E-Mail oder kontaktiere uns über WhatsApp.
+
+Viel Spaß mit deinen neuen Würfeln!
+
+Dein babixGO-Team
+`,
       html: `
-<!DOCTYPE html>
-<html>
-<head>
-  <style>
-    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-    .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-    .header { background-color: #00CFFF; color: white; padding: 15px; text-align: center; border-radius: 5px 5px 0 0; }
-    .content { padding: 20px; border: 1px solid #ddd; border-top: none; border-radius: 0 0 5px 5px; }
-    .section { margin-bottom: 20px; }
-    .footer { margin-top: 30px; font-size: 12px; color: #777; text-align: center; }
-    .info-row { margin-bottom: 10px; }
-    .label { font-weight: bold; }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <div class="header">
-      <h2>Vielen Dank für Ihre Bestellung!</h2>
-    </div>
-    <div class="content">
-      <p>Hallo ${order.name},</p>
-      
-      <p>Vielen Dank für Ihre Bestellung bei babixGO. Wir werden Ihren Auftrag so schnell wie möglich bearbeiten.</p>
-      
-      <div class="section">
-        <h3 style="color: #0A3A68; border-bottom: 1px solid #eee; padding-bottom: 5px;">Bestelldetails</h3>
-        <div class="info-row"><span class="label">Bestellnummer:</span> #${order.id}</div>
-        <div class="info-row"><span class="label">Produkt:</span> ${order.package} Würfel</div>
-        <div class="info-row"><span class="label">Preis:</span> ${formattedPrice}€</div>
-      </div>
-      
-      <p>Bei Fragen können Sie uns jederzeit unter <a href="mailto:support@babixgo.com">support@babixgo.com</a> kontaktieren.</p>
-      
-      <p>Mit freundlichen Grüßen,<br>
-      Ihr babixGO-Team</p>
-      
-      <div class="footer">
-        <p>&copy; 2025 babixGO. Alle Rechte vorbehalten.</p>
-      </div>
-    </div>
-  </div>
-</body>
-</html>
-      `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <div style="background-color: #0A3A68; text-align: center; padding: 20px;">
+            <h1 style="color: white; margin: 0;">babixGO</h1>
+          </div>
+          
+          <div style="padding: 20px;">
+            <h2>Hallo ${order.name},</h2>
+            
+            <p>vielen Dank für deine Bestellung bei babixGO!</p>
+            
+            <p>Wir haben deine Zahlung für <strong>${order.package} Würfel</strong> erfolgreich erhalten und werden diese in Kürze deinem Monopoly GO-Konto gutschreiben.</p>
+            
+            <div style="background-color: #f8f9fa; padding: 15px; border-radius: 5px; margin: 20px 0;">
+              <h3 style="color: #0A3A68; margin-top: 0;">Bestellübersicht #${order.id}</h3>
+              
+              <table style="width: 100%; border-collapse: collapse;">
+                <tr>
+                  <td style="padding: 8px 0; border-bottom: 1px solid #eee; width: 40%;"><strong>Paket:</strong></td>
+                  <td style="padding: 8px 0; border-bottom: 1px solid #eee;">${order.package} Würfel</td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Preis:</strong></td>
+                  <td style="padding: 8px 0; border-bottom: 1px solid #eee;">${order.price} €</td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Zahlungsmethode:</strong></td>
+                  <td style="padding: 8px 0; border-bottom: 1px solid #eee;">${order.paymentMethod}</td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 0;"><strong>Zahlungsstatus:</strong></td>
+                  <td style="padding: 8px 0;"><span style="background-color: #d1fae5; padding: 2px 8px; border-radius: 9999px;">bezahlt</span></td>
+                </tr>
+              </table>
+            </div>
+            
+            <p>Bei Fragen zu deiner Bestellung antworte einfach auf diese E-Mail oder kontaktiere uns über WhatsApp.</p>
+            
+            <p>Viel Spaß mit deinen neuen Würfeln!</p>
+            
+            <p>Dein babixGO-Team</p>
+          </div>
+          
+          <div style="background-color: #f8f9fa; padding: 15px; text-align: center; font-size: 14px; color: #666;">
+            <p>© ${new Date().getFullYear()} babixGO. Alle Rechte vorbehalten.</p>
+            <p>
+              <a href="https://babixgo.de/datenschutz" style="color: #00CFFF; text-decoration: none; margin: 0 10px;">Datenschutz</a> | 
+              <a href="https://babixgo.de/impressum" style="color: #00CFFF; text-decoration: none; margin: 0 10px;">Impressum</a> | 
+              <a href="https://babixgo.de/agb" style="color: #00CFFF; text-decoration: none; margin: 0 10px;">AGB</a>
+            </p>
+          </div>
+        </div>
+      `,
     };
-
-    // Senden der E-Mail
-    await sgMail.send(message);
+    
+    await sgMail.send(msg);
     console.log(`Bestellbestätigung für Bestellung #${order.id} gesendet.`);
     return true;
   } catch (error) {
