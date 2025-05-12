@@ -42,7 +42,7 @@ export default function Partner() {
   ];
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8" id="top">
       <div className="flex flex-col items-center mb-8">
         <Link href="/produkte" className="self-start text-[#0A3A68] hover:text-[#FF4C00] mb-4 inline-flex items-center transition-colors">
           <span className="material-icons mr-1">arrow_back</span>
