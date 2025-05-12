@@ -1,11 +1,34 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'wouter';
 import { PRICES, SPECIAL_OFFER } from '@/lib/constants';
 
 export default function Wuerfel() {
+  const [selectedOption, setSelectedOption] = useState("25000");
+  const [price, setPrice] = useState(25);
+  
   useEffect(() => {
     document.title = 'Würfelboost | babixGO';
   }, []);
+  
+  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value;
+    setSelectedOption(value);
+    
+    // Setze den entsprechenden Preis basierend auf der Auswahl
+    switch(value) {
+      case "25000":
+        setPrice(25);
+        break;
+      case "35000":
+        setPrice(35);
+        break;
+      case "45000":
+        setPrice(45);
+        break;
+      default:
+        setPrice(25);
+    }
+  };
 
   return (
     <div className="container mx-auto px-4 py-8" id="top">
@@ -50,7 +73,8 @@ export default function Wuerfel() {
               <div className="relative w-full md:w-2/3 mb-6">
                 <select 
                   className="w-full p-3 pe-10 bg-gray-100 border border-gray-300 rounded-md appearance-none focus:outline-none focus:ring-2 focus:ring-[#00CFFF]"
-                  defaultValue="25000"
+                  value={selectedOption}
+                  onChange={handleSelectChange}
                 >
                   <option value="25000">25.000 Würfel - 25€</option>
                   <option value="35000">35.000 Würfel - 35€</option>
@@ -61,10 +85,15 @@ export default function Wuerfel() {
                 </span>
               </div>
               
-              <button className="bg-[#FF4C00] text-white py-3 px-6 rounded-md hover:bg-[#0A3A68] transition-colors inline-flex items-center">
-                <span className="material-icons mr-2">shopping_cart</span>
-                Würfel kaufen
-              </button>
+              <div className="flex flex-col sm:flex-row gap-4 items-center">
+                <div className="text-xl font-bold text-[#0A3A68] mb-2 sm:mb-0">
+                  Preis: <span className="text-[#FF4C00]">{price}€</span>
+                </div>
+                <button className="bg-[#FF4C00] text-white py-3 px-6 rounded-md hover:bg-[#0A3A68] transition-colors inline-flex items-center">
+                  <span className="material-icons mr-2">shopping_cart</span>
+                  Würfel kaufen
+                </button>
+              </div>
             </div>
             
             <div className="bg-yellow-50 p-4 rounded-lg border-l-4 border-yellow-400 mt-6">
