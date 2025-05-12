@@ -72,7 +72,7 @@ export default function Wuerfel() {
               
               <div className="w-full md:w-2/3 mb-6">
                 <div className="space-y-3">
-                  <div className="flex items-center">
+                  <div className={`flex items-center p-3 rounded-lg ${selectedOption === "25000" ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border border-gray-200'}`}>
                     <input 
                       type="radio" 
                       id="dice-25000" 
@@ -82,12 +82,12 @@ export default function Wuerfel() {
                       onChange={handleSelectChange}
                       className="w-5 h-5 text-[#00CFFF] border-gray-300 focus:ring-[#00CFFF]" 
                     />
-                    <label htmlFor="dice-25000" className="ml-3 block font-medium text-gray-700">
+                    <label htmlFor="dice-25000" className="ml-3 block font-medium text-gray-700 w-full cursor-pointer">
                       25.000 Würfel - 25€
                     </label>
                   </div>
                   
-                  <div className="flex items-center">
+                  <div className={`flex items-center p-3 rounded-lg ${selectedOption === "35000" ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border border-gray-200'}`}>
                     <input 
                       type="radio" 
                       id="dice-35000" 
@@ -97,12 +97,12 @@ export default function Wuerfel() {
                       onChange={handleSelectChange}
                       className="w-5 h-5 text-[#00CFFF] border-gray-300 focus:ring-[#00CFFF]" 
                     />
-                    <label htmlFor="dice-35000" className="ml-3 block font-medium text-gray-700">
+                    <label htmlFor="dice-35000" className="ml-3 block font-medium text-gray-700 w-full cursor-pointer">
                       35.000 Würfel - 35€
                     </label>
                   </div>
                   
-                  <div className="flex items-center">
+                  <div className={`flex items-center p-3 rounded-lg ${selectedOption === "45000" ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border border-gray-200'}`}>
                     <input 
                       type="radio" 
                       id="dice-45000" 
@@ -112,7 +112,7 @@ export default function Wuerfel() {
                       onChange={handleSelectChange}
                       className="w-5 h-5 text-[#00CFFF] border-gray-300 focus:ring-[#00CFFF]" 
                     />
-                    <label htmlFor="dice-45000" className="ml-3 block font-medium text-gray-700">
+                    <label htmlFor="dice-45000" className="ml-3 block font-medium text-gray-700 w-full cursor-pointer">
                       45.000 Würfel - 45€
                     </label>
                   </div>
@@ -120,7 +120,7 @@ export default function Wuerfel() {
               </div>
               
               <div className="flex flex-col sm:flex-row gap-4 items-center">
-                <div className="text-xl font-bold text-[#0A3A68] mb-2 sm:mb-0">
+                <div className="text-xl font-bold text-[#0A3A68] mb-2 sm:mb-0 bg-[#00CFFF]/10 px-4 py-2 rounded-md border border-[#00CFFF]">
                   Preis: <span className="text-[#FF4C00]">{price}€</span>
                 </div>
                 <button className="bg-[#FF4C00] text-white py-3 px-6 rounded-md hover:bg-[#0A3A68] transition-colors inline-flex items-center">
