@@ -428,16 +428,21 @@ export default function WuerfelCheckout() {
               width: "100%"
             }}
           >
-            {/* Die PayPal-Komponente wird hier eingebunden */}
-            <PayPalButton 
-              amount={
-                formData.selectedPackage === "25000" ? "25.00" :
-                formData.selectedPackage === "35000" ? "35.00" :
-                "45.00"
-              } 
-              currency="EUR" 
-              intent="CAPTURE" 
-            />
+            {/* PayPal Button mit Fallback */}
+            <button
+              type="button"
+              className="w-full h-full flex justify-center items-center"
+              onClick={() => {
+                // Fallback für PayPal
+                window.open("https://www.paypal.com/de/home", "_blank");
+              }}
+            >
+              <img 
+                src="https://www.paypalobjects.com/webstatic/de_DE/i/de-pp-logo-150px.png" 
+                alt="PayPal" 
+                style={{ height: "24px" }} 
+              />
+            </button>
           </div>
         </div>
         
