@@ -7,7 +7,7 @@ export default function WuerfelHilfe() {
   }, []);
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8" id="top">
       <div className="flex flex-col items-center mb-8">
         <Link href="/hilfe" className="self-start text-[#0A3A68] hover:text-[#FF4C00] mb-4 inline-flex items-center transition-colors">
           <span className="material-icons mr-1">arrow_back</span>
@@ -23,7 +23,7 @@ export default function WuerfelHilfe() {
           <h2 className="babix-info-header mx-auto mb-6">Der Würfelboost - Würfel für deinen Monopoly GO Account</h2>
           <p className="text-gray-600 text-sm mb-6">Zuletzt aktualisiert: 2. März</p>
           
-          <div className="mb-8">
+          <div className="mb-8" id="voraussetzungen">
             <h3 className="text-xl font-bold text-[#0A3A68] mb-4 border-b-2 border-[#00CFFF] pb-2 inline-block">Voraussetzungen</h3>
             <ul className="list-disc pl-5 space-y-4 text-gray-700">
               <li>
@@ -38,7 +38,7 @@ export default function WuerfelHilfe() {
             </ul>
           </div>
           
-          <div className="mb-8">
+          <div className="mb-8" id="ablauf">
             <h3 className="text-xl font-bold text-[#0A3A68] mb-4 border-b-2 border-[#00CFFF] pb-2 inline-block">Ablauf</h3>
             <ol className="list-decimal pl-5 space-y-4 text-gray-700">
               <li>
@@ -65,7 +65,7 @@ export default function WuerfelHilfe() {
             </div>
           </div>
           
-          <div className="mb-8">
+          <div className="mb-8" id="preise">
             <h3 className="text-xl font-bold text-[#0A3A68] mb-4 border-b-2 border-[#00CFFF] pb-2 inline-block">Preise</h3>
             <p className="mb-3 text-gray-700">Grundsätzlich ist jede Würfelmenge möglich. <strong>Hinweis:</strong> Würfelangaben haben eine Toleranz von ±2.500 Würfeln.</p>
             <p className="mb-3 text-sm text-gray-600">Beispiel: Bei 25.000 Würfeln erhaltet ihr zwischen 22.500 und 27.500.</p>
