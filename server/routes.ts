@@ -4,6 +4,7 @@ import { storage } from "./storage";
 import { createPaypalOrder, capturePaypalOrder, loadPaypalDefault } from "./paypal";
 import { insertOrderSchema } from "@shared/schema";
 import { ZodError } from "zod";
+import { sendNewOrderNotification, sendOrderConfirmation } from "./email";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // PayPal integration routes
@@ -72,6 +73,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
     });
   });
   
+  // Admin routes
+  app.get("/api/admin/orders", async (req, res) => {
+    try {
+      // In einer echten Anwendung würde hier eine Authentifizierung und Autorisierung stattfinden
+      const orders = await storage.getAllOrders();
+      
+      res.json({
+        success: true,
+        orders
+      });
+    } catch (error) {
+      console.error("Fehler beim Abrufen der Bestellungen:", error);
+      res.status(500).json({
+        success: false,
+        message: "Ein Serverfehler ist aufgetreten"
+      });
+    }
+  });
+  
   // Bestellungsrouten
   app.post("/api/orders", async (req: Request, res: Response) => {
     try {
@@ -80,6 +100,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       // Speichere die Bestellung in der Datenbank
       const order = await storage.createOrder(orderData);
+      
+      // Sende E-Mail-Benachrichtigungen
+      sendNewOrderNotification(order).catch(err => {
+        console.error("Fehler beim Senden der Admin-Benachrichtigung:", err);
+      });
+      
+      sendOrderConfirmation(order).catch(err => {
+        console.error("Fehler beim Senden der Kundenbestätigung:", err);
+      });
       
       // Sende eine erfolgreiche Antwort zurück
       res.status(201).json({

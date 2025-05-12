@@ -36,6 +36,9 @@ const LoginHilfePage = lazy(() => import('@/pages/hilfe/login'));
 const AccountsHilfePage = lazy(() => import('@/pages/hilfe/accounts'));
 const NewsPreiseAngebotPage = lazy(() => import('@/pages/hilfe/news_preise_angebot'));
 
+// Admin pages
+const AdminBestellungenPage = lazy(() => import('@/pages/admin/Bestellungen'));
+
 const Ladebildschirm = () => (
   <div className="flex items-center justify-center min-h-screen">
     <div className="text-center">
@@ -82,6 +85,9 @@ function Router() {
           
           {/* Checkout-Seiten */}
           <Route path="/checkout/wuerfel" component={WuerfelCheckoutPage} />
+          
+          {/* Admin-Bereich */}
+          <Route path="/admin/bestellungen" component={AdminBestellungenPage} />
           
           {/* 404-Seite für alle unbekannten Routen */}
           <Route component={NotFound} />
