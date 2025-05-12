@@ -24,7 +24,7 @@ export default function StartPage() {
           <h2 className="babix-info-header mx-auto mb-8 text-center">Was gibt's Neues?</h2>
           
           <div className="bg-white rounded-lg shadow-md p-5">
-            <h3 className="text-[#0A3A68] font-bold mb-2 border-b border-[#00CFFF] pb-1 inline-block">Neue Preise für Würfel - Angebotsanpassung</h3>
+            <h3 className="babix-info-header mb-2">Neue Preise für Würfel - Angebotsanpassung</h3>
             <p className="text-[#0A3A68]/80 mb-3">
               Die letzten Tage war es still um babixGO... Wir haben uns und unser Vorgehen hinterfragt, daraufhin unsere "Anti-Anticheat Maßnahmen" 
               überdacht, überarbeitet und an über 200 Accounts getestet & zu guter letzt an unserer Preisliste gearbeitet.
