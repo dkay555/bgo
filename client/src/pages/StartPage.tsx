@@ -5,15 +5,63 @@ import { CONTACT } from '@/lib/constants';
 export default function StartPage() {
   return (
     <main className="px-4 py-6 md:py-10 flex-grow font-['Nunito_Sans'] text-[#0A3A68]" id="top">
-      {/* Hero Section - Überschrift und Text als zentrierte Gruppe */}
-      <section className="text-center py-4 md:py-6 relative overflow-hidden flex items-center justify-center">
+      {/* Hero Section - Überschrift und direkte Links */}
+      <section className="py-6 md:py-8 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-[#00CFFF]/10 to-[#FF4C00]/10 animate-gradient-x"></div>
-        <div className="max-w-4xl mx-auto relative">
-          <div className="inline-block text-center">
+        <div className="max-w-4xl mx-auto relative px-4">
+          <div className="text-center mb-6">
             <h1 className="babix-info-header font-bold text-3xl md:text-2xl px--2 py-2">
               Willkommen bei babixGO
             </h1>
             <p className="text-base md:text-lg">Würfel, Events, Sticker & mehr – alles für dein Monopoly GO Abenteuer.</p>
+          </div>
+          
+          <div className="bg-white/80 backdrop-blur-sm rounded-xl p-5 shadow-md">
+            <h2 className="font-bold text-lg text-[#0A3A68] mb-3 border-b border-[#00CFFF] pb-2">
+              Gehe direkt zu:
+            </h2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <Link href="/hilfe/news_preise_angebot.html">
+                <div className="bg-[#00CFFF]/10 hover:bg-[#00CFFF]/20 transition-colors rounded-lg p-4 flex items-start">
+                  <span className="material-icons text-[#00CFFF] mr-3">feed</span>
+                  <div>
+                    <h3 className="font-bold text-[#0A3A68]">News</h3>
+                    <p className="text-sm text-gray-700">Was gibt's Neues bei babixGO?</p>
+                  </div>
+                </div>
+              </Link>
+              
+              <Link href="/produkte">
+                <div className="bg-[#00CFFF]/10 hover:bg-[#00CFFF]/20 transition-colors rounded-lg p-4 flex items-start">
+                  <span className="material-icons text-[#00CFFF] mr-3">shopping_cart</span>
+                  <div>
+                    <h3 className="font-bold text-[#0A3A68]">Shop</h3>
+                    <p className="text-sm text-gray-700">Monopoly Go ingame Währung kaufen. Würfel, Sticker und mehr!</p>
+                  </div>
+                </div>
+              </Link>
+              
+              <Link href="/hilfe">
+                <div className="bg-[#00CFFF]/10 hover:bg-[#00CFFF]/20 transition-colors rounded-lg p-4 flex items-start">
+                  <span className="material-icons text-[#00CFFF] mr-3">help_outline</span>
+                  <div>
+                    <h3 className="font-bold text-[#0A3A68]">Hilfe</h3>
+                    <p className="text-sm text-gray-700">Du möchtest mehr Wissen? Hier gibt's Wissenwertes rund um unsere Leistungen und Monopoly GO!</p>
+                  </div>
+                </div>
+              </Link>
+              
+              <Link href="/kontakt">
+                <div className="bg-[#00CFFF]/10 hover:bg-[#00CFFF]/20 transition-colors rounded-lg p-4 flex items-start">
+                  <span className="material-icons text-[#00CFFF] mr-3">contact_support</span>
+                  <div>
+                    <h3 className="font-bold text-[#0A3A68]">Kontakt</h3>
+                    <p className="text-sm text-gray-700">Du hast Fragen? Möchtest etwas kaufen? Hast konstruktive Kritik loszuwerden? Hier findest du Wege uns zu kontaktieren.</p>
+                  </div>
+                </div>
+              </Link>
+            </div>
           </div>
         </div>
       </section>

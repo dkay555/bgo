@@ -193,3 +193,89 @@ Dein babixGO-Team
     return false;
   }
 }
+
+/**
+ * Sendet eine individuelle E-Mail an einen Kunden bezüglich seiner Bestellung
+ */
+export async function sendEmailToCustomer(order: Order, subject: string, messageText: string): Promise<boolean> {
+  if (!process.env.SENDGRID_API_KEY) {
+    console.warn('SENDGRID_API_KEY nicht gesetzt. Individuelle E-Mail wird nicht gesendet.');
+    return false;
+  }
+  
+  try {
+    // HTML-Nachrichten-Format (Zeilenumbrüche durch <br> ersetzen)
+    const messageHtml = messageText
+      .replace(/\n/g, '<br>')
+      .split('<br><br>')
+      .map(paragraph => `<p>${paragraph.replace(/<br>/g, ' ')}</p>`)
+      .join('');
+    
+    const msg = {
+      to: order.email,
+      from: FROM_EMAIL,
+      subject: subject,
+      text: messageText,
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <div style="background-color: #0A3A68; text-align: center; padding: 20px;">
+            <h1 style="color: white; margin: 0;">babixGO</h1>
+          </div>
+          
+          <div style="padding: 20px;">
+            <h2>Hallo ${order.name},</h2>
+            
+            ${messageHtml}
+            
+            <div style="background-color: #f8f9fa; padding: 15px; border-radius: 5px; margin: 20px 0;">
+              <h3 style="color: #0A3A68; margin-top: 0;">Bestellübersicht #${order.id}</h3>
+              
+              <table style="width: 100%; border-collapse: collapse;">
+                <tr>
+                  <td style="padding: 8px 0; border-bottom: 1px solid #eee; width: 40%;"><strong>Paket:</strong></td>
+                  <td style="padding: 8px 0; border-bottom: 1px solid #eee;">${order.package} Würfel</td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Status:</strong></td>
+                  <td style="padding: 8px 0; border-bottom: 1px solid #eee;">
+                    <span style="background-color: ${
+                      order.paymentStatus === 'completed' ? '#d1fae5' : 
+                      order.paymentStatus === 'started' ? '#dbeafe' : 
+                      order.paymentStatus === 'problem' ? '#fee2e2' : '#fef3c7'
+                    }; padding: 2px 8px; border-radius: 9999px;">
+                      ${
+                        order.paymentStatus === 'completed' ? 'Abgeschlossen' : 
+                        order.paymentStatus === 'started' ? 'In Bearbeitung' : 
+                        order.paymentStatus === 'problem' ? 'Problem' : 'Offen'
+                      }
+                    </span>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            
+            <p>Bei weiteren Fragen kannst du jederzeit auf diese E-Mail antworten oder uns über WhatsApp kontaktieren.</p>
+            
+            <p>Dein babixGO-Team</p>
+          </div>
+          
+          <div style="background-color: #f8f9fa; padding: 15px; text-align: center; font-size: 14px; color: #666;">
+            <p>© ${new Date().getFullYear()} babixGO. Alle Rechte vorbehalten.</p>
+            <p>
+              <a href="https://babixgo.de/datenschutz" style="color: #00CFFF; text-decoration: none; margin: 0 10px;">Datenschutz</a> | 
+              <a href="https://babixgo.de/impressum" style="color: #00CFFF; text-decoration: none; margin: 0 10px;">Impressum</a> | 
+              <a href="https://babixgo.de/agb" style="color: #00CFFF; text-decoration: none; margin: 0 10px;">AGB</a>
+            </p>
+          </div>
+        </div>
+      `,
+    };
+    
+    await sgMail.send(msg);
+    console.log(`Individuelle E-Mail an Kunden für Bestellung #${order.id} gesendet.`);
+    return true;
+  } catch (error) {
+    console.error('Fehler beim Senden der individuellen E-Mail:', error);
+    return false;
+  }
+}

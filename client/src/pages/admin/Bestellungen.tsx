@@ -130,6 +130,73 @@ export default function Bestellungen() {
       });
     }
   });
+  
+  // Mutation zum Senden einer E-Mail an den Kunden
+  const sendEmailMutation = useMutation({
+    mutationFn: async ({ orderId, subject, message }: { orderId: number, subject: string, message: string }) => {
+      const response = await fetch(`/api/orders/${orderId}/email`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Basic ${btoa(`${credentials.username}:${credentials.password}`)}`
+        },
+        body: JSON.stringify({ subject, message })
+      });
+      
+      if (!response.ok) {
+        throw new Error("Fehler beim Senden der E-Mail");
+      }
+      
+      return response.json();
+    },
+    onSuccess: () => {
+      toast({
+        title: "E-Mail gesendet",
+        description: "Die E-Mail wurde erfolgreich an den Kunden gesendet."
+      });
+    },
+    onError: (error) => {
+      toast({
+        title: "Fehler",
+        description: `${error}`,
+        variant: "destructive"
+      });
+    }
+  });
+  
+  // Mutation zum Aktualisieren des Bestellungsstatus
+  const updateOrderStatusMutation = useMutation({
+    mutationFn: async ({ orderId, status, note }: { orderId: number, status: string, note?: string }) => {
+      const response = await fetch(`/api/orders/${orderId}/status`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Basic ${btoa(`${credentials.username}:${credentials.password}`)}`
+        },
+        body: JSON.stringify({ status, note })
+      });
+      
+      if (!response.ok) {
+        throw new Error("Fehler beim Aktualisieren des Bestellungsstatus");
+      }
+      
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/orders"] });
+      toast({
+        title: "Bestellungsstatus aktualisiert",
+        description: "Der Bestellungsstatus wurde erfolgreich aktualisiert."
+      });
+    },
+    onError: (error) => {
+      toast({
+        title: "Fehler",
+        description: `${error}`,
+        variant: "destructive"
+      });
+    }
+  });
 
   // Handle Login
   const handleLogin = async (e: React.FormEvent) => {

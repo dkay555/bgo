@@ -4,7 +4,7 @@ import { storage } from "./storage";
 import { createPaypalOrder, capturePaypalOrder, loadPaypalDefault } from "./paypal";
 import { insertOrderSchema } from "@shared/schema";
 import { ZodError } from "zod";
-import { sendNewOrderNotification, sendOrderConfirmation } from "./email";
+import { sendNewOrderNotification, sendOrderConfirmation, sendEmailToCustomer } from "./email";
 import { adminAuthMiddleware } from "./admin-auth";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -85,6 +85,120 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
     } catch (error) {
       console.error("Fehler beim Abrufen der Bestellungen:", error);
+      res.status(500).json({
+        success: false,
+        message: "Ein Serverfehler ist aufgetreten"
+      });
+    }
+  });
+  
+  // E-Mail an Kunden senden
+  app.post("/api/orders/:id/email", adminAuthMiddleware, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      
+      if (isNaN(id)) {
+        return res.status(400).json({
+          success: false,
+          message: "Ungültige Bestellungs-ID"
+        });
+      }
+      
+      const { subject, message } = req.body;
+      
+      if (!subject || !message) {
+        return res.status(400).json({
+          success: false,
+          message: "Betreff und Nachricht sind erforderlich"
+        });
+      }
+      
+      const order = await storage.getOrder(id);
+      
+      if (!order) {
+        return res.status(404).json({
+          success: false,
+          message: "Bestellung nicht gefunden"
+        });
+      }
+      
+      // Sende E-Mail-Benachrichtigung an den Kunden
+      const emailResponse = await sendEmailToCustomer(order, subject, message);
+      
+      if (!emailResponse) {
+        return res.status(500).json({
+          success: false,
+          message: "Fehler beim Senden der E-Mail"
+        });
+      }
+      
+      res.json({
+        success: true,
+        message: "E-Mail wurde erfolgreich gesendet"
+      });
+    } catch (error) {
+      console.error("Fehler beim Senden der E-Mail:", error);
+      res.status(500).json({
+        success: false,
+        message: "Ein Serverfehler ist aufgetreten"
+      });
+    }
+  });
+  
+  // Bestellungsstatus aktualisieren
+  app.patch("/api/orders/:id/status", adminAuthMiddleware, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      
+      if (isNaN(id)) {
+        return res.status(400).json({
+          success: false,
+          message: "Ungültige Bestellungs-ID"
+        });
+      }
+      
+      const { status, note } = req.body;
+      
+      if (!status) {
+        return res.status(400).json({
+          success: false,
+          message: "Bestellungsstatus ist erforderlich"
+        });
+      }
+      
+      // In einer echten Anwendung würden wir einen bestellungsstatus-Wert in der Datenbank haben
+      // Für dieses Beispiel aktualisieren wir nur den Zahlungsstatus
+      const updatedOrder = await storage.updateOrderPaymentStatus(id, status, note);
+      
+      if (!updatedOrder) {
+        return res.status(404).json({
+          success: false,
+          message: "Bestellung nicht gefunden"
+        });
+      }
+      
+      // Wenn der Status auf "started" oder "completed" gesetzt wird, sende eine Benachrichtigung an den Kunden
+      if (status === "started") {
+        await sendEmailToCustomer(
+          updatedOrder, 
+          "Deine Bestellung wurde bearbeitet", 
+          `Hallo ${updatedOrder.name},\n\nWir haben mit der Bearbeitung deiner Bestellung #${updatedOrder.id} begonnen. Deine Würfel werden in Kürze auf deinem Monopoly GO-Konto gutgeschrieben.\n\nVielen Dank für dein Vertrauen!\n\nDein babixGO-Team`
+        );
+      } else if (status === "completed" && note) {
+        await sendEmailToCustomer(
+          updatedOrder, 
+          "Deine Bestellung wurde abgeschlossen", 
+          `Hallo ${updatedOrder.name},\n\nDeine Bestellung #${updatedOrder.id} wurde erfolgreich abgeschlossen.\n\nHinweis vom Team: ${note}\n\nVielen Dank für dein Vertrauen!\n\nDein babixGO-Team`
+        );
+      }
+      
+      res.json({
+        success: true,
+        message: "Bestellungsstatus aktualisiert",
+        order: updatedOrder
+      });
+    } catch (error) {
+      console.error("Fehler beim Aktualisieren des Bestellungsstatus:", error);
       res.status(500).json({
         success: false,
         message: "Ein Serverfehler ist aufgetreten"
