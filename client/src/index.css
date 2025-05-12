@@ -64,15 +64,60 @@
     @apply font-sans antialiased bg-background text-foreground;
   }
 
+  /* Standardisierte Überschriftengrößen */
+  h1, .h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    font-family: 'Baloo 2', cursive;
+  }
+
+  h2, .h2 {
+    font-size: 1.6rem;
+    font-weight: bold;
+    font-family: 'Baloo 2', cursive;
+  }
+
+  h3, .h3 {
+    font-size: 1.4rem;
+    font-weight: bold;
+    font-family: 'Baloo 2', cursive;
+  }
+
+  h4, .h4, h5, .h5, h6, .h6 {
+    font-size: 1.1rem;
+    font-weight: bold;
+    font-family: 'Baloo 2', cursive;
+  }
+
   /* Custom Babix Header Style */
   .babix-info-header {
     position: relative;
     padding-bottom: 0.5rem;
     margin-bottom: 1rem;
     display: inline-block;
-    font-size: 1.6rem;
     font-family: 'Baloo 2', cursive;
+    font-weight: bold;
     color: #FF4C00;
+  }
+
+  /* h1 mit babix-info-header behält seine 2rem Größe */
+  h1.babix-info-header {
+    font-size: 2rem;
+  }
+
+  /* h2 mit babix-info-header behält seine 1.6rem Größe */
+  h2.babix-info-header {
+    font-size: 1.6rem;
+  }
+
+  /* h3 mit babix-info-header behält seine 1.4rem Größe */
+  h3.babix-info-header {
+    font-size: 1.4rem;
+  }
+
+  /* h4-h6 mit babix-info-header behalten ihre 1.1rem Größe */
+  h4.babix-info-header, h5.babix-info-header, h6.babix-info-header {
+    font-size: 1.1rem;
   }
 
   .babix-info-header::after {

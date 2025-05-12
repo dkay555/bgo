@@ -25,6 +25,7 @@ const StickerPage = lazy(() => import('@/pages/produkte/Sticker'));
 const PartnerPage = lazy(() => import('@/pages/produkte/Partner'));
 const RacePage = lazy(() => import('@/pages/produkte/Race'));
 const WeiterePage = lazy(() => import('@/pages/produkte/Weitere'));
+const WuerfelCheckoutPage = lazy(() => import('@/pages/checkout/Wuerfel'));
 
 // Lazy-loaded help pages
 const WuerfelHilfePage = lazy(() => import('@/pages/hilfe/wuerfel'));
@@ -76,6 +77,9 @@ function Router() {
           <Route path="/produkte/partner" component={PartnerPage} />
           <Route path="/produkte/race" component={RacePage} />
           <Route path="/produkte/weitere" component={WeiterePage} />
+          
+          {/* Checkout-Seiten */}
+          <Route path="/checkout/wuerfel" component={WuerfelCheckoutPage} />
           
           {/* 404-Seite für alle unbekannten Routen */}
           <Route component={NotFound} />

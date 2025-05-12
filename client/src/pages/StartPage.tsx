@@ -23,16 +23,30 @@ export default function StartPage() {
         <div className="max-w-4xl mx-auto">
           <h2 className="babix-info-header mx-auto mb-8 text-center">Was gibt's Neues?</h2>
           
-          <div className="bg-white rounded-lg shadow-md p-4">
-            <h3 className="text-[#0A3A68] font-bold mb-2 border-b border-[#00CFFF] pb-1 inline-block text-sm">Angebot und Preisanpassung</h3>
+          <div className="bg-white rounded-lg shadow-md p-5">
+            <h3 className="text-[#0A3A68] font-bold mb-2 border-b border-[#00CFFF] pb-1 inline-block">Neue Preise für Würfel - Angebotsanpassung</h3>
             <p className="text-[#0A3A68]/80 mb-3">
-              Aufgrund der hohen Nachfrage und um unseren Service weiterhin in gewohnter Qualität anbieten zu können, 
-              haben wir unsere Preisstruktur angepasst. Die neuen Preise gelten ab sofort für alle Dienste.
+              Die letzten Tage war es still um babixGO... Wir haben uns und unser Vorgehen hinterfragt, daraufhin unsere "Anti-Anticheat Maßnahmen" 
+              überdacht, überarbeitet und an über 200 Accounts getestet & zu guter letzt an unserer Preisliste gearbeitet.
             </p>
+            <div className="grid grid-cols-3 gap-3 mb-3">
+              <div className="bg-[#00CFFF]/10 p-2 rounded-lg text-center">
+                <span className="font-bold block text-lg text-[#FF4C00]">25.000</span>
+                <span className="text-sm">Würfel für 25€</span>
+              </div>
+              <div className="bg-[#00CFFF]/10 p-2 rounded-lg text-center">
+                <span className="font-bold block text-lg text-[#FF4C00]">35.000</span>
+                <span className="text-sm">Würfel für 35€</span>
+              </div>
+              <div className="bg-[#00CFFF]/10 p-2 rounded-lg text-center">
+                <span className="font-bold block text-lg text-[#FF4C00]">45.000</span>
+                <span className="text-sm">Würfel für 45€</span>
+              </div>
+            </div>
             <div className="flex justify-end">
               <Link href="/hilfe/news_preise_angebot.html">
                 <Button variant="darkblue" className="text-xs px-3 py-1">
-                  Weiterlesen
+                  Mehr erfahren
                 </Button>
               </Link>
             </div>
