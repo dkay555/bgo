@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'wouter';
+import { Link, useLocation } from 'wouter';
 import { PricingCard } from '@/components/PricingCard';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -11,6 +11,11 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 
 
 export default function WuerfelCheckout() {
+  // URL-Parameter auslesen
+  const [location] = useLocation();
+  const searchParams = new URLSearchParams(location.split('?')[1] || '');
+  const packageParam = searchParams.get('package');
+  
   // State für Formular
   const [authMethod, setAuthMethod] = useState('authtoken');
   const [formData, setFormData] = useState({
@@ -24,7 +29,7 @@ export default function WuerfelCheckout() {
     loginIngameName: '',
     recoveryCode1: '',
     recoveryCode2: '',
-    selectedPackage: '25000',
+    selectedPackage: packageParam || '25000',
     agreedToTerms: false,
     agreedToWithdrawalNotice: false
   });
