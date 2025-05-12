@@ -125,6 +125,21 @@ export default function Hilfe() {
               </Link>
             </div>
             
+            <div className="bg-gray-50 p-5 rounded-lg shadow-sm border border-gray-200 hover:border-[#00CFFF] transition-colors">
+              <h3 className="text-xl font-bold text-[#0A3A68] mb-3 flex items-center border-b-2 border-[#00CFFF] pb-2">
+                <span className="material-icons mr-2 text-[#00CFFF]">key</span>
+                Auth-Token Anleitung
+              </h3>
+              <p className="text-gray-700 mb-4">
+                Erfahre, wie du deinen Auth-Token findest, um deine Würfel sicher auf deinem Monopoly GO! Konto zu erhalten.
+              </p>
+              <Link href="/hilfe/authtoken">
+                <button className="bg-[#0A3A68] hover:bg-[#00CFFF] text-white py-2 px-4 rounded-md transition-colors inline-flex items-center">
+                  <span className="material-icons mr-1">help</span>
+                  Zur Auth-Token Anleitung
+                </button>
+              </Link>
+            </div>
 
           </div>
         </div>

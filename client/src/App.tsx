@@ -34,6 +34,7 @@ const PartnerHilfePage = lazy(() => import('@/pages/hilfe/partner'));
 const RaceHilfePage = lazy(() => import('@/pages/hilfe/race'));
 const LoginHilfePage = lazy(() => import('@/pages/hilfe/login'));
 const AccountsHilfePage = lazy(() => import('@/pages/hilfe/accounts'));
+const AuthTokenHilfePage = lazy(() => import('@/pages/hilfe/authtoken'));
 const NewsPreiseAngebotPage = lazy(() => import('@/pages/hilfe/news_preise_angebot'));
 
 // Admin pages
@@ -74,6 +75,7 @@ function Router() {
           <Route path="/hilfe/race" component={RaceHilfePage} />
           <Route path="/hilfe/login" component={LoginHilfePage} />
           <Route path="/hilfe/accounts" component={AccountsHilfePage} />
+          <Route path="/hilfe/authtoken" component={AuthTokenHilfePage} />
           <Route path="/hilfe/news_preise_angebot.html" component={NewsPreiseAngebotPage} />
           
           {/* Produkt-Unterseiten */}
