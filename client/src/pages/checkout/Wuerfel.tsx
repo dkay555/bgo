@@ -340,7 +340,9 @@ export default function WuerfelCheckout() {
               Monopoly Daten
             </CardTitle>
             <div className="text-sm text-gray-600 mt-1">
-              Weitere Informationen zu den Möglichkeiten findest du hier: <Link href="/hilfe/login" className="text-[#00CFFF] hover:underline">Login Hilfe</Link>
+              Weitere Informationen zu den Möglichkeiten findest du hier: 
+              <Link href="/hilfe/login" className="text-[#00CFFF] hover:underline ml-1">Login Hilfe</Link> | 
+              <Link href="/hilfe/authtoken" className="text-[#00CFFF] hover:underline ml-1">Auth-Token Anleitung</Link>
             </div>
           </CardHeader>
           <CardContent>
@@ -367,7 +369,7 @@ export default function WuerfelCheckout() {
                 <div>
                   <Label htmlFor="authtoken" className="mb-1 block flex items-center">
                     Authtoken *
-                    <Link href="/hilfe/login#authtoken" className="text-xs text-[#00CFFF] hover:underline ml-2">
+                    <Link href="/hilfe/authtoken" className="text-xs text-[#00CFFF] hover:underline ml-2">
                       (Wie bekomme ich den Authtoken?)
                     </Link>
                   </Label>
