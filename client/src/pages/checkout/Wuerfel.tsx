@@ -355,7 +355,7 @@ export default function WuerfelCheckout() {
                     onClick={() => setFormData({...formData, agreedToWithdrawalNotice: !formData.agreedToWithdrawalNotice})}
                   >
                     <input 
-                      type="radio" 
+                      type="checkbox" 
                       id="agreedToWithdrawalNotice" 
                       className="h-4 w-4 mt-1 accent-[#00CFFF]"
                       checked={formData.agreedToWithdrawalNotice}
@@ -373,7 +373,7 @@ export default function WuerfelCheckout() {
                     onClick={() => setFormData({...formData, agreedToTerms: !formData.agreedToTerms})}
                   >
                     <input 
-                      type="radio" 
+                      type="checkbox" 
                       id="agreedToTerms" 
                       className="h-4 w-4 mt-1 accent-[#00CFFF]"
                       checked={formData.agreedToTerms}
