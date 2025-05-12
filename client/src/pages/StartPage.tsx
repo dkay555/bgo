@@ -65,19 +65,13 @@ export default function StartPage() {
       <section className="py-6 md:py-8 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-[#00CFFF]/10 to-[#FF4C00]/10 animate-gradient-x"></div>
         <div className="max-w-4xl mx-auto relative px-4">
-          <div className="text-center mb-6">
+          <div className="text-center mb-8">
             <h1 className="babix-info-header font-bold text-3xl md:text-4xl px--2 py-2">
               Willkommen bei babixGO!
             </h1>
-            <p className="text-base md:text-lg">Würfel, Events, Sticker & mehr – alles für dein Monopoly GO Abenteuer.</p>
-          </div>
-          
-          <div className="bg-white/80 backdrop-blur-sm rounded-xl p-5 shadow-md">
-            <h2 className="font-bold text-lg text-[#0A3A68] mb-4 border-b border-[#00CFFF] pb-2 text-center">
-              Direkt zu:
-            </h2>
+            <p className="text-base md:text-lg mb-6">Würfel, Events, Sticker & mehr – alles für dein Monopoly GO Abenteuer.</p>
             
-            <div className="flex flex-wrap justify-center gap-3">
+            <div className="flex flex-wrap justify-center gap-3 mt-4">
               <Button variant="darkblue" asChild className="font-bold flex items-center gap-2">
                 <Link href="/hilfe/news_preise_angebot.html">
                   <span className="material-icons">feed</span>
@@ -110,16 +104,15 @@ export default function StartPage() {
         </div>
       </section>
       
-      {/* Was gibt's Neues Sektion */}
+      {/* News Sektion */}
       <section className="py-6 bg-gray-50">
         <div className="max-w-4xl mx-auto">
-          <h2 className="babix-info-header mx-auto mb-8 text-center">Was gibt's Neues?</h2>
+          <h2 className="babix-info-header mx-auto mb-8 text-center">News</h2>
           
           <div className="bg-white rounded-lg shadow-md p-5">
-            <h3 className="babix-info-header mb-2">Neue Preise für Würfel - Angebotsanpassung</h3>
+            <h3 className="font-bold text-[#0A3A68] text-xl mb-3">Neue Preise für Würfel - Angebotsanpassung</h3>
             <p className="text-[#0A3A68]/80 mb-3">
-              Die letzten Tage war es still um babixGO... Wir haben uns und unser Vorgehen hinterfragt, daraufhin unsere "Anti-Anticheat Maßnahmen" 
-              überdacht, überarbeitet und an über 200 Accounts getestet & zu guter letzt an unserer Preisliste gearbeitet.
+              Die letzten Tage war es still um babixGO...
             </p>
             <div className="grid grid-cols-3 gap-3 mb-3">
               <div className="bg-[#00CFFF]/10 p-2 rounded-lg text-center">
@@ -137,8 +130,8 @@ export default function StartPage() {
             </div>
             <div className="flex justify-end">
               <Link href="/hilfe/news_preise_angebot.html">
-                <Button variant="darkblue" className="text-xs px-3 py-1">
-                  Mehr erfahren
+                <Button variant="darkblue" className="text-sm px-3 py-1">
+                  [weiterlesen]
                 </Button>
               </Link>
             </div>
@@ -150,7 +143,7 @@ export default function StartPage() {
       <section id="angebote" className="py-8 scroll-mt-20">
         <div className="max-w-6xl mx-auto">
           <h2 className="babix-info-header mx-auto mb-8 text-center">
-            Unsere Bestseller
+            Was wir dir bieten:
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
