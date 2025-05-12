@@ -77,8 +77,6 @@ export const FOOTER_LINKS = [
   { name: 'Datenschutz', href: '/datenschutz#top' },
   { name: 'AGB', href: '/agb#top' },
   { name: 'Widerruf', href: '/widerruf#top' },
-  { name: 'Kontakt', href: '/kontakt#top' },
-  { name: 'Hilfe', href: '/hilfe#top' },
 ];
 
 // Produkt-Kategorien

@@ -15,14 +15,17 @@ export default function WuerfelCheckout() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    whatsapp: '',
+    ingameName: '',
     authtoken: '',
     loginEmail: '',
     password: '',
-    phone: '',
+    loginIngameName: '',
     recoveryCode1: '',
     recoveryCode2: '',
     selectedPackage: '25000',
-    agreedToTerms: false
+    agreedToTerms: false,
+    agreedToWithdrawalNotice: false
   });
 
   // Laden der Material Icons
@@ -132,61 +135,94 @@ export default function WuerfelCheckout() {
             <CardContent>
               <Tabs defaultValue="authtoken" onValueChange={handleAuthMethodChange}>
                 <TabsList className="grid w-full grid-cols-2">
-                  <TabsTrigger value="authtoken">Auth-Token</TabsTrigger>
-                  <TabsTrigger value="login">Login</TabsTrigger>
+                  <TabsTrigger value="authtoken">Authtoken</TabsTrigger>
+                  <TabsTrigger value="login">Facebook Zugangsdaten</TabsTrigger>
                 </TabsList>
                 
                 <TabsContent value="authtoken">
                   <form onSubmit={handleSubmit} className="space-y-4 mt-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="name">Name</Label>
-                      <Input 
-                        id="name" 
-                        name="name" 
-                        placeholder="Ihr Name" 
-                        value={formData.name} 
-                        onChange={handleInputChange} 
-                        required 
-                      />
-                    </div>
-                    
-                    <div className="space-y-2">
-                      <Label htmlFor="email">E-Mail-Adresse</Label>
-                      <Input 
-                        id="email" 
-                        name="email" 
-                        type="email" 
-                        placeholder="ihre.email@beispiel.de" 
-                        value={formData.email} 
-                        onChange={handleInputChange} 
-                        required 
-                      />
-                    </div>
-                    
-                    <div className="space-y-2">
-                      <Label htmlFor="authtoken">
-                        Auth-Token 
-                        <span className="text-xs text-gray-500 ml-2">
-                          <Link href="/hilfe/login" className="text-[#00CFFF] hover:underline">
-                            (Wie erhalte ich einen Auth-Token?)
-                          </Link>
-                        </span>
-                      </Label>
-                      <Input 
-                        id="authtoken" 
-                        name="authtoken" 
-                        placeholder="Ihr Auth-Token aus der App" 
-                        value={formData.authtoken} 
-                        onChange={handleInputChange} 
-                        required 
-                      />
-                      <div className="text-sm text-gray-500 mt-2">
-                        <p className="flex items-start">
-                          <span className="material-icons text-[#FF4C00] mr-2 text-sm">info</span>
-                          Der Auth-Token ist in den Einstellungen der Monopoly GO App zu finden
-                        </p>
+                    <div className="bg-[#00CFFF]/10 p-4 rounded-lg mb-6">
+                      <h4 className="babix-info-header text-[#0A3A68] mb-2 flex items-center">
+                        <span className="material-icons text-[#00CFFF] mr-2">person</span>
+                        Persönliche Daten
+                      </h4>
+                      
+                      <div className="space-y-2 mt-4">
+                        <Label htmlFor="name">Vor- und Nachname</Label>
+                        <Input 
+                          id="name" 
+                          name="name" 
+                          placeholder="Ihr vollständiger Name" 
+                          value={formData.name} 
+                          onChange={handleInputChange} 
+                          required 
+                        />
                       </div>
-                      <div className="grid grid-cols-4 gap-2 mt-3">
+                      
+                      <div className="space-y-2 mt-4">
+                        <Label htmlFor="email">E-Mail-Adresse</Label>
+                        <Input 
+                          id="email" 
+                          name="email" 
+                          type="email" 
+                          placeholder="ihre.email@beispiel.de" 
+                          value={formData.email} 
+                          onChange={handleInputChange} 
+                          required 
+                        />
+                      </div>
+                      
+                      <div className="space-y-2 mt-4">
+                        <Label htmlFor="whatsapp">WhatsApp (freiwillig)</Label>
+                        <Input 
+                          id="whatsapp" 
+                          name="whatsapp" 
+                          placeholder="Für mögliche Rückfragen" 
+                          value={formData.whatsapp} 
+                          onChange={handleInputChange} 
+                        />
+                        <p className="text-xs text-gray-500 mt-1">Für mögliche Rückfragen, ansonsten nutzen wir Ihre E-Mail-Adresse</p>
+                      </div>
+                    </div>
+                    
+                    <div className="bg-[#00CFFF]/10 p-4 rounded-lg">
+                      <h4 className="babix-info-header text-[#0A3A68] mb-2 flex items-center">
+                        <span className="material-icons text-[#00CFFF] mr-2">key</span>
+                        Authtoken
+                      </h4>
+                      
+                      <div className="space-y-2 mt-4">
+                        <Label htmlFor="ingameName">Ingame Name</Label>
+                        <Input 
+                          id="ingameName" 
+                          name="ingameName" 
+                          placeholder="Ihr Name im Spiel" 
+                          value={formData.ingameName} 
+                          onChange={handleInputChange} 
+                          required 
+                        />
+                      </div>
+                      
+                      <div className="space-y-2 mt-4">
+                        <Label htmlFor="authtoken">
+                          Authtoken 
+                          <span className="text-xs text-gray-500 ml-2">
+                            <Link href="/hilfe/login#authtoken" className="text-[#00CFFF] hover:underline">
+                              (Wie bekomme ich den Authtoken?)
+                            </Link>
+                          </span>
+                        </Label>
+                        <Input 
+                          id="authtoken" 
+                          name="authtoken" 
+                          placeholder="Ihr Authtoken aus der App" 
+                          value={formData.authtoken} 
+                          onChange={handleInputChange} 
+                          required 
+                        />
+                      </div>
+                      
+                      <div className="grid grid-cols-4 gap-2 mt-4">
                         <div className="col-span-2">
                           <img src="/attached_assets/Authtoken_Anleitung_1_720_1561.webp" alt="Schritt 1" className="w-full h-auto rounded-md border border-gray-200" />
                           <p className="text-xs text-center mt-1">Schritt 1: Einstellungen öffnen</p>
@@ -201,7 +237,7 @@ export default function WuerfelCheckout() {
                         </div>
                         <div className="col-span-2">
                           <img src="/attached_assets/Authtoken_Anleitung_4_720_1561.webp" alt="Schritt 4" className="w-full h-auto rounded-md border border-gray-200" />
-                          <p className="text-xs text-center mt-1">Schritt 4: Auth-Token kopieren</p>
+                          <p className="text-xs text-center mt-1">Schritt 4: Authtoken kopieren</p>
                         </div>
                       </div>
                     </div>
