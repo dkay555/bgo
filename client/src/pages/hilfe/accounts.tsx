@@ -82,7 +82,7 @@ export default function AccountsHilfe() {
               Spieler, deren Accounts gesperrt wurden, hören nicht auf, sondern erstellen neue Profile – und genau diese geraten schnell ins Visier.
             </p>
             
-            <h4 className="font-semibold text-[#0A3A68] mb-3 mt-5">Die Konsequenz?</h4>
+            <h4 className="babix-info-header text-[#0A3A68] mb-3 mt-5">Die Konsequenz?</h4>
             <p className="mb-3">
               Diese Accounts sind meist von Anfang an „geflaggt" und laufen hoher Gefahr, früher oder später gesperrt zu werden.
             </p>
@@ -96,7 +96,7 @@ export default function AccountsHilfe() {
             </p>
             
             <div className="bg-gray-50 p-5 rounded-lg border border-gray-200 mb-5">
-              <h4 className="font-semibold text-[#0A3A68] mb-3 border-b border-gray-200 pb-2">Alter:</h4>
+              <h4 className="babix-info-header text-[#0A3A68] mb-3">Alter:</h4>
               <ul className="list-disc pl-5 mb-3 space-y-2">
                 <li>Vermögenswert: Accounts mit minimalem Spielfortschritt bzw. sehr geringem Vermögenswert sollten euch aufhorchen lassen.</li>
                 <li>Prüft die Account ID oder lasst euch die Token und Schilde Sammlung zeigen. Vor allem letzteres lässt einfachen Rückschluss auf das Account Alter zu.</li>
@@ -104,7 +104,7 @@ export default function AccountsHilfe() {
             </div>
             
             <div className="bg-gray-50 p-5 rounded-lg border border-gray-200 mb-5">
-              <h4 className="font-semibold text-[#0A3A68] mb-3 border-b border-gray-200 pb-2">Nutzungssicherheit:</h4>
+              <h4 className="babix-info-header text-[#0A3A68] mb-3">Nutzungssicherheit:</h4>
               <ul className="list-disc pl-5 mb-3 space-y-2">
                 <li>Anleitung zur Nutzung: Stellt sicher, dass euch genau erklärt wird, wie der Account sicher verwendet werden kann – besonders, wenn ihr euren Hauptaccount weiterhin nutzen möchtet.</li>
                 <li>IDs beachten: Fragt nach den IDs und lasst euch erklären, wie ihr sie verwendet. Diese sind essenziell, um Banns zu vermeiden – vorausgesetzt, der Account wurde sauber und organisch hochgespielt.</li>

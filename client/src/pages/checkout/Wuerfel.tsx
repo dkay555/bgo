@@ -84,7 +84,7 @@ export default function WuerfelCheckout() {
                   <RadioGroupItem value="25000" id="r1" />
                   <Label htmlFor="r1" className="flex-1">
                     <div className="bg-[#00CFFF]/10 p-3 rounded-md">
-                      <h3 className="font-bold">25.000 Würfel</h3>
+                      <h4 className="babix-info-header text-[#0A3A68]">25.000 Würfel</h4>
                       <p className="text-xl font-bold text-[#FF4C00]">25€</p>
                     </div>
                   </Label>
@@ -93,7 +93,7 @@ export default function WuerfelCheckout() {
                   <RadioGroupItem value="35000" id="r2" />
                   <Label htmlFor="r2" className="flex-1">
                     <div className="bg-[#00CFFF]/10 p-3 rounded-md">
-                      <h3 className="font-bold">35.000 Würfel</h3>
+                      <h4 className="babix-info-header text-[#0A3A68]">35.000 Würfel</h4>
                       <p className="text-xl font-bold text-[#FF4C00]">35€</p>
                     </div>
                   </Label>
@@ -102,7 +102,7 @@ export default function WuerfelCheckout() {
                   <RadioGroupItem value="45000" id="r3" />
                   <Label htmlFor="r3" className="flex-1">
                     <div className="bg-[#00CFFF]/10 p-3 rounded-md">
-                      <h3 className="font-bold">45.000 Würfel</h3>
+                      <h4 className="babix-info-header text-[#0A3A68]">45.000 Würfel</h4>
                       <p className="text-xl font-bold text-[#FF4C00]">45€</p>
                     </div>
                   </Label>
@@ -110,7 +110,7 @@ export default function WuerfelCheckout() {
               </RadioGroup>
               
               <div className="bg-yellow-50 p-4 rounded-lg border-l-4 border-yellow-400 mt-6">
-                <h4 className="font-bold mb-2 flex items-center">
+                <h4 className="babix-info-header text-[#0A3A68] mb-2 flex items-center">
                   <span className="material-icons text-yellow-500 mr-2">stars</span>
                   Sonderangebot
                 </h4>
