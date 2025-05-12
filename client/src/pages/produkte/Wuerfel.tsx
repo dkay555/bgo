@@ -1,6 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'wouter';
 import { PRICES, SPECIAL_OFFER } from '@/lib/constants';
+import { 
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger
+} from "@/components/ui/dialog";
 
 export default function Wuerfel() {
   const [selectedOption, setSelectedOption] = useState("25000");
@@ -123,10 +130,52 @@ export default function Wuerfel() {
                 <div className="text-xl font-bold text-[#0A3A68] mb-2 sm:mb-0 bg-[#00CFFF]/10 px-4 py-2 rounded-md border border-[#00CFFF]">
                   Preis: <span className="text-[#FF4C00]">{price}€</span>
                 </div>
-                <button className="bg-[#FF4C00] text-white py-3 px-6 rounded-md hover:bg-[#0A3A68] transition-colors inline-flex items-center">
-                  <span className="material-icons mr-2">shopping_cart</span>
-                  Würfel kaufen
-                </button>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <button className="bg-[#FF4C00] text-white py-3 px-6 rounded-md hover:bg-[#0A3A68] transition-colors inline-flex items-center">
+                      <span className="material-icons mr-2">shopping_cart</span>
+                      Würfel kaufen
+                    </button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-md">
+                    <DialogHeader>
+                      <DialogTitle className="text-xl font-bold text-[#0A3A68]">Bestelloptionen</DialogTitle>
+                    </DialogHeader>
+                    <div className="mt-4">
+                      <p className="mb-4">
+                        Du hast 2 Möglichkeiten deine Würfel zu bestellen:
+                      </p>
+                      <ul className="space-y-3 mb-6">
+                        <li className="flex items-start">
+                          <span className="material-icons text-[#0A3A68] mr-2">looks_one</span>
+                          <div>
+                            <strong>Option 1:</strong> Du schreibst uns persönlich und wir gehen den Login gemeinsam durch oder helfen dir an deinen Authtoken zu gelangen. <em className="text-[#FF4C00]">(Empfohlen)</em>
+                          </div>
+                        </li>
+                        <li className="flex items-start">
+                          <span className="material-icons text-[#0A3A68] mr-2">looks_two</span>
+                          <div>
+                            <strong>Option 2:</strong> Ein Klick auf "Weiter ..." führt dich zum Warenkorb. Daten ausfüllen, abschicken, zahlen .. Fertig.
+                          </div>
+                        </li>
+                      </ul>
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-4">
+                        <a href="https://wa.me/4915237250453" className="bg-[#25D366] text-white py-2 px-4 rounded-md hover:bg-opacity-80 transition-colors text-center flex items-center justify-center">
+                          <span className="material-icons mr-2">whatsapp</span>
+                          WhatsApp öffnen
+                        </a>
+                        <a href="https://m.me/babixgo" className="bg-[#0078FF] text-white py-2 px-4 rounded-md hover:bg-opacity-80 transition-colors text-center flex items-center justify-center">
+                          <span className="material-icons mr-2">message</span>
+                          Zum Messenger
+                        </a>
+                        <a href="/checkout/wuerfel" className="bg-[#FF4C00] text-white py-2 px-4 rounded-md hover:bg-opacity-80 transition-colors text-center flex items-center justify-center">
+                          <span className="material-icons mr-2">shopping_cart</span>
+                          Weiter zum Warenkorb
+                        </a>
+                      </div>
+                    </div>
+                  </DialogContent>
+                </Dialog>
               </div>
             </div>
             
