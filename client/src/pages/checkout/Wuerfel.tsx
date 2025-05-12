@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'wouter';
 import { PricingCard } from '@/components/PricingCard';
 import { Button } from '@/components/ui/button';
@@ -8,6 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import PayPalButton from '@/components/PayPalButton';
 
 
 export default function WuerfelCheckout() {
@@ -25,7 +26,7 @@ export default function WuerfelCheckout() {
   
   // Stelle sicher, dass der Parameter einer der erlaubten Werte ist
   const validatedPackage = ['25000', '35000', '45000'].includes(packageParam || '') 
-    ? packageParam 
+    ? packageParam || '25000'
     : '25000';
   
   // State für Formular mit reduziertem Beispiel-Code
@@ -402,14 +403,42 @@ export default function WuerfelCheckout() {
           </CardContent>
         </Card>
         
-        {/* Kaufen Button */}
-        <div className="mb-6">
+        {/* Kaufen Button und PayPal */}
+        <div className="mb-6 grid grid-cols-1 gap-4">
           <Button 
             type="submit" 
             className="w-full bg-[#FF4C00] hover:bg-[#FF4C00]/80 text-white font-bold py-3"
           >
             Jetzt kaufen
           </Button>
+
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t border-gray-300"></span>
+            </div>
+            <div className="relative flex justify-center text-xs">
+              <span className="bg-white px-2 text-gray-500">oder zahle mit</span>
+            </div>
+          </div>
+
+          <div 
+            className="flex justify-center items-center min-h-[44px] border border-gray-300 rounded-md p-2"
+            style={{ 
+              height: "50px", 
+              width: "100%"
+            }}
+          >
+            {/* Die PayPal-Komponente wird hier eingebunden */}
+            <PayPalButton 
+              amount={
+                formData.selectedPackage === "25000" ? "25.00" :
+                formData.selectedPackage === "35000" ? "35.00" :
+                "45.00"
+              } 
+              currency="EUR" 
+              intent="CAPTURE" 
+            />
+          </div>
         </div>
         
         {/* Informationen zum Datenschutz */}
