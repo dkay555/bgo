@@ -97,7 +97,7 @@ export default function StickerPage() {
           </p>
           
           <div className="overflow-x-auto mt-4">
-            <h3 className="font-bold text-[#0A3A68] mb-2">Preise:</h3>
+            <h4 className="font-medium text-[#0A3A68] mb-2">Preise:</h4>
             <table className="min-w-full divide-y divide-gray-200 border rounded-lg">
               <thead className="bg-[#0A3A68] text-white">
                 <tr>
@@ -255,21 +255,13 @@ export default function StickerPage() {
               )}
             </div>
             
-            {/* Hilfsbutton */}
-            <div className="mt-8">
-              <Link href="/hilfe/sticker">
-                <button className="w-full bg-transparent border border-[#0A3A68] text-[#0A3A68] hover:bg-gray-100 py-2 px-4 rounded-md transition-colors flex items-center justify-center">
-                  <span className="material-icons mr-1">help</span>
-                  Weitere Informationen zu Stickern
-                </button>
-              </Link>
-            </div>
+            {/* Hilfsbutton entfernt */}
           </div>
         </div>
         
         {/* Warenkorb Zusammenfassung */}
         <div className="bg-[#E6F7FF] border-l-4 border-[#00CFFF] p-4 rounded-r-md mb-8">
-          <h3 className="font-bold text-[#0A3A68] mb-2">Deine Sticker-Auswahl</h3>
+          <h4 className="font-medium text-[#0A3A68] mb-2">Deine Sticker-Auswahl</h4>
           <div className="py-2 my-2">
             {cart.length === 0 ? (
               <div className="bg-gray-50 p-3 rounded-md text-center">
@@ -304,17 +296,20 @@ export default function StickerPage() {
               </div>
             )}
           </div>
-          
-          {cart.length > 0 && (
+        </div>
+        
+        {/* Kauf-Button */}
+        {cart.length > 0 && (
+          <div className="mb-8">
             <button
               onClick={() => setShowModal(true)}
-              className="w-full bg-[#FF4C00] hover:bg-[#FF6D00] text-white py-3 px-4 rounded-md transition-colors mt-4 flex items-center justify-center"
+              className="w-full bg-[#FF4C00] hover:bg-[#FF6D00] text-white py-3 px-4 rounded-md transition-colors flex items-center justify-center"
             >
               <span className="material-icons mr-2">shopping_cart</span>
               Sticker bestellen
             </button>
-          )}
-        </div>
+          </div>
+        )}
       </div>
       
       {/* Modal für Kaufoptionen */}
