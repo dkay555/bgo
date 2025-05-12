@@ -218,21 +218,6 @@ export default function Wuerfel() {
             </Link>
           </div>
         </div>
-        
-        <div className="bg-[#E6F7FF] border-l-4 border-[#00CFFF] p-4 rounded-r-md mb-6">
-          <div className="flex justify-between items-center flex-wrap gap-4">
-            <div>
-              <h4 className="text-[#0A3A68] font-bold mb-2">Haben Sie weitere Fragen? Wir sind für Sie da!</h4>
-              <p className="text-gray-700">Nutzen Sie unseren WhatsApp Support oder unsere Kontaktseite.</p>
-            </div>
-            <Link href="/hilfe" className="inline-block">
-              <button className="bg-[#0A3A68] hover:bg-[#00CFFF] text-white py-2 px-4 rounded-md transition-colors inline-flex items-center">
-                <span className="material-icons mr-1">help</span>
-                Zur Hilfe
-              </button>
-            </Link>
-          </div>
-        </div>
       </div>
     </div>
   );
