@@ -5,6 +5,7 @@ import { createPaypalOrder, capturePaypalOrder, loadPaypalDefault } from "./payp
 import { insertOrderSchema } from "@shared/schema";
 import { ZodError } from "zod";
 import { sendNewOrderNotification, sendOrderConfirmation } from "./email";
+import { adminAuthMiddleware } from "./admin-auth";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // PayPal integration routes
@@ -73,10 +74,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     });
   });
   
-  // Admin routes
-  app.get("/api/admin/orders", async (req, res) => {
+  // Admin routes mit Basic Auth Middleware
+  app.get("/api/admin/orders", adminAuthMiddleware, async (req, res) => {
     try {
-      // In einer echten Anwendung würde hier eine Authentifizierung und Autorisierung stattfinden
       const orders = await storage.getAllOrders();
       
       res.json({
@@ -197,8 +197,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
-  // Zahlungsstatus einer Bestellung aktualisieren
-  app.patch("/api/orders/:id/payment", async (req: Request, res: Response) => {
+  // Zahlungsstatus einer Bestellung aktualisieren (Admin-geschützt)
+  app.patch("/api/orders/:id/payment", adminAuthMiddleware, async (req: Request, res: Response) => {
     try {
       const id = parseInt(req.params.id);
       
@@ -224,6 +224,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({
           success: false,
           message: "Bestellung nicht gefunden"
+        });
+      }
+      
+      // Bei Statusänderung zu "completed" senden wir eine Bestätigungs-E-Mail an den Kunden
+      if (status === 'completed') {
+        sendOrderConfirmation(updatedOrder).catch(err => {
+          console.error("Fehler beim Senden der Zahlungsbestätigung:", err);
         });
       }
       
