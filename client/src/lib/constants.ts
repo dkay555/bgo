@@ -76,6 +76,7 @@ export const FOOTER_LINKS = [
   { name: 'Impressum', href: '/impressum#top' },
   { name: 'Datenschutz', href: '/datenschutz#top' },
   { name: 'AGB', href: '/agb#top' },
+  { name: 'Widerruf', href: '/widerruf#top' },
   { name: 'Kontakt', href: '/kontakt#top' },
   { name: 'Hilfe', href: '/hilfe#top' },
 ];
