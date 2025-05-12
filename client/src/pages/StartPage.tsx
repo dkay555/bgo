@@ -1,6 +1,9 @@
 import { Button } from '@/components/ui/button';
 import { Link } from 'wouter';
 import { CONTACT } from '@/lib/constants';
+import { useState } from 'react';
+import { apiRequest } from '@/lib/queryClient';
+import { useToast } from '@/hooks/use-toast';
 
 export default function StartPage() {
   return (

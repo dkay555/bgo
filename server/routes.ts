@@ -8,6 +8,77 @@ import { sendNewOrderNotification, sendOrderConfirmation, sendEmailToCustomer } 
 import { adminAuthMiddleware } from "./admin-auth";
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Kontaktformular-Route - öffentlich zugänglich
+  app.post("/api/contact", async (req, res) => {
+    try {
+      const { name, email, message, subject, phone } = req.body;
+      
+      // Validierung
+      if (!name || !email || !message) {
+        return res.status(400).json({
+          success: false,
+          message: "Name, E-Mail und Nachricht sind erforderlich"
+        });
+      }
+      
+      // Kontaktanfrage speichern
+      const contactMessage = await storage.createContactMessage({
+        name,
+        email,
+        message,
+        subject,
+        phone
+      });
+      
+      // Optional: E-Mail-Benachrichtigung an Admin senden
+      if (process.env.SENDGRID_API_KEY) {
+        try {
+          const sgMail = require('@sendgrid/mail');
+          sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+          
+          await sgMail.send({
+            to: 'admin@babixgo.de',
+            from: 'noreply@babixgo.de',
+            subject: `Neue Kontaktanfrage von ${name}`,
+            text: `
+Name: ${name}
+E-Mail: ${email}
+${phone ? `Telefon: ${phone}` : ''}
+${subject ? `Betreff: ${subject}` : ''}
+
+Nachricht:
+${message}
+            `,
+            html: `
+              <h1>Neue Kontaktanfrage eingegangen</h1>
+              <p><strong>Name:</strong> ${name}</p>
+              <p><strong>E-Mail:</strong> ${email}</p>
+              ${phone ? `<p><strong>Telefon:</strong> ${phone}</p>` : ''}
+              ${subject ? `<p><strong>Betreff:</strong> ${subject}</p>` : ''}
+              <h2>Nachricht:</h2>
+              <p>${message.replace(/\n/g, '<br>')}</p>
+            `
+          });
+        } catch (emailError) {
+          console.error("Fehler beim Senden der E-Mail-Benachrichtigung:", emailError);
+          // Nicht abbrechen, wenn E-Mail fehlschlägt
+        }
+      }
+      
+      res.status(201).json({
+        success: true,
+        message: "Kontaktanfrage erfolgreich gesendet",
+        contactId: contactMessage.id
+      });
+    } catch (error) {
+      console.error("Fehler beim Speichern der Kontaktanfrage:", error);
+      res.status(500).json({
+        success: false,
+        message: "Ein Serverfehler ist aufgetreten"
+      });
+    }
+  });
+
   // PayPal integration routes
   app.get("/setup", async (req, res) => {
     try {
