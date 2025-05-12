@@ -9,6 +9,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // PayPal integration routes
   app.get("/setup", async (req, res) => {
     try {
+      // Überprüfen, ob PayPal-Anmeldedaten konfiguriert sind
+      if (!process.env.PAYPAL_CLIENT_ID || !process.env.PAYPAL_CLIENT_SECRET) {
+        console.warn("PayPal nicht konfiguriert - fehlende Anmeldedaten");
+        return res.json({
+          isConfigured: false,
+          error: "PayPal ist nicht konfiguriert. Bitte kontaktieren Sie den Support."
+        });
+      }
+      
       await loadPaypalDefault(req, res);
     } catch (error) {
       console.error("PayPal Setup Error:", error);

@@ -10,8 +10,8 @@ interface PayPalButtonWrapperProps {
 }
 
 /**
- * Ein Wrapper um den PayPalButton, der es ermöglicht, Callback-Funktionen für Zahlungsereignisse zu registrieren
- * ohne den eigentlichen PayPalButton zu modifizieren.
+ * Ein einfacher Wrapper um den PayPalButton, der es ermöglicht, die Bestellung zu verfolgen
+ * und nach erfolgreicher Zahlung zu aktualisieren.
  */
 export function PayPalButtonWrapper({
   amount,
@@ -21,74 +21,75 @@ export function PayPalButtonWrapper({
   onPaymentComplete
 }: PayPalButtonWrapperProps) {
   
-  // Initialisiere Event-Listener für PayPal-Ereignisse
+  // Speichere Bestellungs-ID und registriere Event-Listener
   useEffect(() => {
-    // Ursprüngliche onApprove-Funktion kommt von der PayPal-Komponente
-    const originalOnApprove = window.onApproveHandler;
+    // Wenn eine Bestellungs-ID vorhanden ist, speichere sie für den PayPal-Callback
+    if (orderId) {
+      localStorage.setItem('currentOrderId', orderId.toString());
+    }
     
-    // Wenn unsere PayPal-Komponente geladen ist, finden wir den paypal-button und fügen einen Interceptor hinzu
-    const interceptPayPalEvents = () => {
-      const paypalButtonEl = document.getElementById('paypal-button');
+    // Event-Listener für erfolgreiche Zahlungen
+    const handlePaymentSuccess = async (event: any) => {
+      console.log("PayPal Zahlung erfolgreich", event);
       
-      if (!paypalButtonEl) return;
+      // Bestell-ID und PayPal-Transaktions-ID extrahieren
+      const paypalOrderId = event.detail?.paypalOrderId;
       
-      // Speichere die ursprüngliche Click-Funktion
-      const originalClick = paypalButtonEl.onclick;
-      
-      // Überschreibe mit unserem Interceptor
-      paypalButtonEl.onclick = async (e) => {
-        // Speichere die Bestell-ID für spätere Verwendung
-        if (orderId) {
-          localStorage.setItem('currentOrderId', orderId.toString());
+      if (paypalOrderId && onPaymentComplete) {
+        try {
+          // Callback-Funktion aufrufen, um Bestellstatus zu aktualisieren
+          await onPaymentComplete(paypalOrderId);
+          console.log("Bestellstatus erfolgreich aktualisiert");
+        } catch (error) {
+          console.error("Fehler beim Aktualisieren des Bestellstatus:", error);
         }
-        
-        // Rufe das ursprüngliche Click-Event auf
-        if (originalClick) {
-          originalClick.call(paypalButtonEl, e);
-        }
-      };
+      }
     };
     
-    // MonkeyPatch für onApprove-Handler
-    window.onApproveHandler = async (data: any) => {
-      console.log("PayPal payment approved", data);
+    // Event-Listener registrieren
+    window.addEventListener('paypal-payment-success', handlePaymentSuccess);
+    
+    // Cleanup-Funktion
+    return () => {
+      window.removeEventListener('paypal-payment-success', handlePaymentSuccess);
       
-      // Original-Handler aufrufen
+      // Lösche die gespeicherte Bestellungs-ID
+      if (orderId) {
+        localStorage.removeItem('currentOrderId');
+      }
+    };
+  }, [orderId, onPaymentComplete]);
+  
+  // Patche die globale onApprove-Funktion, um unser Event zu triggern
+  useEffect(() => {
+    // Original-Funktion sichern
+    const originalOnApprove = window.onApprove;
+    
+    // Neue Funktion, die sowohl original als auch unser Custom-Event aufruft
+    window.onApprove = async (data: any) => {
+      console.log("PayPal-Zahlung genehmigt", data);
+      
+      // Ursprüngliche Funktion aufrufen, falls vorhanden
       if (originalOnApprove) {
         await originalOnApprove(data);
       }
       
-      // Hole die gespeicherte Bestell-ID
-      const storedOrderId = localStorage.getItem('currentOrderId');
+      // Custom-Event auslösen
+      const paymentEvent = new CustomEvent('paypal-payment-success', {
+        detail: {
+          paypalOrderId: data.orderId,
+          babixOrderId: orderId
+        }
+      });
       
-      // Rufe unsere Callback-Funktion auf
-      if (onPaymentComplete && data.orderId) {
-        await onPaymentComplete(data.orderId);
-        
-        // Lösche die temporäre Bestell-ID
-        localStorage.removeItem('currentOrderId');
-        
-        // Sende ein Event für die erfolgreiche Zahlung
-        const paymentEvent = new CustomEvent('paypal-payment-complete', {
-          detail: {
-            paypalOrderId: data.orderId,
-            babixOrderId: storedOrderId ? parseInt(storedOrderId) : undefined
-          }
-        });
-        window.dispatchEvent(paymentEvent);
-      }
+      window.dispatchEvent(paymentEvent);
     };
-    
-    // Führe die Interceptor-Funktion aus, wenn die Komponente gemountet wird
-    setTimeout(interceptPayPalEvents, 1000);
     
     // Cleanup-Funktion
     return () => {
-      // Stelle den ursprünglichen Handler wieder her
-      window.onApproveHandler = originalOnApprove;
-      localStorage.removeItem('currentOrderId');
+      window.onApprove = originalOnApprove;
     };
-  }, [orderId, onPaymentComplete]);
+  }, [orderId]);
   
   return (
     <PayPalButton
@@ -102,6 +103,6 @@ export function PayPalButtonWrapper({
 // Füge die globale Typdefinition hinzu
 declare global {
   interface Window {
-    onApproveHandler?: (data: any) => Promise<void>;
+    onApprove?: (data: any) => Promise<void>;
   }
 }
