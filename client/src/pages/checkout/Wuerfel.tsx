@@ -222,25 +222,6 @@ export default function WuerfelCheckout() {
                           required 
                         />
                       </div>
-                      
-                      <div className="grid grid-cols-4 gap-2 mt-4">
-                        <div className="col-span-2">
-                          <img src="/attached_assets/Authtoken_Anleitung_1_720_1561.webp" alt="Schritt 1" className="w-full h-auto rounded-md border border-gray-200" />
-                          <p className="text-xs text-center mt-1">Schritt 1: Einstellungen öffnen</p>
-                        </div>
-                        <div className="col-span-2">
-                          <img src="/attached_assets/Authtoken_Anleitung_2_720_1561.webp" alt="Schritt 2" className="w-full h-auto rounded-md border border-gray-200" />
-                          <p className="text-xs text-center mt-1">Schritt 2: Auf Support tippen</p>
-                        </div>
-                        <div className="col-span-2">
-                          <img src="/attached_assets/Authtoken_Anleitung_3_720_1561.webp" alt="Schritt 3" className="w-full h-auto rounded-md border border-gray-200" />
-                          <p className="text-xs text-center mt-1">Schritt 3: Auf Hilfe tippen</p>
-                        </div>
-                        <div className="col-span-2">
-                          <img src="/attached_assets/Authtoken_Anleitung_4_720_1561.webp" alt="Schritt 4" className="w-full h-auto rounded-md border border-gray-200" />
-                          <p className="text-xs text-center mt-1">Schritt 4: Authtoken kopieren</p>
-                        </div>
-                      </div>
                     </div>
                     
 
@@ -379,35 +360,37 @@ export default function WuerfelCheckout() {
             <CardFooter className="flex flex-col items-start w-full">
               {/* Hinweise zum Widerrufsrecht und AGB */}
               <div className="w-full space-y-4 mb-6">
-                <div className="flex items-start space-x-2">
-                  <input 
-                    type="checkbox" 
-                    id="agreedToWithdrawalNotice" 
-                    name="agreedToWithdrawalNotice" 
-                    className="h-4 w-4 mt-1 text-[#00CFFF] rounded" 
-                    checked={formData.agreedToWithdrawalNotice} 
-                    onChange={handleInputChange} 
-                    required 
-                  />
-                  <Label htmlFor="agreedToWithdrawalNotice" className="text-sm">
-                    Ich bin ausdrücklich damit einverstanden, dass mit der Ausführung des Auftrags vor Ablauf der Widerrufsfrist begonnen wird. Mir ist bekannt, dass mein <Link href="/widerruf" className="text-[#00CFFF] hover:underline">Widerrufsrecht</Link> mit Beginn der Ausführung erlischt.
-                  </Label>
-                </div>
+                <RadioGroup className="space-y-3">
+                  <div className="flex items-start space-x-2 border border-[#00CFFF]/30 rounded-md p-3 hover:bg-[#00CFFF]/5">
+                    <RadioGroupItem 
+                      id="agreedToWithdrawalNotice" 
+                      name="agreedToWithdrawalNotice"
+                      value="agreed"
+                      checked={formData.agreedToWithdrawalNotice} 
+                      onClick={() => setFormData({...formData, agreedToWithdrawalNotice: true})}
+                      required 
+                    />
+                    <Label htmlFor="agreedToWithdrawalNotice" className="text-sm">
+                      Ich bin ausdrücklich damit einverstanden, dass mit der Ausführung des Auftrags vor Ablauf der Widerrufsfrist begonnen wird. Mir ist bekannt, dass mein <Link href="/widerruf" className="text-[#00CFFF] hover:underline">Widerrufsrecht</Link> mit Beginn der Ausführung erlischt.
+                    </Label>
+                  </div>
+                </RadioGroup>
                 
-                <div className="flex items-start space-x-2">
-                  <input 
-                    type="checkbox" 
-                    id="agreedToTerms" 
-                    name="agreedToTerms" 
-                    className="h-4 w-4 mt-1 text-[#00CFFF] rounded" 
-                    checked={formData.agreedToTerms} 
-                    onChange={handleInputChange} 
-                    required 
-                  />
-                  <Label htmlFor="agreedToTerms" className="text-sm">
-                    Ich habe die <Link href="/agb" className="text-[#00CFFF] hover:underline">AGB</Link> und <Link href="/datenschutz" className="text-[#00CFFF] hover:underline">Datenschutzbestimmungen</Link> gelesen und akzeptiere diese.
-                  </Label>
-                </div>
+                <RadioGroup className="space-y-3 mt-4">
+                  <div className="flex items-start space-x-2 border border-[#00CFFF]/30 rounded-md p-3 hover:bg-[#00CFFF]/5">
+                    <RadioGroupItem 
+                      id="agreedToTerms" 
+                      name="agreedToTerms"
+                      value="agreed"
+                      checked={formData.agreedToTerms} 
+                      onClick={() => setFormData({...formData, agreedToTerms: true})}
+                      required 
+                    />
+                    <Label htmlFor="agreedToTerms" className="text-sm">
+                      Ich habe die <Link href="/agb" className="text-[#00CFFF] hover:underline">AGB</Link> und <Link href="/datenschutz" className="text-[#00CFFF] hover:underline">Datenschutzbestimmungen</Link> gelesen und akzeptiere diese.
+                    </Label>
+                  </div>
+                </RadioGroup>
               </div>
               
               <Button type="submit" className="w-full bg-[#FF4C00] hover:bg-[#FF4C00]/80 text-white font-bold">
