@@ -25,7 +25,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50 font-['Nunito_Sans'] text-[#0A3A68]">
+    <div className="min-h-screen flex flex-col bg-gray-50 font-['Nunito_Sans'] text-[#0A3A68]" id="top">
       <Header />
       
       <main className="max-w-4xl mx-auto px-4 py-6 md:py-10 flex-grow">
