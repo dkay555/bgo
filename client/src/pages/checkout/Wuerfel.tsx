@@ -353,19 +353,31 @@ export default function WuerfelCheckout() {
                 <div className="space-y-3">
                   <div 
                     className={`flex items-start space-x-2 border border-[#00CFFF]/30 rounded-md p-3 hover:bg-[#00CFFF]/5 ${formData.agreedToWithdrawalNotice ? 'bg-[#00CFFF]/10' : ''}`}
-                    onClick={() => setFormData({...formData, agreedToWithdrawalNotice: !formData.agreedToWithdrawalNotice})}
                   >
                     <input 
                       type="checkbox" 
-                      id="agreedToWithdrawalNotice" 
+                      id="agreedToWithdrawalNotice"
+                      name="agreedToWithdrawalNotice"
                       className="h-4 w-4 mt-1 accent-[#00CFFF]"
                       checked={formData.agreedToWithdrawalNotice}
                       onChange={(e) => {
-                        e.stopPropagation();
-                        setFormData({...formData, agreedToWithdrawalNotice: e.target.checked});
+                        const isChecked = e.target.checked;
+                        setFormData(prevState => ({
+                          ...prevState,
+                          agreedToWithdrawalNotice: isChecked
+                        }));
                       }}
                     />
-                    <Label htmlFor="agreedToWithdrawalNotice" className="text-sm cursor-pointer">
+                    <Label 
+                      htmlFor="agreedToWithdrawalNotice" 
+                      className="text-sm cursor-pointer"
+                      onClick={() => {
+                        setFormData(prevState => ({
+                          ...prevState,
+                          agreedToWithdrawalNotice: !prevState.agreedToWithdrawalNotice
+                        }));
+                      }}
+                    >
                       Ich bin ausdrücklich damit einverstanden, dass mit der Ausführung des Auftrags vor Ablauf der Widerrufsfrist begonnen wird. Mir ist bekannt, dass mein <Link href="/widerruf" className="text-[#00CFFF] hover:underline">Widerrufsrecht</Link> mit Beginn der Ausführung erlischt.
                     </Label>
                   </div>
@@ -374,19 +386,31 @@ export default function WuerfelCheckout() {
                 <div className="space-y-3 mt-4">
                   <div 
                     className={`flex items-start space-x-2 border border-[#00CFFF]/30 rounded-md p-3 hover:bg-[#00CFFF]/5 ${formData.agreedToTerms ? 'bg-[#00CFFF]/10' : ''}`}
-                    onClick={() => setFormData({...formData, agreedToTerms: !formData.agreedToTerms})}
                   >
                     <input 
                       type="checkbox" 
-                      id="agreedToTerms" 
+                      id="agreedToTerms"
+                      name="agreedToTerms" 
                       className="h-4 w-4 mt-1 accent-[#00CFFF]"
                       checked={formData.agreedToTerms}
                       onChange={(e) => {
-                        e.stopPropagation();
-                        setFormData({...formData, agreedToTerms: e.target.checked});
+                        const isChecked = e.target.checked;
+                        setFormData(prevState => ({
+                          ...prevState,
+                          agreedToTerms: isChecked
+                        }));
                       }}
                     />
-                    <Label htmlFor="agreedToTerms" className="text-sm cursor-pointer">
+                    <Label 
+                      htmlFor="agreedToTerms" 
+                      className="text-sm cursor-pointer"
+                      onClick={() => {
+                        setFormData(prevState => ({
+                          ...prevState,
+                          agreedToTerms: !prevState.agreedToTerms
+                        }));
+                      }}
+                    >
                       Ich habe die <Link href="/agb" className="text-[#00CFFF] hover:underline">AGB</Link> und <Link href="/datenschutz" className="text-[#00CFFF] hover:underline">Datenschutzbestimmungen</Link> gelesen und akzeptiere diese.
                     </Label>
                   </div>
