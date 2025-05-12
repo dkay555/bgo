@@ -18,9 +18,9 @@ export default function Wuerfel() {
     return 25; // Standardpreis
   };
 
-  // Handler für Änderungen im Dropdown
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedOption(e.target.value);
+  // Handler für Änderungen bei den Radio-Buttons
+  const handleRadioChange = (value: string) => {
+    setSelectedOption(value);
   };
 
   return (
@@ -82,19 +82,32 @@ export default function Wuerfel() {
               <div className="mt-4 mb-8">
                 <h3 className="babix-info-header text-[#0A3A68] mb-4">Wählen Sie Ihre Würfelmenge</h3>
                 
-                <div className="relative w-full md:w-2/3 mb-6">
-                  <select 
-                    className="w-full p-3 pe-10 bg-gray-100 border border-gray-300 rounded-md appearance-none focus:outline-none focus:ring-2 focus:ring-[#00CFFF]"
-                    value={selectedOption}
-                    onChange={handleChange}
-                  >
-                    <option value="25000">25.000 Würfel - 25€</option>
-                    <option value="35000">35.000 Würfel - 35€</option>
-                    <option value="45000">45.000 Würfel - 45€</option>
-                  </select>
-                  <span className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
-                    <span className="material-icons text-gray-600">expand_more</span>
-                  </span>
+                <div className="w-full md:w-2/3 mb-6">
+                  <div className="space-y-3">
+                    {PRICES.map((priceItem, index) => (
+                      <div 
+                        key={index}
+                        className="flex items-center p-3 border border-gray-200 rounded-md hover:border-[#00CFFF]"
+                      >
+                        <input
+                          type="radio"
+                          id={`dice-${priceItem.dice}`}
+                          name="diceAmount"
+                          value={priceItem.dice}
+                          checked={selectedOption === priceItem.dice.toString()}
+                          onChange={() => handleRadioChange(priceItem.dice.toString())}
+                          className="w-4 h-4 text-[#00CFFF] border-gray-300 focus:ring-[#00CFFF]"
+                        />
+                        <label 
+                          htmlFor={`dice-${priceItem.dice}`}
+                          className="ml-2 text-gray-700 font-medium cursor-pointer flex-1 flex justify-between"
+                        >
+                          <span>{priceItem.dice.toLocaleString('de-DE')} Würfel</span>
+                          <span className="font-semibold">{priceItem.price}€</span>
+                        </label>
+                      </div>
+                    ))}
+                  </div>
                 </div>
                 
                 <div className="flex flex-col sm:flex-row gap-4 items-center">
