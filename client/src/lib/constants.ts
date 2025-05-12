@@ -38,9 +38,6 @@ export const PRICES = [
 
 // Special offer
 export const SPECIAL_OFFER = {
-  title: 'Sonderangebot',
-  description: 'Holen Sie sich jetzt unser bestes Angebot für eine begrenzte Zeit!',
-  discount: 15,
   dice: '40.000–50.000',
   price: 30,
   condition: '(während „Lucky Chance" oder „Dice Roll", nach Absprache)',
