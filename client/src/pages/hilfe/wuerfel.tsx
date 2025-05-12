@@ -71,7 +71,7 @@ export default function WuerfelHilfe() {
             <p className="mb-3 text-sm text-gray-600">Beispiel: Bei 25.000 Würfeln erhaltet ihr zwischen 22.500 und 27.500.</p>
             
             <div className="mt-5 mb-5 bg-[#E6F7FF] border-l-4 border-[#00CFFF] p-4 rounded-r-md">
-              <h4 className="font-bold text-[#0A3A68] mb-2 border-b-2 border-[#00CFFF] pb-2 inline-block">💡 Zu wenig Würfel?</h4>
+              <h4 className="babix-info-header text-[#0A3A68] mb-2">💡 Zu wenig Würfel?</h4>
               <p className="text-gray-700">Lässt sich ein Set vervollständigen? Ist der Freundschaftsbalken gefüllt? Schreib uns und wir finden gemeinsam auch dann eine Lösung wenn es schnell gehen muss.</p>
             </div>
             
@@ -118,7 +118,7 @@ export default function WuerfelHilfe() {
             <div className="space-y-4">
               <div className="border border-gray-200 rounded-lg mb-2">
                 <div className="bg-gray-50 p-4 rounded-t-lg cursor-pointer flex justify-between items-center">
-                  <h4 className="font-bold text-[#0A3A68]">Werden das Top- und Bahnhofsevent mit abgeschlossen?</h4>
+                  <h4 className="babix-info-header text-[#0A3A68]">Werden das Top- und Bahnhofsevent mit abgeschlossen?</h4>
                   <span className="material-icons text-[#00CFFF]">expand_more</span>
                 </div>
                 <div className="p-4 border-t border-gray-200">
@@ -128,7 +128,7 @@ export default function WuerfelHilfe() {
               
               <div className="border border-gray-200 rounded-lg mb-2">
                 <div className="bg-gray-50 p-4 rounded-t-lg cursor-pointer flex justify-between items-center">
-                  <h4 className="font-bold text-[#0A3A68]">Wie kann ich wissen ob noch ein High Roller im Turnier folgt?</h4>
+                  <h4 className="babix-info-header text-[#0A3A68]">Wie kann ich wissen ob noch ein High Roller im Turnier folgt?</h4>
                   <span className="material-icons text-[#00CFFF]">expand_more</span>
                 </div>
                 <div className="p-4 border-t border-gray-200">
