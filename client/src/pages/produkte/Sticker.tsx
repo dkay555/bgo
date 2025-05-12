@@ -84,62 +84,102 @@ export default function StickerPage() {
         <h1 className="babix-info-header text-3xl md:text-4xl font-bold mb-8 text-center">Sticker kaufen</h1>
       </div>
       
-      <div className="max-w-4xl mx-auto">
-        {/* Einführungstext */}
-        <div className="bg-[#E6F7FF] border-l-4 border-[#00CFFF] p-4 rounded-r-md mb-8">
-          <h2 className="text-xl font-bold text-[#0A3A68] mb-3">Wir haben sie alle!</h2>
-          <p className="text-gray-700 mb-3">
-            Sticker werden i.d.R. innerhalb von 60 Minuten verschickt. Aufgrund des Sendelimits kann es allerdings bis zum Reset der Trades dauern.
-            Solltest du den Sticker also dringend benötigen schicke uns vorher eine Nachricht.
-          </p>
-          <p className="text-gray-700 mb-3">
-            Goldsticker können nur während "Goldener Blitz" verschickt werden.
-          </p>
-          
-          <div className="overflow-x-auto mt-4">
-            <h4 className="font-medium text-[#0A3A68] mb-2">Preise:</h4>
-            <table className="min-w-full divide-y divide-gray-200 border rounded-lg">
-              <thead className="bg-[#0A3A68] text-white">
-                <tr>
-                  <th scope="col" className="px-4 py-2 text-left text-xs font-medium uppercase tracking-wider">
-                    Sterne
-                  </th>
-                  <th scope="col" className="px-4 py-2 text-left text-xs font-medium uppercase tracking-wider">
-                    Preis
-                  </th>
-                  <th scope="col" className="px-4 py-2 text-left text-xs font-medium uppercase tracking-wider">
-                    Hinweis
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                <tr>
-                  <td className="px-4 py-2 whitespace-nowrap text-sm">1-3 Sterne</td>
-                  <td className="px-4 py-2 whitespace-nowrap text-sm font-bold text-[#FF4C00]">2,00 €</td>
-                  <td className="px-4 py-2 whitespace-nowrap text-sm">Standard</td>
-                </tr>
-                <tr>
-                  <td className="px-4 py-2 whitespace-nowrap text-sm">4 Sterne</td>
-                  <td className="px-4 py-2 whitespace-nowrap text-sm font-bold text-[#FF4C00]">2,50 €</td>
-                  <td className="px-4 py-2 whitespace-nowrap text-sm">Standard</td>
-                </tr>
-                <tr>
-                  <td className="px-4 py-2 whitespace-nowrap text-sm">5 Sterne</td>
-                  <td className="px-4 py-2 whitespace-nowrap text-sm font-bold text-[#FF4C00]">3,00 €</td>
-                  <td className="px-4 py-2 whitespace-nowrap text-sm">Standard</td>
-                </tr>
-                <tr className="bg-yellow-50">
-                  <td className="px-4 py-2 whitespace-nowrap text-sm">4 Sterne Gold</td>
-                  <td className="px-4 py-2 whitespace-nowrap text-sm font-bold text-[#FF4C00]">4,00 €</td>
-                  <td className="px-4 py-2 whitespace-nowrap text-sm">Nur während "Goldener Blitz"</td>
-                </tr>
-                <tr className="bg-yellow-50">
-                  <td className="px-4 py-2 whitespace-nowrap text-sm">5 Sterne Gold</td>
-                  <td className="px-4 py-2 whitespace-nowrap text-sm font-bold text-[#FF4C00]">5,00 €</td>
-                  <td className="px-4 py-2 whitespace-nowrap text-sm">Nur während "Goldener Blitz"</td>
-                </tr>
-              </tbody>
-            </table>
+      <div className="max-w-4xl mx-auto mb-12">
+        <div className="bg-white rounded-lg shadow-lg overflow-hidden mb-8">
+          <div className="p-6 flex flex-col justify-center">
+            <h2 className="text-2xl font-bold text-[#0A3A68] mb-4">Wir haben sie alle!</h2>
+            <p className="text-gray-700 mb-4">
+              Sticker werden i.d.R. innerhalb von 60 Minuten verschickt. Aufgrund des Sendelimits kann es allerdings bis zum Reset der Trades dauern.
+              Solltest du den Sticker also dringend benötigen schicke uns vorher eine Nachricht.
+            </p>
+            <p className="text-gray-700 mb-4">
+              Goldsticker können nur während "Goldener Blitz" verschickt werden.
+            </p>
+            
+            <div className="mt-4 mb-8">
+              <div className="w-full mb-6">
+                <div className="overflow-x-auto">
+                  <table className="min-w-full divide-y divide-gray-200 border rounded-lg">
+                    <thead className="bg-[#0A3A68] text-white">
+                      <tr>
+                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
+                          Sterne
+                        </th>
+                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
+                          Preis
+                        </th>
+                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
+                          Hinweis
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className="bg-white divide-y divide-gray-200">
+                      <tr>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm font-medium text-gray-900">1-3 Sterne</div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm font-bold text-[#FF4C00]">2,00 €</div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          Standard
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm font-medium text-gray-900">4 Sterne</div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm font-bold text-[#FF4C00]">2,50 €</div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          Standard
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm font-medium text-gray-900">5 Sterne</div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm font-bold text-[#FF4C00]">3,00 €</div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          Standard
+                        </td>
+                      </tr>
+                      <tr className="bg-yellow-50 border-t-2 border-yellow-200">
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm font-medium text-gray-900 flex items-center">
+                            <span className="material-icons text-yellow-500 mr-2">stars</span>
+                            4 Sterne Gold
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm font-bold text-[#FF4C00]">4,00 €</div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          Nur während "Goldener Blitz"
+                        </td>
+                      </tr>
+                      <tr className="bg-yellow-50">
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm font-medium text-gray-900 flex items-center">
+                            <span className="material-icons text-yellow-500 mr-2">stars</span>
+                            5 Sterne Gold
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm font-bold text-[#FF4C00]">5,00 €</div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          Nur während "Goldener Blitz"
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         
@@ -259,57 +299,78 @@ export default function StickerPage() {
           </div>
         </div>
         
-        {/* Warenkorb Zusammenfassung */}
-        <div className="bg-[#E6F7FF] border-l-4 border-[#00CFFF] p-4 rounded-r-md mb-8">
-          <h4 className="font-medium text-[#0A3A68] mb-2">Deine Sticker-Auswahl</h4>
-          <div className="py-2 my-2">
-            {cart.length === 0 ? (
-              <div className="bg-gray-50 p-3 rounded-md text-center">
-                <p className="text-gray-500">Du hast noch keine Sticker ausgewählt.</p>
-              </div>
-            ) : (
-              <div className="bg-gray-50 p-3 rounded-md">
-                <ul className="divide-y divide-gray-200">
-                  {cart.map((item, index) => (
-                    <li key={index} className="py-2 flex justify-between items-center">
-                      <div>
-                        <p className="font-medium">{item.name} (Set {Math.ceil(item.id / 9)})</p>
-                        <div className="flex items-center">
-                          <div className="flex mr-2">
-                            {[...Array(item.stars)].map((_, i) => (
-                              <span key={i} className="material-icons text-yellow-500 text-sm">star</span>
-                            ))}
-                          </div>
-                          <span className="text-sm text-gray-500">
-                            {item.isGold ? '(Gold)' : ''}
-                          </span>
-                        </div>
-                      </div>
-                      <span className="font-bold">{calculatePrice(item).toFixed(2).replace('.', ',')} €</span>
-                    </li>
-                  ))}
-                </ul>
-                <div className="border-t border-gray-200 mt-2 pt-2 flex justify-between font-bold">
-                  <span>Gesamt:</span>
-                  <span className="text-[#FF4C00]">{calculateTotal().replace('.', ',')} €</span>
+        {/* Warenkorb Zusammenfassung im selben Design wie Würfelseite */}
+        <div className="bg-white rounded-lg shadow-lg mb-8 overflow-hidden">
+          <div className="p-6">
+            <h2 className="text-xl font-bold text-[#0A3A68] mb-4">Deine Sticker-Auswahl</h2>
+            <div className="mb-6">
+              {cart.length === 0 ? (
+                <div className="bg-gray-50 p-4 rounded-md text-center">
+                  <p className="text-gray-500">Du hast noch keine Sticker ausgewählt.</p>
                 </div>
+              ) : (
+                <div className="bg-gray-50 p-4 rounded-md">
+                  <ul className="divide-y divide-gray-200">
+                    {cart.map((item, index) => (
+                      <li key={index} className="py-3 flex justify-between items-center">
+                        <div>
+                          <p className="font-medium">{item.name} (Set {Math.ceil(item.id / 9)})</p>
+                          <div className="flex items-center">
+                            <div className="flex mr-2">
+                              {[...Array(item.stars)].map((_, i) => (
+                                <span key={i} className="material-icons text-yellow-500 text-sm">star</span>
+                              ))}
+                            </div>
+                            <span className="text-sm text-gray-500">
+                              {item.isGold ? '(Gold)' : ''}
+                            </span>
+                          </div>
+                        </div>
+                        <span className="font-bold">{calculatePrice(item).toFixed(2).replace('.', ',')} €</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="border-t border-gray-200 mt-2 pt-2 flex justify-between font-bold">
+                    <span>Gesamt:</span>
+                    <span className="text-[#FF4C00]">{calculateTotal().replace('.', ',')} €</span>
+                  </div>
+                </div>
+              )}
+            </div>
+            
+            {/* Kauf-Button */}
+            {cart.length > 0 && (
+              <div className="flex flex-col sm:flex-row gap-4 items-center">
+                <button
+                  onClick={() => setShowModal(true)}
+                  className="bg-[#FF4C00] text-white py-3 px-6 rounded-md hover:bg-[#0A3A68] transition-colors inline-flex items-center"
+                >
+                  <span className="material-icons mr-2">shopping_cart</span>
+                  Sticker bestellen
+                </button>
               </div>
             )}
           </div>
         </div>
         
-        {/* Kauf-Button */}
-        {cart.length > 0 && (
-          <div className="mb-8">
-            <button
-              onClick={() => setShowModal(true)}
-              className="w-full bg-[#FF4C00] hover:bg-[#FF6D00] text-white py-3 px-4 rounded-md transition-colors flex items-center justify-center"
-            >
-              <span className="material-icons mr-2">shopping_cart</span>
-              Sticker bestellen
-            </button>
+        {/* Kontaktbox wie in Würfelseite */}
+        <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
+          <div className="flex items-center mb-4">
+            <span className="material-icons text-[#00CFFF] text-2xl mr-3">help_outline</span>
+            <h2 className="text-2xl font-bold text-[#0A3A68]">Du hast noch Fragen?</h2>
           </div>
-        )}
+          
+          <p className="text-gray-700 mb-4">
+            Schreib uns gerne eine Nachricht. Alle Kontaktmöglichkeiten findest du hier:
+          </p>
+          
+          <Link href="/kontakt" className="inline-block">
+            <button className="bg-[#FF4C00] hover:bg-[#0A3A68] text-white py-2 px-4 rounded-md transition-colors inline-flex items-center font-bold">
+              <span className="material-icons mr-2">contact_support</span>
+              Kontakt aufnehmen
+            </button>
+          </Link>
+        </div>
       </div>
       
       {/* Modal für Kaufoptionen */}
