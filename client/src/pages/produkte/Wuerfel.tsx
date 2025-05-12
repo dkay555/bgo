@@ -191,8 +191,15 @@ export default function Wuerfel() {
           </div>
           
           <p className="text-gray-700 mb-4">
-            Schreib uns gerne eine Nachricht. Alle Kontaktmöglichkeiten findest du hier: <Link href="/kontakt" className="text-[#00CFFF] hover:underline">Kontakt</Link>
+            Schreib uns gerne eine Nachricht. Alle Kontaktmöglichkeiten findest du hier:
           </p>
+          
+          <Link href="/kontakt" className="inline-block">
+            <button className="bg-[#FF4C00] hover:bg-[#0A3A68] text-white py-2 px-4 rounded-md transition-colors inline-flex items-center font-bold">
+              <span className="material-icons mr-2">contact_support</span>
+              Kontakt aufnehmen
+            </button>
+          </Link>
           
           <div className="flex flex-wrap gap-4 mt-4">
             <a href="https://wa.me/4915237250453" className="bg-[#25D366] text-white py-2 px-4 rounded-md hover:bg-opacity-80 transition-colors text-center flex items-center justify-center">
@@ -215,10 +222,10 @@ export default function Wuerfel() {
         <div className="bg-[#E6F7FF] border-l-4 border-[#00CFFF] p-4 rounded-r-md mb-6">
           <div className="flex justify-between items-center flex-wrap gap-4">
             <div>
-              <h4 className="babix-info-header text-[#0A3A68] mb-2">Hilfe zum Würfelboost</h4>
-              <p className="text-gray-700">Erfahre mehr über den Ablauf, die Sicherheit und weitere häufig gestellte Fragen.</p>
+              <h4 className="text-[#0A3A68] font-bold mb-2">Haben Sie weitere Fragen? Wir sind für Sie da!</h4>
+              <p className="text-gray-700">Nutzen Sie unseren WhatsApp Support oder unsere Kontaktseite.</p>
             </div>
-            <Link href="/hilfe/wuerfel#top">
+            <Link href="/hilfe" className="inline-block">
               <button className="bg-[#0A3A68] hover:bg-[#00CFFF] text-white py-2 px-4 rounded-md transition-colors inline-flex items-center">
                 <span className="material-icons mr-1">help</span>
                 Zur Hilfe
@@ -226,16 +233,6 @@ export default function Wuerfel() {
             </Link>
           </div>
         </div>
-      </div>
-      
-      <div className="text-center">
-        <p className="mb-6 text-lg">Haben Sie weitere Fragen? Wir sind für Sie da!</p>
-        <Link href="/kontakt">
-          <button className="bg-[#0A3A68] text-white py-3 px-8 rounded-md hover:bg-[#FF4C00] transition-colors inline-flex items-center">
-            <span className="material-icons mr-2">contact_support</span>
-            Kontakt aufnehmen
-          </button>
-        </Link>
       </div>
     </div>
   );
