@@ -1,0 +1,42 @@
+                    {/* Würfelmengenauswahl */}
+                    <div className="bg-[#0A3A68]/5 p-4 rounded-lg mb-6">
+                      <h4 className="babix-info-header text-[#0A3A68] mb-4 flex items-center">
+                        <span className="material-icons text-[#00CFFF] mr-2">sports_score</span>
+                        Würfelmenge auswählen
+                      </h4>
+                      
+                      <RadioGroup 
+                        defaultValue={formData.selectedPackage}
+                        onValueChange={(value) => {
+                          setFormData({
+                            ...formData,
+                            selectedPackage: value
+                          });
+                        }}
+                        className="grid gap-4"
+                      >
+                        <div className={`flex items-center space-x-2 p-4 rounded-lg border ${formData.selectedPackage === "25000" ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border-gray-200'}`}>
+                          <RadioGroupItem value="25000" id="r-25000" className="text-[#00CFFF]" />
+                          <Label htmlFor="r-25000" className="w-full cursor-pointer flex justify-between">
+                            <span>25.000 Würfel</span>
+                            <span className="font-bold text-[#FF4C00]">25€</span>
+                          </Label>
+                        </div>
+                        
+                        <div className={`flex items-center space-x-2 p-4 rounded-lg border ${formData.selectedPackage === "35000" ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border-gray-200'}`}>
+                          <RadioGroupItem value="35000" id="r-35000" className="text-[#00CFFF]" />
+                          <Label htmlFor="r-35000" className="w-full cursor-pointer flex justify-between">
+                            <span>35.000 Würfel</span>
+                            <span className="font-bold text-[#FF4C00]">35€</span>
+                          </Label>
+                        </div>
+                        
+                        <div className={`flex items-center space-x-2 p-4 rounded-lg border ${formData.selectedPackage === "45000" ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border-gray-200'}`}>
+                          <RadioGroupItem value="45000" id="r-45000" className="text-[#00CFFF]" />
+                          <Label htmlFor="r-45000" className="w-full cursor-pointer flex justify-between">
+                            <span>45.000 Würfel</span>
+                            <span className="font-bold text-[#FF4C00]">45€</span>
+                          </Label>
+                        </div>
+                      </RadioGroup>
+                    </div>
