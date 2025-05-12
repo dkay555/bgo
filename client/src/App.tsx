@@ -13,6 +13,7 @@ import Kontakt from "@/pages/Kontakt";
 import Impressum from "@/pages/Impressum";
 import Datenschutz from "@/pages/Datenschutz";
 import AGB from "@/pages/AGB";
+import Widerruf from "@/pages/Widerruf";
 import Hilfe from "@/pages/Hilfe";
 import Produkte from "@/pages/Produkte";
 
@@ -61,6 +62,7 @@ function Router() {
           <Route path="/impressum" component={Impressum} />
           <Route path="/datenschutz" component={Datenschutz} />
           <Route path="/agb" component={AGB} />
+          <Route path="/widerruf" component={Widerruf} />
           
           {/* Hilfebereich */}
           <Route path="/hilfe" component={Hilfe} />

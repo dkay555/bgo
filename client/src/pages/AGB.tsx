@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { MainLayout } from "@/layouts/MainLayout";
 
 export default function AGB() {
   useEffect(() => {
@@ -6,116 +7,106 @@ export default function AGB() {
   }, []);
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-4xl" id="top">
-      <h1 className="babix-info-header text-3xl md:text-4xl font-bold mb-8 text-center">Allgemeine Geschäftsbedingungen</h1>
-      
-      <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-        <p className="mb-6 text-sm text-gray-600">Stand: Mai 2025</p>
+    <MainLayout>
+      <div className="container mx-auto px-4 py-8 max-w-4xl" id="top">
+        <h1 className="babix-info-header text-3xl md:text-4xl font-bold mb-8 text-center">Allgemeine Geschäftsbedingungen</h1>
         
-        <h2 className="text-2xl font-bold text-[#0A3A68] mb-4">§1 Geltungsbereich</h2>
-        <p className="mb-6">
-          Diese Allgemeinen Geschäftsbedingungen (nachfolgend "AGB") gelten für alle Verträge, die zwischen der BabixGO UG (haftungsbeschränkt), Musterstraße 123, 12345 Musterstadt (nachfolgend "Anbieter") und dem Kunden (nachfolgend "Nutzer") über die Website babixgo.de geschlossen werden.
-        </p>
-        <p className="mb-6">
-          Mit der Registrierung auf unserer Plattform oder der Nutzung unserer Dienste erkennt der Nutzer diese AGB an. Abweichende Bedingungen des Nutzers finden keine Anwendung, es sei denn, der Anbieter stimmt ihrer Geltung ausdrücklich schriftlich zu.
-        </p>
+        <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
+          <p className="mb-6 text-sm text-gray-600">Stand: Mai 2025</p>
+          
+          <h2 className="text-2xl font-bold text-[#0A3A68] mb-4">1. Geltungsbereich</h2>
+          <p className="mb-6">
+            Für alle Bestellungen über unseren Online-Shop gelten die nachfolgenden AGB. Unser Online-Shop richtet sich ausschließlich an Verbraucher.
+          </p>
+          <p className="mb-6">
+            Verbraucher ist jede natürliche Person, die ein Rechtsgeschäft zu Zwecken abschließt, die überwiegend weder ihrer gewerblichen noch ihrer selbständigen beruflichen Tätigkeit zugerechnet werden können. Unternehmer ist eine natürliche oder juristische Person oder eine rechtsfähige Personengesellschaft, die bei Abschluss eines Rechtsgeschäfts in Ausübung ihrer gewerblichen oder selbständigen beruflichen Tätigkeit handelt.
+          </p>
         
-        <h2 className="text-2xl font-bold text-[#0A3A68] mb-4 mt-8">§2 Vertragsgegenstand</h2>
-        <p className="mb-6">
-          Der Anbieter bietet auf seiner Website verschiedene digitale Dienstleistungen im Zusammenhang mit dem Spiel "Monopoly GO" an. Dies umfasst insbesondere:
-        </p>
-        <ul className="list-disc pl-6 mb-6">
-          <li className="mb-2">Würfelboosts: Erhöhung der Spielwährung "Würfel" im Spielkonto des Nutzers</li>
-          <li className="mb-2">Sticker: Bereitstellung von Spielelementen "Sticker" im Spielkonto des Nutzers</li>
-          <li className="mb-2">Partner: Vermittlung von Spielpartnern für gemeinsame Spielaktivitäten</li>
-          <li className="mb-2">Race: Unterstützung bei Spielevents "Race" im Spiel Monopoly GO</li>
-        </ul>
-        <p className="mb-6">
-          Die genauen Leistungsbeschreibungen und Preise ergeben sich aus der jeweiligen Produktbeschreibung auf der Website.
-        </p>
-        
-        <h2 className="text-2xl font-bold text-[#0A3A68] mb-4 mt-8">§3 Vertragsschluss</h2>
-        <p className="mb-6">
-          Der Nutzer kann aus dem Sortiment des Anbieters Produkte auswählen und diese über den Button "In den Warenkorb legen" in einem Warenkorb sammeln. Über den Button "Kostenpflichtig bestellen" gibt er ein verbindliches Angebot zum Kauf der im Warenkorb befindlichen Waren ab.
-        </p>
-        <p className="mb-6">
-          Vor Abschicken der Bestellung kann der Nutzer die Daten jederzeit ändern und einsehen. Der Anbieter schickt daraufhin dem Nutzer eine automatische Empfangsbestätigung per E-Mail zu, in der die Bestellung des Nutzers nochmals aufgeführt wird. Diese stellt noch keine Annahme des Angebots dar.
-        </p>
-        <p className="mb-6">
-          Der Vertrag kommt zustande, wenn der Anbieter das Angebot des Nutzers durch eine Annahmeerklärung oder durch die Bereitstellung der Leistung innerhalb von 2 Tagen annimmt.
-        </p>
-        
-        <h2 className="text-2xl font-bold text-[#0A3A68] mb-4 mt-8">§4 Preise und Zahlungsbedingungen</h2>
-        <p className="mb-6">
-          Alle Preise, die auf der Website des Anbieters angegeben sind, verstehen sich einschließlich der jeweils gültigen gesetzlichen Umsatzsteuer.
-        </p>
-        <p className="mb-6">
-          Dem Nutzer stehen die folgenden Zahlungsmöglichkeiten zur Verfügung:
-        </p>
-        <ul className="list-disc pl-6 mb-6">
-          <li className="mb-2">PayPal</li>
-          <li className="mb-2">Kreditkarte (Visa, Mastercard)</li>
-          <li className="mb-2">Sofortüberweisung</li>
-          <li className="mb-2">Paysafecard</li>
-        </ul>
-        <p className="mb-6">
-          Die Zahlung des Kaufpreises ist unmittelbar mit Vertragsschluss fällig. Der Nutzer gerät in Verzug, wenn er nicht innerhalb von 14 Tagen nach Fälligkeit und Zugang einer Rechnung oder gleichwertigen Zahlungsaufforderung leistet.
-        </p>
-        
-        <h2 className="text-2xl font-bold text-[#0A3A68] mb-4 mt-8">§5 Leistungserbringung</h2>
-        <p className="mb-6">
-          Der Anbieter wird die bestellten Leistungen nach Zahlungseingang unverzüglich, spätestens jedoch innerhalb von 24 Stunden erbringen.
-        </p>
-        <p className="mb-6">
-          Zur Erbringung der Leistung benötigt der Anbieter vom Nutzer folgende Informationen:
-        </p>
-        <ul className="list-disc pl-6 mb-6">
-          <li className="mb-2">Spieler-ID oder Account-Namen im Spiel Monopoly GO</li>
-          <li className="mb-2">Je nach Leistungsart weitere spielbezogene Informationen</li>
-        </ul>
-        <p className="mb-6">
-          Der Nutzer ist verpflichtet, korrekte Angaben zu machen. Für Verzögerungen oder Unmöglichkeit der Leistungserbringung aufgrund falscher Angaben haftet der Anbieter nicht.
-        </p>
-        
-        <h2 className="text-2xl font-bold text-[#0A3A68] mb-4 mt-8">§6 Widerrufsrecht</h2>
-        <p className="mb-6">
-          Dem Nutzer steht ein gesetzliches Widerrufsrecht zu. Informationen dazu sowie das Widerrufsformular finden sich in der separaten Widerrufsbelehrung.
-        </p>
-        <p className="mb-6">
-          Das Widerrufsrecht erlischt vorzeitig bei Verträgen über die Lieferung digitaler Inhalte, wenn der Anbieter mit der Ausführung des Vertrags begonnen hat, nachdem der Nutzer:
-        </p>
-        <ul className="list-disc pl-6 mb-6">
-          <li className="mb-2">ausdrücklich zugestimmt hat, dass der Anbieter mit der Ausführung des Vertrags vor Ablauf der Widerrufsfrist beginnt, und</li>
-          <li className="mb-2">seine Kenntnis davon bestätigt hat, dass er durch seine Zustimmung mit Beginn der Ausführung des Vertrags sein Widerrufsrecht verliert.</li>
-        </ul>
-        
-        <h2 className="text-2xl font-bold text-[#0A3A68] mb-4 mt-8">§7 Haftung</h2>
-        <p className="mb-6">
-          Der Anbieter haftet unbeschränkt für Vorsatz und grobe Fahrlässigkeit sowie nach dem Produkthaftungsgesetz.
-        </p>
-        <p className="mb-6">
-          Für leichte Fahrlässigkeit haftet der Anbieter nur bei Verletzung einer wesentlichen Vertragspflicht und nur in Höhe des vorhersehbaren, vertragstypischen Schadens. Wesentliche Vertragspflichten sind solche, deren Erfüllung die ordnungsgemäße Durchführung des Vertrags überhaupt erst ermöglicht und auf deren Einhaltung der Vertragspartner regelmäßig vertrauen darf.
-        </p>
-        <p className="mb-6">
-          Der Anbieter weist ausdrücklich darauf hin, dass die Nutzung der angebotenen Dienste möglicherweise gegen die Nutzungsbedingungen des Spiels Monopoly GO verstoßen könnte. Der Nutzer trägt das Risiko möglicher Konsequenzen (z.B. Accountsperrung) selbst. Eine Haftung des Anbieters für solche Folgen ist ausgeschlossen.
-        </p>
-        
-        <h2 className="text-2xl font-bold text-[#0A3A68] mb-4 mt-8">§8 Datenschutz</h2>
-        <p className="mb-6">
-          Der Anbieter erhebt und verwendet die personenbezogenen Daten des Nutzers nur, soweit dies für die Begründung, inhaltliche Ausgestaltung, Änderung oder Abwicklung des Vertragsverhältnisses erforderlich ist. Einzelheiten hierzu sind in der separaten Datenschutzerklärung geregelt.
-        </p>
-        
-        <h2 className="text-2xl font-bold text-[#0A3A68] mb-4 mt-8">§9 Schlussbestimmungen</h2>
-        <p className="mb-6">
-          Es gilt das Recht der Bundesrepublik Deutschland unter Ausschluss des UN-Kaufrechts.
-        </p>
-        <p className="mb-6">
-          Erfüllungsort ist der Sitz des Anbieters. Gerichtsstand für alle Streitigkeiten aus diesem Vertragsverhältnis ist der Sitz des Anbieters, sofern der Nutzer Kaufmann, juristische Person des öffentlichen Rechts oder öffentlich-rechtliches Sondervermögen ist.
-        </p>
-        <p className="mb-6">
-          Sollten einzelne Bestimmungen dieser AGB unwirksam sein oder werden, so berührt dies die Wirksamkeit der übrigen Bestimmungen nicht.
-        </p>
+          <h2 className="text-2xl font-bold text-[#0A3A68] mb-4 mt-8">2. Vertragspartner, Vertragsschluss, Korrekturmöglichkeiten</h2>
+          <p className="mb-6">
+            Der Kaufvertrag kommt zustande mit babixGO.
+          </p>
+          <p className="mb-6">
+            Mit Einstellung der Produkte in den Online-Shop geben wir ein verbindliches Angebot zum Vertragsschluss über diese Produkte ab. Sie können unsere Produkte zunächst unverbindlich in den Warenkorb legen und Ihre Eingaben vor Absenden Ihrer verbindlichen Bestellung jederzeit korrigieren, indem Sie die hierfür im Bestellablauf vorgesehenen und erläuterten Korrekturhilfen nutzen. Der Vertrag kommt zustande, indem Sie durch Anklicken des Bestellbuttons das Angebot über die im Warenkorb enthaltenen Produkte annehmen. Unmittelbar nach dem Absenden der Bestellung erhalten Sie noch einmal eine Bestätigung per E-Mail.
+          </p>
+            
+          <h2 className="text-2xl font-bold text-[#0A3A68] mb-4 mt-8">3. Vertragssprache, Vertragstextspeicherung</h2>
+          <p className="mb-6">
+            Die für den Vertragsschluss zur Verfügung stehende(n) Sprache(n): Deutsch
+          </p>
+          <p className="mb-6">
+            Wir speichern den Vertragstext auf unseren Systemen, die jedoch für Sie nicht zugänglich sind.
+          </p>
+            
+          <h2 className="text-2xl font-bold text-[#0A3A68] mb-4 mt-8">4. Lieferbedingungen</h2>
+          <h3 className="text-xl font-bold text-[#0A3A68] mb-2">Lieferoptionen</h3>
+          <p className="mb-6">
+            Wir versenden die Produkte an die im Bestellprozess angegebene Lieferadresse.
+          </p>
+          <p className="mb-6">
+            Wir liefern nur im Versandweg. Eine Selbstabholung der Ware ist leider nicht möglich.
+          </p>
+          <p className="mb-6">
+            Wir liefern nicht an Packstationen.
+          </p>
+            
+          <h2 className="text-2xl font-bold text-[#0A3A68] mb-4 mt-8">5. Bezahlung</h2>
+          <p className="mb-6">
+            In unserem Shop stehen Ihnen grundsätzlich die nachfolgenden Zahlungsarten zur Verfügung.
+          </p>
+            
+          <h3 className="text-xl font-bold text-[#0A3A68] mb-2">Vorkasse</h3>
+          <p className="mb-6">
+            Bei Auswahl der Zahlungsart Vorkasse nennen wir Ihnen unsere Bankverbindung in separater E-Mail und liefern die Ware nach Zahlungseingang.
+          </p>
+            
+          <h3 className="text-xl font-bold text-[#0A3A68] mb-2">Kreditkarte</h3>
+          <p className="mb-6">
+            Im Bestellprozess geben Sie Ihre Kreditkartendaten an. Ihre Karte wird unmittelbar nach Abgabe der Bestellung belastet.
+          </p>
+          
+          <h3 className="text-xl font-bold text-[#0A3A68] mb-2">PayPal, PayPal Express</h3>
+          <p className="mb-6">
+            Um den Rechnungsbetrag über den Zahlungsdienstleister PayPal (Europe) S.à r.l. et Cie, S.C.A, 22-24 Boulevard Royal, L-2449 Luxembourg („PayPal") bezahlen zu können, müssen Sie bei PayPal registriert sein, sich mit Ihren Zugangsdaten legitimieren und die Zahlungsanweisung bestätigen. Die Zahlungstransaktion wird durch PayPal unmittelbar nach Abgabe der Bestellung durchgeführt. Weitere Hinweise erhalten Sie im Bestellvorgang.
+          </p>
+            
+          <h2 className="text-2xl font-bold text-[#0A3A68] mb-4 mt-8">6. Gewährleistung und Garantien</h2>
+          <h3 className="text-xl font-bold text-[#0A3A68] mb-2">6.1 Mängelhaftungsrecht</h3>
+          <p className="mb-6">
+            Es gilt das gesetzliche Mängelhaftungsrecht.
+          </p>
+          <h3 className="text-xl font-bold text-[#0A3A68] mb-2">6.2 Garantien und Kundendienst</h3>
+          <p className="mb-6">
+            Informationen zu gegebenenfalls geltenden zusätzlichen Garantien und deren genaue Bedingungen finden Sie jeweils beim Produkt und auf besonderen Informationsseiten im Online-Shop.
+          </p>
+            
+          <h2 className="text-2xl font-bold text-[#0A3A68] mb-4 mt-8">7. Haftung</h2>
+          <p className="mb-2">
+            Für Ansprüche aufgrund von Schäden, die durch uns, unsere gesetzlichen Vertreter oder Erfüllungsgehilfen verursacht wurden, haften wir stets unbeschränkt
+          </p>
+          <ul className="list-disc ml-6 mb-4">
+            <li>bei Verletzung des Lebens, des Körpers oder der Gesundheit,</li>
+            <li>bei vorsätzlicher oder grob fahrlässiger Pflichtverletzung,</li>
+            <li>bei Garantieversprechen, soweit vereinbart, oder</li>
+            <li>soweit der Anwendungsbereich des Produkthaftungsgesetzes eröffnet ist.</li>
+          </ul>
+          <p className="mb-6">
+            Bei Verletzung wesentlicher Vertragspflichten, deren Erfüllung die ordnungsgemäße Durchführung des Vertrages überhaupt erst ermöglicht und auf deren Einhaltung der Vertragspartner regelmäßig vertrauen darf, (Kardinalpflichten) durch leichte Fahrlässigkeit von uns, unseren gesetzlichen Vertretern oder Erfüllungsgehilfen ist die Haftung der Höhe nach auf den bei Vertragsschluss vorhersehbaren Schaden begrenzt, mit dessen Entstehung typischerweise gerechnet werden muss.
+            <br />
+            Im Übrigen sind Ansprüche auf Schadensersatz ausgeschlossen.
+          </p>
+            
+          <h2 className="text-2xl font-bold text-[#0A3A68] mb-4 mt-8">8. Streitbeilegung</h2>
+          <p className="mb-2">
+            Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit, die Sie <a href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noreferrer" className="text-[#00CFFF] hover:text-[#FF4C00] transition-colors">hier</a> finden.
+          </p>
+          <p className="mb-6">
+            <strong>Wichtiger Hinweis:</strong> Die Plattform zur Online-Streitbeilegung (OS) wird zum 20.7.2025 endgültig eingestellt. Die Einreichung von Beschwerden auf der OS-Plattform wird daher bereits am 20.3.2025 eingestellt.
+            <br/>
+            Zur Teilnahme an einem Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle sind wir nicht verpflichtet und nicht bereit.
+          </p>
+        </div>
       </div>
-    </div>
+    </MainLayout>
   );
 }
