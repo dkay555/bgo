@@ -270,21 +270,97 @@ export default function StickerPage() {
         
         {/* Hinweis-Box */}
         <div className="bg-[#E6F7FF] border-l-4 border-[#00CFFF] p-4 rounded-r-md mb-8">
-          <h3 className="font-bold text-[#0A3A68] mb-2">Informationen zum Stickerservice:</h3>
+          <h3 className="font-bold text-[#0A3A68] mb-2">Wir haben sie alle!</h3>
           <p className="text-gray-700 mb-2">
-            Unsere Sticker werden nach Zahlungseingang innerhalb von 24 Stunden in Ihr Spiel übertragen. 
-            Hierfür benötigen wir lediglich Ihre Spieler-ID oder den Account-Namen.
+            Sticker werden i.d.R. innerhalb von 60 Minuten verschickt. Aufgrund des Sendelimits kann es allerdings bis zum Reset der Trades dauern.
+            Solltest du den Sticker also dringend benötigen schicke uns vorher eine Nachricht.
           </p>
-          <p className="text-gray-700">
-            Die Preise richten sich nach der Seltenheit:
+          <p className="text-gray-700 mb-2">
+            Goldsticker können nur während "Goldener Blitz" verschickt werden.
           </p>
-          <ul className="list-disc pl-5 mt-2">
-            <li>1-3 Sterne: 2,00 €</li>
-            <li>4 Sterne: 2,50 €</li>
-            <li>5 Sterne: 3,00 €</li>
-            <li>4 Sterne Gold: 4,00 € (nur während Goldtausch)</li>
-            <li>5 Sterne Gold: 5,00 € (nur während Goldtausch)</li>
-          </ul>
+          <h4 className="font-bold text-[#0A3A68] mt-4 mb-2">Stickerauswahl:</h4>
+          <div className="border-t border-b border-[#00CFFF]/30 py-3 my-3">
+            <h4 className="font-bold mb-2">Deine bisherige Auswahl:</h4>
+            {cart.length === 0 ? (
+              <div className="bg-gray-50 p-3 rounded-md text-center">
+                <p className="text-gray-500">Du hast noch keine Sticker ausgewählt.</p>
+              </div>
+            ) : (
+              <div className="bg-gray-50 p-3 rounded-md">
+                <ul className="divide-y divide-gray-200">
+                  {cart.map((item, index) => (
+                    <li key={index} className="py-2 flex justify-between items-center">
+                      <div>
+                        <p className="font-medium">{item.name} (Set {Math.ceil(item.id / 9)})</p>
+                        <div className="flex items-center">
+                          <div className="flex mr-2">
+                            {[...Array(item.stars)].map((_, i) => (
+                              <span key={i} className="material-icons text-yellow-500 text-sm">star</span>
+                            ))}
+                          </div>
+                          <span className="text-sm text-gray-500">
+                            {item.isGold ? '(Gold)' : ''}
+                          </span>
+                        </div>
+                      </div>
+                      <span className="font-bold">{calculatePrice(item).toFixed(2).replace('.', ',')} €</span>
+                    </li>
+                  ))}
+                </ul>
+                <div className="border-t border-gray-200 mt-2 pt-2 flex justify-between font-bold">
+                  <span>Gesamt:</span>
+                  <span className="text-[#FF4C00]">{calculateTotal().replace('.', ',')} €</span>
+                </div>
+              </div>
+            )}
+          </div>
+          <div className="mt-4">
+            <h4 className="font-bold text-[#0A3A68] mb-2">Preise:</h4>
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200 border rounded-lg">
+                <thead className="bg-[#0A3A68] text-white">
+                  <tr>
+                    <th scope="col" className="px-4 py-2 text-left text-xs font-medium uppercase tracking-wider">
+                      Sterne
+                    </th>
+                    <th scope="col" className="px-4 py-2 text-left text-xs font-medium uppercase tracking-wider">
+                      Preis
+                    </th>
+                    <th scope="col" className="px-4 py-2 text-left text-xs font-medium uppercase tracking-wider">
+                      Hinweis
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  <tr>
+                    <td className="px-4 py-2 whitespace-nowrap text-sm">1-3 Sterne</td>
+                    <td className="px-4 py-2 whitespace-nowrap text-sm font-bold text-[#FF4C00]">2,00 €</td>
+                    <td className="px-4 py-2 whitespace-nowrap text-sm">Standard</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-2 whitespace-nowrap text-sm">4 Sterne</td>
+                    <td className="px-4 py-2 whitespace-nowrap text-sm font-bold text-[#FF4C00]">2,50 €</td>
+                    <td className="px-4 py-2 whitespace-nowrap text-sm">Standard</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-2 whitespace-nowrap text-sm">5 Sterne</td>
+                    <td className="px-4 py-2 whitespace-nowrap text-sm font-bold text-[#FF4C00]">3,00 €</td>
+                    <td className="px-4 py-2 whitespace-nowrap text-sm">Standard</td>
+                  </tr>
+                  <tr className="bg-yellow-50">
+                    <td className="px-4 py-2 whitespace-nowrap text-sm">4 Sterne Gold</td>
+                    <td className="px-4 py-2 whitespace-nowrap text-sm font-bold text-[#FF4C00]">4,00 €</td>
+                    <td className="px-4 py-2 whitespace-nowrap text-sm">Nur während "Goldener Blitz"</td>
+                  </tr>
+                  <tr className="bg-yellow-50">
+                    <td className="px-4 py-2 whitespace-nowrap text-sm">5 Sterne Gold</td>
+                    <td className="px-4 py-2 whitespace-nowrap text-sm font-bold text-[#FF4C00]">5,00 €</td>
+                    <td className="px-4 py-2 whitespace-nowrap text-sm">Nur während "Goldener Blitz"</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
       
