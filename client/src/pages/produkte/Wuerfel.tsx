@@ -1,27 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Link } from 'wouter';
 import { PRICES, SPECIAL_OFFER } from '@/lib/constants';
 
 export default function Wuerfel() {
-  // Zustand für die ausgewählte Würfelmenge
-  const [selectedOption, setSelectedOption] = useState("25000");
-  
   useEffect(() => {
     document.title = 'Würfelboost | babixGO';
   }, []);
-  
-  // Funktion, die den Preis basierend auf der ausgewählten Option zurückgibt
-  const getPrice = () => {
-    if (selectedOption === "25000") return 25;
-    if (selectedOption === "35000") return 35;
-    if (selectedOption === "45000") return 45;
-    return 25; // Standardpreis
-  };
-
-  // Handler für Änderungen bei den Radio-Buttons
-  const handleRadioChange = (value: string) => {
-    setSelectedOption(value);
-  };
 
   return (
     <div className="container mx-auto px-4 py-8" id="top">
@@ -79,46 +63,25 @@ export default function Wuerfel() {
                 </ul>
               </div>
             
-              <div className="mt-4 mb-8">
-                <h3 className="babix-info-header text-[#0A3A68] mb-4">Wählen Sie Ihre Würfelmenge</h3>
-                
-                <div className="w-full md:w-2/3 mb-6">
-                  <div className="space-y-3">
-                    {PRICES.map((priceItem, index) => (
-                      <div 
-                        key={index}
-                        className="flex items-center p-3 border border-gray-200 rounded-md hover:border-[#00CFFF]"
-                      >
-                        <input
-                          type="radio"
-                          id={`dice-${priceItem.dice}`}
-                          name="diceAmount"
-                          value={priceItem.dice}
-                          checked={selectedOption === priceItem.dice.toString()}
-                          onChange={() => handleRadioChange(priceItem.dice.toString())}
-                          className="w-4 h-4 text-[#00CFFF] border-gray-300 focus:ring-[#00CFFF]"
-                        />
-                        <label 
-                          htmlFor={`dice-${priceItem.dice}`}
-                          className="ml-2 text-gray-700 font-medium cursor-pointer flex-1 flex justify-between"
-                        >
-                          <span>{priceItem.dice.toLocaleString('de-DE')} Würfel</span>
-                          <span className="font-semibold">{priceItem.price}€</span>
-                        </label>
-                      </div>
-                    ))}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+                {PRICES.map((price, index) => (
+                  <div 
+                    key={index} 
+                    className={`border ${price.highlight ? 'border-[#FF4C00]' : 'border-gray-200'} 
+                              rounded-lg p-4 flex flex-col items-center justify-between text-center
+                              ${price.highlight ? 'bg-orange-50' : 'bg-white'}
+                              hover:shadow-md transition-all`}
+                  >
+                    <div className="w-full">
+                      <h4 className="babix-info-header text-[#0A3A68] text-lg mb-2">{price.dice.toLocaleString('de-DE')} Würfel</h4>
+                      <div className="text-2xl font-bold text-[#FF4C00]">{price.price}€</div>
+                    </div>
+                    <Link href="/checkout/wuerfel" className="mt-3 bg-[#FF4C00] text-white py-2 px-4 w-full rounded-md hover:bg-[#0A3A68] transition-colors inline-flex items-center justify-center">
+                      <span className="material-icons mr-1" style={{ fontSize: '18px' }}>shopping_cart</span>
+                      Kaufen
+                    </Link>
                   </div>
-                </div>
-                
-                <div className="flex flex-col sm:flex-row gap-4 items-center">
-                  <div className="text-xl font-bold text-[#0A3A68] mb-2 sm:mb-0">
-                    Preis: <span className="text-[#FF4C00]">{getPrice()}€</span>
-                  </div>
-                  <button className="bg-[#FF4C00] text-white py-3 px-6 rounded-md hover:bg-[#0A3A68] transition-colors inline-flex items-center">
-                    <span className="material-icons mr-2">shopping_cart</span>
-                    Würfel kaufen
-                  </button>
-                </div>
+                ))}
               </div>
               
               <div className="bg-yellow-50 p-4 rounded-lg border-l-4 border-yellow-400 mt-6">
@@ -177,11 +140,11 @@ export default function Wuerfel() {
           <div className="bg-[#0A3A68] rounded-xl shadow-lg overflow-hidden p-6 text-white">
             <h3 className="text-xl font-semibold mb-4 flex items-center">
               <span className="material-icons mr-2">recommend</span>
-              {SPECIAL_OFFER.title}
+              Sonderangebot
             </h3>
-            <p className="mb-4">{SPECIAL_OFFER.description}</p>
+            <p className="mb-4">Holen Sie sich jetzt unser bestes Angebot für eine begrenzte Zeit!</p>
             <div className="flex items-center bg-white bg-opacity-10 p-3 rounded-lg mb-4">
-              <span className="text-3xl font-bold text-[#FF4C00] mr-3">{SPECIAL_OFFER.discount}%</span>
+              <span className="text-3xl font-bold text-[#FF4C00] mr-3">15%</span>
               <span>Rabatt auf alle Würfelkäufe ab 50€</span>
             </div>
             <button className="bg-[#FF4C00] text-white py-3 px-6 w-full rounded-md hover:bg-opacity-80 transition-colors font-medium">
