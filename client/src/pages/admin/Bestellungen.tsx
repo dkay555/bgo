@@ -70,6 +70,13 @@ export default function Bestellungen() {
   const [newStatus, setNewStatus] = useState<string>("");
   const [statusReference, setStatusReference] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [emailSubject, setEmailSubject] = useState<string>("");
+  const [emailMessage, setEmailMessage] = useState<string>("");
+  const [activeTab, setActiveTab] = useState<string>("payment"); // payment, status, email
+  const [orderStatusUpdate, setOrderStatusUpdate] = useState<{ status: string, note: string }>({
+    status: "",
+    note: ""
+  });
 
   // Abfrage für Bestellungen, aber nur wenn authentifiziert
   const { data: orders, isLoading: ordersLoading, refetch } = useQuery<{ success: boolean, orders: Order[] }>({
