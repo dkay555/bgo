@@ -52,33 +52,13 @@ export default function Wuerfel() {
           <div className="p-6 flex flex-col justify-center">
             <h2 className="text-2xl font-bold text-[#0A3A68] mb-4">Würfel für deinen Monopoly Go Account!</h2>
             <p className="text-gray-700 mb-4">
-              Bitte beachte die Voraussetzungen wie auf <Link href="/hilfe/wuerfel" className="text-[#00CFFF] hover:underline">"Hilfe Würfelboost"</Link> beschrieben. 
-              Dort findest du auch weitere Informationen zum Ablauf.
+              Weitere Informationen zu den Voraussetzungen, dem Ablauf usw. findest du hier: <Link href="/hilfe/wuerfel" className="text-[#00CFFF] hover:underline">"Würfelboost - Hilfe & Informationen"</Link>
             </p>
             <p className="text-gray-700 mb-4">
-              Folgende Pakete bieten wir an:
+              Folgende Paketgrößen bieten wir an:
             </p>
-            <ul className="space-y-2 mb-6">
-              <li className="flex items-start">
-                <span className="material-icons text-[#00CFFF] mr-2 mt-0.5">check_circle</span>
-                <span>Schnelle Lieferung innerhalb von 24 Stunden</span>
-              </li>
-              <li className="flex items-start">
-                <span className="material-icons text-[#00CFFF] mr-2 mt-0.5">check_circle</span>
-                <span>Sicher und diskret</span>
-              </li>
-              <li className="flex items-start">
-                <span className="material-icons text-[#00CFFF] mr-2 mt-0.5">check_circle</span>
-                <span>Kein Zugriff auf Ihr Passwort erforderlich</span>
-              </li>
-              <li className="flex items-start">
-                <span className="material-icons text-[#00CFFF] mr-2 mt-0.5">check_circle</span>
-                <span>Verschiedene Pakete verfügbar</span>
-              </li>
-            </ul>
             
             <div className="mt-4 mb-8">
-              <h3 className="babix-info-header text-[#0A3A68] mb-4">Wählen Sie Ihre Würfelmenge</h3>
               
               <div className="w-full mb-6">
                 <div className="overflow-x-auto">
@@ -128,6 +108,21 @@ export default function Wuerfel() {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                           Inkl. Topevent + Bahnhofsevent
+                        </td>
+                      </tr>
+                      <tr className="bg-yellow-50 border-t-2 border-yellow-200">
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm font-medium text-gray-900 flex items-center">
+                            <span className="material-icons text-yellow-500 mr-2">stars</span>
+                            40.000-50.000 Würfel
+                          </div>
+                          <div className="text-xs text-gray-500 mt-1">Sonderangebot</div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm font-bold text-[#FF4C00]">30€</div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          Gültig während Lucky Chance, Dice Roll oder Frei Parken x2
                         </td>
                       </tr>
                     </tbody>
@@ -185,19 +180,6 @@ export default function Wuerfel() {
                   </DialogContent>
                 </Dialog>
               </div>
-            </div>
-            
-            <div className="bg-yellow-50 p-4 rounded-lg border-l-4 border-yellow-400 mt-6">
-              <h4 className="babix-info-header text-[#0A3A68] mb-2 flex items-center">
-                <span className="material-icons text-yellow-500 mr-2">stars</span>
-                Sonderangebot
-              </h4>
-              <p className="text-sm mb-2">Gültig während Lucky Chance, Dice Roll oder Frei Parken x2:</p>
-              <p className="text-sm mb-2">40.000 - 50.000 Würfel für <span className="text-xl font-bold text-[#FF4C00]">30€</span></p>
-              <button className="bg-[#0A3A68] hover:bg-[#00CFFF] text-white py-2 px-4 rounded-md transition-colors inline-flex items-center mt-2">
-                <span className="material-icons mr-1">event</span>
-                Jetzt reservieren
-              </button>
             </div>
           </div>
         </div>
