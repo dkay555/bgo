@@ -80,52 +80,31 @@ export default function WuerfelCheckout() {
         <div className="md:col-span-1">
           <Card>
             <CardHeader>
-              <CardTitle>Würfelpaket auswählen</CardTitle>
-              <CardDescription>Wählen Sie Ihr gewünschtes Würfelpaket</CardDescription>
+              <CardTitle>Ihr Würfelpaket</CardTitle>
+              <CardDescription>Ausgewählte Würfelmenge und Preis</CardDescription>
             </CardHeader>
             <CardContent>
-              <RadioGroup 
-                defaultValue="25000" 
-                name="selectedPackage" 
-                onValueChange={(value) => setFormData({...formData, selectedPackage: value})}
-              >
-                <div className="flex items-center space-x-2 mb-4">
-                  <RadioGroupItem value="25000" id="r1" />
-                  <Label htmlFor="r1" className="flex-1">
-                    <div className="bg-[#00CFFF]/10 p-3 rounded-md">
-                      <h4 className="babix-info-header text-[#0A3A68]">25.000 Würfel</h4>
-                      <p className="text-xl font-bold text-[#FF4C00]">25€</p>
-                    </div>
-                  </Label>
-                </div>
-                <div className="flex items-center space-x-2 mb-4">
-                  <RadioGroupItem value="35000" id="r2" />
-                  <Label htmlFor="r2" className="flex-1">
-                    <div className="bg-[#00CFFF]/10 p-3 rounded-md">
-                      <h4 className="babix-info-header text-[#0A3A68]">35.000 Würfel</h4>
-                      <p className="text-xl font-bold text-[#FF4C00]">35€</p>
-                    </div>
-                  </Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="45000" id="r3" />
-                  <Label htmlFor="r3" className="flex-1">
-                    <div className="bg-[#00CFFF]/10 p-3 rounded-md">
-                      <h4 className="babix-info-header text-[#0A3A68]">45.000 Würfel</h4>
-                      <p className="text-xl font-bold text-[#FF4C00]">45€</p>
-                    </div>
-                  </Label>
-                </div>
-              </RadioGroup>
+              <div className="bg-[#00CFFF]/10 p-6 rounded-md text-center mb-6">
+                <h3 className="text-2xl font-bold babix-info-header text-[#0A3A68] mb-2">
+                  {formData.selectedPackage === "25000" && "25.000 Würfel"}
+                  {formData.selectedPackage === "35000" && "35.000 Würfel"}
+                  {formData.selectedPackage === "45000" && "45.000 Würfel"}
+                </h3>
+                <p className="text-3xl font-bold text-[#FF4C00]">
+                  {formData.selectedPackage === "25000" && "25€"}
+                  {formData.selectedPackage === "35000" && "35€"}
+                  {formData.selectedPackage === "45000" && "45€"}
+                </p>
+              </div>
               
               <div className="bg-yellow-50 p-4 rounded-lg border-l-4 border-yellow-400 mt-6">
                 <h4 className="babix-info-header text-[#0A3A68] mb-2 flex items-center">
-                  <span className="material-icons text-yellow-500 mr-2">stars</span>
-                  Sonderangebot
+                  <span className="material-icons text-yellow-500 mr-2">info</span>
+                  Hinweis
                 </h4>
-                <p className="text-sm mb-2">Während Lucky Chance oder Dice Roll aktiv:</p>
-                <p className="text-sm mb-2">40.000 - 50.000 Würfel für <span className="text-xl font-bold text-[#FF4C00]">30€</span></p>
-                <p className="text-xs text-gray-500">Nach Absprache möglich</p>
+                <p className="text-sm mb-2">
+                  Falls Sie ein anderes Würfelpaket wünschen, kehren Sie zur <Link href="/produkte/wuerfel" className="text-[#00CFFF] hover:underline">Produktseite</Link> zurück.
+                </p>
               </div>
             </CardContent>
           </Card>
@@ -370,33 +349,41 @@ export default function WuerfelCheckout() {
             <CardFooter className="flex flex-col items-start w-full">
               {/* Hinweise zum Widerrufsrecht und AGB */}
               <div className="w-full space-y-4 mb-6">
-                <RadioGroup className="space-y-3">
-                  <div className="flex items-start space-x-2 border border-[#00CFFF]/30 rounded-md p-3 hover:bg-[#00CFFF]/5">
-                    <RadioGroupItem 
+                <div className="space-y-3">
+                  <div 
+                    className={`flex items-start space-x-2 border border-[#00CFFF]/30 rounded-md p-3 hover:bg-[#00CFFF]/5 ${formData.agreedToWithdrawalNotice ? 'bg-[#00CFFF]/10' : ''}`}
+                    onClick={() => setFormData({...formData, agreedToWithdrawalNotice: !formData.agreedToWithdrawalNotice})}
+                  >
+                    <input 
+                      type="radio" 
                       id="agreedToWithdrawalNotice" 
-                      value="agreed"
-                      checked={formData.agreedToWithdrawalNotice} 
-                      onClick={() => setFormData({...formData, agreedToWithdrawalNotice: true})}
+                      className="h-4 w-4 mt-1 accent-[#00CFFF]"
+                      checked={formData.agreedToWithdrawalNotice}
+                      onChange={() => {}}
                     />
-                    <Label htmlFor="agreedToWithdrawalNotice" className="text-sm">
+                    <Label htmlFor="agreedToWithdrawalNotice" className="text-sm cursor-pointer">
                       Ich bin ausdrücklich damit einverstanden, dass mit der Ausführung des Auftrags vor Ablauf der Widerrufsfrist begonnen wird. Mir ist bekannt, dass mein <Link href="/widerruf" className="text-[#00CFFF] hover:underline">Widerrufsrecht</Link> mit Beginn der Ausführung erlischt.
                     </Label>
                   </div>
-                </RadioGroup>
+                </div>
                 
-                <RadioGroup className="space-y-3 mt-4">
-                  <div className="flex items-start space-x-2 border border-[#00CFFF]/30 rounded-md p-3 hover:bg-[#00CFFF]/5">
-                    <RadioGroupItem 
+                <div className="space-y-3 mt-4">
+                  <div 
+                    className={`flex items-start space-x-2 border border-[#00CFFF]/30 rounded-md p-3 hover:bg-[#00CFFF]/5 ${formData.agreedToTerms ? 'bg-[#00CFFF]/10' : ''}`}
+                    onClick={() => setFormData({...formData, agreedToTerms: !formData.agreedToTerms})}
+                  >
+                    <input 
+                      type="radio" 
                       id="agreedToTerms" 
-                      value="agreed"
-                      checked={formData.agreedToTerms} 
-                      onClick={() => setFormData({...formData, agreedToTerms: true})}
+                      className="h-4 w-4 mt-1 accent-[#00CFFF]"
+                      checked={formData.agreedToTerms}
+                      onChange={() => {}}
                     />
-                    <Label htmlFor="agreedToTerms" className="text-sm">
+                    <Label htmlFor="agreedToTerms" className="text-sm cursor-pointer">
                       Ich habe die <Link href="/agb" className="text-[#00CFFF] hover:underline">AGB</Link> und <Link href="/datenschutz" className="text-[#00CFFF] hover:underline">Datenschutzbestimmungen</Link> gelesen und akzeptiere diese.
                     </Label>
                   </div>
-                </RadioGroup>
+                </div>
               </div>
               
               <Button type="submit" className="w-full bg-[#FF4C00] hover:bg-[#FF4C00]/80 text-white font-bold">
