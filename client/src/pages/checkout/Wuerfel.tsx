@@ -293,7 +293,7 @@ export default function WuerfelCheckout() {
                     </div>
                     
                     <div className="bg-yellow-50 p-4 rounded-lg border-l-4 border-yellow-400">
-                      <h4 className="font-bold mb-2 flex items-center">
+                      <h4 className="babix-info-header text-[#0A3A68] mb-2 flex items-center">
                         <span className="material-icons text-yellow-500 mr-2">warning</span>
                         Wichtiger Hinweis
                       </h4>

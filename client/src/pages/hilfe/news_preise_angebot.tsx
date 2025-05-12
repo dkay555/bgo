@@ -84,10 +84,10 @@ export default function NewsPreiseAngebot() {
         </div>
         
         <div className="bg-red-50 rounded-xl p-6 md:p-8 shadow-[0_4px_10px_rgba(0,0,0,0.1)] border-l-4 border-red-500">
-          <h2 className="font-['Baloo_2'] font-bold text-xl text-[#0A3A68] mb-4 flex items-center">
+          <h4 className="babix-info-header text-[#0A3A68] mb-4 flex items-center">
             <span className="material-icons text-red-500 mr-2">warning</span>
             Nach dem Boost beachten
-          </h2>
+          </h4>
           
           <p className="mb-4">
             So wie wir vor & während des Boosts, solltet ihr selbst auch einige Dinge nach dem Boost beachten:
