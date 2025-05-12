@@ -80,3 +80,29 @@ export const insertOrderSchema = createInsertSchema(orders)
 
 export type InsertOrder = z.infer<typeof insertOrderSchema>;
 export type Order = typeof orders.$inferSelect;
+
+// Tabelle für Kontaktanfragen
+export const contactMessages = pgTable("contact_messages", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  email: text("email").notNull(),
+  message: text("message").notNull(),
+  subject: text("subject"),
+  phone: text("phone"),
+  isRead: boolean("is_read").default(false).notNull(),
+  isArchived: boolean("is_archived").default(false).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const insertContactMessageSchema = createInsertSchema(contactMessages)
+  .omit({ 
+    id: true, 
+    isRead: true,
+    isArchived: true,
+    createdAt: true, 
+    updatedAt: true 
+  });
+
+export type InsertContactMessage = z.infer<typeof insertContactMessageSchema>;
+export type ContactMessage = typeof contactMessages.$inferSelect;

@@ -92,6 +92,117 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
+  // Admin-Routen für Kontaktanfragen
+  app.get("/api/admin/contact-messages", adminAuthMiddleware, async (req, res) => {
+    try {
+      const archived = req.query.archived === 'true';
+      const messages = await storage.getAllContactMessages(archived);
+      
+      res.json({
+        success: true,
+        messages
+      });
+    } catch (error) {
+      console.error("Fehler beim Abrufen der Kontaktanfragen:", error);
+      res.status(500).json({
+        success: false,
+        message: "Ein Serverfehler ist aufgetreten"
+      });
+    }
+  });
+  
+  app.patch("/api/admin/contact-messages/:id/read", adminAuthMiddleware, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      
+      if (isNaN(id)) {
+        return res.status(400).json({
+          success: false,
+          message: "Ungültige Nachrichten-ID"
+        });
+      }
+      
+      const updatedMessage = await storage.markContactMessageAsRead(id);
+      
+      if (!updatedMessage) {
+        return res.status(404).json({
+          success: false,
+          message: "Nachricht nicht gefunden"
+        });
+      }
+      
+      res.json({
+        success: true,
+        message: updatedMessage
+      });
+    } catch (error) {
+      console.error("Fehler beim Markieren der Nachricht als gelesen:", error);
+      res.status(500).json({
+        success: false,
+        message: "Ein Serverfehler ist aufgetreten"
+      });
+    }
+  });
+  
+  app.patch("/api/admin/contact-messages/:id/archive", adminAuthMiddleware, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      
+      if (isNaN(id)) {
+        return res.status(400).json({
+          success: false,
+          message: "Ungültige Nachrichten-ID"
+        });
+      }
+      
+      const archivedMessage = await storage.archiveContactMessage(id);
+      
+      if (!archivedMessage) {
+        return res.status(404).json({
+          success: false,
+          message: "Nachricht nicht gefunden"
+        });
+      }
+      
+      res.json({
+        success: true,
+        message: archivedMessage
+      });
+    } catch (error) {
+      console.error("Fehler beim Archivieren der Nachricht:", error);
+      res.status(500).json({
+        success: false,
+        message: "Ein Serverfehler ist aufgetreten"
+      });
+    }
+  });
+  
+  app.delete("/api/admin/contact-messages/:id", adminAuthMiddleware, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      
+      if (isNaN(id)) {
+        return res.status(400).json({
+          success: false,
+          message: "Ungültige Nachrichten-ID"
+        });
+      }
+      
+      await storage.deleteContactMessage(id);
+      
+      res.json({
+        success: true,
+        message: "Nachricht erfolgreich gelöscht"
+      });
+    } catch (error) {
+      console.error("Fehler beim Löschen der Nachricht:", error);
+      res.status(500).json({
+        success: false,
+        message: "Ein Serverfehler ist aufgetreten"
+      });
+    }
+  });
+  
   // E-Mail an Kunden senden
   app.post("/api/orders/:id/email", adminAuthMiddleware, async (req, res) => {
     try {

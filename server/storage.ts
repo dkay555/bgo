@@ -1,8 +1,12 @@
-import { users, type User, type InsertUser, orders, type Order, type InsertOrder } from "@shared/schema";
+import { 
+  users, type User, type InsertUser, 
+  orders, type Order, type InsertOrder,
+  contactMessages, type ContactMessage, type InsertContactMessage
+} from "@shared/schema";
 import { db } from "./db";
-import { eq } from "drizzle-orm";
+import { eq, desc } from "drizzle-orm";
 
-// CRUD methods for User and Order
+// CRUD methods for User, Order and ContactMessage
 export interface IStorage {
   // Benutzerverwaltung
   getUser(id: number): Promise<User | undefined>;
@@ -15,6 +19,14 @@ export interface IStorage {
   createOrder(order: InsertOrder): Promise<Order>;
   updateOrderPaymentStatus(id: number, status: string, reference?: string): Promise<Order | undefined>;
   getAllOrders(): Promise<Order[]>;
+  
+  // Kontaktanfragenverwaltung
+  getContactMessage(id: number): Promise<ContactMessage | undefined>;
+  getAllContactMessages(archived?: boolean): Promise<ContactMessage[]>;
+  createContactMessage(message: InsertContactMessage): Promise<ContactMessage>;
+  markContactMessageAsRead(id: number): Promise<ContactMessage | undefined>;
+  archiveContactMessage(id: number): Promise<ContactMessage | undefined>;
+  deleteContactMessage(id: number): Promise<void>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -78,7 +90,62 @@ export class DatabaseStorage implements IStorage {
   }
   
   async getAllOrders(): Promise<Order[]> {
-    return await db.select().from(orders);
+    return await db.select().from(orders).orderBy(desc(orders.createdAt));
+  }
+  
+  // Kontaktanfragenverwaltung
+  async getContactMessage(id: number): Promise<ContactMessage | undefined> {
+    const [message] = await db.select().from(contactMessages).where(eq(contactMessages.id, id));
+    return message;
+  }
+  
+  async getAllContactMessages(archived: boolean = false): Promise<ContactMessage[]> {
+    return await db
+      .select()
+      .from(contactMessages)
+      .where(eq(contactMessages.isArchived, archived))
+      .orderBy(desc(contactMessages.createdAt));
+  }
+  
+  async createContactMessage(message: InsertContactMessage): Promise<ContactMessage> {
+    const [newMessage] = await db
+      .insert(contactMessages)
+      .values(message)
+      .returning();
+      
+    return newMessage;
+  }
+  
+  async markContactMessageAsRead(id: number): Promise<ContactMessage | undefined> {
+    const [updatedMessage] = await db
+      .update(contactMessages)
+      .set({
+        isRead: true,
+        updatedAt: new Date()
+      })
+      .where(eq(contactMessages.id, id))
+      .returning();
+      
+    return updatedMessage;
+  }
+  
+  async archiveContactMessage(id: number): Promise<ContactMessage | undefined> {
+    const [archivedMessage] = await db
+      .update(contactMessages)
+      .set({
+        isArchived: true,
+        updatedAt: new Date()
+      })
+      .where(eq(contactMessages.id, id))
+      .returning();
+      
+    return archivedMessage;
+  }
+  
+  async deleteContactMessage(id: number): Promise<void> {
+    await db
+      .delete(contactMessages)
+      .where(eq(contactMessages.id, id));
   }
 }
 
