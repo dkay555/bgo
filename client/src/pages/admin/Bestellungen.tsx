@@ -272,9 +272,80 @@ export default function Bestellungen() {
   // Funktion zum Öffnen der Detailansicht
   const openOrderDetail = (order: Order) => {
     setSelectedOrder(order);
+    
+    // Zahlungsstatus-Tab vorbereiten
     setNewStatus(order.paymentStatus);
     setStatusReference(order.paymentReference || "");
+    
+    // Bestellungsstatus-Tab vorbereiten
+    setOrderStatusUpdate({
+      status: order.paymentStatus,
+      note: ""
+    });
+    
+    // E-Mail-Tab vorbereiten
+    setEmailSubject("");
+    setEmailMessage("");
+    
+    // Standardtab setzen
+    setActiveTab("payment");
+    
     setIsDetailOpen(true);
+  };
+  
+  // Funktion zum Zurücksetzen der Email-Form
+  const resetEmailForm = () => {
+    setEmailSubject("");
+    setEmailMessage("");
+  };
+  
+  // Funktion zum Senden einer E-Mail an den Kunden
+  const handleSendEmail = async (orderId: number) => {
+    if (!emailSubject.trim() || !emailMessage.trim()) {
+      toast({
+        title: "Fehler",
+        description: "Bitte geben Sie Betreff und Nachricht ein.",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    try {
+      await sendEmailMutation.mutateAsync({
+        orderId,
+        subject: emailSubject,
+        message: emailMessage
+      });
+      
+      resetEmailForm();
+      setActiveTab("payment");
+    } catch (error) {
+      console.error("Fehler beim Senden der E-Mail:", error);
+    }
+  };
+  
+  // Funktion zum Aktualisieren des Bestellungsstatus
+  const handleOrderStatusChange = async (orderId: number) => {
+    if (!orderStatusUpdate.status) {
+      toast({
+        title: "Fehler",
+        description: "Bitte wählen Sie einen Status aus.",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    try {
+      await updateOrderStatusMutation.mutateAsync({
+        orderId,
+        status: orderStatusUpdate.status,
+        note: orderStatusUpdate.note
+      });
+      
+      setActiveTab("payment");
+    } catch (error) {
+      console.error("Fehler beim Aktualisieren des Bestellungsstatus:", error);
+    }
   };
 
   // Gefilterte Bestellungen basierend auf der Suche
@@ -450,14 +521,15 @@ export default function Bestellungen() {
       {/* Detailansicht Dialog */}
       {selectedOrder && (
         <Dialog open={isDetailOpen} onOpenChange={setIsDetailOpen}>
-          <DialogContent className="max-w-3xl">
+          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle>Bestelldetails #{selectedOrder.id}</DialogTitle>
               <DialogDescription>
                 Erstellt am {formatDate(selectedOrder.createdAt)}
               </DialogDescription>
             </DialogHeader>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
               <div className="space-y-4">
                 <h3 className="text-lg font-medium">Persönliche Daten</h3>
                 <div className="space-y-2">
@@ -496,6 +568,13 @@ export default function Bestellungen() {
                     <CreditCard className="h-4 w-4 mr-2 text-gray-500" />
                     <span className="font-medium">Zahlungsmethode:</span>
                     <span className="ml-2">{selectedOrder.paymentMethod}</span>
+                  </div>
+                  <div className="flex items-center text-sm">
+                    <Calendar className="h-4 w-4 mr-2 text-gray-500" />
+                    <span className="font-medium">Status:</span>
+                    <span className={`ml-2 px-2 py-0.5 rounded-full text-xs ${getStatusBadgeClass(selectedOrder.paymentStatus)}`}>
+                      {selectedOrder.paymentStatus}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -537,51 +616,176 @@ export default function Bestellungen() {
                     </>
                   )}
                 </div>
-
-                <h3 className="text-lg font-medium pt-2">Zahlungsstatus aktualisieren</h3>
-                <div className="space-y-4">
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium">Status</label>
-                    <Select value={newStatus} onValueChange={setNewStatus}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Status auswählen" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="pending">Ausstehend</SelectItem>
-                        <SelectItem value="completed">Abgeschlossen</SelectItem>
-                        <SelectItem value="failed">Fehlgeschlagen</SelectItem>
-                        <SelectItem value="refunded">Erstattet</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium">Referenz (optional)</label>
-                    <Input
-                      value={statusReference}
-                      onChange={(e) => setStatusReference(e.target.value)}
-                      placeholder="z.B. PayPal-Transaktions-ID"
-                    />
-                  </div>
-                </div>
               </div>
             </div>
             
-            <DialogFooter className="mt-6">
-              <Button variant="outline" onClick={() => setIsDetailOpen(false)}>
-                Abbrechen
-              </Button>
-              <Button 
-                onClick={() => handleStatusChange(selectedOrder.id)}
-                disabled={updateStatusMutation.isPending || newStatus === selectedOrder.paymentStatus}
+            {/* Navigation Tabs */}
+            <div className="flex border-b">
+              <button
+                className={`px-4 py-2 font-medium text-sm ${activeTab === 'payment' ? 'border-b-2 border-[#00CFFF] text-[#0A3A68]' : 'text-gray-600 hover:text-[#0A3A68]'}`}
+                onClick={() => setActiveTab('payment')}
               >
-                {updateStatusMutation.isPending ? (
-                  <>
-                    <RefreshCw className="mr-2 h-4 w-4 animate-spin" /> Aktualisieren...
-                  </>
-                ) : (
-                  "Status aktualisieren"
-                )}
+                Zahlungsstatus
+              </button>
+              <button
+                className={`px-4 py-2 font-medium text-sm ${activeTab === 'status' ? 'border-b-2 border-[#00CFFF] text-[#0A3A68]' : 'text-gray-600 hover:text-[#0A3A68]'}`}
+                onClick={() => setActiveTab('status')}
+              >
+                Bestellungsstatus
+              </button>
+              <button
+                className={`px-4 py-2 font-medium text-sm ${activeTab === 'email' ? 'border-b-2 border-[#00CFFF] text-[#0A3A68]' : 'text-gray-600 hover:text-[#0A3A68]'}`}
+                onClick={() => setActiveTab('email')}
+              >
+                E-Mail an Kunde
+              </button>
+            </div>
+            
+            {/* Tab Content */}
+            <div className="py-4">
+              {/* 1. Zahlungsstatus Tab */}
+              {activeTab === 'payment' && (
+                <div className="space-y-4">
+                  <h3 className="text-lg font-medium">Zahlungsstatus aktualisieren</h3>
+                  <div className="space-y-4">
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Status</label>
+                      <Select value={newStatus} onValueChange={setNewStatus}>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Status auswählen" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="pending">Ausstehend</SelectItem>
+                          <SelectItem value="completed">Abgeschlossen</SelectItem>
+                          <SelectItem value="failed">Fehlgeschlagen</SelectItem>
+                          <SelectItem value="refunded">Erstattet</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Referenz (optional)</label>
+                      <Input
+                        value={statusReference}
+                        onChange={(e) => setStatusReference(e.target.value)}
+                        placeholder="z.B. PayPal-Transaktions-ID"
+                      />
+                    </div>
+                    
+                    <Button 
+                      onClick={() => handleStatusChange(selectedOrder.id)}
+                      disabled={updateStatusMutation.isPending || newStatus === selectedOrder.paymentStatus}
+                      className="w-full"
+                    >
+                      {updateStatusMutation.isPending ? (
+                        <>
+                          <RefreshCw className="mr-2 h-4 w-4 animate-spin" /> Aktualisieren...
+                        </>
+                      ) : (
+                        "Zahlungsstatus aktualisieren"
+                      )}
+                    </Button>
+                  </div>
+                </div>
+              )}
+              
+              {/* 2. Bestellungsstatus Tab */}
+              {activeTab === 'status' && (
+                <div className="space-y-4">
+                  <h3 className="text-lg font-medium">Bestellungsstatus aktualisieren</h3>
+                  <div className="space-y-4">
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Status</label>
+                      <Select 
+                        value={orderStatusUpdate.status} 
+                        onValueChange={(value) => setOrderStatusUpdate({...orderStatusUpdate, status: value})}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Status auswählen" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="pending">Offen</SelectItem>
+                          <SelectItem value="started">In Bearbeitung</SelectItem>
+                          <SelectItem value="completed">Abgeschlossen</SelectItem>
+                          <SelectItem value="problem">Problem</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Bemerkung (wird an Kunden gesendet)</label>
+                      <textarea
+                        className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#00CFFF]"
+                        value={orderStatusUpdate.note}
+                        onChange={(e) => setOrderStatusUpdate({...orderStatusUpdate, note: e.target.value})}
+                        placeholder="z.B. 'Wir haben Ihnen soeben 25.000 Würfel gutgeschrieben. Viel Spaß!'"
+                        rows={4}
+                      />
+                    </div>
+                    
+                    <Button 
+                      onClick={() => handleOrderStatusChange(selectedOrder.id)}
+                      disabled={updateOrderStatusMutation.isPending || (orderStatusUpdate.status === selectedOrder.paymentStatus && !orderStatusUpdate.note)}
+                      className="w-full"
+                    >
+                      {updateOrderStatusMutation.isPending ? (
+                        <>
+                          <RefreshCw className="mr-2 h-4 w-4 animate-spin" /> Aktualisieren...
+                        </>
+                      ) : (
+                        "Bestellungsstatus aktualisieren"
+                      )}
+                    </Button>
+                  </div>
+                </div>
+              )}
+              
+              {/* 3. E-Mail Tab */}
+              {activeTab === 'email' && (
+                <div className="space-y-4">
+                  <h3 className="text-lg font-medium">E-Mail an Kunden senden</h3>
+                  <div className="space-y-4">
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Betreff</label>
+                      <Input
+                        value={emailSubject}
+                        onChange={(e) => setEmailSubject(e.target.value)}
+                        placeholder="z.B. 'Ihre Bestellung #123 bei babixGO'"
+                      />
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Nachricht</label>
+                      <textarea
+                        className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#00CFFF]"
+                        value={emailMessage}
+                        onChange={(e) => setEmailMessage(e.target.value)}
+                        placeholder="Geben Sie hier Ihre Nachricht ein..."
+                        rows={6}
+                      />
+                    </div>
+                    
+                    <Button 
+                      onClick={() => handleSendEmail(selectedOrder.id)}
+                      disabled={sendEmailMutation.isPending || !emailSubject.trim() || !emailMessage.trim()}
+                      className="w-full"
+                    >
+                      {sendEmailMutation.isPending ? (
+                        <>
+                          <RefreshCw className="mr-2 h-4 w-4 animate-spin" /> Senden...
+                        </>
+                      ) : (
+                        "E-Mail senden"
+                      )}
+                    </Button>
+                  </div>
+                </div>
+              )}
+            </div>
+            
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setIsDetailOpen(false)}>
+                Schließen
               </Button>
             </DialogFooter>
           </DialogContent>
