@@ -6,7 +6,7 @@ export default function Datenschutz() {
   }, []);
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-4xl">
+    <div className="container mx-auto px-4 py-8 max-w-4xl" id="top">
       <h1 className="babix-info-header text-3xl md:text-4xl font-bold mb-8 text-center">Datenschutzerklärung</h1>
       
       <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
