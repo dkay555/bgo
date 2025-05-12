@@ -213,6 +213,9 @@ export default function WuerfelCheckout() {
               <span className="material-icons text-[#00CFFF]">videogame_asset</span>
               Monopoly Daten
             </CardTitle>
+            <div className="text-sm text-gray-600 mt-1">
+              Weitere Informationen zu den Möglichkeiten findest du hier: <Link href="/hilfe/login" className="text-[#00CFFF] hover:underline">Login Hilfe</Link>
+            </div>
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="authtoken" onValueChange={handleAuthMethodChange}>

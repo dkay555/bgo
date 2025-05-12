@@ -133,13 +133,6 @@ export default function Wuerfel() {
               </div>
               
               <div className="flex flex-col sm:flex-row gap-4 items-center">
-                <div className="text-xl font-bold text-[#0A3A68] mb-2 sm:mb-0 bg-[#00CFFF]/10 px-4 py-2 rounded-md border border-[#00CFFF]">
-                  Ausgewählt: <span className="text-[#FF4C00]">{
-                    selectedOption === "25000" ? "25.000 Würfel (25€)" :
-                    selectedOption === "35000" ? "35.000 Würfel (35€)" :
-                    "45.000 Würfel (45€)"
-                  }</span>
-                </div>
                 <Dialog>
                   <DialogTrigger asChild>
                     <button className="bg-[#FF4C00] text-white py-3 px-6 rounded-md hover:bg-[#0A3A68] transition-colors inline-flex items-center">
