@@ -8,7 +8,7 @@ export default function Produkte() {
   }, []);
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8" id="top">
       <h1 className="babix-info-header text-3xl md:text-4xl font-bold mb-8 text-center">Unsere Produkte & Dienstleistungen</h1>
       
       <div className="max-w-4xl mx-auto">

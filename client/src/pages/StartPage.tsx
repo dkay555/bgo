@@ -4,7 +4,7 @@ import { CONTACT } from '@/lib/constants';
 
 export default function StartPage() {
   return (
-    <main className="px-4 py-6 md:py-10 flex-grow font-['Nunito_Sans'] text-[#0A3A68]">
+    <main className="px-4 py-6 md:py-10 flex-grow font-['Nunito_Sans'] text-[#0A3A68]" id="top">
       {/* Hero Section - Überschrift und Text als zentrierte Gruppe */}
       <section className="text-center py-4 md:py-6 relative overflow-hidden flex items-center justify-center">
         <div className="absolute inset-0 bg-gradient-to-r from-[#00CFFF]/10 to-[#FF4C00]/10 animate-gradient-x"></div>
@@ -77,7 +77,7 @@ export default function StartPage() {
                     <a href={CONTACT.whatsapp} target="_blank" rel="noreferrer">Schreib uns</a>
                   </Button>
                   <Button variant="darkblue" asChild className="flex-1 font-bold">
-                    <Link href="/produkte/wuerfel">Zum Shop</Link>
+                    <Link href="/produkte/wuerfel#top">Zum Shop</Link>
                   </Button>
                 </div>
               </div>
@@ -98,7 +98,7 @@ export default function StartPage() {
                     <a href={CONTACT.whatsapp} target="_blank" rel="noreferrer">Schreib uns</a>
                   </Button>
                   <Button variant="darkblue" asChild className="flex-1 font-bold">
-                    <Link href="/produkte/sticker">Zum Shop</Link>
+                    <Link href="/produkte/sticker#top">Zum Shop</Link>
                   </Button>
                 </div>
               </div>
