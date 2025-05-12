@@ -29,7 +29,7 @@ export default function LoginHilfe() {
             </p>
 
             <div className="bg-[#E6F7FF] border-l-4 border-[#00CFFF] p-4 mb-6 rounded-r-md">
-              <h4 className="font-bold text-[#0A3A68] mb-2 border-b-2 border-[#00CFFF] pb-2 inline-block">💡 Wichtiger Hinweis</h4>
+              <h4 className="babix-info-header text-[#0A3A68] mb-2">💡 Wichtiger Hinweis</h4>
               <p className="text-gray-700">Wir verstehen, dass es für manche ein sensibles Thema ist und garantieren, dass wir den Login nur nutzen, um die nötigen Spieldaten zu erhalten. In aller Regel kann das Passwort wenige Minuten nach dem Login von dir geändert werden.</p>
             </div>
           </div>
@@ -70,7 +70,7 @@ export default function LoginHilfe() {
               
               <div className="border border-gray-200 rounded-lg">
                 <div className="bg-gray-50 p-4 rounded-t-lg">
-                  <h4 className="font-bold text-[#0A3A68] flex items-center">
+                  <h4 className="babix-info-header text-[#0A3A68] flex items-center">
                     <span className="material-icons mr-2 text-[#00CFFF]">token</span>
                     Methode 2: Facebook Auth-Token
                   </h4>

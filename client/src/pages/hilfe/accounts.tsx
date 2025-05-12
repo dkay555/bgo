@@ -127,7 +127,7 @@ export default function AccountsHilfe() {
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
               <div className="bg-gray-50 p-5 rounded-lg border border-gray-200 hover:border-[#00CFFF] transition-colors">
-                <h4 className="font-semibold text-[#0A3A68] mb-3">„Die Jungen"</h4>
+                <h4 className="babix-info-header text-[#0A3A68] mb-3">„Die Jungen"</h4>
                 <p className="mb-4">Diese Accounts werden mindestens sechs Wochen aktiv und mit langsamem, stetigem Wachstum gespielt.</p>
                 <button className="bg-[#0A3A68] hover:bg-[#00CFFF] text-white py-1 px-3 rounded-md transition-colors text-sm inline-flex items-center">
                   <span className="material-icons text-sm mr-1">shopping_cart</span>
@@ -136,7 +136,7 @@ export default function AccountsHilfe() {
               </div>
               
               <div className="bg-gray-50 p-5 rounded-lg border border-gray-200 hover:border-[#00CFFF] transition-colors">
-                <h4 className="font-semibold text-[#0A3A68] mb-3">„Die Alten"</h4>
+                <h4 className="babix-info-header text-[#0A3A68] mb-3">„Die Alten"</h4>
                 <p className="mb-4">Diese Accounts haben eine längere Spielhistorie und sind entsprechend erprobt.</p>
                 <button className="bg-[#0A3A68] hover:bg-[#00CFFF] text-white py-1 px-3 rounded-md transition-colors text-sm inline-flex items-center">
                   <span className="material-icons text-sm mr-1">shopping_cart</span>
@@ -145,7 +145,7 @@ export default function AccountsHilfe() {
               </div>
             </div>
             
-            <h4 className="font-semibold text-[#0A3A68] mb-3 mt-5">Allgemein:</h4>
+            <h4 className="babix-info-header text-[#0A3A68] mb-3 mt-5">Allgemein:</h4>
             <ul className="list-disc pl-5 mb-4 space-y-2">
               <li>Werden entweder verknüpft mit einem FB-Account oder als Gast Accounts übergeben.</li>
               <li>Ihr erhaltet für den Account einige weitere Dateien, so wie eine Anleitung für das sichere Nutzen von 2 oder mehr Accounts.</li>
