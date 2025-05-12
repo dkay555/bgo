@@ -132,6 +132,11 @@ export default function WuerfelCheckout() {
             <CardHeader>
               <CardTitle>Authentifizierung</CardTitle>
               <CardDescription>Wählen Sie Ihre bevorzugte Authentifizierungsmethode</CardDescription>
+              <div className="mt-3 p-3 bg-[#00CFFF]/10 rounded-md border border-[#00CFFF]/20">
+                <p className="text-sm">
+                  Informationen zu den Möglichkeiten der Authentifizierung gibt es hier: <Link href="/hilfe/login" className="text-[#00CFFF] hover:underline">Hilfsartikel zum Login</Link>
+                </p>
+              </div>
             </CardHeader>
             <CardContent>
               <Tabs defaultValue="authtoken" onValueChange={handleAuthMethodChange}>
@@ -364,11 +369,9 @@ export default function WuerfelCheckout() {
                   <div className="flex items-start space-x-2 border border-[#00CFFF]/30 rounded-md p-3 hover:bg-[#00CFFF]/5">
                     <RadioGroupItem 
                       id="agreedToWithdrawalNotice" 
-                      name="agreedToWithdrawalNotice"
                       value="agreed"
                       checked={formData.agreedToWithdrawalNotice} 
                       onClick={() => setFormData({...formData, agreedToWithdrawalNotice: true})}
-                      required 
                     />
                     <Label htmlFor="agreedToWithdrawalNotice" className="text-sm">
                       Ich bin ausdrücklich damit einverstanden, dass mit der Ausführung des Auftrags vor Ablauf der Widerrufsfrist begonnen wird. Mir ist bekannt, dass mein <Link href="/widerruf" className="text-[#00CFFF] hover:underline">Widerrufsrecht</Link> mit Beginn der Ausführung erlischt.
@@ -380,11 +383,9 @@ export default function WuerfelCheckout() {
                   <div className="flex items-start space-x-2 border border-[#00CFFF]/30 rounded-md p-3 hover:bg-[#00CFFF]/5">
                     <RadioGroupItem 
                       id="agreedToTerms" 
-                      name="agreedToTerms"
                       value="agreed"
                       checked={formData.agreedToTerms} 
                       onClick={() => setFormData({...formData, agreedToTerms: true})}
-                      required 
                     />
                     <Label htmlFor="agreedToTerms" className="text-sm">
                       Ich habe die <Link href="/agb" className="text-[#00CFFF] hover:underline">AGB</Link> und <Link href="/datenschutz" className="text-[#00CFFF] hover:underline">Datenschutzbestimmungen</Link> gelesen und akzeptiere diese.
