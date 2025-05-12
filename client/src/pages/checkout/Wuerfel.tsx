@@ -16,6 +16,14 @@ export default function WuerfelCheckout() {
   const searchParams = new URLSearchParams(location.split('?')[1] || '');
   const packageParam = searchParams.get('package');
   
+  // Stelle sicher, dass der Parameter einer der erlaubten Werte ist
+  const validatedPackage = ['25000', '35000', '45000'].includes(packageParam || '') 
+    ? packageParam 
+    : '25000';
+  
+  console.log("Empfangenes Paket:", packageParam);
+  console.log("Validiertes Paket:", validatedPackage);
+  
   // State für Formular
   const [authMethod, setAuthMethod] = useState('authtoken');
   const [formData, setFormData] = useState({
@@ -29,7 +37,7 @@ export default function WuerfelCheckout() {
     loginIngameName: '',
     recoveryCode1: '',
     recoveryCode2: '',
-    selectedPackage: packageParam || '25000',
+    selectedPackage: validatedPackage,
     agreedToTerms: false,
     agreedToWithdrawalNotice: false
   });
@@ -353,102 +361,52 @@ export default function WuerfelCheckout() {
             <CardFooter className="flex flex-col items-start w-full">
               {/* Hinweise zum Widerrufsrecht und AGB */}
               <div className="w-full space-y-4 mb-6">
-                {/* Erste Checkbox */}
-                <div 
-                  className={`flex items-start space-x-2 border border-[#00CFFF]/30 rounded-md p-3 hover:bg-[#00CFFF]/5 ${formData.agreedToWithdrawalNotice ? 'bg-[#00CFFF]/10' : ''}`}
-                  onClick={() => {
-                    // Klick auf das ganze Feld
-                    const newValue = !formData.agreedToWithdrawalNotice;
-                    
-                    // Nur das Widerrufsfeld umschalten
-                    setFormData(prevData => ({
-                      ...prevData,
-                      agreedToWithdrawalNotice: newValue
-                    }));
-                  }}
-                >
+                {/* Einfach nur direkt die Checkboxen verwenden */}
+                <div className="flex items-start space-x-2 border border-[#00CFFF]/30 rounded-md p-3 hover:bg-[#00CFFF]/5">
                   <input 
                     type="checkbox" 
-                    id="agreedToWithdrawalNotice"
-                    name="agreedToWithdrawalNotice"
+                    id="withdrawalCheck"
                     className="h-4 w-4 mt-1 accent-[#00CFFF]"
                     checked={formData.agreedToWithdrawalNotice}
-                    onChange={(e) => {
-                      // Verhindern der Ereignisausbreitung
-                      e.stopPropagation();
-                      
-                      // Nur das Widerrufsfeld umschalten
-                      setFormData(prevData => ({
-                        ...prevData,
-                        agreedToWithdrawalNotice: e.target.checked
-                      }));
+                    onChange={() => {
+                      // Separater State nur für diese Checkbox
+                      const newValue = !formData.agreedToWithdrawalNotice;
+                      setFormData({
+                        ...formData,
+                        agreedToWithdrawalNotice: newValue
+                      });
                     }}
                   />
-                  <Label 
-                    htmlFor="agreedToWithdrawalNotice" 
+                  <label 
+                    htmlFor="withdrawalCheck" 
                     className="text-sm cursor-pointer"
-                    onClick={(e) => {
-                      // Verhindern der Ereignisausbreitung
-                      e.stopPropagation();
-                      
-                      // Nur das Widerrufsfeld umschalten
-                      setFormData(prevData => ({
-                        ...prevData,
-                        agreedToWithdrawalNotice: !prevData.agreedToWithdrawalNotice
-                      }));
-                    }}
                   >
                     Ich bin ausdrücklich damit einverstanden, dass mit der Ausführung des Auftrags vor Ablauf der Widerrufsfrist begonnen wird. Mir ist bekannt, dass mein <Link href="/widerruf" className="text-[#00CFFF] hover:underline">Widerrufsrecht</Link> mit Beginn der Ausführung erlischt.
-                  </Label>
+                  </label>
                 </div>
                 
                 {/* Zweite Checkbox */}
-                <div 
-                  className={`flex items-start space-x-2 border border-[#00CFFF]/30 rounded-md p-3 hover:bg-[#00CFFF]/5 mt-4 ${formData.agreedToTerms ? 'bg-[#00CFFF]/10' : ''}`}
-                  onClick={() => {
-                    // Klick auf das ganze Feld
-                    const newValue = !formData.agreedToTerms;
-                    
-                    // Nur das AGB-Feld umschalten
-                    setFormData(prevData => ({
-                      ...prevData,
-                      agreedToTerms: newValue
-                    }));
-                  }}
-                >
+                <div className="flex items-start space-x-2 border border-[#00CFFF]/30 rounded-md p-3 hover:bg-[#00CFFF]/5 mt-4">
                   <input 
                     type="checkbox" 
-                    id="agreedToTerms"
-                    name="agreedToTerms" 
+                    id="termsCheck"
                     className="h-4 w-4 mt-1 accent-[#00CFFF]"
                     checked={formData.agreedToTerms}
-                    onChange={(e) => {
-                      // Verhindern der Ereignisausbreitung
-                      e.stopPropagation();
-                      
-                      // Nur das AGB-Feld umschalten
-                      setFormData(prevData => ({
-                        ...prevData,
-                        agreedToTerms: e.target.checked
-                      }));
+                    onChange={() => {
+                      // Separater State nur für diese Checkbox
+                      const newValue = !formData.agreedToTerms;
+                      setFormData({
+                        ...formData,
+                        agreedToTerms: newValue
+                      });
                     }}
                   />
-                  <Label 
-                    htmlFor="agreedToTerms" 
+                  <label 
+                    htmlFor="termsCheck" 
                     className="text-sm cursor-pointer"
-                    onClick={(e) => {
-                      // Verhindern der Ereignisausbreitung
-                      e.stopPropagation();
-                      
-                      // Nur das AGB-Feld umschalten
-                      setFormData(prevData => ({
-                        ...prevData,
-                        agreedToTerms: !prevData.agreedToTerms
-                      }));
-                    }}
                   >
                     Ich habe die <Link href="/agb" className="text-[#00CFFF] hover:underline">AGB</Link> und <Link href="/datenschutz" className="text-[#00CFFF] hover:underline">Datenschutzbestimmungen</Link> gelesen und akzeptiere diese.
-                  </Label>
+                  </label>
                 </div>
               </div>
               
