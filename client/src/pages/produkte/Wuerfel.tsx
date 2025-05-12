@@ -168,7 +168,7 @@ export default function Wuerfel() {
                           <span className="material-icons mr-2">message</span>
                           Zum Messenger
                         </a>
-                        <Link href={`/checkout/wuerfel?package=${encodeURIComponent(selectedOption)}`} className="bg-[#FF4C00] text-white py-2 px-4 rounded-md hover:bg-opacity-80 transition-colors text-center flex items-center justify-center">
+                        <Link href={`/checkout/wuerfel?package=${selectedOption}`} className="bg-[#FF4C00] text-white py-2 px-4 rounded-md hover:bg-opacity-80 transition-colors text-center flex items-center justify-center">
                           <span className="material-icons mr-2">shopping_cart</span>
                           Weiter zum Warenkorb
                         </Link>

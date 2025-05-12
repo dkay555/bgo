@@ -14,6 +14,13 @@ export default function WuerfelCheckout() {
   // URL-Parameter auslesen
   const [location] = useLocation();
   const searchParams = new URLSearchParams(location.split('?')[1] || '');
+  
+  // Direkter Test der Parameterwerte im Konsolenprotokoll
+  console.log("Vollständige URL:", location);
+  console.log("Query-Teil:", location.split('?')[1] || 'keine Query');
+  console.log("Alle Parameter:", Object.fromEntries(searchParams.entries()));
+  
+  // Parameter für das Würfelpaket
   const packageParam = searchParams.get('package');
   
   // Stelle sicher, dass der Parameter einer der erlaubten Werte ist
@@ -21,26 +28,30 @@ export default function WuerfelCheckout() {
     ? packageParam 
     : '25000';
   
-  console.log("Empfangenes Paket:", packageParam);
-  console.log("Validiertes Paket:", validatedPackage);
-  
-  // State für Formular
+  // State für Formular mit reduziertem Beispiel-Code
   const [authMethod, setAuthMethod] = useState('authtoken');
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    whatsapp: '',
-    ingameName: '',
-    authtoken: '',
-    loginEmail: '',
-    password: '',
-    loginIngameName: '',
-    recoveryCode1: '',
-    recoveryCode2: '',
-    selectedPackage: validatedPackage,
-    agreedToTerms: false,
-    agreedToWithdrawalNotice: false
-  });
+  
+  // Erstelle und unmittelbar aktualisiere den State
+  const getInitialFormData = () => {
+    // Ein spezifischer, vereinfachter State
+    return {
+      name: '',
+      email: '',
+      whatsapp: '',
+      ingameName: '',
+      authtoken: '',
+      loginEmail: '',
+      password: '',
+      loginIngameName: '',
+      recoveryCode1: '',
+      recoveryCode2: '',
+      selectedPackage: validatedPackage,
+      agreedToTerms: false,
+      agreedToWithdrawalNotice: false
+    };
+  };
+  
+  const [formData, setFormData] = useState(getInitialFormData());
 
   // Laden der Material Icons
   useEffect(() => {
