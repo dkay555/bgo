@@ -241,11 +241,7 @@ export default function Partner() {
                     Die Voraussetzungen für die Eventwährung kannst du auch hier nachlesen
                   </a>
                 </li>
-                <li>
-                  <a href="/kontakt" className="text-[#0A3A68] hover:text-[#FF4C00] font-medium underline">
-                    Gerne kannst du uns auch über die hier verlinkten Wege kontaktieren
-                  </a>
-                </li>
+
               </ul>
             </div>
           </div>
