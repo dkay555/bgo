@@ -9,20 +9,19 @@ export default function TycoonRacers() {
   
   // States für Tycoon Racers
   const [eventType, setEventType] = useState<'team' | 'flags'>('team');
-  const [tycoonPrice, setTycoonPrice] = useState(25);
+  const [tycoonPrice, setTycoonPrice] = useState(20);
   const [showTycoonModal, setShowTycoonModal] = useState(false);
 
   // Preistabelle für Tycoon Racers
   const tycoonPrices = {
     team: [
-      { level: 'Bronze', price: 25 },
-      { level: 'Silber', price: 45 },
-      { level: 'Gold', price: 65 },
+      { slots: 1, price: 20 },
+      { slots: 2, price: 38 },
+      { slots: 3, price: 55 },
     ],
     flags: [
-      { amount: '100 Flaggen', price: 20 },
-      { amount: '250 Flaggen', price: 40 },
-      { amount: '500 Flaggen', price: 75 },
+      { amount: '15.000 Flaggen', price: 30 },
+      { amount: '25.000 Flaggen', price: 40 },
     ]
   };
 
@@ -108,10 +107,10 @@ export default function TycoonRacers() {
                   <div className={`w-5 h-5 rounded-full mr-2 flex items-center justify-center ${eventType === 'team' ? 'bg-[#8A2BE2]' : 'border border-gray-400'}`}>
                     {eventType === 'team' && <span className="material-icons text-white text-xs">check</span>}
                   </div>
-                  <h4 className="font-bold text-lg">Teamplatz</h4>
+                  <h4 className="font-bold text-lg">Teamplätze</h4>
                 </div>
                 <p className="text-gray-600 text-sm mb-3">
-                  Buchen Sie einen Platz in unserem Team und erhalten Sie die entsprechenden Belohnungen.
+                  Werde Teil unseres Teams und sichere dir alle 54 Rundenbelohnungen!
                 </p>
                 <div className="space-y-2">
                   {tycoonPrices.team.map((item, index) => (
@@ -121,7 +120,7 @@ export default function TycoonRacers() {
                       onClick={() => eventType === 'team' && handleTycoonPriceChange(item.price)}
                     >
                       <div className="flex justify-between">
-                        <span className="font-medium">{item.level}</span>
+                        <span className="font-medium">{item.slots} {item.slots === 1 ? 'Platz' : 'Plätze'}</span>
                         <span className="font-bold text-[#FF4C00]">{item.price},00 €</span>
                       </div>
                     </div>
@@ -141,7 +140,7 @@ export default function TycoonRacers() {
                   <h4 className="font-bold text-lg">Flaggen</h4>
                 </div>
                 <p className="text-gray-600 text-sm mb-3">
-                  Kaufen Sie Flaggenpakete, um schneller im Event voranzukommen.
+                  Fahre dein Team zum Sieg. Wir helfen beim Flaggen sammeln!
                 </p>
                 <div className="space-y-2">
                   {tycoonPrices.flags.map((item, index) => (
