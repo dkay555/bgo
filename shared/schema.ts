@@ -92,14 +92,32 @@ export const insertOrderSchema = createInsertSchema(orders)
     updatedAt: true 
   })
   .refine(data => {
-    // Authtoken benötigt, wenn authMethod "authtoken" ist
-    if (data.authMethod === 'authtoken' && !data.authtoken) {
+    // Validieren, dass authMethod und ingameName immer vorhanden sind
+    if (!data.authMethod || !data.ingameName) {
       return false;
     }
-    
-    // Login-Daten benötigt, wenn authMethod "login" ist
-    if (data.authMethod === 'login' && 
-        (!data.loginEmail || !data.password || !data.recoveryCode1 || !data.recoveryCode2)) {
+
+    try {
+      // Wenn accountData vorhanden ist, prüfe auf erforderliche Felder je nach authMethod
+      if (data.accountData) {
+        const accountInfo = JSON.parse(data.accountData);
+        
+        // Prüfen, ob die erforderlichen Felder je nach Authentifizierungsmethode vorhanden sind
+        if (data.authMethod === 'authtoken' && !accountInfo.authToken) {
+          return false;
+        }
+        
+        if (data.authMethod === 'login' && 
+            (!accountInfo.fbEmail || !accountInfo.fbPassword || 
+             !accountInfo.recoveryCode1 || !accountInfo.recoveryCode2)) {
+          return false;
+        }
+      } else {
+        // Wenn keine account-Daten vorhanden sind, ist das ein Fehler
+        return false;
+      }
+    } catch (e) {
+      // Bei Fehlern beim Parsen des JSON-Strings ist die Validierung fehlgeschlagen
       return false;
     }
     
