@@ -36,6 +36,7 @@ const WuerfelCheckoutPage = lazy(() => import('@/pages/checkout/Wuerfel'));
 const StickerCheckoutPage = lazy(() => import('@/pages/checkout/Sticker'));
 const PartnereventCheckoutPage = lazy(() => import('@/pages/checkout/Partnerevent'));
 const TycoonRacersCheckoutPage = lazy(() => import('@/pages/checkout/TycoonRacers'));
+const EventwaehrungCheckoutPage = lazy(() => import('@/pages/checkout/Eventwaehrung'));
 
 // Lazy-loaded help pages
 const WuerfelHilfePage = lazy(() => import('@/pages/hilfe/wuerfel'));
@@ -142,6 +143,9 @@ function Router() {
           </Route>
           <Route path="/checkout/tycoonracers">
             {() => <TycoonRacersCheckoutPage />}
+          </Route>
+          <Route path="/checkout/eventwaehrung">
+            {() => <EventwaehrungCheckoutPage />}
           </Route>
           
           {/* Auth-Routen */}
