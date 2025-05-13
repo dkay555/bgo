@@ -42,8 +42,12 @@ export const orders = pgTable("orders", {
   whatsapp: text("whatsapp"),
   
   // Bestelldetails
-  package: text("package").notNull(), // Packungsgröße (z.B. "25000", "35000", usw.)
+  productType: text("product_type").default("dice"), // "dice", "partnerevent", "tycoonracers", "sticker"
+  package: text("package").notNull(), // Produkt-Info (z.B. "25000" für Würfel, "3 Partner" für Partnerevent)
   price: numeric("price").notNull(),   // Preis
+  
+  // Zusätzliche Produktdaten als JSON (für Partner, Tycoon Racers, etc.)
+  accountData: text("account_data"),
   
   // Monopoly-Daten
   authMethod: text("auth_method").notNull(), // "authtoken" oder "login"

@@ -30,7 +30,12 @@ const StickerPage = lazy(() => import('@/pages/produkte/Sticker'));
 const PartnerPage = lazy(() => import('@/pages/produkte/Partner'));
 const TycoonRacersPage = lazy(() => import('@/pages/produkte/TycoonRacers'));
 const WeiterePage = lazy(() => import('@/pages/produkte/Weitere'));
+
+// Lazy-loaded checkout pages
 const WuerfelCheckoutPage = lazy(() => import('@/pages/checkout/Wuerfel'));
+const StickerCheckoutPage = lazy(() => import('@/pages/checkout/Sticker'));
+const PartnereventCheckoutPage = lazy(() => import('@/pages/checkout/Partnerevent'));
+const TycoonRacersCheckoutPage = lazy(() => import('@/pages/checkout/TycoonRacers'));
 
 // Lazy-loaded help pages
 const WuerfelHilfePage = lazy(() => import('@/pages/hilfe/wuerfel'));

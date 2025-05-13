@@ -52,7 +52,8 @@ import {
   Eye,
   Facebook,
   Key,
-  Link2
+  Link2,
+  Clock
 } from "lucide-react";
 
 interface AdminCredentials {
@@ -639,6 +640,14 @@ export default function Bestellungen() {
                   )}
                   
                   <h4 className="text-md font-medium pt-2 text-[#00CFFF]">Zusätzliche Spieldaten</h4>
+                  
+                  {selectedOrder.executionTime && (
+                    <div className="flex items-center text-sm">
+                      <Clock className="h-4 w-4 mr-2 text-gray-500" />
+                      <span className="font-medium">Ausführungszeitpunkt:</span>
+                      <span className="ml-2">{selectedOrder.executionTime}</span>
+                    </div>
+                  )}
                   
                   {selectedOrder.fbLogin && (
                     <div className="flex items-center text-sm">
