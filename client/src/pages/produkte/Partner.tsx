@@ -279,6 +279,17 @@ export default function Partner() {
             </p>
             
             <div className="space-y-3">
+              {/* Link zum Checkout-Formular */}
+              <Link
+                to={`/checkout/partnerevent?partner=${partnerCount}`}
+                className="block w-full bg-[#FF4C00] hover:bg-[#0A3A68] text-white py-3 px-4 rounded-md transition-colors text-center"
+              >
+                <span className="flex items-center justify-center">
+                  <span className="material-icons mr-2">shopping_cart</span>
+                  Weiter zum Kaufen
+                </span>
+              </Link>
+              
               <a
                 href={`https://wa.me/491234567890?text=Ich%20möchte%20${partnerCount}%20Partner%20für%20das%20aktuelle%20Event%20buchen.`}
                 target="_blank"
