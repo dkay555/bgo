@@ -504,6 +504,112 @@ export default function Race() {
           </div>
         </div>
       )}
+      {renderTycoonModal()}
     </div>
   );
+}
+
+function TycoonConfirmationModal({ isOpen, onClose, eventType, price }: { 
+  isOpen: boolean; 
+  onClose: () => void;
+  eventType: 'team' | 'flags';
+  price: number;
+}) {
+  const [email, setEmail] = useState('');
+  const [playerId, setPlayerId] = useState('');
+  const [isProcessing, setIsProcessing] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsProcessing(true);
+    
+    // Simuliere Verarbeitungszeit
+    setTimeout(() => {
+      setIsProcessing(false);
+      onClose();
+      // Hier könnte die Weiterleitung zur Zahlung erfolgen
+    }, 1000);
+  };
+
+  return isOpen ? (
+    <div className="fixed inset-0 flex items-center justify-center z-50">
+      <div className="fixed inset-0 bg-black opacity-50" onClick={onClose}></div>
+      <div className="bg-white rounded-lg p-6 z-10 max-w-md w-full">
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="text-xl font-bold text-[#8A2BE2]">
+            {eventType === 'team' ? 'Teamplatz buchen' : 'Flaggen kaufen'}
+          </h3>
+          <span 
+            className="material-icons cursor-pointer text-gray-500 hover:text-gray-700"
+            onClick={onClose}
+          >
+            close
+          </span>
+        </div>
+
+        <div className="mb-4 p-3 bg-purple-50 rounded-md">
+          <div className="font-medium text-[#8A2BE2]">Ihre Auswahl:</div>
+          <div className="flex justify-between mt-1">
+            <span>{eventType === 'team' ? 'Teamplatz Tycoon Racers' : 'Flaggenpaket Tycoon Racers'}</span>
+            <span className="font-bold">{price},00 €</span>
+          </div>
+        </div>
+        
+        <form onSubmit={handleSubmit}>
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-medium mb-1" htmlFor="email">
+              E-Mail Adresse <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="email"
+              id="email"
+              className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-200 focus:border-[#8A2BE2]"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          
+          <div className="mb-6">
+            <label className="block text-gray-700 text-sm font-medium mb-1" htmlFor="playerId">
+              Monopoly GO Spieler-ID <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="text"
+              id="playerId"
+              className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-200 focus:border-[#8A2BE2]"
+              value={playerId}
+              onChange={(e) => setPlayerId(e.target.value)}
+              required
+            />
+            <p className="text-xs text-gray-500 mt-1">
+              Ihre Spieler-ID finden Sie in den Einstellungen des Spiels
+            </p>
+          </div>
+          
+          <button
+            type="submit"
+            disabled={isProcessing}
+            className={`w-full py-3 px-4 rounded-md transition-colors font-bold flex items-center justify-center ${
+              isProcessing 
+                ? 'bg-purple-300 cursor-not-allowed' 
+                : 'bg-[#8A2BE2] hover:bg-[#7722C9] text-white'
+            }`}
+          >
+            {isProcessing ? (
+              <>
+                <span className="animate-spin mr-2 h-4 w-4 border-2 border-white border-t-transparent rounded-full"></span>
+                Verarbeitung...
+              </>
+            ) : (
+              <>
+                <span className="material-icons mr-2">payment</span>
+                Zur Zahlung
+              </>
+            )}
+          </button>
+        </form>
+      </div>
+    </div>
+  ) : null;
 }
