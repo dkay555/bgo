@@ -79,35 +79,69 @@ function Router() {
           
           {/* Hilfebereich */}
           <Route path="/hilfe" component={Hilfe} />
-          <Route path="/hilfe/wuerfel" component={WuerfelHilfePage} />
-          <Route path="/hilfe/partner" component={PartnerHilfePage} />
-          <Route path="/hilfe/race" component={RaceHilfePage} />
-          <Route path="/hilfe/login" component={LoginHilfePage} />
-          <Route path="/hilfe/accounts" component={AccountsHilfePage} />
-          <Route path="/hilfe/authtoken" component={AuthTokenHilfePage} />
-          <Route path="/hilfe/news_preise_angebot.html" component={NewsPreiseAngebotPage} />
+          <Route path="/hilfe/wuerfel">
+            {() => <WuerfelHilfePage />}
+          </Route>
+          <Route path="/hilfe/partner">
+            {() => <PartnerHilfePage />}
+          </Route>
+          <Route path="/hilfe/race">
+            {() => <RaceHilfePage />}
+          </Route>
+          <Route path="/hilfe/login">
+            {() => <LoginHilfePage />}
+          </Route>
+          <Route path="/hilfe/accounts">
+            {() => <AccountsHilfePage />}
+          </Route>
+          <Route path="/hilfe/authtoken">
+            {() => <AuthTokenHilfePage />}
+          </Route>
+          <Route path="/hilfe/news_preise_angebot.html">
+            {() => <NewsPreiseAngebotPage />}
+          </Route>
           
           {/* Produkt-Unterseiten */}
-          <Route path="/produkte/wuerfel" component={WuerfelPage} />
-          <Route path="/produkte/sticker" component={StickerPage} />
-          <Route path="/produkte/partner" component={PartnerPage} />
-          <Route path="/produkte/race" component={RacePage} />
-          <Route path="/produkte/weitere" component={WeiterePage} />
+          <Route path="/produkte/wuerfel">
+            {() => <WuerfelPage />}
+          </Route>
+          <Route path="/produkte/sticker">
+            {() => <StickerPage />}
+          </Route>
+          <Route path="/produkte/partner">
+            {() => <PartnerPage />}
+          </Route>
+          <Route path="/produkte/race">
+            {() => <RacePage />}
+          </Route>
+          <Route path="/produkte/weitere">
+            {() => <WeiterePage />}
+          </Route>
           
           {/* Checkout-Seiten */}
-          <Route path="/checkout/wuerfel" component={WuerfelCheckoutPage} />
+          <Route path="/checkout/wuerfel">
+            {() => <WuerfelCheckoutPage />}
+          </Route>
           
           {/* Auth-Routen */}
           <Route path="/auth" component={AuthPage} />
           <ProtectedRoute path="/order-history" component={OrderHistory} />
           
           {/* Ticket-System */}
-          <ProtectedRoute path="/tickets" component={TicketsPage} />
-          <ProtectedRoute path="/tickets/new" component={NewTicketPage} />
-          <ProtectedRoute path="/tickets/:id" component={TicketDetailPage} />
+          <Route path="/tickets">
+            {() => <TicketsPage />}
+          </Route>
+          <Route path="/tickets/new">
+            {() => <NewTicketPage />}
+          </Route>
+          <Route path="/tickets/:id">
+            {params => <TicketDetailPage />}
+          </Route>
           
           {/* Admin-Bereich */}
-          <Route path="/admin/bestellungen" component={AdminBestellungenPage} />
+          <Route path="/admin/bestellungen">
+            {() => <AdminBestellungenPage />}
+          </Route>
           
           {/* 404-Seite für alle unbekannten Routen */}
           <Route component={NotFound} />
