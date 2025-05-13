@@ -166,6 +166,11 @@ function Router() {
             {() => <AdminBestellungenPage />}
           </Route>
           
+          {/* Test-Seiten */}
+          <Route path="/paypal-test">
+            {() => <PayPalTestPage />}
+          </Route>
+          
           {/* 404-Seite für alle unbekannten Routen */}
           <Route component={NotFound} />
         </Switch>
