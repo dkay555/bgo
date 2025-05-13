@@ -43,6 +43,10 @@ const registerSchema = z.object({
 export default function AuthPage() {
   const { user, isLoading, loginMutation, registerMutation } = useAuth();
   const [activeTab, setActiveTab] = useState("login");
+  const [isAdminLogin, setIsAdminLogin] = useState(false);
+
+  // Admin-Login-Toggle
+  const toggleAdminLogin = () => setIsAdminLogin(!isAdminLogin);
 
   // Login Form
   const loginForm = useForm<z.infer<typeof loginSchema>>({
@@ -66,7 +70,11 @@ export default function AuthPage() {
 
   // Login Funktion
   function onLoginSubmit(values: z.infer<typeof loginSchema>) {
-    loginMutation.mutate(values);
+    // Wenn Admin-Login aktiviert ist, vermerken wir das in der Anfrage
+    loginMutation.mutate({ 
+      ...values, 
+      isAdmin: isAdminLogin 
+    });
   }
 
   // Registrierungs-Funktion
@@ -95,9 +103,10 @@ export default function AuthPage() {
             </CardDescription>
           </CardHeader>
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="grid grid-cols-2 w-full">
+            <TabsList className="grid grid-cols-3 w-full">
               <TabsTrigger value="login">Login</TabsTrigger>
               <TabsTrigger value="register">Registrieren</TabsTrigger>
+              <TabsTrigger value="guest">Als Gast</TabsTrigger>
             </TabsList>
             <TabsContent value="login" className="p-4">
               <Form {...loginForm}>
