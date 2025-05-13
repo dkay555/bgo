@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'wouter';
+import { CONTACT } from '@/lib/constants';
 
 export default function TycoonRacers() {
   useEffect(() => {
@@ -45,12 +46,32 @@ export default function TycoonRacers() {
   const renderTycoonModal = () => {
     if (showTycoonModal) {
       return (
-        <TycoonConfirmationModal 
-          isOpen={showTycoonModal} 
-          onClose={() => setShowTycoonModal(false)} 
-          eventType={eventType}
-          price={tycoonPrice}
-        />
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+          <div className="bg-white p-6 rounded-lg shadow-xl max-w-md w-full">
+            <h3 className="text-xl font-bold text-[#0A3A68] mb-4">Bestätigung</h3>
+            <p className="mb-4">
+              Vielen Dank für deine Auswahl! Du hast dich für {eventType === 'team' ? 'einen Teamplatz' : 'ein Flaggenpaket'} für die Tycoon Racers entschieden.
+            </p>
+            <p className="font-semibold mb-6">Preis: {tycoonPrice} €</p>
+            
+            <div className="flex justify-end space-x-3">
+              <button
+                onClick={() => setShowTycoonModal(false)}
+                className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-md transition-colors"
+              >
+                Abbrechen
+              </button>
+              <a
+                href={`${CONTACT.whatsapp}?text=Ich%20interessiere%20mich%20für%20${eventType === 'team' ? 'einen%20Teamplatz' : 'ein%20Flaggenpaket'}%20für%20Tycoon%20Racers%20für%20${tycoonPrice}%20€`}
+                target="_blank"
+                rel="noreferrer"
+                className="px-4 py-2 bg-[#FF4C00] hover:bg-[#FF4C00]/80 text-white rounded-md transition-colors"
+              >
+                Über WhatsApp bestellen
+              </a>
+            </div>
+          </div>
+        </div>
       );
     }
     return null;
@@ -67,7 +88,6 @@ export default function TycoonRacers() {
       </div>
       
       <div className="max-w-4xl mx-auto mb-12">
-        
         {/* Tycoon Racers Sektion */}
         <div className="bg-white rounded-lg shadow-lg overflow-hidden mb-8">
           <div className="bg-gradient-to-r from-[#8A2BE2] to-[#FF69B4] p-4 text-white">
@@ -142,60 +162,45 @@ export default function TycoonRacers() {
             
             <button
               onClick={() => setShowTycoonModal(true)}
-              className="w-full bg-[#8A2BE2] hover:bg-[#7722C9] text-white py-3 px-4 rounded-md transition-colors font-bold"
+              className="w-full bg-[#8A2BE2] hover:bg-[#7B1FA2] text-white py-3 px-6 rounded-md transition-colors font-bold flex items-center justify-center"
             >
-              <span className="flex items-center justify-center">
-                <span className="material-icons mr-2">shopping_cart</span>
-                {eventType === 'team' ? 'Teamplatz buchen' : 'Flaggen kaufen'}
-              </span>
+              <span className="material-icons mr-2">shopping_cart</span>
+              Jetzt buchen
             </button>
-          </div>
-        </div>
-        
-        {/* FAQ */}
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-          <h2 className="text-2xl font-bold text-[#0A3A68] mb-4">Häufig gestellte Fragen</h2>
-          
-          <div className="space-y-4">
-            <details className="group border-b border-gray-200 pb-4">
-              <summary className="flex justify-between items-center font-bold cursor-pointer text-[#0A3A68] hover:text-[#FF4C00]">
-                Wie weit komme ich mit einem Race-Platz?
-                <span className="material-icons transition-transform group-open:rotate-180">expand_more</span>
-              </summary>
-              <div className="mt-2 text-gray-700">
-                <p>Mit einem Race-Platz erreichen Sie in der Regel etwa 50-60% der Event-Belohnungen. Mit zwei Plätzen kommen Sie auf ca. 70-80%, und mit drei oder mehr Plätzen können Sie nahezu alle Belohnungen des Events freischalten.</p>
-              </div>
-            </details>
             
-            <details className="group border-b border-gray-200 pb-4">
-              <summary className="flex justify-between items-center font-bold cursor-pointer text-[#0A3A68] hover:text-[#FF4C00]">
-                Benötigen Sie mein Passwort?
-                <span className="material-icons transition-transform group-open:rotate-180">expand_more</span>
-              </summary>
-              <div className="mt-2 text-gray-700">
-                <p>Nein, wir benötigen niemals Ihr Passwort. Für den Race-Service reicht Ihre Spieler-ID oder Ihr Account-Name in Monopoly GO aus.</p>
-              </div>
-            </details>
-            
-            <details className="group border-b border-gray-200 pb-4">
-              <summary className="flex justify-between items-center font-bold cursor-pointer text-[#0A3A68] hover:text-[#FF4C00]">
-                Wie lange dauert ein Race-Event?
-                <span className="material-icons transition-transform group-open:rotate-180">expand_more</span>
-              </summary>
-              <div className="mt-2 text-gray-700">
-                <p>Die meisten Race-Events in Monopoly GO dauern zwischen 2 und 4 Tagen. Wir spielen durchgehend während dieser Zeit, um maximale Ergebnisse zu erzielen.</p>
-              </div>
-            </details>
-            
-            <details className="group">
-              <summary className="flex justify-between items-center font-bold cursor-pointer text-[#0A3A68] hover:text-[#FF4C00]">
-                Kann ich auch während eines laufenden Events noch Plätze buchen?
-                <span className="material-icons transition-transform group-open:rotate-180">expand_more</span>
-              </summary>
-              <div className="mt-2 text-gray-700">
-                <p>Ja, Sie können auch während eines laufenden Events noch Plätze buchen. Der Preis bleibt gleich, aber die erreichbaren Belohnungen können je nach verbleibender Zeit variieren. Kontaktieren Sie uns für eine individuelle Beratung.</p>
-              </div>
-            </details>
+            <div className="mt-8 space-y-4 bg-purple-50 p-4 rounded-lg">
+              <h3 className="font-bold text-lg text-[#0A3A68]">Häufig gestellte Fragen:</h3>
+              
+              <details className="group">
+                <summary className="flex justify-between items-center font-bold cursor-pointer text-[#0A3A68] hover:text-[#FF4C00]">
+                  Was sind Tycoon Racers Events?
+                  <span className="material-icons transition-transform group-open:rotate-180">expand_more</span>
+                </summary>
+                <div className="mt-2 text-gray-700">
+                  <p>Tycoon Racers sind spezielle Events in Monopoly GO, bei denen Sie in Teams antreten oder Flaggen sammeln, um wertvolle Belohnungen zu erhalten. Unsere Pakete helfen Ihnen, bei diesen Events schneller voranzukommen.</p>
+                </div>
+              </details>
+              
+              <details className="group">
+                <summary className="flex justify-between items-center font-bold cursor-pointer text-[#0A3A68] hover:text-[#FF4C00]">
+                  Wie funktionieren Teamplätze?
+                  <span className="material-icons transition-transform group-open:rotate-180">expand_more</span>
+                </summary>
+                <div className="mt-2 text-gray-700">
+                  <p>Bei einem Teamplatz nehmen wir Sie in unser Team für das Tycoon Racers Event auf. Je nach gewähltem Level (Bronze, Silber, Gold) erhalten Sie unterschiedliche Belohnungen. Sie profitieren von unserem erfahrenen Team und erhalten alle entsprechenden Belohnungen.</p>
+                </div>
+              </details>
+              
+              <details className="group">
+                <summary className="flex justify-between items-center font-bold cursor-pointer text-[#0A3A68] hover:text-[#FF4C00]">
+                  Kann ich auch während eines laufenden Events noch Plätze buchen?
+                  <span className="material-icons transition-transform group-open:rotate-180">expand_more</span>
+                </summary>
+                <div className="mt-2 text-gray-700">
+                  <p>Ja, Sie können auch während eines laufenden Events noch Plätze buchen. Der Preis bleibt gleich, aber die erreichbaren Belohnungen können je nach verbleibender Zeit variieren. Kontaktieren Sie uns für eine individuelle Beratung.</p>
+                </div>
+              </details>
+            </div>
           </div>
         </div>
         
@@ -219,159 +224,8 @@ export default function TycoonRacers() {
         </div>
       </div>
       
-      {/* Modal für Kaufoptionen */}
-      {showModal && (
-        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg max-w-md w-full p-6">
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="text-xl font-bold text-[#0A3A68]">Wie möchten Sie bestellen?</h3>
-              <button 
-                onClick={() => setShowModal(false)}
-                className="text-gray-500 hover:text-gray-700"
-              >
-                <span className="material-icons">close</span>
-              </button>
-            </div>
-            
-            <p className="mb-6">
-              Wählen Sie Ihre bevorzugte Bestellmethode:
-            </p>
-            
-            <div className="space-y-3">
-              <a
-                href={`https://wa.me/491234567890?text=Ich%20möchte%20${placeCount}%20Race-Plätze%20für%20das%20aktuelle%20Event%20buchen.`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block w-full bg-[#25D366] hover:bg-opacity-90 text-white py-3 px-4 rounded-md transition-colors text-center"
-              >
-                <span className="flex items-center justify-center">
-                  <span className="material-icons mr-2">whatsapp</span>
-                  Über WhatsApp bestellen
-                </span>
-              </a>
-              
-              <button
-                onClick={() => {
-                  alert('Hier würde jetzt der normale Bestellprozess starten.');
-                  setShowModal(false);
-                }}
-                className="w-full bg-[#0A3A68] hover:bg-[#FF4C00] text-white py-3 px-4 rounded-md transition-colors"
-              >
-                <span className="flex items-center justify-center">
-                  <span className="material-icons mr-2">shopping_cart</span>
-                  Zum Warenkorb
-                </span>
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Render das Modal */}
       {renderTycoonModal()}
     </div>
   );
-}
-
-function TycoonConfirmationModal({ isOpen, onClose, eventType, price }: { 
-  isOpen: boolean; 
-  onClose: () => void;
-  eventType: 'team' | 'flags';
-  price: number;
-}) {
-  const [email, setEmail] = useState('');
-  const [playerId, setPlayerId] = useState('');
-  const [isProcessing, setIsProcessing] = useState(false);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsProcessing(true);
-    
-    // Simuliere Verarbeitungszeit
-    setTimeout(() => {
-      setIsProcessing(false);
-      onClose();
-      // Hier könnte die Weiterleitung zur Zahlung erfolgen
-    }, 1000);
-  };
-
-  return isOpen ? (
-    <div className="fixed inset-0 flex items-center justify-center z-50">
-      <div className="fixed inset-0 bg-black opacity-50" onClick={onClose}></div>
-      <div className="bg-white rounded-lg p-6 z-10 max-w-md w-full">
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="text-xl font-bold text-[#8A2BE2]">
-            {eventType === 'team' ? 'Teamplatz buchen' : 'Flaggen kaufen'}
-          </h3>
-          <span 
-            className="material-icons cursor-pointer text-gray-500 hover:text-gray-700"
-            onClick={onClose}
-          >
-            close
-          </span>
-        </div>
-
-        <div className="mb-4 p-3 bg-purple-50 rounded-md">
-          <div className="font-medium text-[#8A2BE2]">Ihre Auswahl:</div>
-          <div className="flex justify-between mt-1">
-            <span>{eventType === 'team' ? 'Teamplatz Tycoon Racers' : 'Flaggenpaket Tycoon Racers'}</span>
-            <span className="font-bold">{price},00 €</span>
-          </div>
-        </div>
-        
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-medium mb-1" htmlFor="email">
-              E-Mail Adresse <span className="text-red-500">*</span>
-            </label>
-            <input
-              type="email"
-              id="email"
-              className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-200 focus:border-[#8A2BE2]"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-          
-          <div className="mb-6">
-            <label className="block text-gray-700 text-sm font-medium mb-1" htmlFor="playerId">
-              Monopoly GO Spieler-ID <span className="text-red-500">*</span>
-            </label>
-            <input
-              type="text"
-              id="playerId"
-              className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-200 focus:border-[#8A2BE2]"
-              value={playerId}
-              onChange={(e) => setPlayerId(e.target.value)}
-              required
-            />
-            <p className="text-xs text-gray-500 mt-1">
-              Ihre Spieler-ID finden Sie in den Einstellungen des Spiels
-            </p>
-          </div>
-          
-          <button
-            type="submit"
-            disabled={isProcessing}
-            className={`w-full py-3 px-4 rounded-md transition-colors font-bold flex items-center justify-center ${
-              isProcessing 
-                ? 'bg-purple-300 cursor-not-allowed' 
-                : 'bg-[#8A2BE2] hover:bg-[#7722C9] text-white'
-            }`}
-          >
-            {isProcessing ? (
-              <>
-                <span className="animate-spin mr-2 h-4 w-4 border-2 border-white border-t-transparent rounded-full"></span>
-                Verarbeitung...
-              </>
-            ) : (
-              <>
-                <span className="material-icons mr-2">payment</span>
-                Zur Zahlung
-              </>
-            )}
-          </button>
-        </form>
-      </div>
-    </div>
-  ) : null;
 }
