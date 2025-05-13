@@ -61,14 +61,14 @@ export default function TycoonRacers() {
               >
                 Abbrechen
               </button>
-              <a
-                href={`${CONTACT.whatsapp}?text=Ich%20interessiere%20mich%20für%20${eventType === 'team' ? 'einen%20Teamplatz' : 'ein%20Flaggenpaket'}%20für%20Tycoon%20Racers%20für%20${tycoonPrice}%20€`}
-                target="_blank"
-                rel="noreferrer"
+              <Link
+                to={`/checkout/tycoonracers?type=${eventType}&level=${eventType === 'team' ? 
+                  (tycoonPrice === 25 ? 'bronze' : tycoonPrice === 45 ? 'silver' : 'gold') : 
+                  (tycoonPrice === 20 ? '100' : tycoonPrice === 40 ? '250' : '500')}`}
                 className="px-4 py-2 bg-[#FF4C00] hover:bg-[#FF4C00]/80 text-white rounded-md transition-colors"
               >
-                Über WhatsApp bestellen
-              </a>
+                Weiter zum Kaufen
+              </Link>
             </div>
           </div>
         </div>
