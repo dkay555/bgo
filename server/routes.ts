@@ -2,7 +2,7 @@ import type { Express, Request, Response } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { createPaypalOrder, capturePaypalOrder, loadPaypalDefault } from "./paypal";
-import { insertOrderSchema, insertTicketSchema, insertTicketReplySchema } from "@shared/schema";
+import { insertOrderSchema, insertTicketSchema, insertTicketReplySchema, type User } from "@shared/schema";
 import { ZodError } from "zod";
 import { sendNewOrderNotification, sendOrderConfirmation, sendEmailToCustomer } from "./email";
 import { adminAuthMiddleware } from "./admin-auth";

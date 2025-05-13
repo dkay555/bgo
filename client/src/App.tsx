@@ -56,6 +56,7 @@ const ProfilePage = lazy(() => import('@/pages/profile'));
 
 // Admin pages
 const AdminBestellungenPage = lazy(() => import('@/pages/admin/Bestellungen'));
+const AdminBenutzerPage = lazy(() => import('@/pages/admin/Benutzer'));
 
 // Test pages
 const PayPalTestPage = lazy(() => import('@/pages/PayPalTest'));
@@ -164,6 +165,9 @@ function Router() {
           {/* Admin-Bereich */}
           <Route path="/admin/bestellungen">
             {() => <AdminBestellungenPage />}
+          </Route>
+          <Route path="/admin/benutzer">
+            {() => <AdminBenutzerPage />}
           </Route>
           
           {/* Test-Seiten */}
