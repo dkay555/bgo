@@ -43,33 +43,39 @@ export default function WuerfelCheckoutPage() {
   
   // Würfel-Produkte aus der Datenbank abrufen
   const { data: diceProducts, isLoading: isLoadingProducts } = useQuery<{success: boolean, products: Product[]}>({
-    queryKey: ['/api/products/type/dice'],
-    onSuccess: (data) => {
-      // Default-Produkt basierend auf URL-Parameter oder erstes Produkt auswählen
-      if (data.products.length > 0) {
-        const product = amountParam 
-          ? data.products.find(p => p.variant === amountParam) || data.products[0]
-          : data.products[0];
-        
-        setSelectedProductId(product.id);
-        setOrderAmount(product.price);
-      }
-    }
+    queryKey: ['/api/products/type/dice']
   });
+
+  // Effekt zum Setzen des ausgewählten Produkts, wenn Daten geladen wurden
+  useEffect(() => {
+    if (diceProducts?.success && diceProducts.products.length > 0) {
+      // Default-Produkt basierend auf URL-Parameter oder erstes Produkt auswählen
+      const product = amountParam 
+        ? diceProducts.products.find((p: Product) => p.variant === amountParam) || diceProducts.products[0]
+        : diceProducts.products[0];
+      
+      setSelectedProductId(product.id);
+      setOrderAmount(product.price);
+    }
+  }, [diceProducts, amountParam]);
   
   // Ausgewähltes Produkt
-  const selectedProduct = diceProducts?.products.find(p => p.id === selectedProductId);
+  const selectedProduct = diceProducts?.products?.find((p: Product) => p.id === selectedProductId);
   
   // State für Formular
   const [formError, setFormError] = useState('');
   
   // Initiale Form-Daten
   const getInitialFormData = () => {
+    // Standardwert für selected_amount ist die erste Variante aus den verfügbaren Paketen
+    // oder '25000' wenn keine Pakete vorhanden sind
+    const defaultAmount = diceProducts?.products?.[0]?.variant || '25000';
+    
     return {
       name: '',
       email: '',
       whatsapp: '',
-      selectedAmount: validatedAmount,
+      selectedAmount: amountParam || defaultAmount,
       authMethod: 'authtoken', // 'authtoken' oder 'login'
       ingameName: '',
       authToken: '',
@@ -152,7 +158,7 @@ export default function WuerfelCheckoutPage() {
       // Bestelldetails
       productType: 'dice',
       package: formData.selectedAmount,
-      price: parseFloat(orderAmount),
+      price: orderAmount, // Als String belassen, wie in der Datenbank erwartet
       
       // Monopoly-Daten
       authMethod: formData.authMethod,
