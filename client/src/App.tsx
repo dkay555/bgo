@@ -28,7 +28,7 @@ import { lazy, Suspense } from "react";
 const WuerfelPage = lazy(() => import('@/pages/produkte/Wuerfel'));
 const StickerPage = lazy(() => import('@/pages/produkte/Sticker'));
 const PartnerPage = lazy(() => import('@/pages/produkte/Partner'));
-const RacePage = lazy(() => import('@/pages/produkte/Race'));
+const TycoonRacersPage = lazy(() => import('@/pages/produkte/TycoonRacers'));
 const WeiterePage = lazy(() => import('@/pages/produkte/Weitere'));
 const WuerfelCheckoutPage = lazy(() => import('@/pages/checkout/Wuerfel'));
 
@@ -115,7 +115,7 @@ function Router() {
             {() => <PartnerPage />}
           </Route>
           <Route path="/produkte/race">
-            {() => <RacePage />}
+            {() => <TycoonRacersPage />}
           </Route>
           <Route path="/produkte/weitere">
             {() => <WeiterePage />}
