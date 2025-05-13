@@ -392,6 +392,15 @@ export default function StickerPage() {
             </p>
             
             <div className="space-y-3">
+              {/* Link zum Checkout-Formular */}
+              <Link
+                href={`/checkout/sticker?set=${selectedSetNumber}`}
+                className="block w-full bg-[#FF4C00] hover:bg-[#0A3A68] text-white py-3 px-4 rounded-md transition-colors text-center flex items-center justify-center"
+              >
+                <span className="material-icons mr-2">shopping_cart</span>
+                Weiter zum Kaufen
+              </Link>
+              
               {/* Formatierte WhatsApp-Nachricht mit Stickerliste erstellen */}
               {(() => {
                 const itemsList = cart.map(item => `${item.name} (${item.stars}★) - ${calculatePrice(item).toFixed(2).replace('.', ',')}€`).join(", ");
