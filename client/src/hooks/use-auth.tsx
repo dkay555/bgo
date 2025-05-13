@@ -27,6 +27,7 @@ type AuthContextType = {
 type LoginData = {
   username: string;
   password: string;
+  isAdmin?: boolean;
 };
 
 type RegisterData = {

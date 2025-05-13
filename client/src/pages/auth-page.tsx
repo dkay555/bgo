@@ -94,12 +94,18 @@ export default function AuthPage() {
         <Card className="w-full max-w-md border border-gray-200 shadow-md">
           <CardHeader>
             <CardTitle className="text-2xl font-bold text-[#0A3A68]">
-              {activeTab === "login" ? "Einloggen" : "Konto erstellen"}
+              {activeTab === "login" 
+                ? "Einloggen" 
+                : activeTab === "register" 
+                  ? "Konto erstellen" 
+                  : "Als Gast fortfahren"}
             </CardTitle>
             <CardDescription>
               {activeTab === "login" 
                 ? "Melde dich an, um deine Bestellungen einzusehen und Support zu erhalten" 
-                : "Erstelle ein Konto, um deine Bestellungen einfach zu verwalten"}
+                : activeTab === "register" 
+                  ? "Erstelle ein Konto, um deine Bestellungen einfach zu verwalten"
+                  : "Ohne Registrierung bestellen und einkaufen"}
             </CardDescription>
           </CardHeader>
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
@@ -151,6 +157,20 @@ export default function AuthPage() {
                       "Anmelden"
                     )}
                   </Button>
+                  
+                  {/* Admin Login Checkbox */}
+                  <div className="flex items-center mt-4">
+                    <input
+                      type="checkbox"
+                      id="admin-login"
+                      checked={isAdminLogin}
+                      onChange={toggleAdminLogin}
+                      className="h-4 w-4 text-[#0A3A68] rounded border-gray-300 focus:ring-[#0A3A68]"
+                    />
+                    <label htmlFor="admin-login" className="ml-2 block text-sm text-gray-700">
+                      Als Administrator anmelden
+                    </label>
+                  </div>
                 </form>
               </Form>
             </TabsContent>
@@ -225,6 +245,50 @@ export default function AuthPage() {
                   </Button>
                 </form>
               </Form>
+            </TabsContent>
+            
+            {/* Als Gast Tab-Inhalt */}
+            <TabsContent value="guest" className="p-4">
+              <div className="space-y-4">
+                <p className="text-sm text-gray-700 mb-4">
+                  Sie können auch ohne Registrierung bei uns bestellen. Beachten Sie jedoch, 
+                  dass Sie ohne Konto Ihre Bestellungen nicht in einer Übersicht einsehen können.
+                </p>
+                
+                <div className="grid gap-3">
+                  <Link to="/checkout/wuerfel" className="flex items-center p-3 border rounded-md hover:bg-gray-50">
+                    <span className="material-icons mr-3 text-[#0A3A68]">casino</span>
+                    <div>
+                      <h3 className="font-medium">Würfelboost</h3>
+                      <p className="text-sm text-gray-500">Würfel für Monopoly GO erhalten</p>
+                    </div>
+                  </Link>
+                  
+                  <Link to="/checkout/partnerevent" className="flex items-center p-3 border rounded-md hover:bg-gray-50">
+                    <span className="material-icons mr-3 text-[#0A3A68]">people</span>
+                    <div>
+                      <h3 className="font-medium">Partnerevent</h3>
+                      <p className="text-sm text-gray-500">Mit Partnern Monopoly GO spielen</p>
+                    </div>
+                  </Link>
+                  
+                  <Link to="/checkout/sticker" className="flex items-center p-3 border rounded-md hover:bg-gray-50">
+                    <span className="material-icons mr-3 text-[#0A3A68]">image</span>
+                    <div>
+                      <h3 className="font-medium">Sticker</h3>
+                      <p className="text-sm text-gray-500">Sticker für Sammlungen</p>
+                    </div>
+                  </Link>
+                  
+                  <Link to="/checkout/tycoonracers" className="flex items-center p-3 border rounded-md hover:bg-gray-50">
+                    <span className="material-icons mr-3 text-[#0A3A68]">directions_car</span>
+                    <div>
+                      <h3 className="font-medium">Tycoon Racers</h3>
+                      <p className="text-sm text-gray-500">Tycoon Racers Event</p>
+                    </div>
+                  </Link>
+                </div>
+              </div>
             </TabsContent>
           </Tabs>
           <CardFooter className="flex flex-col space-y-2 p-6 border-t">

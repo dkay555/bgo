@@ -28,7 +28,29 @@ async function comparePasswords(supplied: string, stored: string) {
   return timingSafeEqual(hashedBuf, suppliedBuf);
 }
 
+// Admin-Benutzer erstellen, falls noch keiner existiert
+async function createAdminUserIfNotExists() {
+  try {
+    const existingAdmin = await storage.getUserByUsername("admin");
+    if (!existingAdmin) {
+      console.log("Erstelle Admin-Benutzer...");
+      await storage.createUser({
+        username: "admin",
+        password: await hashPassword("admin123"), // Temporäres Passwort
+        email: "admin@example.com",
+        name: "Administrator",
+        isAdmin: true
+      });
+      console.log("Admin-Benutzer erstellt. Bitte ändern Sie das Passwort bei der ersten Anmeldung.");
+    }
+  } catch (error) {
+    console.error("Fehler beim Erstellen des Admin-Benutzers:", error);
+  }
+}
+
 export function setupAuth(app: Express) {
+  // Erstelle einen Admin-Benutzer (falls nicht vorhanden)
+  createAdminUserIfNotExists();
   const sessionSettings: session.SessionOptions = {
     secret: process.env.SESSION_SECRET || "monopoly-go-secret-key",
     resave: false,
@@ -98,8 +120,11 @@ export function setupAuth(app: Express) {
     }
   });
 
-  // Login-Endpunkt
+  // Login-Endpunkt mit Admin-Unterstützung
   app.post("/api/login", (req, res, next) => {
+    // Prüfen, ob der Admin-Login angefordert wurde
+    const isAdminLogin = req.body.isAdmin === true;
+    
     passport.authenticate("local", (err: Error | null, user: Express.User | false, info: { message: string } | undefined) => {
       if (err) return next(err);
       if (!user) {
@@ -108,6 +133,15 @@ export function setupAuth(app: Express) {
           message: "Falscher Benutzername oder Passwort"
         });
       }
+      
+      // Wenn Admin-Login angefordert wurde, überprüfen, ob der Benutzer Admin ist
+      if (isAdminLogin && !user.isAdmin) {
+        return res.status(403).json({
+          success: false,
+          message: "Keine Administratorrechte"
+        });
+      }
+      
       req.login(user, (loginErr) => {
         if (loginErr) return next(loginErr);
         return res.status(200).json({
