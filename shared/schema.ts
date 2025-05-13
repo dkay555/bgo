@@ -93,10 +93,11 @@ export const insertOrderSchema = createInsertSchema(orders)
   })
   .transform((data) => {
     // Konvertieren des Preises von number zu string, wenn er als Zahl übergeben wird
-    if (typeof data.price === 'number') {
-      data.price = data.price.toString();
+    const updatedData = {...data};
+    if (typeof updatedData.price === 'number') {
+      updatedData.price = String(updatedData.price);
     }
-    return data;
+    return updatedData;
   })
   .refine(data => {
     // Validieren, dass authMethod und ingameName immer vorhanden sind

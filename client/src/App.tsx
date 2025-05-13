@@ -57,6 +57,9 @@ const ProfilePage = lazy(() => import('@/pages/profile'));
 // Admin pages
 const AdminBestellungenPage = lazy(() => import('@/pages/admin/Bestellungen'));
 
+// Test pages
+const PayPalTestPage = lazy(() => import('@/pages/PayPalTest'));
+
 const Ladebildschirm = () => (
   <div className="flex items-center justify-center min-h-screen">
     <div className="text-center">

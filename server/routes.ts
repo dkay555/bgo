@@ -234,7 +234,7 @@ ${message}
   });
 
   // PayPal integration routes
-  app.get("/setup", async (req, res) => {
+  app.get("/paypal/setup", async (req, res) => {
     try {
       // Überprüfen, ob PayPal-Anmeldedaten konfiguriert sind
       if (!process.env.PAYPAL_CLIENT_ID || !process.env.PAYPAL_CLIENT_SECRET) {
@@ -255,7 +255,7 @@ ${message}
     }
   });
 
-  app.post("/order", async (req, res) => {
+  app.post("/paypal/order", async (req, res) => {
     try {
       // Request body should contain: { intent, amount, currency }
       await createPaypalOrder(req, res);
@@ -268,7 +268,7 @@ ${message}
     }
   });
 
-  app.post("/order/:orderID/capture", async (req, res) => {
+  app.post("/paypal/order/:orderID/capture", async (req, res) => {
     try {
       await capturePaypalOrder(req, res);
       
