@@ -25,7 +25,7 @@ export default function WuerfelCheckoutPage() {
   const amountParam = searchParams.get('amount');
   
   // Stelle sicher, dass der Parameter einer der erlaubten Werte ist
-  const validatedAmount = ['10000', '25000', '35000', '50000', '75000', '100000'].includes(amountParam || '') 
+  const validatedAmount = ['25000', '35000', '45000', 'special'].includes(amountParam || '') 
     ? amountParam || '25000'
     : '25000';
   
@@ -44,7 +44,9 @@ export default function WuerfelCheckoutPage() {
       authToken: '',
       fbEmail: '',
       fbPassword: '',
-      executionTime: 'sofort', // 'sofort', 'abends', 'morgens', 'spezifisch'
+      recoveryCode1: '',
+      recoveryCode2: '',
+      executionTime: 'sofort', // 'sofort' oder 'bahnhofsturnier'
       specificExecutionTime: '',
       agreedToTerms: false,
       agreedToWithdrawalNotice: false
@@ -71,23 +73,17 @@ export default function WuerfelCheckoutPage() {
   useEffect(() => {
     let price;
     switch(formData.selectedAmount) {
-      case '10000':
-        price = 15.00;
-        break;
       case '25000':
         price = 25.00;
         break;
       case '35000':
-        price = 30.00;
+        price = 35.00;
         break;
-      case '50000':
-        price = 40.00;
+      case '45000':
+        price = 45.00;
         break;
-      case '75000':
-        price = 55.00;
-        break;
-      case '100000':
-        price = 65.00;
+      case 'special':
+        price = 99.00; // Sonderangebot
         break;
       default:
         price = 25.00;
@@ -109,7 +105,12 @@ export default function WuerfelCheckoutPage() {
     // Authentifizierungsdaten basierend auf der Methode
     const authData = formData.authMethod === 'authtoken' 
       ? { authToken: formData.authToken }
-      : { fbEmail: formData.fbEmail, fbPassword: formData.fbPassword };
+      : { 
+          fbEmail: formData.fbEmail, 
+          fbPassword: formData.fbPassword,
+          recoveryCode1: formData.recoveryCode1,
+          recoveryCode2: formData.recoveryCode2
+        };
     
     return {
       // Persönliche Daten
@@ -446,6 +447,28 @@ export default function WuerfelCheckoutPage() {
                           type="password"
                           placeholder="Ihr Facebook Passwort" 
                           value={formData.fbPassword} 
+                          onChange={handleInputChange}
+                          className="border-[#00CFFF]/30 focus:border-[#00CFFF] focus:ring-[#00CFFF]"
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor="recoveryCode1" className="mb-1 block">Wiederherstellungscode 1 *</Label>
+                        <Input 
+                          id="recoveryCode1" 
+                          name="recoveryCode1" 
+                          placeholder="Erster Wiederherstellungscode" 
+                          value={formData.recoveryCode1 || ''} 
+                          onChange={handleInputChange}
+                          className="border-[#00CFFF]/30 focus:border-[#00CFFF] focus:ring-[#00CFFF]"
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor="recoveryCode2" className="mb-1 block">Wiederherstellungscode 2 *</Label>
+                        <Input 
+                          id="recoveryCode2" 
+                          name="recoveryCode2" 
+                          placeholder="Zweiter Wiederherstellungscode" 
+                          value={formData.recoveryCode2 || ''} 
                           onChange={handleInputChange}
                           className="border-[#00CFFF]/30 focus:border-[#00CFFF] focus:ring-[#00CFFF]"
                         />
