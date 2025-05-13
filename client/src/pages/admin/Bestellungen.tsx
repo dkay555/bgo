@@ -579,8 +579,19 @@ export default function Bestellungen() {
                 <div className="space-y-2">
                   <div className="flex items-center text-sm">
                     <Package className="h-4 w-4 mr-2 text-gray-500" />
+                    <span className="font-medium">Produkttyp:</span>
+                    <span className="ml-2">
+                      {selectedOrder.productType === 'dice' && 'Würfelboost'}
+                      {selectedOrder.productType === 'partnerevent' && 'Partnerevent'}
+                      {selectedOrder.productType === 'tycoonracers' && 'Tycoon Racers'}
+                      {selectedOrder.productType === 'sticker' && 'Sticker'}
+                      {!selectedOrder.productType && 'Würfelboost'}
+                    </span>
+                  </div>
+                  <div className="flex items-center text-sm">
+                    <Package className="h-4 w-4 mr-2 text-gray-500" />
                     <span className="font-medium">Paket:</span>
-                    <span className="ml-2">{selectedOrder.package} Würfel</span>
+                    <span className="ml-2">{selectedOrder.package}</span>
                   </div>
                   <div className="flex items-center text-sm">
                     <DollarSign className="h-4 w-4 mr-2 text-gray-500" />
@@ -590,15 +601,25 @@ export default function Bestellungen() {
                   <div className="flex items-center text-sm">
                     <CreditCard className="h-4 w-4 mr-2 text-gray-500" />
                     <span className="font-medium">Zahlungsmethode:</span>
-                    <span className="ml-2">{selectedOrder.paymentMethod}</span>
+                    <span className="ml-2">{selectedOrder.paymentMethod === 'paypal' ? 'PayPal' : 'Überweisung'}</span>
                   </div>
                   <div className="flex items-center text-sm">
                     <Calendar className="h-4 w-4 mr-2 text-gray-500" />
                     <span className="font-medium">Status:</span>
                     <span className={`ml-2 px-2 py-0.5 rounded-full text-xs ${getStatusBadgeClass(selectedOrder.paymentStatus)}`}>
-                      {selectedOrder.paymentStatus}
+                      {selectedOrder.paymentStatus === 'completed' ? 'Bezahlt' : 
+                       selectedOrder.paymentStatus === 'pending' ? 'Ausstehend' :
+                       selectedOrder.paymentStatus === 'started' ? 'In Bearbeitung' :
+                       selectedOrder.paymentStatus}
                     </span>
                   </div>
+                  {selectedOrder.paymentReference && (
+                    <div className="flex items-center text-sm">
+                      <CreditCard className="h-4 w-4 mr-2 text-gray-500" />
+                      <span className="font-medium">Zahlungsreferenz:</span>
+                      <span className="ml-2 text-xs max-w-xs truncate">{selectedOrder.paymentReference}</span>
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -610,43 +631,150 @@ export default function Bestellungen() {
                     <span className="font-medium">Spielername:</span>
                     <span className="ml-2">{selectedOrder.ingameName}</span>
                   </div>
-                  <div className="flex items-center text-sm">
-                    <Shield className="h-4 w-4 mr-2 text-gray-500" />
-                    <span className="font-medium">Auth-Methode:</span>
-                    <span className="ml-2">{selectedOrder.authMethod}</span>
-                  </div>
                   
-                  {selectedOrder.authMethod === 'authtoken' && selectedOrder.authtoken && (
-                    <div className="flex items-center text-sm">
-                      <Shield className="h-4 w-4 mr-2 text-gray-500" />
-                      <span className="font-medium">Auth-Token:</span>
-                      <span className="ml-2">{selectedOrder.authtoken}</span>
-                    </div>
-                  )}
-                  
-                  {selectedOrder.authMethod === 'login' && (
+                  {/* Nur für Würfelboost-Bestellungen Auth-Methode anzeigen */}
+                  {(selectedOrder.productType === 'dice' || !selectedOrder.productType) && (
                     <>
                       <div className="flex items-center text-sm">
-                        <Mail className="h-4 w-4 mr-2 text-gray-500" />
-                        <span className="font-medium">Login-E-Mail:</span>
-                        <span className="ml-2">{selectedOrder.loginEmail}</span>
-                      </div>
-                      <div className="flex items-center text-sm">
                         <Shield className="h-4 w-4 mr-2 text-gray-500" />
-                        <span className="font-medium">Passwort:</span>
-                        <span className="ml-2">•••••••••••</span>
+                        <span className="font-medium">Auth-Methode:</span>
+                        <span className="ml-2">{selectedOrder.authMethod}</span>
                       </div>
+                      
+                      {/* Auth-Daten aus JSON parsen und anzeigen */}
+                      {selectedOrder.accountData && (
+                        (() => {
+                          try {
+                            const accountData = JSON.parse(selectedOrder.accountData);
+                            return (
+                              <>
+                                {accountData.authToken && (
+                                  <div className="flex items-center text-sm">
+                                    <Key className="h-4 w-4 mr-2 text-gray-500" />
+                                    <span className="font-medium">Auth-Token:</span>
+                                    <span className="ml-2 text-xs max-w-xs truncate">{accountData.authToken}</span>
+                                  </div>
+                                )}
+                                
+                                {accountData.fbEmail && (
+                                  <div className="flex items-center text-sm">
+                                    <Facebook className="h-4 w-4 mr-2 text-gray-500" />
+                                    <span className="font-medium">FB E-Mail:</span>
+                                    <span className="ml-2">{accountData.fbEmail}</span>
+                                  </div>
+                                )}
+                                
+                                {accountData.fbPassword && (
+                                  <div className="flex items-center text-sm">
+                                    <Shield className="h-4 w-4 mr-2 text-gray-500" />
+                                    <span className="font-medium">FB Passwort:</span>
+                                    <span className="ml-2">•••••••••••</span>
+                                  </div>
+                                )}
+                                
+                                {accountData.executionTime && (
+                                  <div className="flex items-center text-sm">
+                                    <Clock className="h-4 w-4 mr-2 text-gray-500" />
+                                    <span className="font-medium">Ausführungszeitpunkt:</span>
+                                    <span className="ml-2">
+                                      {accountData.executionTime === 'sofort' ? 'Sofort' :
+                                       accountData.executionTime === 'abends' ? 'Abends (18-22 Uhr)' :
+                                       accountData.executionTime === 'morgens' ? 'Morgens (8-12 Uhr)' :
+                                       accountData.executionTime === 'spezifisch' && accountData.specificExecutionTime ? 
+                                         `Spezifisch: ${accountData.specificExecutionTime}` :
+                                         accountData.executionTime}
+                                    </span>
+                                  </div>
+                                )}
+                              </>
+                            );
+                          } catch (e) {
+                            return null;
+                          }
+                        })()
+                      )}
                     </>
                   )}
                   
-                  <h4 className="text-md font-medium pt-2 text-[#00CFFF]">Zusätzliche Spieldaten</h4>
-                  
-                  {selectedOrder.executionTime && (
-                    <div className="flex items-center text-sm">
-                      <Clock className="h-4 w-4 mr-2 text-gray-500" />
-                      <span className="font-medium">Ausführungszeitpunkt:</span>
-                      <span className="ml-2">{selectedOrder.executionTime}</span>
-                    </div>
+                  {/* Für Sticker, Partnerevent und Tycoon Racers andere Felder anzeigen */}
+                  {['sticker', 'partnerevent', 'tycoonracers'].includes(selectedOrder.productType || '') && selectedOrder.accountData && (
+                    (() => {
+                      try {
+                        const accountData = JSON.parse(selectedOrder.accountData);
+                        
+                        if (selectedOrder.productType === 'sticker') {
+                          return (
+                            <div className="flex items-center text-sm">
+                              <Link2 className="h-4 w-4 mr-2 text-gray-500" />
+                              <span className="font-medium">Freundschaftslink:</span>
+                              <span className="ml-2">{selectedOrder.friendshipLink || accountData.friendshipLink}</span>
+                            </div>
+                          );
+                        }
+                        
+                        if (selectedOrder.productType === 'partnerevent') {
+                          return (
+                            <>
+                              <h4 className="text-md font-medium pt-2 text-[#00CFFF]">Partnerevent-Daten</h4>
+                              {accountData.accounts && accountData.accounts.map((account: any, index: number) => (
+                                <div key={index} className="mt-2 p-2 bg-gray-50 rounded-md">
+                                  <div className="text-sm font-medium mb-1">Account {index + 1} ({account.partnerCount} Partner)</div>
+                                  <div className="flex items-center text-sm">
+                                    <User className="h-4 w-4 mr-2 text-gray-500" />
+                                    <span className="font-medium">Spielername:</span>
+                                    <span className="ml-2">{account.ingameName}</span>
+                                  </div>
+                                  <div className="flex items-center text-sm">
+                                    <Link2 className="h-4 w-4 mr-2 text-gray-500" />
+                                    <span className="font-medium">Freundschaftslink:</span>
+                                    <span className="ml-2">{account.friendshipLink}</span>
+                                  </div>
+                                </div>
+                              ))}
+                            </>
+                          );
+                        }
+                        
+                        if (selectedOrder.productType === 'tycoonracers') {
+                          return (
+                            <>
+                              <h4 className="text-md font-medium pt-2 text-[#00CFFF]">Tycoon Racers Daten</h4>
+                              <div className="flex items-center text-sm">
+                                <Package className="h-4 w-4 mr-2 text-gray-500" />
+                                <span className="font-medium">Typ:</span>
+                                <span className="ml-2">{accountData.type === 'team' ? 'Teamplatz' : 'Flaggen'}</span>
+                              </div>
+                              <div className="flex items-center text-sm">
+                                <Package className="h-4 w-4 mr-2 text-gray-500" />
+                                <span className="font-medium">Level:</span>
+                                <span className="ml-2">{accountData.level}</span>
+                              </div>
+                              {accountData.places && accountData.places.map((place: any, index: number) => (
+                                <div key={index} className="mt-2 p-2 bg-gray-50 rounded-md">
+                                  <div className="text-sm font-medium mb-1">
+                                    {accountData.type === 'team' ? 'Teamplatz' : 'Flaggenpaket'} {index + 1}
+                                  </div>
+                                  <div className="flex items-center text-sm">
+                                    <User className="h-4 w-4 mr-2 text-gray-500" />
+                                    <span className="font-medium">Spielername:</span>
+                                    <span className="ml-2">{place.ingameName}</span>
+                                  </div>
+                                  <div className="flex items-center text-sm">
+                                    <Link2 className="h-4 w-4 mr-2 text-gray-500" />
+                                    <span className="font-medium">Freundschaftslink:</span>
+                                    <span className="ml-2">{place.friendshipLink}</span>
+                                  </div>
+                                </div>
+                              ))}
+                            </>
+                          );
+                        }
+                        
+                        return null;
+                      } catch (e) {
+                        return null;
+                      }
+                    })()
                   )}
                   
                   {selectedOrder.fbLogin && (

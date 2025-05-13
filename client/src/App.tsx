@@ -130,6 +130,15 @@ function Router() {
           <Route path="/checkout/wuerfel">
             {() => <WuerfelCheckoutPage />}
           </Route>
+          <Route path="/checkout/sticker">
+            {() => <StickerCheckoutPage />}
+          </Route>
+          <Route path="/checkout/partnerevent">
+            {() => <PartnereventCheckoutPage />}
+          </Route>
+          <Route path="/checkout/tycoonracers">
+            {() => <TycoonRacersCheckoutPage />}
+          </Route>
           
           {/* Auth-Routen */}
           <Route path="/auth" component={AuthPage} />
