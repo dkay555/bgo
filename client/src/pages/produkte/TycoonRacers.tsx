@@ -159,13 +159,27 @@ export default function TycoonRacers() {
               </div>
             </div>
             
-            <button
-              onClick={() => setShowTycoonModal(true)}
-              className="w-full bg-[#8A2BE2] hover:bg-[#7B1FA2] text-white py-3 px-6 rounded-md transition-colors font-bold flex items-center justify-center"
-            >
-              <span className="material-icons mr-2">shopping_cart</span>
-              Jetzt buchen
-            </button>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+              {eventType === 'team' ? (
+                <Link href="/checkout/tycoonracers" className="col-span-1 md:col-span-2">
+                  <button
+                    className="w-full bg-[#8A2BE2] hover:bg-[#7B1FA2] text-white py-3 px-6 rounded-md transition-colors font-bold flex items-center justify-center"
+                  >
+                    <span className="material-icons mr-2">group_add</span>
+                    Teamplatz sichern
+                  </button>
+                </Link>
+              ) : (
+                <Link href="/checkout/flaggen" className="col-span-1 md:col-span-2">
+                  <button
+                    className="w-full bg-[#8A2BE2] hover:bg-[#7B1FA2] text-white py-3 px-6 rounded-md transition-colors font-bold flex items-center justify-center"
+                  >
+                    <span className="material-icons mr-2">flag</span>
+                    Jetzt kaufen
+                  </button>
+                </Link>
+              )}
+            </div>
             
             <div className="mt-8 space-y-4 bg-purple-50 p-4 rounded-lg">
               <h3 className="font-bold text-lg text-[#0A3A68]">Häufig gestellte Fragen:</h3>
@@ -176,7 +190,7 @@ export default function TycoonRacers() {
                   <span className="material-icons transition-transform group-open:rotate-180">expand_more</span>
                 </summary>
                 <div className="mt-2 text-gray-700">
-                  <p>Tycoon Racers sind spezielle Events in Monopoly GO, bei denen Sie in Teams antreten oder Flaggen sammeln, um wertvolle Belohnungen zu erhalten. Unsere Pakete helfen Ihnen, bei diesen Events schneller voranzukommen.</p>
+                  <p>Tycoon Racers sind spezielle Events in Monopoly GO, bei denen du in Teams antrittst oder Flaggen sammelst, um wertvolle Belohnungen zu erhalten. Unsere Pakete helfen dir, bei diesen Events schneller voranzukommen und alle Belohnungen zu sichern.</p>
                 </div>
               </details>
               
@@ -186,7 +200,7 @@ export default function TycoonRacers() {
                   <span className="material-icons transition-transform group-open:rotate-180">expand_more</span>
                 </summary>
                 <div className="mt-2 text-gray-700">
-                  <p>Bei einem Teamplatz nehmen wir Sie in unser Team für das Tycoon Racers Event auf. Je nach gewähltem Level (Bronze, Silber, Gold) erhalten Sie unterschiedliche Belohnungen. Sie profitieren von unserem erfahrenen Team und erhalten alle entsprechenden Belohnungen.</p>
+                  <p>Bei einem Teamplatz nehmen wir dich in unser Team für das Tycoon Racers Event auf. Je nach gewählter Anzahl der Plätze erhältst du unterschiedliche Belohnungen. Du profitierst von unserem erfahrenen Team und erhältst alle 54 Rundenbelohnungen.</p>
                 </div>
               </details>
               
@@ -196,30 +210,38 @@ export default function TycoonRacers() {
                   <span className="material-icons transition-transform group-open:rotate-180">expand_more</span>
                 </summary>
                 <div className="mt-2 text-gray-700">
-                  <p>Ja, Sie können auch während eines laufenden Events noch Plätze buchen. Der Preis bleibt gleich, aber die erreichbaren Belohnungen können je nach verbleibender Zeit variieren. Kontaktieren Sie uns für eine individuelle Beratung.</p>
+                  <p>Ja, du kannst auch während eines laufenden Events noch Plätze buchen. Der Preis bleibt gleich, aber die erreichbaren Belohnungen können je nach verbleibender Zeit variieren. Kontaktiere uns für eine individuelle Beratung.</p>
                 </div>
               </details>
             </div>
           </div>
         </div>
         
-        {/* Kontaktbox wie in den anderen Seiten */}
+        {/* FAQ-Box statt Kontaktbox */}
         <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
           <div className="flex items-center mb-4">
             <span className="material-icons text-[#00CFFF] text-2xl mr-3">help_outline</span>
-            <h2 className="text-2xl font-bold text-[#0A3A68]">Du hast noch Fragen?</h2>
+            <h2 className="text-2xl font-bold text-[#0A3A68]">Hilfreiche Informationen</h2>
           </div>
           
           <p className="text-gray-700 mb-4">
-            Schreib uns gerne eine Nachricht. Alle Kontaktmöglichkeiten findest du hier:
+            Hier findest du weitere Informationen zu unseren Angeboten:
           </p>
           
-          <Link href="/kontakt" className="inline-block">
-            <button className="bg-[#FF4C00] hover:bg-[#0A3A68] text-white py-2 px-4 rounded-md transition-colors inline-flex items-center font-bold">
-              <span className="material-icons mr-2">contact_support</span>
-              Kontakt aufnehmen
-            </button>
-          </Link>
+          <div className="space-y-3">
+            <Link href="/hilfe/tycoon-racers" className="text-[#8A2BE2] hover:text-[#7B1FA2] font-medium block">
+              <div className="flex items-center">
+                <span className="material-icons mr-2">article</span>
+                Alle Informationen zu Tycoon Racers findest du hier
+              </div>
+            </Link>
+            <Link href="/hilfe/flaggen" className="text-[#8A2BE2] hover:text-[#7B1FA2] font-medium block">
+              <div className="flex items-center">
+                <span className="material-icons mr-2">article</span>
+                Die Voraussetzungen für Flaggen-Rewards kannst du auch hier nachlesen
+              </div>
+            </Link>
+          </div>
         </div>
       </div>
       
