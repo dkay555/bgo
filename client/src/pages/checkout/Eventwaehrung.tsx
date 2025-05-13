@@ -73,8 +73,8 @@ export default function EventwaehrungCheckoutPage() {
   // Bei Änderungen des Währungs-Parameters den Preis aktualisieren
   useEffect(() => {
     setOrderAmount(getWaehrungPrice(validatedAmount));
-    setFormData(prev => ({
-      ...prev,
+    setFormData(prevData => ({
+      ...prevData,
       selectedAmount: validatedAmount
     }));
   }, [validatedAmount]);
@@ -99,10 +99,10 @@ export default function EventwaehrungCheckoutPage() {
   // Benutzerinformationen vorausfüllen, wenn der Benutzer angemeldet ist
   useEffect(() => {
     if (user) {
-      setFormData(prev => ({
-        ...prev,
-        name: user.name || prev.name,
-        email: user.email || prev.email
+      setFormData(prevData => ({
+        ...prevData,
+        name: user.name || prevData.name,
+        email: user.email || prevData.email
       }));
     }
   }, [user]);

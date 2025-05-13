@@ -215,7 +215,7 @@ export default function Partner() {
                   </div>
                 </div>
                 
-                <Link to="/checkout/wuerfel" className="block">
+                <Link to="/checkout/eventwaehrung?amount=15000" className="block">
                   <button className="w-full bg-[#FF4C00] hover:bg-[#0A3A68] text-white py-3 px-4 rounded-md transition-colors font-bold">
                     <span className="flex items-center justify-center">
                       <span className="material-icons mr-2">shopping_cart</span>
