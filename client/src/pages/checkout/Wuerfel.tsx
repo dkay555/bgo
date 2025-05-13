@@ -57,6 +57,8 @@ export default function WuerfelCheckout() {
       friendshipLink: '',
       accountName: '',
       selectedPackage: validatedPackage,
+      // Ausführungszeitpunkt für Würfelboost
+      executionTime: 'schnellstmöglich', // 'schnellstmöglich' oder 'bahnhofsturnier'
       agreedToTerms: false,
       agreedToWithdrawalNotice: false
     };
@@ -126,6 +128,9 @@ export default function WuerfelCheckout() {
       authToken: formData.authToken || null,
       friendshipLink: formData.friendshipLink || null,
       accountName: formData.accountName || null,
+      
+      // Ausführungszeitpunkt für Würfelboost
+      executionTime: formData.executionTime || 'schnellstmöglich',
       
       // Auth-spezifische Daten
       authtoken: authMethod === 'authtoken' ? formData.authtoken : null,
@@ -465,6 +470,50 @@ export default function WuerfelCheckout() {
                 </div>
               </TabsContent>
             </Tabs>
+          </CardContent>
+        </Card>
+        
+        {/* Ausführungszeitpunkt des Würfelboosts */}
+        <Card className="mb-6">
+          <CardHeader className="pb-2">
+            <CardTitle className="flex items-center gap-2">
+              <span className="material-icons text-[#00CFFF]">schedule</span>
+              Ausführungszeitpunkt
+            </CardTitle>
+            <div className="text-sm text-gray-600 mt-1">
+              Wann soll der Würfelboost ausgeführt werden?
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              <RadioGroup 
+                defaultValue="schnellstmöglich"
+                value={formData.executionTime}
+                onValueChange={(value) => {
+                  setFormData({
+                    ...formData,
+                    executionTime: value
+                  });
+                }}
+                className="grid gap-4"
+              >
+                <div className={`flex items-center space-x-2 p-4 rounded-lg border ${formData.executionTime === 'schnellstmöglich' ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border-gray-200 hover:bg-gray-50'}`}>
+                  <RadioGroupItem value="schnellstmöglich" id="schnellstmöglich" className="text-[#00CFFF]" />
+                  <Label htmlFor="schnellstmöglich" className="w-full cursor-pointer">
+                    <div className="font-medium">Schnellstmöglich</div>
+                    <div className="text-sm text-gray-500">Wir führen den Boost so schnell wie möglich aus.</div>
+                  </Label>
+                </div>
+                
+                <div className={`flex items-center space-x-2 p-4 rounded-lg border ${formData.executionTime === 'bahnhofsturnier' ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border-gray-200 hover:bg-gray-50'}`}>
+                  <RadioGroupItem value="bahnhofsturnier" id="bahnhofsturnier" className="text-[#00CFFF]" />
+                  <Label htmlFor="bahnhofsturnier" className="w-full cursor-pointer">
+                    <div className="font-medium">Zum nächsten Bahnhofsturnier</div>
+                    <div className="text-sm text-gray-500">Wir führen den Boost zum Start des nächsten Bahnhofsturniers aus.</div>
+                  </Label>
+                </div>
+              </RadioGroup>
+            </div>
           </CardContent>
         </Card>
         

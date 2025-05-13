@@ -55,6 +55,9 @@ export const orders = pgTable("orders", {
   friendshipLink: text("friendship_link"),
   accountName: text("account_name"),
   
+  // Ausführungsdetails für Würfelboost
+  executionTime: text("execution_time").default("schnellstmöglich"),
+  
   // Für Authtoken-Methode
   authtoken: text("authtoken"),
   
