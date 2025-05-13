@@ -24,9 +24,25 @@ export default function PartnereventCheckout() {
   const partnerParam = searchParams.get('partner');
   
   // Stelle sicher, dass der Parameter einer der erlaubten Werte ist
-  const validatedPartner = ['1', '2', '3', '5', '10'].includes(partnerParam || '') 
+  const validatedPartner = ['1', '2', '3', '4'].includes(partnerParam || '') 
     ? partnerParam || '1'
     : '1';
+    
+  // Preisberechnung für Partner
+  const getPartnerPrice = (partnerCount: string): string => {
+    switch (partnerCount) {
+      case '1': return '7.00';
+      case '2': return '14.00';
+      case '3': return '21.00';
+      case '4': return '25.00';
+      default: return '7.00';
+    }
+  };
+  
+  // Bei Änderungen des Partner-Parameters den Preis aktualisieren
+  useEffect(() => {
+    setOrderAmount(getPartnerPrice(validatedPartner));
+  }, [validatedPartner]);
   
   // State für Formular
   const [formError, setFormError] = useState('');
