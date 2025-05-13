@@ -130,10 +130,11 @@ export function Header() {
               )}
               
               {/* Benutzerbereich */}
+              <div className="ml-2">
               {user ? (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="relative h-8 w-8 rounded-full ring-2 ring-white text-white hover:text-[#FF4C00] hover:bg-transparent">
+                    <Button variant="ghost" className="relative h-9 w-9 rounded-full ring-2 ring-white text-white hover:text-[#FF4C00] hover:bg-transparent">
                       <Avatar>
                         <AvatarFallback className="bg-[#00CFFF]/20 text-white">
                           {user.name ? user.name.charAt(0).toUpperCase() : 
@@ -180,12 +181,13 @@ export function Header() {
                 </DropdownMenu>
               ) : (
                 <Link href="/auth">
-                  <Button variant="ghost" className="text-white hover:text-[#FF4C00] hover:bg-white/10">
+                  <Button className="bg-[#00CFFF]/20 hover:bg-[#00CFFF]/30 text-white border-none rounded-md ml-2">
                     <User className="mr-2 h-4 w-4" />
                     Anmelden
                   </Button>
                 </Link>
               )}
+              </div>
             </div>
             <div className="flex md:hidden items-center">
               <button 
