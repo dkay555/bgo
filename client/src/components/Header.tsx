@@ -1,6 +1,18 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'wouter';
 import { NAV_LINKS } from '@/lib/constants';
+import { useAuth } from '@/hooks/use-auth';
+import { Button } from '@/components/ui/button';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { 
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { User, Ticket, ClipboardList, LogOut } from 'lucide-react';
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -8,6 +20,7 @@ export function Header() {
   const [location] = useLocation();
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const dropdownRefs = useRef<{[key: string]: HTMLDivElement | null}>({});
+  const { user, logoutMutation } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -112,6 +125,64 @@ export function Header() {
                     {link.name}
                   </Link>
                 )
+              )}
+              
+              {/* Benutzerbereich */}
+              {user ? (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" className="relative h-8 w-8 rounded-full ring-2 ring-white text-white hover:text-[#FF4C00] hover:bg-transparent">
+                      <Avatar>
+                        <AvatarFallback className="bg-[#00CFFF]/20 text-white">
+                          {user.name ? user.name.charAt(0).toUpperCase() : 
+                           user.username.charAt(0).toUpperCase()}
+                        </AvatarFallback>
+                      </Avatar>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-56" align="end" forceMount>
+                    <DropdownMenuLabel className="font-normal">
+                      <div className="flex flex-col space-y-1">
+                        <p className="text-sm font-medium leading-none">
+                          {user.name || user.username}
+                        </p>
+                        {user.email && (
+                          <p className="text-xs leading-none text-muted-foreground">
+                            {user.email}
+                          </p>
+                        )}
+                      </div>
+                    </DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem asChild>
+                      <Link href="/order-history" className="cursor-pointer flex w-full items-center">
+                        <ClipboardList className="mr-2 h-4 w-4" />
+                        <span>Bestellhistorie</span>
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link href="/tickets" className="cursor-pointer flex w-full items-center">
+                        <Ticket className="mr-2 h-4 w-4" />
+                        <span>Support-Tickets</span>
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem 
+                      onClick={() => logoutMutation.mutate()} 
+                      className="cursor-pointer text-red-600 focus:text-red-600"
+                    >
+                      <LogOut className="mr-2 h-4 w-4" />
+                      <span>Abmelden</span>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ) : (
+                <Link href="/auth">
+                  <Button variant="ghost" className="text-white hover:text-[#FF4C00] hover:bg-white/10">
+                    <User className="mr-2 h-4 w-4" />
+                    Anmelden
+                  </Button>
+                </Link>
               )}
             </div>
             <div className="flex md:hidden items-center">

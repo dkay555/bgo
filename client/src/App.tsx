@@ -16,6 +16,10 @@ import AGB from "@/pages/AGB";
 import Widerruf from "@/pages/Widerruf";
 import Hilfe from "@/pages/Hilfe";
 import Produkte from "@/pages/Produkte";
+import AuthPage from "@/pages/auth-page";
+import OrderHistory from "@/pages/order-history";
+import { AuthProvider } from "@/hooks/use-auth";
+import { ProtectedRoute } from "@/lib/protected-route";
 
 // Lazy loading für Unterseiten, die nicht sofort benötigt werden
 import { lazy, Suspense } from "react";
@@ -36,6 +40,11 @@ const LoginHilfePage = lazy(() => import('@/pages/hilfe/login'));
 const AccountsHilfePage = lazy(() => import('@/pages/hilfe/accounts'));
 const AuthTokenHilfePage = lazy(() => import('@/pages/hilfe/authtoken'));
 const NewsPreiseAngebotPage = lazy(() => import('@/pages/hilfe/news_preise_angebot'));
+
+// Lazy-loaded ticket pages
+const TicketsPage = lazy(() => import('@/pages/tickets'));
+const NewTicketPage = lazy(() => import('@/pages/tickets/new'));
+const TicketDetailPage = lazy(() => import('@/pages/tickets/[id]'));
 
 // Admin pages
 const AdminBestellungenPage = lazy(() => import('@/pages/admin/Bestellungen'));
@@ -88,6 +97,15 @@ function Router() {
           {/* Checkout-Seiten */}
           <Route path="/checkout/wuerfel" component={WuerfelCheckoutPage} />
           
+          {/* Auth-Routen */}
+          <Route path="/auth" component={AuthPage} />
+          <ProtectedRoute path="/order-history" component={OrderHistory} />
+          
+          {/* Ticket-System */}
+          <ProtectedRoute path="/tickets" component={TicketsPage} />
+          <ProtectedRoute path="/tickets/new" component={NewTicketPage} />
+          <ProtectedRoute path="/tickets/:id" component={TicketDetailPage} />
+          
           {/* Admin-Bereich */}
           <Route path="/admin/bestellungen" component={AdminBestellungenPage} />
           
@@ -102,10 +120,12 @@ function Router() {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Router />
-      </TooltipProvider>
+      <AuthProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Router />
+        </TooltipProvider>
+      </AuthProvider>
     </QueryClientProvider>
   );
 }
