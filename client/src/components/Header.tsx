@@ -21,6 +21,8 @@ export function Header() {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const dropdownRefs = useRef<{[key: string]: HTMLDivElement | null}>({});
   const { user, logoutMutation } = useAuth();
+  
+  console.log("Current user:", user);
 
   useEffect(() => {
     const handleScroll = () => {
