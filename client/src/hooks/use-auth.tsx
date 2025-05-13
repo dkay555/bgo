@@ -166,6 +166,36 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       });
     },
   });
+  
+  const updateProfileMutation = useMutation({
+    mutationFn: async (profileData: ProfileData) => {
+      const res = await apiRequest("PATCH", "/api/user/profile", profileData);
+      return await res.json();
+    },
+    onSuccess: (data) => {
+      if (data.success) {
+        queryClient.setQueryData(["/api/user"], data);
+        toast({
+          title: "Profil aktualisiert",
+          description: data.message || "Deine persönlichen Daten wurden erfolgreich aktualisiert",
+          variant: "default",
+        });
+      } else {
+        toast({
+          title: "Fehler beim Aktualisieren des Profils",
+          description: data.message || "Bitte versuche es erneut",
+          variant: "destructive",
+        });
+      }
+    },
+    onError: (error: Error) => {
+      toast({
+        title: "Fehler beim Aktualisieren des Profils",
+        description: error.message,
+        variant: "destructive",
+      });
+    },
+  });
 
   return (
     <AuthContext.Provider
@@ -177,6 +207,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         logoutMutation,
         registerMutation,
         saveAuthTokenMutation,
+        updateProfileMutation,
       }}
     >
       {children}

@@ -158,6 +158,12 @@ export function Header() {
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem asChild>
+                      <Link href="/profile" className="cursor-pointer flex w-full items-center">
+                        <User className="mr-2 h-4 w-4" />
+                        <span>Mein Profil</span>
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
                       <Link href="/order-history" className="cursor-pointer flex w-full items-center">
                         <ClipboardList className="mr-2 h-4 w-4" />
                         <span>Bestellhistorie</span>
@@ -329,6 +335,14 @@ export function Header() {
                 </div>
                 <div className="grid grid-cols-2 gap-2">
                   <Link
+                    href="/profile"
+                    className="flex items-center justify-center bg-white/10 hover:bg-white/20 text-white py-2 px-3 rounded-md text-sm"
+                    onClick={closeMobileMenu}
+                  >
+                    <User className="mr-2 h-4 w-4" />
+                    Profil
+                  </Link>
+                  <Link
                     href="/order-history"
                     className="flex items-center justify-center bg-white/10 hover:bg-white/20 text-white py-2 px-3 rounded-md text-sm"
                     onClick={closeMobileMenu}
@@ -338,7 +352,7 @@ export function Header() {
                   </Link>
                   <Link
                     href="/tickets"
-                    className="flex items-center justify-center bg-white/10 hover:bg-white/20 text-white py-2 px-3 rounded-md text-sm"
+                    className="flex items-center justify-center bg-white/10 hover:bg-white/20 text-white py-2 px-3 rounded-md text-sm col-span-2"
                     onClick={closeMobileMenu}
                   >
                     <Ticket className="mr-2 h-4 w-4" />

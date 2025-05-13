@@ -46,6 +46,9 @@ const TicketsPage = lazy(() => import('@/pages/tickets'));
 const NewTicketPage = lazy(() => import('@/pages/tickets/new'));
 const TicketDetailPage = lazy(() => import('@/pages/tickets/[id]'));
 
+// User account pages
+const ProfilePage = lazy(() => import('@/pages/profile'));
+
 // Admin pages
 const AdminBestellungenPage = lazy(() => import('@/pages/admin/Bestellungen'));
 
@@ -126,6 +129,9 @@ function Router() {
           {/* Auth-Routen */}
           <Route path="/auth" component={AuthPage} />
           <ProtectedRoute path="/order-history" component={OrderHistory} />
+          <Route path="/profile">
+            {() => <ProfilePage />}
+          </Route>
           
           {/* Ticket-System */}
           <Route path="/tickets">
