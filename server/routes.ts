@@ -2,12 +2,15 @@ import type { Express, Request, Response } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { createPaypalOrder, capturePaypalOrder, loadPaypalDefault } from "./paypal";
-import { insertOrderSchema } from "@shared/schema";
+import { insertOrderSchema, insertTicketSchema, insertTicketReplySchema } from "@shared/schema";
 import { ZodError } from "zod";
 import { sendNewOrderNotification, sendOrderConfirmation, sendEmailToCustomer } from "./email";
 import { adminAuthMiddleware } from "./admin-auth";
+import { setupAuth } from "./auth";
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Auth-System initialisieren
+  setupAuth(app);
   // Kontaktformular-Route - öffentlich zugänglich
   app.post("/api/contact", async (req, res) => {
     try {
@@ -585,6 +588,306 @@ ${message}
       res.status(500).json({
         success: false,
         message: "Ein Serverfehler ist aufgetreten bei der Verarbeitung der Bestellung"
+      });
+    }
+  });
+
+  // ========== TICKETSYSTEM ROUTEN ==========
+  
+  // Ticket erstellen (nur für authentifizierte Benutzer)
+  app.post("/api/tickets", async (req: Request, res: Response) => {
+    if (!req.isAuthenticated()) {
+      return res.status(401).json({
+        success: false,
+        message: "Nicht authentifiziert"
+      });
+    }
+
+    try {
+      const ticketData = insertTicketSchema.parse({
+        ...req.body,
+        userId: req.user.id
+      });
+
+      const ticket = await storage.createTicket(ticketData);
+
+      res.status(201).json({
+        success: true,
+        message: "Support-Ticket erfolgreich erstellt",
+        ticket
+      });
+    } catch (error) {
+      console.error("Fehler beim Erstellen des Tickets:", error);
+      
+      if (error instanceof ZodError) {
+        return res.status(400).json({
+          success: false,
+          message: "Validierungsfehler",
+          errors: error.errors
+        });
+      }
+      
+      res.status(500).json({
+        success: false,
+        message: "Ein Serverfehler ist aufgetreten"
+      });
+    }
+  });
+
+  // Tickets eines Benutzers abrufen
+  app.get("/api/tickets", async (req: Request, res: Response) => {
+    if (!req.isAuthenticated()) {
+      return res.status(401).json({
+        success: false,
+        message: "Nicht authentifiziert"
+      });
+    }
+
+    try {
+      const tickets = await storage.getTicketsForUser(req.user.id);
+      
+      res.json({
+        success: true,
+        tickets
+      });
+    } catch (error) {
+      console.error("Fehler beim Abrufen der Tickets:", error);
+      res.status(500).json({
+        success: false,
+        message: "Ein Serverfehler ist aufgetreten"
+      });
+    }
+  });
+
+  // Ein bestimmtes Ticket abrufen
+  app.get("/api/tickets/:id", async (req: Request, res: Response) => {
+    if (!req.isAuthenticated()) {
+      return res.status(401).json({
+        success: false,
+        message: "Nicht authentifiziert"
+      });
+    }
+
+    try {
+      const id = parseInt(req.params.id);
+      
+      if (isNaN(id)) {
+        return res.status(400).json({
+          success: false,
+          message: "Ungültige Ticket-ID"
+        });
+      }
+      
+      const ticket = await storage.getTicket(id);
+      
+      if (!ticket) {
+        return res.status(404).json({
+          success: false,
+          message: "Ticket nicht gefunden"
+        });
+      }
+      
+      // Prüfen, ob der Benutzer Zugriff auf dieses Ticket hat
+      if (ticket.userId !== req.user.id && !req.user.isAdmin) {
+        return res.status(403).json({
+          success: false,
+          message: "Keine Berechtigung für dieses Ticket"
+        });
+      }
+      
+      // Hole auch die Antworten für dieses Ticket
+      const replies = await storage.getTicketReplies(id);
+      
+      res.json({
+        success: true,
+        ticket,
+        replies
+      });
+    } catch (error) {
+      console.error("Fehler beim Abrufen des Tickets:", error);
+      res.status(500).json({
+        success: false,
+        message: "Ein Serverfehler ist aufgetreten"
+      });
+    }
+  });
+
+  // Antwort zu einem Ticket hinzufügen
+  app.post("/api/tickets/:id/replies", async (req: Request, res: Response) => {
+    if (!req.isAuthenticated()) {
+      return res.status(401).json({
+        success: false,
+        message: "Nicht authentifiziert"
+      });
+    }
+
+    try {
+      const ticketId = parseInt(req.params.id);
+      
+      if (isNaN(ticketId)) {
+        return res.status(400).json({
+          success: false,
+          message: "Ungültige Ticket-ID"
+        });
+      }
+      
+      const ticket = await storage.getTicket(ticketId);
+      
+      if (!ticket) {
+        return res.status(404).json({
+          success: false,
+          message: "Ticket nicht gefunden"
+        });
+      }
+      
+      // Prüfen, ob der Benutzer Zugriff auf dieses Ticket hat
+      if (ticket.userId !== req.user.id && !req.user.isAdmin) {
+        return res.status(403).json({
+          success: false,
+          message: "Keine Berechtigung für dieses Ticket"
+        });
+      }
+      
+      const replyData = insertTicketReplySchema.parse({
+        ...req.body,
+        ticketId,
+        userId: req.user.id,
+        isAdmin: req.user.isAdmin || false
+      });
+      
+      const reply = await storage.createTicketReply(replyData);
+      
+      // Wenn das Ticket "geschlossen" ist, setzen wir es zurück auf "in Bearbeitung"
+      if (ticket.status === "closed") {
+        await storage.updateTicketStatus(ticketId, "in_progress");
+      }
+      
+      res.status(201).json({
+        success: true,
+        message: "Antwort erfolgreich hinzugefügt",
+        reply
+      });
+    } catch (error) {
+      console.error("Fehler beim Hinzufügen der Antwort:", error);
+      
+      if (error instanceof ZodError) {
+        return res.status(400).json({
+          success: false,
+          message: "Validierungsfehler",
+          errors: error.errors
+        });
+      }
+      
+      res.status(500).json({
+        success: false,
+        message: "Ein Serverfehler ist aufgetreten"
+      });
+    }
+  });
+
+  // Ticket-Status aktualisieren (schließen/öffnen)
+  app.patch("/api/tickets/:id/status", async (req: Request, res: Response) => {
+    if (!req.isAuthenticated()) {
+      return res.status(401).json({
+        success: false,
+        message: "Nicht authentifiziert"
+      });
+    }
+
+    try {
+      const id = parseInt(req.params.id);
+      
+      if (isNaN(id)) {
+        return res.status(400).json({
+          success: false,
+          message: "Ungültige Ticket-ID"
+        });
+      }
+      
+      const { status } = req.body;
+      
+      if (!status || !["open", "in_progress", "closed"].includes(status)) {
+        return res.status(400).json({
+          success: false,
+          message: "Ungültiger Status"
+        });
+      }
+      
+      const ticket = await storage.getTicket(id);
+      
+      if (!ticket) {
+        return res.status(404).json({
+          success: false,
+          message: "Ticket nicht gefunden"
+        });
+      }
+      
+      // Prüfen, ob der Benutzer Zugriff auf dieses Ticket hat
+      if (ticket.userId !== req.user.id && !req.user.isAdmin) {
+        return res.status(403).json({
+          success: false,
+          message: "Keine Berechtigung für dieses Ticket"
+        });
+      }
+      
+      const updatedTicket = await storage.updateTicketStatus(id, status);
+      
+      res.json({
+        success: true,
+        message: "Ticket-Status aktualisiert",
+        ticket: updatedTicket
+      });
+    } catch (error) {
+      console.error("Fehler beim Aktualisieren des Ticket-Status:", error);
+      res.status(500).json({
+        success: false,
+        message: "Ein Serverfehler ist aufgetreten"
+      });
+    }
+  });
+  
+  // Admin-Route: Alle Tickets abrufen
+  app.get("/api/admin/tickets", adminAuthMiddleware, async (req: Request, res: Response) => {
+    try {
+      const status = req.query.status as string;
+      const tickets = await storage.getAllTickets(status);
+      
+      res.json({
+        success: true,
+        tickets
+      });
+    } catch (error) {
+      console.error("Fehler beim Abrufen der Tickets:", error);
+      res.status(500).json({
+        success: false,
+        message: "Ein Serverfehler ist aufgetreten"
+      });
+    }
+  });
+
+  // ========== BESTELLHISTORIE ENDPUNKTE ==========
+  
+  // Bestellhistorie eines Benutzers abrufen
+  app.get("/api/user/orders", async (req: Request, res: Response) => {
+    if (!req.isAuthenticated()) {
+      return res.status(401).json({
+        success: false,
+        message: "Nicht authentifiziert"
+      });
+    }
+
+    try {
+      const orders = await storage.getUserOrderHistory(req.user.id);
+      
+      res.json({
+        success: true,
+        orders
+      });
+    } catch (error) {
+      console.error("Fehler beim Abrufen der Bestellhistorie:", error);
+      res.status(500).json({
+        success: false,
+        message: "Ein Serverfehler ist aufgetreten"
       });
     }
   });
