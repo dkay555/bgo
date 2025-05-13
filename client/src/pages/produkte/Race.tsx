@@ -42,7 +42,7 @@ export default function Race() {
         <h1 className="babix-info-header text-3xl md:text-4xl font-bold mb-8 text-center">Race Event Plätze</h1>
       </div>
       
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-4xl mx-auto mb-12">
         <div className="bg-white rounded-lg shadow-lg overflow-hidden mb-8">
           <div className="grid grid-cols-1 md:grid-cols-2">
             <div className="bg-gradient-to-r from-[#0A3A68] to-[#FF4C00] p-8 flex items-center justify-center">
@@ -300,6 +300,25 @@ export default function Race() {
               </div>
             </details>
           </div>
+        </div>
+        
+        {/* Kontaktbox wie in den anderen Seiten */}
+        <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
+          <div className="flex items-center mb-4">
+            <span className="material-icons text-[#00CFFF] text-2xl mr-3">help_outline</span>
+            <h2 className="text-2xl font-bold text-[#0A3A68]">Du hast noch Fragen?</h2>
+          </div>
+          
+          <p className="text-gray-700 mb-4">
+            Schreib uns gerne eine Nachricht. Alle Kontaktmöglichkeiten findest du hier:
+          </p>
+          
+          <Link href="/kontakt" className="inline-block">
+            <button className="bg-[#FF4C00] hover:bg-[#0A3A68] text-white py-2 px-4 rounded-md transition-colors inline-flex items-center font-bold">
+              <span className="material-icons mr-2">contact_support</span>
+              Kontakt aufnehmen
+            </button>
+          </Link>
         </div>
       </div>
       

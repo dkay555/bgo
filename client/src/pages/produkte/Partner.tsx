@@ -51,19 +51,7 @@ export default function Partner() {
         <h1 className="babix-info-header text-3xl md:text-4xl font-bold mb-8 text-center">Partnerevent-Plätze</h1>
       </div>
       
-      <div className="max-w-4xl mx-auto">
-        <div className="bg-[#E6F7FF] border-l-4 border-[#00CFFF] p-4 rounded-r-md mb-6 flex justify-between items-center">
-          <div>
-            <h4 className="font-bold text-[#0A3A68] mb-2">Hilfe zu Partnerevents</h4>
-            <p className="text-gray-700">Erfahre mehr über Ablauf, Belohnungen und Tipps zu Partnerevents.</p>
-          </div>
-          <Link href="/hilfe/partner">
-            <button className="bg-[#0A3A68] hover:bg-[#00CFFF] text-white py-2 px-4 rounded-md transition-colors inline-flex items-center">
-              <span className="material-icons mr-1">help</span>
-              Zur Hilfe
-            </button>
-          </Link>
-        </div>
+      <div className="max-w-4xl mx-auto mb-12">
       
         <div className="bg-white rounded-lg shadow-lg overflow-hidden mb-8">
           <div className="grid grid-cols-1 md:grid-cols-2">
@@ -250,6 +238,25 @@ export default function Partner() {
               </div>
             </details>
           </div>
+        </div>
+        
+        {/* Kontaktbox wie in den anderen Seiten */}
+        <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
+          <div className="flex items-center mb-4">
+            <span className="material-icons text-[#00CFFF] text-2xl mr-3">help_outline</span>
+            <h2 className="text-2xl font-bold text-[#0A3A68]">Du hast noch Fragen?</h2>
+          </div>
+          
+          <p className="text-gray-700 mb-4">
+            Schreib uns gerne eine Nachricht. Alle Kontaktmöglichkeiten findest du hier:
+          </p>
+          
+          <Link href="/kontakt" className="inline-block">
+            <button className="bg-[#FF4C00] hover:bg-[#0A3A68] text-white py-2 px-4 rounded-md transition-colors inline-flex items-center font-bold">
+              <span className="material-icons mr-2">contact_support</span>
+              Kontakt aufnehmen
+            </button>
+          </Link>
         </div>
       </div>
       
