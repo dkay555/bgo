@@ -1,17 +1,28 @@
 import { 
   users, type User, type InsertUser, 
   orders, type Order, type InsertOrder,
-  contactMessages, type ContactMessage, type InsertContactMessage
+  contactMessages, type ContactMessage, type InsertContactMessage,
+  supportTickets, type Ticket, type InsertTicket,
+  ticketReplies, type TicketReply, type InsertTicketReply
 } from "@shared/schema";
 import { db } from "./db";
-import { eq, desc } from "drizzle-orm";
+import { eq, desc, and } from "drizzle-orm";
+import session from "express-session";
+import connectPg from "connect-pg-simple";
+import { pool } from "./db";
 
 // CRUD methods for User, Order and ContactMessage
 export interface IStorage {
+  // Session-Verwaltung
+  sessionStore: session.Store;
+
   // Benutzerverwaltung
   getUser(id: number): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
+  getUserByEmail(email: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
+  updateUserAuthToken(id: number, authToken: string): Promise<User | undefined>;
+  getUserOrderHistory(userId: number): Promise<Order[]>;
   
   // Bestellungsverwaltung
   getOrder(id: number): Promise<Order | undefined>;
@@ -27,9 +38,31 @@ export interface IStorage {
   markContactMessageAsRead(id: number): Promise<ContactMessage | undefined>;
   archiveContactMessage(id: number): Promise<ContactMessage | undefined>;
   deleteContactMessage(id: number): Promise<void>;
+  
+  // Ticketverwaltung
+  getTicket(id: number): Promise<Ticket | undefined>;
+  getTicketsForUser(userId: number): Promise<Ticket[]>;
+  getAllTickets(status?: string): Promise<Ticket[]>;
+  createTicket(ticket: InsertTicket): Promise<Ticket>;
+  updateTicketStatus(id: number, status: string): Promise<Ticket | undefined>;
+  
+  // Ticket-Antwortenverwaltung
+  getTicketReplies(ticketId: number): Promise<TicketReply[]>;
+  createTicketReply(reply: InsertTicketReply): Promise<TicketReply>;
 }
 
 export class DatabaseStorage implements IStorage {
+  // Session-Verwaltung
+  sessionStore: session.Store;
+
+  constructor() {
+    const PostgresSessionStore = connectPg(session);
+    this.sessionStore = new PostgresSessionStore({ 
+      pool,
+      createTableIfMissing: true 
+    });
+  }
+
   // Benutzerverwaltung
   async getUser(id: number): Promise<User | undefined> {
     const [user] = await db.select().from(users).where(eq(users.id, id));
@@ -41,12 +74,40 @@ export class DatabaseStorage implements IStorage {
     return user;
   }
 
+  async getUserByEmail(email: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.email, email));
+    return user;
+  }
+
   async createUser(insertUser: InsertUser): Promise<User> {
     const [user] = await db
       .insert(users)
       .values(insertUser)
       .returning();
     return user;
+  }
+
+  async updateUserAuthToken(id: number, authToken: string): Promise<User | undefined> {
+    const [updatedUser] = await db
+      .update(users)
+      .set({
+        authToken,
+        authTokenUpdatedAt: new Date(),
+        updatedAt: new Date()
+      })
+      .where(eq(users.id, id))
+      .returning();
+    
+    return updatedUser;
+  }
+
+  async getUserOrderHistory(userId: number): Promise<Order[]> {
+    const user = await this.getUser(userId);
+    if (!user || !user.email) {
+      return [];
+    }
+    
+    return await this.getOrdersByEmail(user.email);
   }
   
   // Bestellungsverwaltung
@@ -146,6 +207,70 @@ export class DatabaseStorage implements IStorage {
     await db
       .delete(contactMessages)
       .where(eq(contactMessages.id, id));
+  }
+
+  // Ticketverwaltung
+  async getTicket(id: number): Promise<Ticket | undefined> {
+    const [ticket] = await db.select().from(supportTickets).where(eq(supportTickets.id, id));
+    return ticket;
+  }
+
+  async getTicketsForUser(userId: number): Promise<Ticket[]> {
+    return await db
+      .select()
+      .from(supportTickets)
+      .where(eq(supportTickets.userId, userId))
+      .orderBy(desc(supportTickets.createdAt));
+  }
+
+  async getAllTickets(status?: string): Promise<Ticket[]> {
+    let query = db.select().from(supportTickets);
+    
+    if (status) {
+      query = query.where(eq(supportTickets.status, status));
+    }
+    
+    return await query.orderBy(desc(supportTickets.createdAt));
+  }
+
+  async createTicket(ticket: InsertTicket): Promise<Ticket> {
+    const [newTicket] = await db
+      .insert(supportTickets)
+      .values(ticket)
+      .returning();
+      
+    return newTicket;
+  }
+
+  async updateTicketStatus(id: number, status: string): Promise<Ticket | undefined> {
+    const [updatedTicket] = await db
+      .update(supportTickets)
+      .set({
+        status,
+        updatedAt: new Date()
+      })
+      .where(eq(supportTickets.id, id))
+      .returning();
+      
+    return updatedTicket;
+  }
+
+  // Ticket-Antwortenverwaltung
+  async getTicketReplies(ticketId: number): Promise<TicketReply[]> {
+    return await db
+      .select()
+      .from(ticketReplies)
+      .where(eq(ticketReplies.ticketId, ticketId))
+      .orderBy(ticketReplies.createdAt);
+  }
+
+  async createTicketReply(reply: InsertTicketReply): Promise<TicketReply> {
+    const [newReply] = await db
+      .insert(ticketReplies)
+      .values(reply)
+      .returning();
+      
+    return newReply;
   }
 }
 

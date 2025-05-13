@@ -6,12 +6,21 @@ export const users = pgTable("users", {
   id: serial("id").primaryKey(),
   username: text("username").notNull().unique(),
   password: text("password").notNull(),
+  email: text("email").unique(),
+  name: text("name"),
+  authToken: text("auth_token"),
+  authTokenUpdatedAt: timestamp("auth_token_updated_at"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
-export const insertUserSchema = createInsertSchema(users).pick({
-  username: true,
-  password: true,
-});
+export const insertUserSchema = createInsertSchema(users)
+  .omit({
+    id: true,
+    authTokenUpdatedAt: true,
+    createdAt: true,
+    updatedAt: true
+  });
 
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
@@ -106,3 +115,42 @@ export const insertContactMessageSchema = createInsertSchema(contactMessages)
 
 export type InsertContactMessage = z.infer<typeof insertContactMessageSchema>;
 export type ContactMessage = typeof contactMessages.$inferSelect;
+
+// Tabelle für Support-Tickets
+export const supportTickets = pgTable("support_tickets", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id),
+  subject: text("subject").notNull(),
+  message: text("message").notNull(),
+  status: text("status").notNull().default("open"), // "open", "in_progress", "closed"
+  priority: text("priority").notNull().default("normal"), // "low", "normal", "high"
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const ticketReplies = pgTable("ticket_replies", {
+  id: serial("id").primaryKey(),
+  ticketId: integer("ticket_id").notNull().references(() => supportTickets.id),
+  userId: integer("user_id").references(() => users.id),
+  isAdmin: boolean("is_admin").default(false).notNull(), // Unterscheidet Admin-Antworten von Benutzerantworten
+  message: text("message").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const insertTicketSchema = createInsertSchema(supportTickets)
+  .omit({
+    id: true,
+    createdAt: true,
+    updatedAt: true
+  });
+
+export const insertTicketReplySchema = createInsertSchema(ticketReplies)
+  .omit({
+    id: true,
+    createdAt: true
+  });
+
+export type InsertTicket = z.infer<typeof insertTicketSchema>;
+export type Ticket = typeof supportTickets.$inferSelect;
+export type InsertTicketReply = z.infer<typeof insertTicketReplySchema>;
+export type TicketReply = typeof ticketReplies.$inferSelect;
