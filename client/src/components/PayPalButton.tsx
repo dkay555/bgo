@@ -77,7 +77,7 @@ export default function PayPalButton({
   useEffect(() => {
     const checkPayPalConfiguration = async () => {
       try {
-        const response = await fetch("/setup");
+        const response = await fetch("/paypal/setup");
         const data = await response.json();
         
         if (response.status !== 200 || !data.isConfigured) {
@@ -118,7 +118,7 @@ export default function PayPalButton({
   }, []);
   const initPayPal = async () => {
     try {
-      const clientToken: string = await fetch("/setup")
+      const clientToken: string = await fetch("/paypal/setup")
         .then((res) => res.json())
         .then((data) => {
           return data.clientToken;
