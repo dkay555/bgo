@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'wouter';
 import { useToast } from "@/hooks/use-toast";
-import { apiRequest } from '@/lib/queryClient';
+import { apiRequest, queryClient } from '@/lib/queryClient';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -11,23 +11,54 @@ import { Link } from 'wouter';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Loader2 } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { useAuth } from "@/hooks/use-auth";
+
+// Produkttypen
+interface Product {
+  id: number;
+  name: string;
+  description: string;
+  productType: string;
+  variant: string;
+  price: string;
+  isActive: boolean;
+  stock: number;
+}
 
 export default function WuerfelCheckoutPage() {
   const [location] = useLocation();
   const { toast } = useToast();
+  const { user } = useAuth();
   const [orderId, setOrderId] = useState<number | null>(null);
   const [showPayPal, setShowPayPal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [orderAmount, setOrderAmount] = useState("25.00");
+  const [selectedProductId, setSelectedProductId] = useState<number | null>(null);
 
   // Parameter aus URL extrahieren (z.B. /checkout/wuerfel?amount=25000)
   const searchParams = new URLSearchParams(location.split('?')[1] || '');
   const amountParam = searchParams.get('amount');
   
-  // Stelle sicher, dass der Parameter einer der erlaubten Werte ist
-  const validatedAmount = ['25000', '35000', '45000', 'special'].includes(amountParam || '') 
-    ? amountParam || '25000'
-    : '25000';
+  // Würfel-Produkte aus der Datenbank abrufen
+  const { data: diceProducts, isLoading: isLoadingProducts } = useQuery<{success: boolean, products: Product[]}>({
+    queryKey: ['/api/products/type/dice'],
+    onSuccess: (data) => {
+      // Default-Produkt basierend auf URL-Parameter oder erstes Produkt auswählen
+      if (data.products.length > 0) {
+        const product = amountParam 
+          ? data.products.find(p => p.variant === amountParam) || data.products[0]
+          : data.products[0];
+        
+        setSelectedProductId(product.id);
+        setOrderAmount(product.price);
+      }
+    }
+  });
+  
+  // Ausgewähltes Produkt
+  const selectedProduct = diceProducts?.products.find(p => p.id === selectedProductId);
   
   // State für Formular
   const [formError, setFormError] = useState('');
