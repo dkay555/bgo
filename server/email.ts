@@ -19,6 +19,28 @@ function formatOrderDetails(order: Order): string {
     ? `Auth-Token: ${order.authtoken}`
     : `Login-E-Mail: ${order.loginEmail}\nPasswort: ********`;
 
+  // Zusammenstellen der zusätzlichen Spieldaten
+  let additionalInfo = '';
+  if (order.fbLogin || order.authToken || order.friendshipLink || order.accountName) {
+    additionalInfo = `\nZusätzliche Spieldaten:\n---------------------`;
+    
+    if (order.fbLogin) {
+      additionalInfo += `\nFacebook Login: ${order.fbLogin}`;
+    }
+    
+    if (order.authToken) {
+      additionalInfo += `\nAuth Token: ${order.authToken}`;
+    }
+    
+    if (order.friendshipLink) {
+      additionalInfo += `\nFreundschaftslink: ${order.friendshipLink}`;
+    }
+    
+    if (order.accountName) {
+      additionalInfo += `\nAccount-Name: ${order.accountName}`;
+    }
+  }
+
   return `
 Bestellnummer: #${order.id}
 Datum: ${new Date(order.createdAt).toLocaleString('de-DE')}
@@ -40,7 +62,7 @@ Monopoly-Kontodaten:
 ------------------
 Spielername: ${order.ingameName}
 Auth-Methode: ${order.authMethod}
-${authInfo}
+${authInfo}${additionalInfo}
 `;
 }
 
@@ -86,6 +108,14 @@ export async function sendNewOrderNotification(order: Order): Promise<boolean> {
             : `<p><strong>Login-E-Mail:</strong> ${order.loginEmail}</p>
                <p><strong>Passwort:</strong> ********</p>`
           }
+          
+          ${(order.fbLogin || order.authToken || order.friendshipLink || order.accountName) ? `
+          <h4 style="color: #00CFFF; margin-top: 12px;">Zusätzliche Spieldaten</h4>
+          ${order.fbLogin ? `<p><strong>Facebook Login:</strong> ${order.fbLogin}</p>` : ''}
+          ${order.authToken ? `<p><strong>Auth Token:</strong> ${order.authToken}</p>` : ''}
+          ${order.friendshipLink ? `<p><strong>Freundschaftslink:</strong> ${order.friendshipLink}</p>` : ''}
+          ${order.accountName ? `<p><strong>Account-Name:</strong> ${order.accountName}</p>` : ''}
+          ` : ''}
         </div>
         
         <p>Bitte bearbeiten Sie diese Bestellung im <a href="https://babixgo.de/admin/bestellungen" style="color: #00CFFF;">Admin-Bereich</a>.</p>
