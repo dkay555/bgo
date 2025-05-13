@@ -8,6 +8,11 @@ import { User } from "@shared/schema";
 import { getQueryFn, apiRequest, queryClient } from "../lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 
+type ProfileData = {
+  name?: string;
+  email?: string;
+};
+
 type AuthContextType = {
   user: User | null;
   isLoading: boolean;
@@ -16,6 +21,7 @@ type AuthContextType = {
   logoutMutation: UseMutationResult<{ success: boolean }, Error, void>;
   registerMutation: UseMutationResult<{ success: boolean; user: User }, Error, RegisterData>;
   saveAuthTokenMutation: UseMutationResult<{ success: boolean; user: User }, Error, { authToken: string }>;
+  updateProfileMutation: UseMutationResult<{ success: boolean; user: User }, Error, ProfileData>;
 };
 
 type LoginData = {

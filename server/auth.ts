@@ -142,6 +142,53 @@ export function setupAuth(app: Express) {
       user: req.user
     });
   });
+  
+  // Persönliche Benutzerdaten aktualisieren
+  app.patch("/api/user/profile", async (req, res, next) => {
+    try {
+      if (!req.isAuthenticated()) {
+        return res.status(401).json({
+          success: false,
+          message: "Nicht authentifiziert"
+        });
+      }
+      
+      const userId = req.user!.id;
+      const { name, email } = req.body;
+      
+      // Überprüfen, ob die E-Mail-Adresse bereits verwendet wird
+      if (email && email !== req.user!.email) {
+        const existingUser = await storage.getUserByEmail(email);
+        if (existingUser && existingUser.id !== userId) {
+          return res.status(400).json({
+            success: false,
+            message: "Diese E-Mail-Adresse wird bereits verwendet"
+          });
+        }
+      }
+      
+      // Benutzerdaten aktualisieren
+      const updatedUser = await storage.updateUserProfile(userId, {
+        name: name || req.user!.name,
+        email: email || req.user!.email
+      });
+      
+      if (!updatedUser) {
+        return res.status(500).json({
+          success: false,
+          message: "Fehler beim Aktualisieren des Benutzerprofils"
+        });
+      }
+      
+      res.json({
+        success: true,
+        user: updatedUser,
+        message: "Profil wurde erfolgreich aktualisiert"
+      });
+    } catch (error) {
+      next(error);
+    }
+  });
 
   // Auth-Token speichern oder aktualisieren
   app.post("/api/auth-token", (req, res, next) => {

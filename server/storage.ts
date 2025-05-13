@@ -22,6 +22,7 @@ export interface IStorage {
   getUserByEmail(email: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
   updateUserAuthToken(id: number, authToken: string): Promise<User | undefined>;
+  updateUserProfile(id: number, userData: { name?: string; email?: string }): Promise<User | undefined>;
   getUserOrderHistory(userId: number): Promise<Order[]>;
   
   // Bestellungsverwaltung
@@ -93,6 +94,20 @@ export class DatabaseStorage implements IStorage {
       .set({
         authToken,
         authTokenUpdatedAt: new Date(),
+        updatedAt: new Date()
+      })
+      .where(eq(users.id, id))
+      .returning();
+    
+    return updatedUser;
+  }
+  
+  async updateUserProfile(id: number, userData: { name?: string; email?: string }): Promise<User | undefined> {
+    const [updatedUser] = await db
+      .update(users)
+      .set({ 
+        ...(userData.name !== undefined ? { name: userData.name } : {}),
+        ...(userData.email !== undefined ? { email: userData.email } : {}),
         updatedAt: new Date()
       })
       .where(eq(users.id, id))
