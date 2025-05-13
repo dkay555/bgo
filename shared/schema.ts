@@ -175,3 +175,26 @@ export type InsertTicket = z.infer<typeof insertTicketSchema>;
 export type Ticket = typeof supportTickets.$inferSelect;
 export type InsertTicketReply = z.infer<typeof insertTicketReplySchema>;
 export type TicketReply = typeof ticketReplies.$inferSelect;
+
+// Produkttabelle für den Shop
+export const products = pgTable("products", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  description: text("description"),
+  productType: text("product_type").notNull(), // 'dice', 'partnerevent', 'tycoonracers', 'sticker'
+  variant: text("variant"), // z.B. '25000', 'bronze', '100' usw.
+  price: numeric("price").notNull(),
+  isActive: boolean("is_active").default(true),
+  stock: integer("stock").default(999), // Standardwert für digitale Produkte
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const insertProductSchema = createInsertSchema(products).omit({ 
+  id: true, 
+  createdAt: true, 
+  updatedAt: true 
+});
+
+export type InsertProduct = z.infer<typeof insertProductSchema>;
+export type Product = typeof products.$inferSelect;

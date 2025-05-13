@@ -3,7 +3,8 @@ import {
   orders, type Order, type InsertOrder,
   contactMessages, type ContactMessage, type InsertContactMessage,
   supportTickets, type Ticket, type InsertTicket,
-  ticketReplies, type TicketReply, type InsertTicketReply
+  ticketReplies, type TicketReply, type InsertTicketReply,
+  products, type Product, type InsertProduct
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, and } from "drizzle-orm";
@@ -50,6 +51,14 @@ export interface IStorage {
   // Ticket-Antwortenverwaltung
   getTicketReplies(ticketId: number): Promise<TicketReply[]>;
   createTicketReply(reply: InsertTicketReply): Promise<TicketReply>;
+  
+  // Produktverwaltung
+  getProduct(id: number): Promise<Product | undefined>;
+  getProductsByType(productType: string): Promise<Product[]>;
+  getAllProducts(activeOnly?: boolean): Promise<Product[]>;
+  createProduct(product: InsertProduct): Promise<Product>;
+  updateProduct(id: number, productData: Partial<InsertProduct>): Promise<Product | undefined>;
+  deleteProduct(id: number): Promise<void>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -286,6 +295,56 @@ export class DatabaseStorage implements IStorage {
       .returning();
       
     return newReply;
+  }
+
+  // Produktverwaltungsmethoden
+  async getProduct(id: number): Promise<Product | undefined> {
+    const [product] = await db
+      .select()
+      .from(products)
+      .where(eq(products.id, id));
+    return product || undefined;
+  }
+
+  async getProductsByType(productType: string): Promise<Product[]> {
+    return db
+      .select()
+      .from(products)
+      .where(eq(products.productType, productType))
+      .orderBy(products.price);
+  }
+
+  async getAllProducts(activeOnly: boolean = false): Promise<Product[]> {
+    let query = db.select().from(products);
+    
+    if (activeOnly) {
+      query = query.where(eq(products.isActive, true));
+    }
+    
+    return query.orderBy(products.productType, products.price);
+  }
+
+  async createProduct(product: InsertProduct): Promise<Product> {
+    const [newProduct] = await db
+      .insert(products)
+      .values(product)
+      .returning();
+    return newProduct;
+  }
+
+  async updateProduct(id: number, productData: Partial<InsertProduct>): Promise<Product | undefined> {
+    const [updatedProduct] = await db
+      .update(products)
+      .set({ ...productData, updatedAt: new Date() })
+      .where(eq(products.id, id))
+      .returning();
+    return updatedProduct || undefined;
+  }
+
+  async deleteProduct(id: number): Promise<void> {
+    await db
+      .delete(products)
+      .where(eq(products.id, id));
   }
 }
 
