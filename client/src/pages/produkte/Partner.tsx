@@ -7,8 +7,9 @@ export default function Partner() {
   }, []);
 
   const [partnerCount, setPartnerCount] = useState(1);
-  const [price, setPrice] = useState(7.5);
+  const [price, setPrice] = useState(7);
   const [showModal, setShowModal] = useState(false);
+  const [selectedOption, setSelectedOption] = useState<'partner' | 'waehrung'>('partner');
 
   // Preisberechnung für Partner
   const calculatePrice = (count: number) => {
@@ -48,7 +49,7 @@ export default function Partner() {
           <span className="material-icons mr-1">arrow_back</span>
           Zurück zu Produkten
         </Link>
-        <h1 className="babix-info-header text-3xl md:text-4xl font-bold mb-8 text-center">Partnerevent-Plätze</h1>
+        <h1 className="babix-info-header text-3xl md:text-4xl font-bold mb-8 text-center">Partnerevent</h1>
       </div>
       
       <div className="max-w-4xl mx-auto mb-12">

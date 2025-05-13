@@ -341,13 +341,13 @@ export default function StickerPage() {
             {/* Kauf-Button */}
             {cart.length > 0 && (
               <div className="flex flex-col sm:flex-row gap-4 items-center">
-                <button
-                  onClick={() => setShowModal(true)}
+                <Link 
+                  to={`/checkout/sticker?stickers=${encodeURIComponent(JSON.stringify(cart.map(s => s.id)))}`}
                   className="bg-[#FF4C00] text-white py-3 px-6 rounded-md hover:bg-[#0A3A68] transition-colors inline-flex items-center"
                 >
                   <span className="material-icons mr-2">shopping_cart</span>
                   Sticker bestellen
-                </button>
+                </Link>
               </div>
             )}
           </div>
