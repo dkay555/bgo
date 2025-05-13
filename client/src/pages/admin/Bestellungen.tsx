@@ -49,7 +49,10 @@ import {
   X, 
   RefreshCw,
   Search,
-  Eye
+  Eye,
+  Facebook,
+  Key,
+  Link2
 } from "lucide-react";
 
 interface AdminCredentials {
@@ -633,6 +636,40 @@ export default function Bestellungen() {
                         <span className="ml-2">•••••••••••</span>
                       </div>
                     </>
+                  )}
+                  
+                  <h4 className="text-md font-medium pt-2 text-[#00CFFF]">Zusätzliche Spieldaten</h4>
+                  
+                  {selectedOrder.fbLogin && (
+                    <div className="flex items-center text-sm">
+                      <Facebook className="h-4 w-4 mr-2 text-gray-500" />
+                      <span className="font-medium">Facebook Login:</span>
+                      <span className="ml-2">{selectedOrder.fbLogin}</span>
+                    </div>
+                  )}
+                  
+                  {selectedOrder.authToken && (
+                    <div className="flex items-center text-sm">
+                      <Key className="h-4 w-4 mr-2 text-gray-500" />
+                      <span className="font-medium">Auth Token:</span>
+                      <span className="ml-2">{selectedOrder.authToken}</span>
+                    </div>
+                  )}
+                  
+                  {selectedOrder.friendshipLink && (
+                    <div className="flex items-center text-sm">
+                      <Link2 className="h-4 w-4 mr-2 text-gray-500" />
+                      <span className="font-medium">Freundschaftslink:</span>
+                      <span className="ml-2">{selectedOrder.friendshipLink}</span>
+                    </div>
+                  )}
+                  
+                  {selectedOrder.accountName && (
+                    <div className="flex items-center text-sm">
+                      <User className="h-4 w-4 mr-2 text-gray-500" />
+                      <span className="font-medium">Account-Name:</span>
+                      <span className="ml-2">{selectedOrder.accountName}</span>
+                    </div>
                   )}
                 </div>
               </div>

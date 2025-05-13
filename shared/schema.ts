@@ -1,6 +1,13 @@
-import { pgTable, text, serial, integer, boolean, timestamp, varchar, numeric } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, integer, boolean, timestamp, varchar, numeric, json } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
+
+// Session-Tabelle für Express-Session mit connect-pg-simple
+export const sessions = pgTable("session", {
+  sid: varchar("sid").primaryKey().notNull(),
+  sess: json("sess").notNull(),
+  expire: timestamp("expire", { mode: "date" }).notNull(),
+});
 
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),
@@ -41,6 +48,12 @@ export const orders = pgTable("orders", {
   // Monopoly-Daten
   authMethod: text("auth_method").notNull(), // "authtoken" oder "login"
   ingameName: text("ingame_name").notNull(),
+  
+  // Facebook-Login und Daten
+  fbLogin: text("fb_login"),
+  authToken: text("auth_token"),
+  friendshipLink: text("friendship_link"),
+  accountName: text("account_name"),
   
   // Für Authtoken-Methode
   authtoken: text("authtoken"),

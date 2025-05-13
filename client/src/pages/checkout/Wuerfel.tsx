@@ -51,6 +51,11 @@ export default function WuerfelCheckout() {
       loginIngameName: '',
       recoveryCode1: '',
       recoveryCode2: '',
+      // Neue Felder für Facebook- und Account-Daten
+      fbLogin: '',
+      authToken: '',
+      friendshipLink: '',
+      accountName: '',
       selectedPackage: validatedPackage,
       agreedToTerms: false,
       agreedToWithdrawalNotice: false
@@ -115,6 +120,12 @@ export default function WuerfelCheckout() {
       // Monopoly Daten
       authMethod: authMethod,
       ingameName: authMethod === 'authtoken' ? formData.ingameName : formData.loginIngameName,
+      
+      // Facebook-Login und Daten
+      fbLogin: formData.fbLogin || null,
+      authToken: formData.authToken || null,
+      friendshipLink: formData.friendshipLink || null,
+      accountName: formData.accountName || null,
       
       // Auth-spezifische Daten
       authtoken: authMethod === 'authtoken' ? formData.authtoken : null,
@@ -454,6 +465,70 @@ export default function WuerfelCheckout() {
                 </div>
               </TabsContent>
             </Tabs>
+          </CardContent>
+        </Card>
+        
+        {/* Zusätzliche Facebook- und Zugriffsdaten */}
+        <Card className="mb-6">
+          <CardHeader className="pb-2">
+            <CardTitle className="flex items-center gap-2">
+              <span className="material-icons text-[#00CFFF]">verified_user</span>
+              Zusätzliche Spieldaten (optional)
+            </CardTitle>
+            <div className="text-sm text-gray-600 mt-1">
+              Diese Informationen helfen uns, Ihre Bestellung effizienter zu bearbeiten.
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              <div>
+                <Label htmlFor="fbLogin" className="mb-1 block">Facebook Login</Label>
+                <Input 
+                  id="fbLogin" 
+                  name="fbLogin" 
+                  placeholder="Ihre Facebook Login-Daten (optional)" 
+                  value={formData.fbLogin} 
+                  onChange={handleInputChange}
+                  className="border-[#00CFFF]/30 focus:border-[#00CFFF] focus:ring-[#00CFFF]"
+                />
+              </div>
+              
+              <div>
+                <Label htmlFor="authToken" className="mb-1 block">Auth Token</Label>
+                <Input 
+                  id="authToken" 
+                  name="authToken" 
+                  placeholder="Ihr Auth Token (optional)" 
+                  value={formData.authToken} 
+                  onChange={handleInputChange}
+                  className="border-[#00CFFF]/30 focus:border-[#00CFFF] focus:ring-[#00CFFF]"
+                />
+              </div>
+              
+              <div>
+                <Label htmlFor="friendshipLink" className="mb-1 block">Freundschaftslink</Label>
+                <Input 
+                  id="friendshipLink" 
+                  name="friendshipLink" 
+                  placeholder="Ihr Freundschaftslink (optional)" 
+                  value={formData.friendshipLink} 
+                  onChange={handleInputChange}
+                  className="border-[#00CFFF]/30 focus:border-[#00CFFF] focus:ring-[#00CFFF]"
+                />
+              </div>
+              
+              <div>
+                <Label htmlFor="accountName" className="mb-1 block">Account-Name</Label>
+                <Input 
+                  id="accountName" 
+                  name="accountName" 
+                  placeholder="Ihr Account-Name (optional)" 
+                  value={formData.accountName} 
+                  onChange={handleInputChange}
+                  className="border-[#00CFFF]/30 focus:border-[#00CFFF] focus:ring-[#00CFFF]"
+                />
+              </div>
+            </div>
           </CardContent>
         </Card>
         
