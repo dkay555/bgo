@@ -199,9 +199,9 @@ export default function WuerfelCheckoutPage() {
       return;
     }
     
-    // Prüfe auf bestimmte Ausführungszeit
-    if (formData.executionTime === 'spezifisch' && !formData.specificExecutionTime) {
-      setFormError('Bitte geben Sie eine spezifische Ausführungszeit an.');
+    // Validiere für FB Login die Wiederherstellungscodes
+    if (formData.authMethod === 'login' && (!formData.recoveryCode1 || !formData.recoveryCode2)) {
+      setFormError('Bitte geben Sie beide Wiederherstellungscodes ein.');
       return;
     }
     
@@ -264,14 +264,6 @@ export default function WuerfelCheckoutPage() {
               }}
               className="grid gap-4"
             >
-              <div className={`flex items-center space-x-2 p-4 rounded-lg border ${formData.selectedAmount === '10000' ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border-gray-200 hover:bg-gray-50'}`}>
-                <RadioGroupItem value="10000" id="w-10000" className="text-[#00CFFF]" />
-                <Label htmlFor="w-10000" className="w-full cursor-pointer flex justify-between">
-                  <span className="font-medium">10.000 Würfel</span>
-                  <span className="font-bold text-[#FF4C00]">15,00 €</span>
-                </Label>
-              </div>
-              
               <div className={`flex items-center space-x-2 p-4 rounded-lg border ${formData.selectedAmount === '25000' ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border-gray-200 hover:bg-gray-50'}`}>
                 <RadioGroupItem value="25000" id="w-25000" className="text-[#00CFFF]" />
                 <Label htmlFor="w-25000" className="w-full cursor-pointer flex justify-between">
@@ -284,31 +276,26 @@ export default function WuerfelCheckoutPage() {
                 <RadioGroupItem value="35000" id="w-35000" className="text-[#00CFFF]" />
                 <Label htmlFor="w-35000" className="w-full cursor-pointer flex justify-between">
                   <span className="font-medium">35.000 Würfel</span>
-                  <span className="font-bold text-[#FF4C00]">30,00 €</span>
+                  <span className="font-bold text-[#FF4C00]">35,00 €</span>
                 </Label>
               </div>
               
-              <div className={`flex items-center space-x-2 p-4 rounded-lg border ${formData.selectedAmount === '50000' ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border-gray-200 hover:bg-gray-50'}`}>
-                <RadioGroupItem value="50000" id="w-50000" className="text-[#00CFFF]" />
-                <Label htmlFor="w-50000" className="w-full cursor-pointer flex justify-between">
-                  <span className="font-medium">50.000 Würfel</span>
-                  <span className="font-bold text-[#FF4C00]">40,00 €</span>
+              <div className={`flex items-center space-x-2 p-4 rounded-lg border ${formData.selectedAmount === '45000' ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border-gray-200 hover:bg-gray-50'}`}>
+                <RadioGroupItem value="45000" id="w-45000" className="text-[#00CFFF]" />
+                <Label htmlFor="w-45000" className="w-full cursor-pointer flex justify-between">
+                  <span className="font-medium">45.000 Würfel</span>
+                  <span className="font-bold text-[#FF4C00]">45,00 €</span>
                 </Label>
               </div>
               
-              <div className={`flex items-center space-x-2 p-4 rounded-lg border ${formData.selectedAmount === '75000' ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border-gray-200 hover:bg-gray-50'}`}>
-                <RadioGroupItem value="75000" id="w-75000" className="text-[#00CFFF]" />
-                <Label htmlFor="w-75000" className="w-full cursor-pointer flex justify-between">
-                  <span className="font-medium">75.000 Würfel</span>
-                  <span className="font-bold text-[#FF4C00]">55,00 €</span>
-                </Label>
-              </div>
-              
-              <div className={`flex items-center space-x-2 p-4 rounded-lg border ${formData.selectedAmount === '100000' ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border-gray-200 hover:bg-gray-50'}`}>
-                <RadioGroupItem value="100000" id="w-100000" className="text-[#00CFFF]" />
-                <Label htmlFor="w-100000" className="w-full cursor-pointer flex justify-between">
-                  <span className="font-medium">100.000 Würfel</span>
-                  <span className="font-bold text-[#FF4C00]">65,00 €</span>
+              <div className={`flex items-center space-x-2 p-4 rounded-lg border ${formData.selectedAmount === 'special' ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border-gray-200 hover:bg-gray-50'}`}>
+                <RadioGroupItem value="special" id="w-special" className="text-[#00CFFF]" />
+                <Label htmlFor="w-special" className="w-full cursor-pointer flex justify-between">
+                  <div>
+                    <span className="font-medium">SONDERANGEBOT</span>
+                    <p className="text-sm text-gray-500">100.000 Würfel + 10.000 BONUS</p>
+                  </div>
+                  <span className="font-bold text-[#FF4C00]">99,00 €</span>
                 </Label>
               </div>
             </RadioGroup>
@@ -498,7 +485,7 @@ export default function WuerfelCheckoutPage() {
               onValueChange={(value) => {
                 setFormData({
                   ...formData,
-                  executionTime: value as 'sofort' | 'abends' | 'morgens' | 'spezifisch'
+                  executionTime: value as 'sofort' | 'bahnhofsturnier'
                 });
               }}
               className="grid gap-4"
@@ -506,49 +493,19 @@ export default function WuerfelCheckoutPage() {
               <div className={`flex items-center space-x-2 p-4 rounded-lg border ${formData.executionTime === 'sofort' ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border-gray-200 hover:bg-gray-50'}`}>
                 <RadioGroupItem value="sofort" id="time-sofort" className="text-[#00CFFF]" />
                 <Label htmlFor="time-sofort" className="w-full cursor-pointer">
-                  <span className="font-medium">So schnell wie möglich</span>
+                  <span className="font-medium">Schnellstmöglich</span>
                   <p className="text-sm text-gray-500">Die Würfel werden so bald wie möglich hinzugefügt</p>
                 </Label>
               </div>
               
-              <div className={`flex items-center space-x-2 p-4 rounded-lg border ${formData.executionTime === 'abends' ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border-gray-200 hover:bg-gray-50'}`}>
-                <RadioGroupItem value="abends" id="time-abends" className="text-[#00CFFF]" />
-                <Label htmlFor="time-abends" className="w-full cursor-pointer">
-                  <span className="font-medium">Abends (18:00 - 22:00 Uhr)</span>
-                  <p className="text-sm text-gray-500">Die Würfel werden am Abend hinzugefügt</p>
-                </Label>
-              </div>
-              
-              <div className={`flex items-center space-x-2 p-4 rounded-lg border ${formData.executionTime === 'morgens' ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border-gray-200 hover:bg-gray-50'}`}>
-                <RadioGroupItem value="morgens" id="time-morgens" className="text-[#00CFFF]" />
-                <Label htmlFor="time-morgens" className="w-full cursor-pointer">
-                  <span className="font-medium">Morgens (8:00 - 12:00 Uhr)</span>
-                  <p className="text-sm text-gray-500">Die Würfel werden am Morgen hinzugefügt</p>
-                </Label>
-              </div>
-              
-              <div className={`flex items-center space-x-2 p-4 rounded-lg border ${formData.executionTime === 'spezifisch' ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border-gray-200 hover:bg-gray-50'}`}>
-                <RadioGroupItem value="spezifisch" id="time-spezifisch" className="text-[#00CFFF]" />
-                <Label htmlFor="time-spezifisch" className="w-full cursor-pointer">
-                  <span className="font-medium">Spezifischer Zeitpunkt</span>
-                  <p className="text-sm text-gray-500">Geben Sie einen bestimmten Zeitpunkt an</p>
+              <div className={`flex items-center space-x-2 p-4 rounded-lg border ${formData.executionTime === 'bahnhofsturnier' ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border-gray-200 hover:bg-gray-50'}`}>
+                <RadioGroupItem value="bahnhofsturnier" id="time-bahnhofsturnier" className="text-[#00CFFF]" />
+                <Label htmlFor="time-bahnhofsturnier" className="w-full cursor-pointer">
+                  <span className="font-medium">Zum nächsten Bahnhofsturnier</span>
+                  <p className="text-sm text-gray-500">Die Würfel werden zum nächsten Bahnhofsturnier hinzugefügt</p>
                 </Label>
               </div>
             </RadioGroup>
-            
-            {formData.executionTime === 'spezifisch' && (
-              <div className="mt-4">
-                <Label htmlFor="specificExecutionTime" className="mb-1 block">Gewünschter Zeitpunkt *</Label>
-                <Input
-                  id="specificExecutionTime"
-                  name="specificExecutionTime"
-                  placeholder="z.B. 'Morgen um 15 Uhr' oder 'Dienstag Abend'"
-                  value={formData.specificExecutionTime}
-                  onChange={handleInputChange}
-                  className="border-[#00CFFF]/30 focus:border-[#00CFFF] focus:ring-[#00CFFF]"
-                />
-              </div>
-            )}
           </CardContent>
         </Card>
         
