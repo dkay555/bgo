@@ -7,10 +7,161 @@ import { ZodError } from "zod";
 import { sendNewOrderNotification, sendOrderConfirmation, sendEmailToCustomer } from "./email";
 import { adminAuthMiddleware } from "./admin-auth";
 import { setupAuth } from "./auth";
+import { seedProducts } from "./seed-products";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Auth-System initialisieren
   setupAuth(app);
+  
+  // Beispiel-Produkte erstellen (falls keine vorhanden sind)
+  await seedProducts();
+  
+  // Produkt-API-Routen
+  // Produkte abrufen - öffentlich zugänglich
+  app.get("/api/products", async (req, res) => {
+    try {
+      const activeOnly = req.query.active === 'true';
+      const products = await storage.getAllProducts(activeOnly);
+      res.status(200).json({ success: true, products });
+    } catch (error) {
+      res.status(500).json({ 
+        success: false, 
+        message: "Fehler beim Abrufen der Produkte"
+      });
+    }
+  });
+  
+  // Produkte nach Typ abrufen - öffentlich zugänglich
+  app.get("/api/products/type/:type", async (req, res) => {
+    try {
+      const { type } = req.params;
+      const products = await storage.getProductsByType(type);
+      res.status(200).json({ success: true, products });
+    } catch (error) {
+      res.status(500).json({ 
+        success: false, 
+        message: "Fehler beim Abrufen der Produkte"
+      });
+    }
+  });
+  
+  // Einzelnes Produkt abrufen - öffentlich zugänglich
+  app.get("/api/products/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({ 
+          success: false, 
+          message: "Ungültige Produkt-ID"
+        });
+      }
+      
+      const product = await storage.getProduct(id);
+      if (!product) {
+        return res.status(404).json({ 
+          success: false, 
+          message: "Produkt nicht gefunden"
+        });
+      }
+      
+      res.status(200).json({ success: true, product });
+    } catch (error) {
+      res.status(500).json({ 
+        success: false, 
+        message: "Fehler beim Abrufen des Produkts"
+      });
+    }
+  });
+  
+  // Produkt erstellen - nur für Administratoren
+  app.post("/api/products", adminAuthMiddleware, async (req, res) => {
+    try {
+      const { name, description, productType, variant, price, isActive, stock } = req.body;
+      
+      // Validierung
+      if (!name || !productType || price === undefined) {
+        return res.status(400).json({
+          success: false,
+          message: "Name, Produkttyp und Preis sind erforderlich"
+        });
+      }
+      
+      const newProduct = await storage.createProduct({
+        name,
+        description,
+        productType,
+        variant,
+        price,
+        isActive,
+        stock
+      });
+      
+      res.status(201).json({ success: true, product: newProduct });
+    } catch (error) {
+      res.status(500).json({ 
+        success: false, 
+        message: "Fehler beim Erstellen des Produkts"
+      });
+    }
+  });
+  
+  // Produkt aktualisieren - nur für Administratoren
+  app.patch("/api/products/:id", adminAuthMiddleware, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({ 
+          success: false, 
+          message: "Ungültige Produkt-ID"
+        });
+      }
+      
+      const updatedProduct = await storage.updateProduct(id, req.body);
+      if (!updatedProduct) {
+        return res.status(404).json({ 
+          success: false, 
+          message: "Produkt nicht gefunden"
+        });
+      }
+      
+      res.status(200).json({ success: true, product: updatedProduct });
+    } catch (error) {
+      res.status(500).json({ 
+        success: false, 
+        message: "Fehler beim Aktualisieren des Produkts"
+      });
+    }
+  });
+  
+  // Produkt löschen - nur für Administratoren
+  app.delete("/api/products/:id", adminAuthMiddleware, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({ 
+          success: false, 
+          message: "Ungültige Produkt-ID"
+        });
+      }
+      
+      // Prüfen, ob das Produkt existiert
+      const product = await storage.getProduct(id);
+      if (!product) {
+        return res.status(404).json({ 
+          success: false, 
+          message: "Produkt nicht gefunden"
+        });
+      }
+      
+      await storage.deleteProduct(id);
+      res.status(200).json({ success: true, message: "Produkt erfolgreich gelöscht" });
+    } catch (error) {
+      res.status(500).json({ 
+        success: false, 
+        message: "Fehler beim Löschen des Produkts"
+      });
+    }
+  });
   // Kontaktformular-Route - öffentlich zugänglich
   app.post("/api/contact", async (req, res) => {
     try {
