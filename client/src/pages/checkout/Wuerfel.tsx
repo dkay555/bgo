@@ -200,7 +200,29 @@ export default function WuerfelCheckoutPage() {
     try {
       setIsSubmitting(true);
       
+      console.log("Formulardaten vor dem Senden:", formData);
+      
       const orderData = createOrderData();
+      
+      // Sicherstellen, dass alle notwendigen Felder definiert sind
+      if (!orderData.authMethod) {
+        orderData.authMethod = 'authtoken'; // Default-Wert als Fallback
+      }
+      
+      // Sicherstellen, dass ingameName definiert ist
+      if (!orderData.ingameName) {
+        orderData.ingameName = 'Nicht angegeben'; // Fallback-Wert
+      }
+      
+      // Sicherstellen, dass der Preis als String im richtigen Format übergeben wird
+      const numericPrice = typeof orderData.price === 'number' 
+        ? orderData.price 
+        : parseFloat(orderData.price);
+      
+      orderData.price = numericPrice.toFixed(2);
+      
+      console.log("Zu sendende Bestelldaten:", orderData);
+      
       const response = await apiRequest("POST", "/api/orders", orderData);
       
       if (!response.ok) {
