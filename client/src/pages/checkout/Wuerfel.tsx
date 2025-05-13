@@ -106,8 +106,22 @@ export default function WuerfelCheckoutPage() {
     };
   }, []);
 
-  // Aktualisiert den Bestellbetrag basierend auf der Würfelanzahl
+  // Aktualisiert den Bestellbetrag basierend auf dem ausgewählten Produkt
   useEffect(() => {
+    // Wenn das Produkt in den Datenbankprodukten gefunden wird, verwenden wir dessen Preis
+    if (diceProducts?.products && diceProducts.products.length > 0) {
+      const selectedProduct = diceProducts.products.find(
+        (p: Product) => p.variant === formData.selectedAmount
+      );
+      
+      if (selectedProduct) {
+        setOrderAmount(selectedProduct.price);
+        setSelectedProductId(selectedProduct.id);
+        return;
+      }
+    }
+    
+    // Fallback zu den statischen Werten, falls das Produkt nicht gefunden wird
     let price;
     switch(formData.selectedAmount) {
       case '25000':
@@ -126,7 +140,7 @@ export default function WuerfelCheckoutPage() {
         price = 25.00;
     }
     setOrderAmount(price.toFixed(2));
-  }, [formData.selectedAmount]);
+  }, [formData.selectedAmount, diceProducts]);
 
   // Funktion zur Handhabung von Formulareingaben
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -291,51 +305,95 @@ export default function WuerfelCheckoutPage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <RadioGroup 
-              defaultValue={formData.selectedAmount}
-              onValueChange={(value) => {
-                setFormData({
-                  ...formData,
-                  selectedAmount: value
-                });
-              }}
-              className="grid gap-4"
-            >
-              <div className={`flex items-center space-x-2 p-4 rounded-lg border ${formData.selectedAmount === '25000' ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border-gray-200 hover:bg-gray-50'}`}>
-                <RadioGroupItem value="25000" id="w-25000" className="text-[#00CFFF]" />
-                <Label htmlFor="w-25000" className="w-full cursor-pointer flex justify-between">
-                  <span className="font-medium">25.000 Würfel</span>
-                  <span className="font-bold text-[#FF4C00]">25,00 €</span>
-                </Label>
+            {isLoadingProducts ? (
+              <div className="flex justify-center items-center py-8">
+                <Loader2 className="h-8 w-8 animate-spin text-[#00CFFF]" />
+                <span className="ml-2">Lade Würfelpakete...</span>
               </div>
-              
-              <div className={`flex items-center space-x-2 p-4 rounded-lg border ${formData.selectedAmount === '35000' ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border-gray-200 hover:bg-gray-50'}`}>
-                <RadioGroupItem value="35000" id="w-35000" className="text-[#00CFFF]" />
-                <Label htmlFor="w-35000" className="w-full cursor-pointer flex justify-between">
-                  <span className="font-medium">35.000 Würfel</span>
-                  <span className="font-bold text-[#FF4C00]">35,00 €</span>
-                </Label>
-              </div>
-              
-              <div className={`flex items-center space-x-2 p-4 rounded-lg border ${formData.selectedAmount === '45000' ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border-gray-200 hover:bg-gray-50'}`}>
-                <RadioGroupItem value="45000" id="w-45000" className="text-[#00CFFF]" />
-                <Label htmlFor="w-45000" className="w-full cursor-pointer flex justify-between">
-                  <span className="font-medium">45.000 Würfel</span>
-                  <span className="font-bold text-[#FF4C00]">45,00 €</span>
-                </Label>
-              </div>
-              
-              <div className={`flex items-center space-x-2 p-4 rounded-lg border ${formData.selectedAmount === 'special' ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border-gray-200 hover:bg-gray-50'}`}>
-                <RadioGroupItem value="special" id="w-special" className="text-[#00CFFF]" />
-                <Label htmlFor="w-special" className="w-full cursor-pointer flex justify-between">
-                  <div>
-                    <span className="font-medium">SONDERANGEBOT</span>
-                    <p className="text-sm text-gray-500">100.000 Würfel + 10.000 BONUS</p>
-                  </div>
-                  <span className="font-bold text-[#FF4C00]">99,00 €</span>
-                </Label>
-              </div>
-            </RadioGroup>
+            ) : (
+              <RadioGroup 
+                defaultValue={formData.selectedAmount}
+                onValueChange={(value) => {
+                  setFormData({
+                    ...formData,
+                    selectedAmount: value
+                  });
+                }}
+                className="grid gap-4"
+              >
+                {diceProducts?.success && diceProducts.products.length > 0 ? (
+                  // Dynamische Produkte aus der Datenbank
+                  diceProducts.products.map((product: Product) => (
+                    <div 
+                      key={product.id}
+                      className={`flex items-center space-x-2 p-4 rounded-lg border ${
+                        formData.selectedAmount === product.variant 
+                          ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' 
+                          : 'border-gray-200 hover:bg-gray-50'
+                      }`}
+                    >
+                      <RadioGroupItem 
+                        value={product.variant} 
+                        id={`w-${product.id}`} 
+                        className="text-[#00CFFF]" 
+                      />
+                      <Label 
+                        htmlFor={`w-${product.id}`} 
+                        className="w-full cursor-pointer flex justify-between"
+                      >
+                        <div>
+                          <span className="font-medium">{product.name}</span>
+                          {product.description && (
+                            <p className="text-sm text-gray-500">{product.description}</p>
+                          )}
+                        </div>
+                        <span className="font-bold text-[#FF4C00]">
+                          {parseFloat(product.price).toFixed(2).replace('.', ',')} €
+                        </span>
+                      </Label>
+                    </div>
+                  ))
+                ) : (
+                  // Fallback zu statischen Optionen, falls keine Produkte aus der Datenbank verfügbar sind
+                  <>
+                    <div className={`flex items-center space-x-2 p-4 rounded-lg border ${formData.selectedAmount === '25000' ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border-gray-200 hover:bg-gray-50'}`}>
+                      <RadioGroupItem value="25000" id="w-25000" className="text-[#00CFFF]" />
+                      <Label htmlFor="w-25000" className="w-full cursor-pointer flex justify-between">
+                        <span className="font-medium">25.000 Würfel</span>
+                        <span className="font-bold text-[#FF4C00]">25,00 €</span>
+                      </Label>
+                    </div>
+                    
+                    <div className={`flex items-center space-x-2 p-4 rounded-lg border ${formData.selectedAmount === '35000' ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border-gray-200 hover:bg-gray-50'}`}>
+                      <RadioGroupItem value="35000" id="w-35000" className="text-[#00CFFF]" />
+                      <Label htmlFor="w-35000" className="w-full cursor-pointer flex justify-between">
+                        <span className="font-medium">35.000 Würfel</span>
+                        <span className="font-bold text-[#FF4C00]">35,00 €</span>
+                      </Label>
+                    </div>
+                    
+                    <div className={`flex items-center space-x-2 p-4 rounded-lg border ${formData.selectedAmount === '45000' ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border-gray-200 hover:bg-gray-50'}`}>
+                      <RadioGroupItem value="45000" id="w-45000" className="text-[#00CFFF]" />
+                      <Label htmlFor="w-45000" className="w-full cursor-pointer flex justify-between">
+                        <span className="font-medium">45.000 Würfel</span>
+                        <span className="font-bold text-[#FF4C00]">45,00 €</span>
+                      </Label>
+                    </div>
+                    
+                    <div className={`flex items-center space-x-2 p-4 rounded-lg border ${formData.selectedAmount === 'special' ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border-gray-200 hover:bg-gray-50'}`}>
+                      <RadioGroupItem value="special" id="w-special" className="text-[#00CFFF]" />
+                      <Label htmlFor="w-special" className="w-full cursor-pointer flex justify-between">
+                        <div>
+                          <span className="font-medium">SONDERANGEBOT</span>
+                          <p className="text-sm text-gray-500">100.000 Würfel + 10.000 BONUS</p>
+                        </div>
+                        <span className="font-bold text-[#FF4C00]">99,00 €</span>
+                      </Label>
+                    </div>
+                  </>
+                )}
+              </RadioGroup>
+            )}
           </CardContent>
         </Card>
         
