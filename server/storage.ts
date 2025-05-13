@@ -25,6 +25,9 @@ export interface IStorage {
   updateUserAuthToken(id: number, authToken: string): Promise<User | undefined>;
   updateUserProfile(id: number, userData: { name?: string; email?: string }): Promise<User | undefined>;
   getUserOrderHistory(userId: number): Promise<Order[]>;
+  getAllUsers(): Promise<User[]>;
+  updateUser(id: number, userData: Partial<User>): Promise<User | undefined>;
+  deleteUser(id: number): Promise<void>;
   
   // Bestellungsverwaltung
   getOrder(id: number): Promise<Order | undefined>;
@@ -345,6 +348,32 @@ export class DatabaseStorage implements IStorage {
     await db
       .delete(products)
       .where(eq(products.id, id));
+  }
+  
+  // Zusätzliche Benutzerverwaltung für Admin-Bereich
+  async getAllUsers(): Promise<User[]> {
+    return db
+      .select()
+      .from(users)
+      .orderBy(users.username);
+  }
+  
+  async updateUser(id: number, userData: Partial<User>): Promise<User | undefined> {
+    const [updatedUser] = await db
+      .update(users)
+      .set({ 
+        ...userData, 
+        updatedAt: new Date() 
+      })
+      .where(eq(users.id, id))
+      .returning();
+    return updatedUser || undefined;
+  }
+  
+  async deleteUser(id: number): Promise<void> {
+    await db
+      .delete(users)
+      .where(eq(users.id, id));
   }
 }
 

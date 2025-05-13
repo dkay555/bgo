@@ -6,7 +6,7 @@ import { insertOrderSchema, insertTicketSchema, insertTicketReplySchema } from "
 import { ZodError } from "zod";
 import { sendNewOrderNotification, sendOrderConfirmation, sendEmailToCustomer } from "./email";
 import { adminAuthMiddleware } from "./admin-auth";
-import { setupAuth } from "./auth";
+import { setupAuth, hashPassword } from "./auth";
 import { seedProducts } from "./seed-products";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -1036,6 +1036,177 @@ ${message}
       });
     } catch (error) {
       console.error("Fehler beim Abrufen der Bestellhistorie:", error);
+      res.status(500).json({
+        success: false,
+        message: "Ein Serverfehler ist aufgetreten"
+      });
+    }
+  });
+  
+  // ========== BENUTZERVERWALTUNG IM ADMIN-BEREICH ==========
+  
+  // Alle Benutzer abrufen (nur für Admins)
+  app.get("/api/admin/users", adminAuthMiddleware, async (req: Request, res: Response) => {
+    try {
+      const users = await storage.getAllUsers();
+      
+      // Aus Sicherheitsgründen Passwörter aus der Antwort entfernen
+      const safeUsers = users.map((user: User) => ({
+        ...user,
+        password: undefined
+      }));
+      
+      res.json({
+        success: true,
+        users: safeUsers
+      });
+    } catch (error) {
+      console.error("Fehler beim Abrufen der Benutzer:", error);
+      res.status(500).json({
+        success: false,
+        message: "Ein Serverfehler ist aufgetreten"
+      });
+    }
+  });
+  
+  // Einzelnen Benutzer abrufen (nur für Admins)
+  app.get("/api/admin/users/:id", adminAuthMiddleware, async (req: Request, res: Response) => {
+    try {
+      const id = parseInt(req.params.id);
+      
+      if (isNaN(id)) {
+        return res.status(400).json({
+          success: false,
+          message: "Ungültige Benutzer-ID"
+        });
+      }
+      
+      const user = await storage.getUser(id);
+      
+      if (!user) {
+        return res.status(404).json({
+          success: false,
+          message: "Benutzer nicht gefunden"
+        });
+      }
+      
+      // Aus Sicherheitsgründen Passwort aus der Antwort entfernen
+      const safeUser = {
+        ...user,
+        password: undefined
+      };
+      
+      res.json({
+        success: true,
+        user: safeUser
+      });
+    } catch (error) {
+      console.error("Fehler beim Abrufen des Benutzers:", error);
+      res.status(500).json({
+        success: false,
+        message: "Ein Serverfehler ist aufgetreten"
+      });
+    }
+  });
+  
+  // Benutzer aktualisieren (nur für Admins)
+  app.patch("/api/admin/users/:id", adminAuthMiddleware, async (req: Request, res: Response) => {
+    try {
+      const id = parseInt(req.params.id);
+      
+      if (isNaN(id)) {
+        return res.status(400).json({
+          success: false,
+          message: "Ungültige Benutzer-ID"
+        });
+      }
+      
+      const { username, email, name, isAdmin } = req.body;
+      
+      // Nur erlaubte Felder aktualisieren
+      const userData: Record<string, any> = {};
+      if (username !== undefined) userData.username = username;
+      if (email !== undefined) userData.email = email;
+      if (name !== undefined) userData.name = name;
+      if (isAdmin !== undefined) userData.isAdmin = isAdmin;
+      
+      // Neues Passwort setzen (falls vorhanden)
+      if (req.body.password) {
+        userData.password = await hashPassword(req.body.password);
+      }
+      
+      const updatedUser = await storage.updateUser(id, userData);
+      
+      if (!updatedUser) {
+        return res.status(404).json({
+          success: false,
+          message: "Benutzer nicht gefunden"
+        });
+      }
+      
+      // Aus Sicherheitsgründen Passwort aus der Antwort entfernen
+      const safeUser = {
+        ...updatedUser,
+        password: undefined
+      };
+      
+      res.json({
+        success: true,
+        message: "Benutzer erfolgreich aktualisiert",
+        user: safeUser
+      });
+    } catch (error) {
+      console.error("Fehler beim Aktualisieren des Benutzers:", error);
+      res.status(500).json({
+        success: false,
+        message: "Ein Serverfehler ist aufgetreten"
+      });
+    }
+  });
+  
+  // Benutzer löschen (nur für Admins)
+  app.delete("/api/admin/users/:id", adminAuthMiddleware, async (req: Request, res: Response) => {
+    try {
+      const id = parseInt(req.params.id);
+      
+      if (isNaN(id)) {
+        return res.status(400).json({
+          success: false,
+          message: "Ungültige Benutzer-ID"
+        });
+      }
+      
+      // Prüfen, ob der zu löschende Benutzer existiert
+      const user = await storage.getUser(id);
+      
+      if (!user) {
+        return res.status(404).json({
+          success: false,
+          message: "Benutzer nicht gefunden"
+        });
+      }
+      
+      // Verhindern, dass der letzte Admin-Benutzer gelöscht wird
+      if (user.isAdmin) {
+        const allUsers = await storage.getAllUsers();
+        const adminUsers = allUsers.filter((u: User) => u.isAdmin);
+        
+        if (adminUsers.length <= 1) {
+          return res.status(400).json({
+            success: false,
+            message: "Der letzte Administrator kann nicht gelöscht werden"
+          });
+        }
+      }
+      
+      await storage.deleteUser(id);
+      
+      res.json({
+        success: true,
+        message: "Benutzer erfolgreich gelöscht"
+      });
+    } catch (error) {
+      console.error("Fehler beim Löschen des Benutzers:", error);
       res.status(500).json({
         success: false,
         message: "Ein Serverfehler ist aufgetreten"
