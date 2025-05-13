@@ -61,9 +61,7 @@ export default function TycoonRacers() {
                 Abbrechen
               </button>
               <Link
-                to={`/checkout/tycoonracers?type=${eventType}&level=${eventType === 'team' ? 
-                  (tycoonPrice === 25 ? 'bronze' : tycoonPrice === 45 ? 'silver' : 'gold') : 
-                  (tycoonPrice === 20 ? '100' : tycoonPrice === 40 ? '250' : '500')}`}
+                to={`/checkout/${eventType === 'team' ? 'tycoonracers' : 'flaggen'}?price=${tycoonPrice}`}
                 className="px-4 py-2 bg-[#FF4C00] hover:bg-[#FF4C00]/80 text-white rounded-md transition-colors"
               >
                 Weiter zum Kaufen
