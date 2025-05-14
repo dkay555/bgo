@@ -81,13 +81,30 @@ export default function StickerPage() {
           <span className="material-icons mr-1">arrow_back</span>
           Zurück zu Produkten
         </Link>
-        <h1 className="babix-info-header text-3xl md:text-4xl font-bold mb-8 text-center">Sticker kaufen</h1>
+        <div className="w-full relative rounded-xl overflow-hidden">
+          <div className="h-48 md:h-64 bg-cover bg-center" style={{backgroundImage: 'url("/images/hero-backgrounds/sticker-hero.svg")'}}>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="text-center">
+                <h1 className="babix-info-header text-3xl md:text-5xl font-bold text-white px-4 drop-shadow-lg">
+                  Sticker kaufen
+                </h1>
+                <p className="text-white text-lg mt-2 max-w-2xl px-4">Vervollständige dein Album mit unserer riesigen Auswahl</p>
+                <button 
+                  onClick={() => setShowModal(true)}
+                  className="mt-4 bg-white hover:bg-gray-100 text-[#0A3A68] font-bold py-2 px-6 rounded-full shadow-lg transition-colors"
+                >
+                  Sticker bestellen
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       
       <div className="max-w-4xl mx-auto mb-12">
         <div className="bg-white rounded-lg shadow-lg overflow-hidden mb-8">
           <div className="p-6 flex flex-col justify-center">
-            <h2 className="text-2xl font-bold text-[#0A3A68] mb-4">Wir haben sie alle!</h2>
+            <h2 className="babixgoheader text-2xl font-bold text-[#0A3A68] mb-4">Wir haben sie alle!</h2>
             <p className="text-gray-700 mb-4">
               Sticker werden i.d.R. innerhalb von 60 Minuten verschickt. Aufgrund des Sendelimits kann es allerdings bis zum Reset der Trades dauern.
               Solltest du den Sticker also dringend benötigen schicke uns vorher eine Nachricht.
