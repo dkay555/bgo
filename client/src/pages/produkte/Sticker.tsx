@@ -2,11 +2,10 @@ import { useEffect, useState } from 'react';
 import { Link } from 'wouter';
 import { Sticker, stickersWithSets, getAvailableSets, getStickersBySet, calculatePrice } from '@/lib/stickerData';
 import { CONTACT } from '@/lib/constants';
+import SEOHead from '@/components/SEOHead';
 
 export default function StickerPage() {
-  useEffect(() => {
-    document.title = 'Stickerkauf | babixGO';
-  }, []);
+  // SEO-Meta-Tags werden über die SEOHead-Komponente gesteuert
 
   const [selectedSetNumber, setSelectedSetNumber] = useState<number | null>(null);
   const [selectedStickerId, setSelectedStickerId] = useState<number | null>(null);
