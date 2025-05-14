@@ -129,73 +129,35 @@ export default function TycoonRacers() {
           </div>
         </div>
         
-        {/* FAQ Section */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-          <div className="bg-white rounded-xl shadow p-6">
-            <h3 className="font-bold text-lg text-[#0A3A68] mb-4">Häufig gestellte Fragen</h3>
-            
-            <div className="space-y-4">
-              <details className="group">
-                <summary className="flex justify-between items-center font-bold cursor-pointer text-[#0A3A68] hover:text-[#FF4C00]">
-                  Was sind Tycoon Racers Events?
-                  <span className="material-icons transition-transform group-open:rotate-180">expand_more</span>
-                </summary>
-                <div className="mt-2 text-gray-700">
-                  <p>Tycoon Racers sind spezielle Events in Monopoly GO, bei denen du in Teams antrittst oder Flaggen sammelst, um wertvolle Belohnungen zu erhalten. Unsere Pakete helfen dir, bei diesen Events schneller voranzukommen und alle Belohnungen zu sichern.</p>
-                </div>
-              </details>
-              
-              <details className="group">
-                <summary className="flex justify-between items-center font-bold cursor-pointer text-[#0A3A68] hover:text-[#FF4C00]">
-                  Wie funktionieren Teamplätze?
-                  <span className="material-icons transition-transform group-open:rotate-180">expand_more</span>
-                </summary>
-                <div className="mt-2 text-gray-700">
-                  <p>Bei einem Teamplatz nehmen wir dich in unser Team für das Tycoon Racers Event auf. Je nach gewählter Anzahl der Plätze erhältst du unterschiedliche Belohnungen. Du profitierst von unserem erfahrenen Team und erhältst alle 54 Rundenbelohnungen.</p>
-                </div>
-              </details>
-              
-              <details className="group">
-                <summary className="flex justify-between items-center font-bold cursor-pointer text-[#0A3A68] hover:text-[#FF4C00]">
-                  Kann ich auch während eines laufenden Events noch Plätze buchen?
-                  <span className="material-icons transition-transform group-open:rotate-180">expand_more</span>
-                </summary>
-                <div className="mt-2 text-gray-700">
-                  <p>Ja, du kannst auch während eines laufenden Events noch Plätze buchen. Der Preis bleibt gleich, aber die erreichbaren Belohnungen können je nach verbleibender Zeit variieren. Kontaktiere uns für eine individuelle Beratung.</p>
-                </div>
-              </details>
-            </div>
-          </div>
+        {/* Noch Fragen */}
+        <div className="bg-white rounded-xl shadow p-6 mb-8">
+          <h3 className="font-bold text-lg text-[#0A3A68] mb-4">Noch Fragen?</h3>
           
-          <div className="bg-white rounded-xl shadow p-6">
-            <h3 className="font-bold text-lg text-[#0A3A68] mb-4">Noch Fragen?</h3>
-            
-            <p className="text-gray-700 mb-4">
-              Hier findest du weitere Informationen zu unseren Angeboten:
-            </p>
-            
-            <div className="space-y-3">
-              <Link href="/hilfe/tycoon-racers" className="text-[#8A2BE2] hover:text-[#7B1FA2] font-medium block">
-                <div className="flex items-center">
-                  <span className="material-icons mr-2">article</span>
-                  Alle Informationen zu Tycoon Racers findest du hier
-                </div>
-              </Link>
-              <Link href="/hilfe/flaggen" className="text-[#8A2BE2] hover:text-[#7B1FA2] font-medium block">
-                <div className="flex items-center">
-                  <span className="material-icons mr-2">article</span>
-                  Die Voraussetzungen für Flaggen-Rewards kannst du hier nachlesen
-                </div>
-              </Link>
-              
-              <div className="mt-6">
-                <Link href="/kontakt" className="inline-block">
-                  <button className="bg-[#FF4C00] hover:bg-[#E03A00] text-white py-2 px-4 rounded-md transition-colors inline-flex items-center font-bold">
-                    <span className="material-icons mr-2">contact_support</span>
-                    Kontakt aufnehmen
-                  </button>
-                </Link>
+          <p className="text-gray-700 mb-4">
+            Hier findest du weitere Informationen zu diesem Angebot:
+          </p>
+          
+          <div className="space-y-3">
+            <Link href="/hilfe/tycoon-racers" className="text-[#8A2BE2] hover:text-[#7B1FA2] font-medium block">
+              <div className="flex items-center">
+                <span className="material-icons mr-2">article</span>
+                Alle Informationen zu Tycoon Racers findest du hier
               </div>
+            </Link>
+            <Link href="/hilfe/flaggen" className="text-[#8A2BE2] hover:text-[#7B1FA2] font-medium block">
+              <div className="flex items-center">
+                <span className="material-icons mr-2">article</span>
+                Die Voraussetzungen für Flaggen-Rewards kannst du hier nachlesen
+              </div>
+            </Link>
+            
+            <div className="mt-6">
+              <Link href="/kontakt" className="inline-block">
+                <button className="bg-[#FF4C00] hover:bg-[#E03A00] text-white py-2 px-4 rounded-md transition-colors inline-flex items-center font-bold">
+                  <span className="material-icons mr-2">contact_support</span>
+                  Kontakt aufnehmen
+                </button>
+              </Link>
             </div>
           </div>
         </div>
