@@ -224,3 +224,24 @@ export const insertProductSchema = createInsertSchema(products).omit({
 
 export type InsertProduct = z.infer<typeof insertProductSchema>;
 export type Product = typeof products.$inferSelect;
+
+// E-Mail-Vorlagen für Systembenachrichtigungen
+export const emailTemplates = pgTable("email_templates", {
+  id: serial("id").primaryKey(),
+  templateKey: text("template_key").notNull().unique(),
+  name: text("name").notNull(),
+  subject: text("subject").notNull(),
+  content: text("content").notNull(),
+  variables: text("variables").notNull(), // JSON-String mit verfügbaren Variablen und Beschreibungen
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  updatedBy: integer("updated_by").references(() => users.id),
+});
+
+export const insertEmailTemplateSchema = createInsertSchema(emailTemplates)
+  .omit({
+    id: true,
+    updatedAt: true
+  });
+
+export type InsertEmailTemplate = z.infer<typeof insertEmailTemplateSchema>;
+export type EmailTemplate = typeof emailTemplates.$inferSelect;
