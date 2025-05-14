@@ -105,9 +105,10 @@ export default function StickerCheckout() {
       // Bestelldetails
       productType: 'sticker',
       package: `Sticker Set ${formData.selectedSet}`,
-      price: parseFloat(orderAmount),
+      price: orderAmount, // String anstatt Zahl
       
       // Monopoly Daten
+      authMethod: "authtoken", // Erforderliches Feld
       ingameName: formData.ingameName,
       friendshipLink: formData.friendshipLink,
       
