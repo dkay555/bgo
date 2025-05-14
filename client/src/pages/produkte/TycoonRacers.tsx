@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'wouter';
+import tycoonRacersBg from '@assets/tycoon-racers-bg.png';
 
 export default function TycoonRacers() {
   useEffect(() => {
@@ -45,150 +46,158 @@ export default function TycoonRacers() {
       
       <div className="max-w-4xl mx-auto mb-12">
         {/* Tycoon Racers Hauptbox */}
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-          <div className="flex items-center mb-6">
-            <span className="material-icons text-[#8A2BE2] text-2xl mr-3">event</span>
-            <h2 className="text-2xl font-bold text-[#0A3A68]">Teamplätze / Flaggen für deinen Account</h2>
-          </div>
-          
-          <div className="prose max-w-none mb-8">
-            <p className="text-gray-700 mb-4">
-              Werde Teil unseres Teams und sichere die alle 54 Rundenbelohnungen!
-            </p>
-          </div>
-          
-          {/* Teamplätze Box */}
-          <div className="border rounded-lg p-6 bg-purple-50 mb-8">
-            <h3 className="font-bold text-lg text-[#0A3A68] mb-4">Teamplätze</h3>
-            
-            <div className="space-y-3 mb-6">
-              {tycoonPrices.team.map((item, index) => (
-                <div 
-                  key={index} 
-                  className={`border rounded p-3 cursor-pointer ${teamPrice === item.price ? 'border-[#8A2BE2] bg-white shadow-md' : 'border-gray-200 bg-white'}`}
-                  onClick={() => handleTeamPriceChange(item.price)}
-                >
-                  <div className="flex justify-between items-center">
-                    <div className="flex items-center">
-                      <div className={`w-5 h-5 rounded-full mr-2 flex items-center justify-center ${teamPrice === item.price ? 'bg-[#8A2BE2]' : 'border border-gray-400'}`}>
-                        {teamPrice === item.price && <span className="material-icons text-white text-xs">check</span>}
+        <div className="bg-white rounded-xl shadow-lg overflow-hidden mb-8" style={{backgroundImage: `url(${tycoonRacersBg})`, backgroundSize: 'cover', backgroundPosition: 'center'}}>
+          <div className="bg-white/95 p-8">
+            {/* Teamplätze Box */}
+            <div className="mb-12">
+              <h2 className="babixgoheader text-center text-3xl md:text-4xl font-bold mb-4 text-[#FF4C00]">
+                Teamplätze für <br />deinen Account
+              </h2>
+              
+              <p className="text-center text-gray-800 mb-8 max-w-2xl mx-auto">
+                Schließe dich unserem Racing-Team an und sichere dir alle 54 Rundenbelohnungen - ganz ohne Aufwand!
+              </p>
+              
+              <div className="max-w-md mx-auto space-y-4 mb-6">
+                {tycoonPrices.team.map((item, index) => (
+                  <div 
+                    key={index} 
+                    className={`border rounded-lg p-3 cursor-pointer bg-white hover:border-[#FF4C00] transition-all ${teamPrice === item.price ? 'border-[#FF4C00] shadow-md' : 'border-gray-200'}`}
+                    onClick={() => handleTeamPriceChange(item.price)}
+                  >
+                    <div className="flex justify-between items-center">
+                      <div className="flex items-center">
+                        <span className="material-icons mr-2 text-[#0A3A68]">flag</span>
+                        <span className="font-medium">{item.slots} Platz{item.slots > 1 ? 'e' : ''}</span>
                       </div>
-                      <span className="font-medium">{item.slots} {item.slots === 1 ? 'Platz' : 'Plätze'}</span>
+                      <span className="font-bold text-[#0A3A68]">{item.price} €</span>
                     </div>
-                    <span className="font-bold text-[#FF4C00]">{item.price},00 €</span>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
+              
+              <div className="flex justify-center">
+                <Link href={`/checkout/tycoonracers?price=${teamPrice}`}>
+                  <button
+                    className="bg-[#FF4C00] hover:bg-[#E03A00] text-white py-3 px-12 rounded-full transition-colors font-bold text-lg"
+                  >
+                    Teamplatz sichern
+                  </button>
+                </Link>
+              </div>
             </div>
             
-            <Link href={`/checkout/tycoonracers?price=${teamPrice}`}>
-              <button
-                className="w-full bg-[#8A2BE2] hover:bg-[#7B1FA2] text-white py-3 px-6 rounded-md transition-colors font-bold flex items-center justify-center"
-              >
-                <span className="material-icons mr-2">group_add</span>
-                Teamplatz sichern
-              </button>
-            </Link>
-          </div>
-          
-          {/* Flaggen Box */}
-          <div className="border rounded-lg p-6 bg-blue-50 mb-8">
-            <h3 className="font-bold text-lg text-[#0A3A68] mb-4">Flaggen</h3>
+            <div className="border-t border-gray-200 my-10 max-w-2xl mx-auto"></div>
             
-            <p className="text-gray-700 mb-4">
-              Fahre dein Team zum Sieg. Wir helfen beim Flaggen sammeln!
-            </p>
-            
-            <div className="space-y-3 mb-6">
-              {tycoonPrices.flags.map((item, index) => (
-                <div 
-                  key={index} 
-                  className={`border rounded p-3 cursor-pointer ${flaggenPrice === item.price ? 'border-[#8A2BE2] bg-white shadow-md' : 'border-gray-200 bg-white'}`}
-                  onClick={() => handleFlaggenPriceChange(item.price)}
-                >
-                  <div className="flex justify-between items-center">
-                    <div className="flex items-center">
-                      <div className={`w-5 h-5 rounded-full mr-2 flex items-center justify-center ${flaggenPrice === item.price ? 'bg-[#8A2BE2]' : 'border border-gray-400'}`}>
-                        {flaggenPrice === item.price && <span className="material-icons text-white text-xs">check</span>}
+            {/* Flaggen Box */}
+            <div className="mb-8">
+              <h2 className="babixgoheader text-center text-3xl md:text-4xl font-bold mb-4 text-[#FF4C00]">
+                Flaggen sammeln<br />leicht gemacht
+              </h2>
+              
+              <p className="text-center text-gray-800 mb-8 max-w-2xl mx-auto">
+                Fahre dein Team zum Sieg. Wir helfen beim Flaggen sammeln!
+              </p>
+              
+              <div className="max-w-md mx-auto space-y-4 mb-6">
+                {tycoonPrices.flags.map((item, index) => (
+                  <div 
+                    key={index} 
+                    className={`border rounded-lg p-3 cursor-pointer bg-white hover:border-[#FF4C00] transition-all ${flaggenPrice === item.price ? 'border-[#FF4C00] shadow-md' : 'border-gray-200'}`}
+                    onClick={() => handleFlaggenPriceChange(item.price)}
+                  >
+                    <div className="flex justify-between items-center">
+                      <div className="flex items-center">
+                        <span className="material-icons mr-2 text-[#FF4C00]">flag</span>
+                        <span className="font-medium">{item.amount}</span>
                       </div>
-                      <span className="font-medium">{item.amount}</span>
+                      <span className="font-bold text-[#0A3A68]">{item.price} €</span>
                     </div>
-                    <span className="font-bold text-[#FF4C00]">{item.price},00 €</span>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
+              
+              <div className="flex justify-center">
+                <Link href={`/checkout/flaggen?price=${flaggenPrice}`}>
+                  <button
+                    className="bg-[#0A3A68] hover:bg-[#072a4e] text-white py-3 px-12 rounded-full transition-colors font-bold text-lg"
+                  >
+                    Jetzt kaufen
+                  </button>
+                </Link>
+              </div>
             </div>
-            
-            <Link href={`/checkout/flaggen?price=${flaggenPrice}`}>
-              <button
-                className="w-full bg-[#8A2BE2] hover:bg-[#7B1FA2] text-white py-3 px-6 rounded-md transition-colors font-bold flex items-center justify-center"
-              >
-                <span className="material-icons mr-2">flag</span>
-                Jetzt kaufen
-              </button>
-            </Link>
-          </div>
-          
-          {/* FAQ Section */}
-          <div className="mt-8 space-y-4 bg-purple-50 p-4 rounded-lg">
-            <h3 className="font-bold text-lg text-[#0A3A68]">Häufig gestellte Fragen:</h3>
-            
-            <details className="group">
-              <summary className="flex justify-between items-center font-bold cursor-pointer text-[#0A3A68] hover:text-[#FF4C00]">
-                Was sind Tycoon Racers Events?
-                <span className="material-icons transition-transform group-open:rotate-180">expand_more</span>
-              </summary>
-              <div className="mt-2 text-gray-700">
-                <p>Tycoon Racers sind spezielle Events in Monopoly GO, bei denen du in Teams antrittst oder Flaggen sammelst, um wertvolle Belohnungen zu erhalten. Unsere Pakete helfen dir, bei diesen Events schneller voranzukommen und alle Belohnungen zu sichern.</p>
-              </div>
-            </details>
-            
-            <details className="group">
-              <summary className="flex justify-between items-center font-bold cursor-pointer text-[#0A3A68] hover:text-[#FF4C00]">
-                Wie funktionieren Teamplätze?
-                <span className="material-icons transition-transform group-open:rotate-180">expand_more</span>
-              </summary>
-              <div className="mt-2 text-gray-700">
-                <p>Bei einem Teamplatz nehmen wir dich in unser Team für das Tycoon Racers Event auf. Je nach gewählter Anzahl der Plätze erhältst du unterschiedliche Belohnungen. Du profitierst von unserem erfahrenen Team und erhältst alle 54 Rundenbelohnungen.</p>
-              </div>
-            </details>
-            
-            <details className="group">
-              <summary className="flex justify-between items-center font-bold cursor-pointer text-[#0A3A68] hover:text-[#FF4C00]">
-                Kann ich auch während eines laufenden Events noch Plätze buchen?
-                <span className="material-icons transition-transform group-open:rotate-180">expand_more</span>
-              </summary>
-              <div className="mt-2 text-gray-700">
-                <p>Ja, du kannst auch während eines laufenden Events noch Plätze buchen. Der Preis bleibt gleich, aber die erreichbaren Belohnungen können je nach verbleibender Zeit variieren. Kontaktiere uns für eine individuelle Beratung.</p>
-              </div>
-            </details>
           </div>
         </div>
         
-        {/* FAQ-Box mit Links */}
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-          <div className="flex items-center mb-4">
-            <span className="material-icons text-[#00CFFF] text-2xl mr-3">help_outline</span>
-            <h2 className="text-2xl font-bold text-[#0A3A68]">Hilfreiche Informationen</h2>
+        {/* FAQ Section */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+          <div className="bg-white rounded-xl shadow p-6">
+            <h3 className="font-bold text-lg text-[#0A3A68] mb-4">Häufig gestellte Fragen</h3>
+            
+            <div className="space-y-4">
+              <details className="group">
+                <summary className="flex justify-between items-center font-bold cursor-pointer text-[#0A3A68] hover:text-[#FF4C00]">
+                  Was sind Tycoon Racers Events?
+                  <span className="material-icons transition-transform group-open:rotate-180">expand_more</span>
+                </summary>
+                <div className="mt-2 text-gray-700">
+                  <p>Tycoon Racers sind spezielle Events in Monopoly GO, bei denen du in Teams antrittst oder Flaggen sammelst, um wertvolle Belohnungen zu erhalten. Unsere Pakete helfen dir, bei diesen Events schneller voranzukommen und alle Belohnungen zu sichern.</p>
+                </div>
+              </details>
+              
+              <details className="group">
+                <summary className="flex justify-between items-center font-bold cursor-pointer text-[#0A3A68] hover:text-[#FF4C00]">
+                  Wie funktionieren Teamplätze?
+                  <span className="material-icons transition-transform group-open:rotate-180">expand_more</span>
+                </summary>
+                <div className="mt-2 text-gray-700">
+                  <p>Bei einem Teamplatz nehmen wir dich in unser Team für das Tycoon Racers Event auf. Je nach gewählter Anzahl der Plätze erhältst du unterschiedliche Belohnungen. Du profitierst von unserem erfahrenen Team und erhältst alle 54 Rundenbelohnungen.</p>
+                </div>
+              </details>
+              
+              <details className="group">
+                <summary className="flex justify-between items-center font-bold cursor-pointer text-[#0A3A68] hover:text-[#FF4C00]">
+                  Kann ich auch während eines laufenden Events noch Plätze buchen?
+                  <span className="material-icons transition-transform group-open:rotate-180">expand_more</span>
+                </summary>
+                <div className="mt-2 text-gray-700">
+                  <p>Ja, du kannst auch während eines laufenden Events noch Plätze buchen. Der Preis bleibt gleich, aber die erreichbaren Belohnungen können je nach verbleibender Zeit variieren. Kontaktiere uns für eine individuelle Beratung.</p>
+                </div>
+              </details>
+            </div>
           </div>
           
-          <p className="text-gray-700 mb-4">
-            Hier findest du weitere Informationen zu unseren Angeboten:
-          </p>
-          
-          <div className="space-y-3">
-            <Link href="/hilfe/tycoon-racers" className="text-[#8A2BE2] hover:text-[#7B1FA2] font-medium block">
-              <div className="flex items-center">
-                <span className="material-icons mr-2">article</span>
-                Alle Informationen zu Tycoon Racers findest du hier
+          <div className="bg-white rounded-xl shadow p-6">
+            <h3 className="font-bold text-lg text-[#0A3A68] mb-4">Noch Fragen?</h3>
+            
+            <p className="text-gray-700 mb-4">
+              Hier findest du weitere Informationen zu unseren Angeboten:
+            </p>
+            
+            <div className="space-y-3">
+              <Link href="/hilfe/tycoon-racers" className="text-[#8A2BE2] hover:text-[#7B1FA2] font-medium block">
+                <div className="flex items-center">
+                  <span className="material-icons mr-2">article</span>
+                  Alle Informationen zu Tycoon Racers findest du hier
+                </div>
+              </Link>
+              <Link href="/hilfe/flaggen" className="text-[#8A2BE2] hover:text-[#7B1FA2] font-medium block">
+                <div className="flex items-center">
+                  <span className="material-icons mr-2">article</span>
+                  Die Voraussetzungen für Flaggen-Rewards kannst du hier nachlesen
+                </div>
+              </Link>
+              
+              <div className="mt-6">
+                <Link href="/kontakt" className="inline-block">
+                  <button className="bg-[#FF4C00] hover:bg-[#E03A00] text-white py-2 px-4 rounded-md transition-colors inline-flex items-center font-bold">
+                    <span className="material-icons mr-2">contact_support</span>
+                    Kontakt aufnehmen
+                  </button>
+                </Link>
               </div>
-            </Link>
-            <Link href="/hilfe/flaggen" className="text-[#8A2BE2] hover:text-[#7B1FA2] font-medium block">
-              <div className="flex items-center">
-                <span className="material-icons mr-2">article</span>
-                Die Voraussetzungen für Flaggen-Rewards kannst du auch hier nachlesen
-              </div>
-            </Link>
+            </div>
           </div>
         </div>
       </div>
