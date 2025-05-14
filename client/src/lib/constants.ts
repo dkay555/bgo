@@ -46,8 +46,9 @@ export const SPECIAL_OFFER = {
 // Navigation links
 export const NAV_LINKS = [
   { name: 'Start', href: '/' },
+  { name: 'News', href: '/news' },
   { 
-    name: 'Leistungen', 
+    name: 'Shop', 
     href: '/produkte',
     isDropdown: true,
     dropdownItems: [
@@ -57,6 +58,7 @@ export const NAV_LINKS = [
       { name: 'Race', href: '/produkte/race#top', icon: 'emoji_events' },
     ]
   },
+  { name: 'Login', href: '/auth' },
   { 
     name: 'Hilfe',
     href: '/hilfe', 

@@ -73,7 +73,7 @@ export default function StartPage() {
             
             <div className="flex flex-wrap justify-center gap-3 mt-4">
               <Button variant="darkblue" asChild className="font-bold flex items-center gap-2">
-                <Link href="/hilfe/news_preise_angebot.html">
+                <Link href="/news">
                   <span className="material-icons">feed</span>
                   News
                 </Link>
@@ -87,13 +87,20 @@ export default function StartPage() {
               </Button>
               
               <Button variant="orange" asChild className="font-bold flex items-center gap-2">
+                <Link href="/auth">
+                  <span className="material-icons">person</span>
+                  Login
+                </Link>
+              </Button>
+              
+              <Button variant="darkblue" asChild className="font-bold flex items-center gap-2">
                 <Link href="/hilfe">
                   <span className="material-icons">help_outline</span>
                   Hilfe
                 </Link>
               </Button>
               
-              <Button variant="darkblue" asChild className="font-bold flex items-center gap-2">
+              <Button variant="cyan" asChild className="font-bold flex items-center gap-2">
                 <Link href="/kontakt">
                   <span className="material-icons">contact_support</span>
                   Kontakt
