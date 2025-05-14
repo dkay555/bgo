@@ -127,6 +127,9 @@ function Router() {
           <Route path="/produkte/race">
             {() => <TycoonRacersPage />}
           </Route>
+          <Route path="/produkte/tycoonracers">
+            {() => <TycoonRacersPage />}
+          </Route>
           <Route path="/produkte/weitere">
             {() => <WeiterePage />}
           </Route>
