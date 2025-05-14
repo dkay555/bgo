@@ -303,14 +303,14 @@ export function Header() {
                 <span className="font-bold">Partner</span>
               </Link>
               
-              {/* Race */}
+              {/* Tycoon Racers */}
               <Link 
-                href="/produkte/race"
+                href="/produkte/tycoonracers"
                 className="text-white hover:bg-white/10 hover:text-[#FF4C00] p-2 rounded-md transition duration-300 border border-white/10 flex flex-col items-center"
                 onClick={closeMobileMenu}
               >
                 <span className="material-icons text-[#00CFFF] text-xl mb-1">emoji_events</span>
-                <span className="font-bold">Race</span>
+                <span className="font-bold">Tycoon Racers</span>
               </Link>
             </div>
           </div>
