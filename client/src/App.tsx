@@ -8,6 +8,7 @@ import NotFound from "@/pages/not-found";
 import LandingPage from "@/pages/LandingPage";
 import StartPage from "@/pages/StartPage";
 import BlogPost from "@/pages/BlogPost";
+import News from "@/pages/News";
 import Kontakt from "@/pages/Kontakt";
 import Impressum from "@/pages/Impressum";
 import Datenschutz from "@/pages/Datenschutz";
@@ -80,6 +81,7 @@ function Router() {
           <Route path="/" component={StartPage} />
           <Route path="/landing" component={LandingPage} />
           <Route path="/blog" component={BlogPost} />
+          <Route path="/news" component={News} />
           <Route path="/produkte" component={Produkte} />
           <Route path="/preise" component={Preise} />
           

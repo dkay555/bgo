@@ -105,8 +105,8 @@ export const PRODUCT_CATEGORIES = [
     description: 'Finden Sie aktive Spielpartner'
   },
   { 
-    name: 'Race', 
-    path: '/produkte/race#top',
+    name: 'Tycoon Racers', 
+    path: '/produkte/tycoonracers#top',
     icon: 'emoji_events',
     image: 'kategorie_racers_200_300.webp',
     description: 'Unterstützung bei Events'
