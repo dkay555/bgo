@@ -231,25 +231,74 @@ export default function StartPage() {
       <section id="ueber" className="py-8 bg-gray-100 my-12 rounded-xl scroll-mt-20">
         <div className="max-w-4xl mx-auto px-4">
           <h2 className="babix-info-header mx-auto mb-6 text-center">
-            Über babixGO
+            Warum du babixGO wählen solltest
           </h2>
           <div className="bg-white p-6 rounded-xl shadow-md">
-            <p className="mb-4">babixGO ist deine erste Adresse für alles rund um <strong className="text-[#FF4C00]">Monopoly GO</strong>. Als langjähriger Spieler weiß ich genau, was dir in den wichtigsten Momenten weiterhilft – bei Events, Stickeralben oder Würfelbedarf.</p>
+            <p className="mb-4">Es ist kein Geheimnis: Am Ende gewinnt immer die Bank. Daran können wir auch nichts ändern. Was wir allerdings können: Den Wert der Würfel soweit verschieben, dass Event-, Set- und Albumabschlüsse für jeden möglich sind.</p>
             
-            <ul className="space-y-3 mt-6">
-              <li className="flex items-start">
-                <span className="material-icons text-[#FF4C00] mr-2 flex-shrink-0">check_circle</span>
-                <span>Schnelle & zuverlässige Lieferung</span>
-              </li>
-              <li className="flex items-start">
-                <span className="material-icons text-[#FF4C00] mr-2 flex-shrink-0">check_circle</span>
-                <span>Individuelle Beratung & faire Preise</span>
-              </li>
-              <li className="flex items-start">
-                <span className="material-icons text-[#FF4C00] mr-2 flex-shrink-0">check_circle</span>
-                <span>Sicherheit & Erfahrung</span>
-              </li>
-            </ul>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+              <div className="space-y-4">
+                <div>
+                  <h3 className="font-bold text-[#0A3A68] text-lg flex items-center">
+                    <span className="material-icons text-[#FF4C00] mr-2">check_circle</span>
+                    Alles aus einer Hand
+                  </h3>
+                  <p className="ml-8 text-[#0A3A68]/80">Würfelboosts, Sticker, Solo-, Team- und Partnerevents sowie komplette Accounts – und das alles an einem Ort.</p>
+                </div>
+                
+                <div>
+                  <h3 className="font-bold text-[#0A3A68] text-lg flex items-center">
+                    <span className="material-icons text-[#FF4C00] mr-2">check_circle</span>
+                    Persönlicher Service über WhatsApp
+                  </h3>
+                  <p className="ml-8 text-[#0A3A68]/80">Direkter Kontakt, individuelle Betreuung und schnelle Antworten. Bei babixGO bekommst du den Service, den du verdienst.</p>
+                </div>
+                
+                <div>
+                  <h3 className="font-bold text-[#0A3A68] text-lg flex items-center">
+                    <span className="material-icons text-[#FF4C00] mr-2">check_circle</span>
+                    Technisches Verständnis & Accountsicherheit
+                  </h3>
+                  <p className="ml-8 text-[#0A3A68]/80">Mit fundiertem Wissen über die Spielmechaniken, Sicherheitsmaßnahmen und Tracking-Funktionen sorgen wir dafür, dass dein Account in sicheren Händen bleibt.</p>
+                </div>
+                
+                <div>
+                  <h3 className="font-bold text-[#0A3A68] text-lg flex items-center">
+                    <span className="material-icons text-[#FF4C00] mr-2">check_circle</span>
+                    Kontinuität und Erfahrung
+                  </h3>
+                  <p className="ml-8 text-[#0A3A68]/80">Seit dem Release von Monopoly Go ist babixGO am Puls der Zeit und bringt fast zwei Jahre Erfahrung und Leidenschaft für das Spiel mit.</p>
+                </div>
+              </div>
+              
+              <div className="space-y-4">
+                <h3 className="font-bold text-[#0A3A68] text-xl mb-2">Dein Vorteil:</h3>
+                
+                <div>
+                  <h3 className="font-bold text-[#0A3A68] text-lg flex items-center">
+                    <span className="material-icons text-[#FF4C00] mr-2">check_circle</span>
+                    Faire Preise
+                  </h3>
+                  <p className="ml-8 text-[#0A3A68]/80">Wir legen großen Wert darauf, dir einen fairen und erschwinglichen Preis anzubieten - für jedes Budget ist etwas passendes dabei. Durch Gewinnspiele können wir auch an die etwas geben, die kein Geld für Monopoly Go ausgeben möchten.</p>
+                </div>
+                
+                <div>
+                  <h3 className="font-bold text-[#0A3A68] text-lg flex items-center">
+                    <span className="material-icons text-[#FF4C00] mr-2">check_circle</span>
+                    Zuverlässige Leistungen
+                  </h3>
+                  <p className="ml-8 text-[#0A3A68]/80">Wir reagieren schnell auf Änderungen im Spiel. Durch unser inzwischen großes Netzwerk bemerken wir Änderungen früh und können dadurch schon Lösungen präsentieren bevor überhaupt alle Accounts betroffen sind.</p>
+                </div>
+                
+                <div>
+                  <h3 className="font-bold text-[#0A3A68] text-lg flex items-center">
+                    <span className="material-icons text-[#FF4C00] mr-2">check_circle</span>
+                    Transparente Kommunikation
+                  </h3>
+                  <p className="ml-8 text-[#0A3A68]/80">Egal, ob es unsere Angebote und Preise betrifft, Änderungen an der Spielmechanik die Dich und deinen Account betreffen könnten oder es sich um dein Feedback handelt. Je offener wir miteinander sprechen, desto unkomplizierter Dein Erlebnis.</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
