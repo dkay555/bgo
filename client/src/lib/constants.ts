@@ -98,7 +98,7 @@ export const PRODUCT_CATEGORIES = [
     description: 'Vervollständigen Sie Ihre Sammlungen'
   },
   { 
-    name: 'Partner', 
+    name: 'Partnerevents', 
     path: '/produkte/partner',
     icon: 'people',
     image: 'kategorie_partner_300_300.webp',
