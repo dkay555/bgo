@@ -5,7 +5,6 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import MainLayout from "@/layouts/MainLayout";
 import NotFound from "@/pages/not-found";
-import Home from "@/pages/Home";
 import LandingPage from "@/pages/LandingPage";
 import StartPage from "@/pages/StartPage";
 import BlogPost from "@/pages/BlogPost";
@@ -16,6 +15,7 @@ import AGB from "@/pages/AGB";
 import Widerruf from "@/pages/Widerruf";
 import Hilfe from "@/pages/Hilfe";
 import Produkte from "@/pages/Produkte";
+import Preise from "@/pages/Preise";
 import AuthPage from "@/pages/auth-page";
 import OrderHistory from "@/pages/order-history";
 import { AuthProvider } from "@/hooks/use-auth";
@@ -81,7 +81,7 @@ function Router() {
           <Route path="/landing" component={LandingPage} />
           <Route path="/blog" component={BlogPost} />
           <Route path="/produkte" component={Produkte} />
-          <Route path="/preise" component={Home} />
+          <Route path="/preise" component={Preise} />
           
           {/* Rechtliche Seiten */}
           <Route path="/kontakt" component={Kontakt} />
