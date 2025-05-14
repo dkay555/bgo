@@ -59,6 +59,7 @@ const ProfilePage = lazy(() => import('@/pages/profile'));
 // Admin pages
 const AdminBestellungenPage = lazy(() => import('@/pages/admin/Bestellungen'));
 const AdminBenutzerPage = lazy(() => import('@/pages/admin/Benutzer'));
+const AdminEmailVorlagenPage = lazy(() => import('@/pages/admin/EmailVorlagen'));
 
 // Test pages
 const PayPalTestPage = lazy(() => import('@/pages/PayPalTest'));
@@ -177,6 +178,9 @@ function Router() {
           </Route>
           <Route path="/admin/benutzer">
             {() => <AdminBenutzerPage />}
+          </Route>
+          <Route path="/admin/email-vorlagen">
+            {() => <AdminEmailVorlagenPage />}
           </Route>
           
           {/* Test-Seiten */}
