@@ -52,10 +52,10 @@ export const NAV_LINKS = [
     href: '/produkte',
     isDropdown: true,
     dropdownItems: [
-      { name: 'Würfel', href: '/produkte/wuerfel#top', icon: 'casino' },
-      { name: 'Sticker', href: '/produkte/sticker#top', icon: 'collections_bookmark' },
-      { name: 'Partnerevents', href: '/produkte/partner#top', icon: 'people' },
-      { name: 'Tycoon Racers', href: '/produkte/tycoonracers#top', icon: 'emoji_events' },
+      { name: 'Würfel', href: '/produkte/wuerfel', icon: 'casino' },
+      { name: 'Sticker', href: '/produkte/sticker', icon: 'collections_bookmark' },
+      { name: 'Partnerevents', href: '/produkte/partner', icon: 'people' },
+      { name: 'Tycoon Racers', href: '/produkte/tycoonracers', icon: 'emoji_events' },
     ]
   },
   { name: 'Login', href: '/auth' },
@@ -64,10 +64,10 @@ export const NAV_LINKS = [
     href: '/hilfe', 
     isDropdown: true,
     dropdownItems: [
-      { name: 'Würfel Hilfe', href: '/hilfe/wuerfel#top' },
-      { name: 'Sticker Hilfe', href: '/hilfe/sticker#top' },
-      { name: 'Partnerevents Hilfe', href: '/hilfe/partner#top' },
-      { name: 'Tycoon Racers Hilfe', href: '/hilfe/tycoonracers#top' },
+      { name: 'Würfel Hilfe', href: '/hilfe/wuerfel' },
+      { name: 'Sticker Hilfe', href: '/hilfe/sticker' },
+      { name: 'Partnerevents Hilfe', href: '/hilfe/partner' },
+      { name: 'Tycoon Racers Hilfe', href: '/hilfe/tycoonracers' },
     ]
   },
   { name: 'Kontakt', href: '/kontakt' },
@@ -75,38 +75,38 @@ export const NAV_LINKS = [
 
 // Footer links
 export const FOOTER_LINKS = [
-  { name: 'Impressum', href: '/impressum#top' },
-  { name: 'Datenschutz', href: '/datenschutz#top' },
-  { name: 'AGB', href: '/agb#top' },
-  { name: 'Widerruf', href: '/widerruf#top' },
+  { name: 'Impressum', href: '/impressum' },
+  { name: 'Datenschutz', href: '/datenschutz' },
+  { name: 'AGB', href: '/agb' },
+  { name: 'Widerruf', href: '/widerruf' },
 ];
 
 // Produkt-Kategorien
 export const PRODUCT_CATEGORIES = [
   { 
     name: 'Würfelboost', 
-    path: '/produkte/wuerfel#top',
+    path: '/produkte/wuerfel',
     icon: 'casino',
     image: 'kategorie_wuerfel_300_300.webp',
     description: 'Erhöhen Sie Ihre Würfelzahl im Spiel'
   },
   { 
     name: 'Sticker', 
-    path: '/produkte/sticker#top',
+    path: '/produkte/sticker',
     icon: 'collections_bookmark',
     image: 'kategorie_sticker_300_300.webp',
     description: 'Vervollständigen Sie Ihre Sammlungen'
   },
   { 
     name: 'Partner', 
-    path: '/produkte/partner#top',
+    path: '/produkte/partner',
     icon: 'people',
     image: 'kategorie_partner_300_300.webp',
     description: 'Finden Sie aktive Spielpartner'
   },
   { 
     name: 'Tycoon Racers', 
-    path: '/produkte/tycoonracers#top',
+    path: '/produkte/tycoonracers',
     icon: 'emoji_events',
     image: 'kategorie_racers_200_300.webp',
     description: 'Unterstützung bei Events'
