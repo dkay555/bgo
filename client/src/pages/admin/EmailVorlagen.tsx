@@ -157,14 +157,15 @@ export default function AdminEmailVorlagenPage() {
   };
 
   // Filtern der E-Mail-Vorlagen basierend auf Suchbegriff
-  const filteredTemplates = templatesData?.templates?.filter((template: EmailTemplate) => {
+  const templates = Array.isArray(templatesData?.templates) ? templatesData.templates : [];
+  const filteredTemplates = templates.filter((template: EmailTemplate) => {
     const searchTermLower = searchTerm.toLowerCase();
     return (
       template.name.toLowerCase().includes(searchTermLower) ||
       template.templateKey.toLowerCase().includes(searchTermLower) ||
       template.subject.toLowerCase().includes(searchTermLower)
     );
-  }) || [];
+  });
 
   // Loading-Indikator anzeigen während der Admin-Authentifizierung läuft
   if (isLoading) {

@@ -472,7 +472,7 @@ export default function Bestellungen() {
       <div className="bg-white shadow mb-6 rounded-lg">
         <div className="flex items-center p-4">
           <h2 className="text-xl font-bold mr-6">Admin-Bereich</h2>
-          <div className="flex space-x-4">
+          <div className="flex flex-wrap gap-2">
             <a 
               href="/admin/bestellungen" 
               className="px-4 py-2 rounded-md bg-blue-100 text-blue-800 font-medium"
@@ -484,6 +484,12 @@ export default function Bestellungen() {
               className="px-4 py-2 rounded-md hover:bg-gray-100 transition-colors"
             >
               Benutzer
+            </a>
+            <a 
+              href="/admin/email-vorlagen" 
+              className="px-4 py-2 rounded-md hover:bg-gray-100 transition-colors"
+            >
+              E-Mail-Vorlagen
             </a>
           </div>
           <div className="ml-auto">
