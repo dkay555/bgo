@@ -45,14 +45,12 @@ export default function Wuerfel() {
           Zurück zu Produkten
         </Link>
         <div className="w-full relative rounded-xl overflow-hidden">
-          <div className="h-48 md:h-64 bg-cover bg-center" style={{backgroundImage: 'url("/images/hero-backgrounds/wuerfel-hero.svg")'}}>
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="text-center">
-                <h1 className="babix-info-header text-3xl md:text-5xl font-bold text-white px-4 drop-shadow-lg">
-                  Würfelboost Service
-                </h1>
-                <p className="text-white text-lg mt-2 max-w-2xl px-4">Mehr Würfel für dein Spielvergnügen</p>
-              </div>
+          <div className="h-48 md:h-64 bg-gradient-to-r from-[#FF4C00] to-[#0A3A68] flex items-center justify-center">
+            <div className="text-center">
+              <h1 className="babix-info-header text-3xl md:text-5xl font-bold text-white px-4 drop-shadow-lg">
+                Würfelboost Service
+              </h1>
+              <p className="text-white text-lg mt-2 max-w-2xl px-4">Mehr Würfel für dein Spielvergnügen</p>
             </div>
           </div>
         </div>
