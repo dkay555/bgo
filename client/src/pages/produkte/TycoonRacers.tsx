@@ -27,11 +27,14 @@ export default function TycoonRacers() {
           Zurück zu Produkten
         </Link>
         <div className="w-full relative rounded-xl overflow-hidden">
-          <div className="h-48 md:h-64 bg-cover bg-center" style={{backgroundImage: 'url("/images/hero-backgrounds/tycoon-racers-hero.png")'}}>
-            <div className="absolute inset-0 bg-gradient-to-r from-[#0A3A68]/80 to-[#FF4C00]/80 flex items-center justify-center">
-              <h1 className="babix-info-header text-3xl md:text-5xl font-bold text-white text-center px-4 drop-shadow-lg">
-                Tycoon Racers
-              </h1>
+          <div className="h-48 md:h-64 bg-cover bg-center" style={{backgroundImage: 'url("/images/hero-backgrounds/tycoon-hero.svg")'}}>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="text-center">
+                <h1 className="babix-info-header text-3xl md:text-5xl font-bold text-white px-4 drop-shadow-lg">
+                  Tycoon Racers
+                </h1>
+                <p className="text-white text-lg mt-2 max-w-2xl px-4">Sammle Flaggen und sichere dir alle Rundenbelohnungen</p>
+              </div>
             </div>
           </div>
         </div>
