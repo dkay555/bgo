@@ -6,10 +6,6 @@ export default function TycoonRacers() {
     document.title = 'Tycoon Racers | babixGO';
   }, []);
   
-  // States für Tycoon Racers
-  const [teamPrice, setTeamPrice] = useState(20);
-  const [flaggenPrice, setFlaggenPrice] = useState(30);
-
   // Preistabelle für Tycoon Racers
   const tycoonPrices = {
     team: [
@@ -21,16 +17,6 @@ export default function TycoonRacers() {
       { amount: '15.000 Flaggen', price: 30 },
       { amount: '25.000 Flaggen', price: 40 },
     ]
-  };
-
-  // Handler für Team Preis-Änderung
-  const handleTeamPriceChange = (price: number) => {
-    setTeamPrice(price);
-  };
-  
-  // Handler für Flaggen Preis-Änderung
-  const handleFlaggenPriceChange = (price: number) => {
-    setFlaggenPrice(price);
   };
 
   return (
@@ -57,26 +43,28 @@ export default function TycoonRacers() {
                 Schließe dich unserem Racing-Team an und sichere dir alle 54 Rundenbelohnungen - ganz ohne Aufwand!
               </p>
               
-              <div className="max-w-md mx-auto space-y-4 mb-6">
-                {tycoonPrices.team.map((item, index) => (
-                  <div 
-                    key={index} 
-                    className={`border rounded-lg p-3 cursor-pointer bg-white hover:border-[#FF4C00] transition-all ${teamPrice === item.price ? 'border-[#FF4C00] shadow-md' : 'border-gray-200'}`}
-                    onClick={() => handleTeamPriceChange(item.price)}
-                  >
-                    <div className="flex justify-between items-center">
-                      <div className="flex items-center">
-                        <span className="material-icons mr-2 text-[#0A3A68]">flag</span>
-                        <span className="font-medium">{item.slots} Platz{item.slots > 1 ? 'e' : ''}</span>
-                      </div>
-                      <span className="font-bold text-[#0A3A68]">{item.price} €</span>
-                    </div>
-                  </div>
-                ))}
+              <div className="max-w-md mx-auto bg-white border border-gray-200 rounded-lg p-4 mb-6">
+                <table className="w-full">
+                  <tbody>
+                    {tycoonPrices.team.map((item, index) => (
+                      <tr key={index} className={index < tycoonPrices.team.length - 1 ? "border-b border-gray-100" : ""}>
+                        <td className="py-2">
+                          <div className="flex items-center">
+                            <span className="material-icons mr-2 text-[#0A3A68]">flag</span>
+                            <span className="font-medium">{item.slots} Platz{item.slots > 1 ? 'e' : ''}</span>
+                          </div>
+                        </td>
+                        <td className="py-2 text-right">
+                          <span className="font-bold text-[#0A3A68]">{item.price} €</span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
               
               <div className="flex justify-center">
-                <Link href={`/checkout/tycoonracers?price=${teamPrice}`}>
+                <Link href="/checkout/tycoonracers">
                   <button
                     className="bg-[#FF4C00] hover:bg-[#E03A00] text-white py-3 px-12 rounded-full transition-colors font-bold text-lg"
                   >
@@ -98,26 +86,28 @@ export default function TycoonRacers() {
                 Fahre dein Team zum Sieg. Wir helfen beim Flaggen sammeln!
               </p>
               
-              <div className="max-w-md mx-auto space-y-4 mb-6">
-                {tycoonPrices.flags.map((item, index) => (
-                  <div 
-                    key={index} 
-                    className={`border rounded-lg p-3 cursor-pointer bg-white hover:border-[#FF4C00] transition-all ${flaggenPrice === item.price ? 'border-[#FF4C00] shadow-md' : 'border-gray-200'}`}
-                    onClick={() => handleFlaggenPriceChange(item.price)}
-                  >
-                    <div className="flex justify-between items-center">
-                      <div className="flex items-center">
-                        <span className="material-icons mr-2 text-[#FF4C00]">flag</span>
-                        <span className="font-medium">{item.amount}</span>
-                      </div>
-                      <span className="font-bold text-[#0A3A68]">{item.price} €</span>
-                    </div>
-                  </div>
-                ))}
+              <div className="max-w-md mx-auto bg-white border border-gray-200 rounded-lg p-4 mb-6">
+                <table className="w-full">
+                  <tbody>
+                    {tycoonPrices.flags.map((item, index) => (
+                      <tr key={index} className={index < tycoonPrices.flags.length - 1 ? "border-b border-gray-100" : ""}>
+                        <td className="py-2">
+                          <div className="flex items-center">
+                            <span className="material-icons mr-2 text-[#FF4C00]">flag</span>
+                            <span className="font-medium">{item.amount}</span>
+                          </div>
+                        </td>
+                        <td className="py-2 text-right">
+                          <span className="font-bold text-[#0A3A68]">{item.price} €</span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
               
               <div className="flex justify-center">
-                <Link href={`/checkout/flaggen?price=${flaggenPrice}`}>
+                <Link href="/checkout/flaggen">
                   <button
                     className="bg-[#0A3A68] hover:bg-[#072a4e] text-white py-3 px-12 rounded-full transition-colors font-bold text-lg"
                   >
