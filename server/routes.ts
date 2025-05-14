@@ -2,19 +2,21 @@ import type { Express, Request, Response } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { createPaypalOrder, capturePaypalOrder, loadPaypalDefault } from "./paypal";
-import { insertOrderSchema, insertTicketSchema, insertTicketReplySchema, type User } from "@shared/schema";
+import { insertOrderSchema, insertTicketSchema, insertTicketReplySchema, insertEmailTemplateSchema, type User } from "@shared/schema";
 import { ZodError } from "zod";
 import { sendNewOrderNotification, sendOrderConfirmation, sendEmailToCustomer } from "./email";
 import { adminAuthMiddleware } from "./admin-auth";
 import { setupAuth, hashPassword } from "./auth";
 import { seedProducts } from "./seed-products";
+import { seedEmailTemplates } from "./seed-emails";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Auth-System initialisieren
   setupAuth(app);
   
-  // Beispiel-Produkte erstellen (falls keine vorhanden sind)
+  // Beispiel-Produkte und E-Mail-Vorlagen erstellen (falls keine vorhanden sind)
   await seedProducts();
+  await seedEmailTemplates();
   
   // Produkt-API-Routen
   // Produkte abrufen - öffentlich zugänglich
@@ -1210,6 +1212,122 @@ ${message}
       res.status(500).json({
         success: false,
         message: "Ein Serverfehler ist aufgetreten"
+      });
+    }
+  });
+  
+  // E-Mail-Vorlagen API-Routen (nur für Admins)
+  
+  // Alle E-Mail-Vorlagen abrufen
+  app.get("/api/admin/email-templates", adminAuthMiddleware, async (req: Request, res: Response) => {
+    try {
+      const templates = await storage.getAllEmailTemplates();
+      res.status(200).json({
+        success: true,
+        templates
+      });
+    } catch (error) {
+      console.error("Fehler beim Abrufen der E-Mail-Vorlagen:", error);
+      res.status(500).json({
+        success: false,
+        message: "Fehler beim Abrufen der E-Mail-Vorlagen"
+      });
+    }
+  });
+  
+  // Einzelne E-Mail-Vorlage abrufen
+  app.get("/api/admin/email-templates/:id", adminAuthMiddleware, async (req: Request, res: Response) => {
+    try {
+      const id = parseInt(req.params.id);
+      
+      if (isNaN(id)) {
+        return res.status(400).json({
+          success: false,
+          message: "Ungültige Vorlagen-ID"
+        });
+      }
+      
+      const template = await storage.getEmailTemplate(id);
+      
+      if (!template) {
+        return res.status(404).json({
+          success: false,
+          message: "E-Mail-Vorlage nicht gefunden"
+        });
+      }
+      
+      res.status(200).json({
+        success: true,
+        template
+      });
+    } catch (error) {
+      console.error("Fehler beim Abrufen der E-Mail-Vorlage:", error);
+      res.status(500).json({
+        success: false,
+        message: "Fehler beim Abrufen der E-Mail-Vorlage"
+      });
+    }
+  });
+  
+  // E-Mail-Vorlage bearbeiten
+  app.patch("/api/admin/email-templates/:id", adminAuthMiddleware, async (req: Request, res: Response) => {
+    try {
+      const id = parseInt(req.params.id);
+      
+      if (isNaN(id)) {
+        return res.status(400).json({
+          success: false,
+          message: "Ungültige Vorlagen-ID"
+        });
+      }
+      
+      // Prüfen, ob Vorlage existiert
+      const template = await storage.getEmailTemplate(id);
+      
+      if (!template) {
+        return res.status(404).json({
+          success: false,
+          message: "E-Mail-Vorlage nicht gefunden"
+        });
+      }
+      
+      // Validieren der Daten
+      try {
+        // Wir erlauben nur die Änderung von Betreff und Inhalt
+        // Der Schlüssel (templateKey) darf nicht geändert werden
+        const validatedData = insertEmailTemplateSchema.partial()
+          .omit({ templateKey: true, variables: true })
+          .parse(req.body);
+        
+        // Benutzer-ID des Administrators für Audit-Zwecke hinzufügen
+        const admin = req.user as User;
+        
+        // Aktualisieren der Vorlage
+        const updatedTemplate = await storage.updateEmailTemplate(id, {
+          ...validatedData,
+          updatedBy: admin.id
+        });
+        
+        res.status(200).json({
+          success: true,
+          message: "E-Mail-Vorlage erfolgreich aktualisiert",
+          template: updatedTemplate
+        });
+      } catch (validationError) {
+        if (validationError instanceof ZodError) {
+          return res.status(400).json({
+            success: false,
+            message: "Validierungsfehler",
+            errors: validationError.errors
+          });
+        }
+        throw validationError;
+      }
+    } catch (error) {
+      console.error("Fehler beim Aktualisieren der E-Mail-Vorlage:", error);
+      res.status(500).json({
+        success: false,
+        message: "Fehler beim Aktualisieren der E-Mail-Vorlage"
       });
     }
   });
