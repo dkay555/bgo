@@ -54,7 +54,7 @@ export const NAV_LINKS = [
     dropdownItems: [
       { name: 'Würfel', href: '/produkte/wuerfel#top', icon: 'casino' },
       { name: 'Sticker', href: '/produkte/sticker#top', icon: 'collections_bookmark' },
-      { name: 'Partnerevent', href: '/produkte/partner#top', icon: 'people' },
+      { name: 'Partnerevents', href: '/produkte/partner#top', icon: 'people' },
       { name: 'Tycoon Racers', href: '/produkte/tycoonracers#top', icon: 'emoji_events' },
     ]
   },
@@ -66,7 +66,7 @@ export const NAV_LINKS = [
     dropdownItems: [
       { name: 'Würfel Hilfe', href: '/hilfe/wuerfel#top' },
       { name: 'Sticker Hilfe', href: '/hilfe/sticker#top' },
-      { name: 'Partnerevent Hilfe', href: '/hilfe/partner#top' },
+      { name: 'Partnerevents Hilfe', href: '/hilfe/partner#top' },
       { name: 'Tycoon Racers Hilfe', href: '/hilfe/tycoonracers#top' },
     ]
   },
