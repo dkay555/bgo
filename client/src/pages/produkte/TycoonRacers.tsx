@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'wouter';
-import tycoonRacersBg from '@assets/tycoon-racers-bg.png';
 
 export default function TycoonRacers() {
   useEffect(() => {
@@ -46,7 +45,7 @@ export default function TycoonRacers() {
       
       <div className="max-w-4xl mx-auto mb-12">
         {/* Tycoon Racers Hauptbox */}
-        <div className="bg-white rounded-xl shadow-lg overflow-hidden mb-8" style={{backgroundImage: `url(${tycoonRacersBg})`, backgroundSize: 'cover', backgroundPosition: 'center'}}>
+        <div className="bg-white rounded-xl shadow-lg overflow-hidden mb-8" style={{background: '#f0f9ff'}}>
           <div className="bg-white/95 p-8">
             {/* Teamplätze Box */}
             <div className="mb-12">
