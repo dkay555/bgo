@@ -6,10 +6,6 @@ export default function Partner() {
     document.title = 'Partnerevent-Plätze | babixGO';
   }, []);
 
-  // States für Partnerevent
-  const [partnerPrice, setPartnerPrice] = useState(7);
-  const [waehrungPrice, setWaehrungPrice] = useState(25);
-
   // Preistabelle für Partner
   const partnerPrices = [
     { count: 1, price: 7 },
@@ -23,16 +19,6 @@ export default function Partner() {
     { amount: '15.000 Währung', price: 25 },
     { amount: '25.000 Währung', price: 35 },
   ];
-
-  // Handler für Partner Preis-Änderung
-  const handlePartnerPriceChange = (price: number) => {
-    setPartnerPrice(price);
-  };
-  
-  // Handler für Währung Preis-Änderung
-  const handleWaehrungPriceChange = (price: number) => {
-    setWaehrungPrice(price);
-  };
 
   return (
     <div className="container mx-auto px-4 py-8" id="top">
@@ -58,26 +44,28 @@ export default function Partner() {
                 Lehne dich zurück und lass uns die Arbeit machen! Wir übernehmen die vollen 80.000 Punkte.
               </p>
               
-              <div className="max-w-md mx-auto space-y-4 mb-6">
-                {partnerPrices.map((item, index) => (
-                  <div 
-                    key={index} 
-                    className={`border rounded-lg p-3 cursor-pointer bg-white hover:border-[#FF4C00] transition-all ${partnerPrice === item.price ? 'border-[#FF4C00] shadow-md' : 'border-gray-200'}`}
-                    onClick={() => handlePartnerPriceChange(item.price)}
-                  >
-                    <div className="flex justify-between items-center">
-                      <div className="flex items-center">
-                        <span className="material-icons mr-2 text-[#0A3A68]">group</span>
-                        <span className="font-medium">{item.count} {item.count === 1 ? 'Partner' : 'Partner'}</span>
-                      </div>
-                      <span className="font-bold text-[#0A3A68]">{item.price} €</span>
-                    </div>
-                  </div>
-                ))}
+              <div className="max-w-md mx-auto bg-white border border-gray-200 rounded-lg p-4 mb-6">
+                <table className="w-full">
+                  <tbody>
+                    {partnerPrices.map((item, index) => (
+                      <tr key={index} className={index < partnerPrices.length - 1 ? "border-b border-gray-100" : ""}>
+                        <td className="py-2">
+                          <div className="flex items-center">
+                            <span className="material-icons mr-2 text-[#0A3A68]">group</span>
+                            <span className="font-medium">{item.count} {item.count === 1 ? 'Partner' : 'Partner'}</span>
+                          </div>
+                        </td>
+                        <td className="py-2 text-right">
+                          <span className="font-bold text-[#0A3A68]">{item.price} €</span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
               
               <div className="flex justify-center">
-                <Link href={`/checkout/partnerevent?price=${partnerPrice}`}>
+                <Link href="/checkout/partnerevent">
                   <button
                     className="bg-[#FF4C00] hover:bg-[#E03A00] text-white py-3 px-12 rounded-full transition-colors font-bold text-lg"
                   >
@@ -99,26 +87,28 @@ export default function Partner() {
                 Falls du lieber mit deinen liebsten spielen magst, aber trotzdem nicht um den Hauptpreis bangen willst: Wir sammeln Eventwährung vom Spielbrett.
               </p>
               
-              <div className="max-w-md mx-auto space-y-4 mb-6">
-                {waehrungOptions.map((item, index) => (
-                  <div 
-                    key={index} 
-                    className={`border rounded-lg p-3 cursor-pointer bg-white hover:border-[#FF4C00] transition-all ${waehrungPrice === item.price ? 'border-[#FF4C00] shadow-md' : 'border-gray-200'}`}
-                    onClick={() => handleWaehrungPriceChange(item.price)}
-                  >
-                    <div className="flex justify-between items-center">
-                      <div className="flex items-center">
-                        <span className="material-icons mr-2 text-[#FF4C00]">currency_exchange</span>
-                        <span className="font-medium">{item.amount}</span>
-                      </div>
-                      <span className="font-bold text-[#0A3A68]">{item.price} €</span>
-                    </div>
-                  </div>
-                ))}
+              <div className="max-w-md mx-auto bg-white border border-gray-200 rounded-lg p-4 mb-6">
+                <table className="w-full">
+                  <tbody>
+                    {waehrungOptions.map((item, index) => (
+                      <tr key={index} className={index < waehrungOptions.length - 1 ? "border-b border-gray-100" : ""}>
+                        <td className="py-2">
+                          <div className="flex items-center">
+                            <span className="material-icons mr-2 text-[#FF4C00]">currency_exchange</span>
+                            <span className="font-medium">{item.amount}</span>
+                          </div>
+                        </td>
+                        <td className="py-2 text-right">
+                          <span className="font-bold text-[#0A3A68]">{item.price} €</span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
               
               <div className="flex justify-center">
-                <Link href={`/checkout/eventwaehrung?price=${waehrungPrice}`}>
+                <Link href="/checkout/eventwaehrung">
                   <button
                     className="bg-[#0A3A68] hover:bg-[#072a4e] text-white py-3 px-12 rounded-full transition-colors font-bold text-lg"
                   >
