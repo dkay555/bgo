@@ -6,46 +6,11 @@ export default function Partner() {
     document.title = 'Partnerevent-Plätze | babixGO';
   }, []);
 
-  const [partnerCount, setPartnerCount] = useState(1);
-  const [price, setPrice] = useState(7);
-  const [showModal, setShowModal] = useState(false);
-  const [selectedOption, setSelectedOption] = useState<'partner' | 'waehrung'>('partner');
+  // States für Partnerevent
+  const [partnerPrice, setPartnerPrice] = useState(7);
+  const [waehrungPrice, setWaehrungPrice] = useState(25);
 
-  // Preisberechnung für Partner
-  const calculatePartnerPrice = (count: number) => {
-    // Spezialpreis für 4 Partner
-    if (count === 4) return 25;
-    
-    // Regulärer Preis: 7€ pro Partner
-    return count * 7;
-  };
-  
-  // Preisberechnung für Eventwährung
-  const calculateWaehrungPrice = (amount: string) => {
-    switch (amount) {
-      case '15000': return 25;
-      case '25000': return 35;
-      default: return 0;
-    }
-  };
-
-  // Partner-Anzahl ändern und Preis aktualisieren
-  const handlePartnerCountChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const count = parseInt(e.target.value);
-    setPartnerCount(count);
-    setPrice(calculatePartnerPrice(count));
-  };
-  
-  // Beim Wechsel zwischen Partner und Währung den Preis aktualisieren
-  useEffect(() => {
-    if (selectedOption === 'partner') {
-      setPrice(calculatePartnerPrice(partnerCount));
-    } else {
-      setPrice(calculateWaehrungPrice('15000')); // Standardmäßig 15000 Währung (25€)
-    }
-  }, [selectedOption]);
-
-  // Preistabelle für Anzeige
+  // Preistabelle für Partner
   const partnerPrices = [
     { count: 1, price: 7 },
     { count: 2, price: 14 },
@@ -55,9 +20,19 @@ export default function Partner() {
   
   // Währungsoptionen
   const waehrungOptions = [
-    { amount: '15000', price: 25 },
-    { amount: '25000', price: 35 },
+    { amount: '15.000 Währung', price: 25 },
+    { amount: '25.000 Währung', price: 35 },
   ];
+
+  // Handler für Partner Preis-Änderung
+  const handlePartnerPriceChange = (price: number) => {
+    setPartnerPrice(price);
+  };
+  
+  // Handler für Währung Preis-Änderung
+  const handleWaehrungPriceChange = (price: number) => {
+    setWaehrungPrice(price);
+  };
 
   return (
     <div className="container mx-auto px-4 py-8" id="top">
@@ -70,204 +45,124 @@ export default function Partner() {
       </div>
       
       <div className="max-w-4xl mx-auto mb-12">
-        {/* Optionenauswahl: Partner oder Eventwährung */}
-        <div className="bg-white rounded-lg shadow-lg overflow-hidden mb-8">
-          <div className="p-6">
-            <h2 className="text-2xl font-bold text-[#0A3A68] mb-4">Partnerevent - Wähle deine Option</h2>
-            
-            <div className="flex flex-col md:flex-row gap-6 mb-6">
-              <div 
-                className={`flex-1 border-2 rounded-lg p-6 cursor-pointer transition-all ${
-                  selectedOption === 'partner' 
-                    ? 'border-[#0A3A68] bg-blue-50' 
-                    : 'border-gray-200 hover:border-gray-300'
-                }`}
-                onClick={() => setSelectedOption('partner')}
-              >
-                <div className="flex justify-between items-start mb-4">
-                  <h3 className="text-xl font-bold text-[#0A3A68]">Zuverlässiger Partner</h3>
-                  <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${
-                    selectedOption === 'partner' ? 'border-[#0A3A68] bg-[#0A3A68]' : 'border-gray-300'
-                  }`}>
-                    {selectedOption === 'partner' && (
-                      <span className="material-icons text-white text-sm">check</span>
-                    )}
+        {/* Partnerevent Hauptbox */}
+        <div className="bg-white rounded-xl shadow-lg overflow-hidden mb-8" style={{background: '#f0f9ff'}}>
+          <div className="bg-white/95 p-8">
+            {/* Zuverlässiger Partner Box */}
+            <div className="mb-12">
+              <h2 className="babixgoheader text-center text-3xl md:text-4xl font-bold mb-4 text-[#FF4C00]">
+                Zuverlässiger Partner<br />für deinen Account
+              </h2>
+              
+              <p className="text-center text-gray-800 mb-8 max-w-2xl mx-auto">
+                Lehne dich zurück und lass uns die Arbeit machen! Wir übernehmen die vollen 80.000 Punkte.
+              </p>
+              
+              <div className="max-w-md mx-auto space-y-4 mb-6">
+                {partnerPrices.map((item, index) => (
+                  <div 
+                    key={index} 
+                    className={`border rounded-lg p-3 cursor-pointer bg-white hover:border-[#FF4C00] transition-all ${partnerPrice === item.price ? 'border-[#FF4C00] shadow-md' : 'border-gray-200'}`}
+                    onClick={() => handlePartnerPriceChange(item.price)}
+                  >
+                    <div className="flex justify-between items-center">
+                      <div className="flex items-center">
+                        <span className="material-icons mr-2 text-[#0A3A68]">group</span>
+                        <span className="font-medium">{item.count} {item.count === 1 ? 'Partner' : 'Partner'}</span>
+                      </div>
+                      <span className="font-bold text-[#0A3A68]">{item.price} €</span>
+                    </div>
                   </div>
-                </div>
-                
-                <p className="text-gray-700 mb-4">
-                  Lehne dich zurück und lass uns die Arbeit machen! Wir übernehmen die vollen 80.000 Punkte.
-                </p>
-                
-                <div className="bg-[#0A3A68]/10 p-3 rounded-md mb-3">
-                  <div className="font-semibold text-[#0A3A68]">Preistabelle:</div>
-                  <div className="flex justify-between text-sm mt-1">
-                    <span>Je Partner 7€</span>
-                    <span>4 Partner 25€</span>
-                  </div>
-                </div>
+                ))}
               </div>
               
-              <div 
-                className={`flex-1 border-2 rounded-lg p-6 cursor-pointer transition-all ${
-                  selectedOption === 'waehrung' 
-                    ? 'border-[#0A3A68] bg-blue-50' 
-                    : 'border-gray-200 hover:border-gray-300'
-                }`}
-                onClick={() => setSelectedOption('waehrung')}
-              >
-                <div className="flex justify-between items-start mb-4">
-                  <h3 className="text-xl font-bold text-[#0A3A68]">Eventwährung</h3>
-                  <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${
-                    selectedOption === 'waehrung' ? 'border-[#0A3A68] bg-[#0A3A68]' : 'border-gray-300'
-                  }`}>
-                    {selectedOption === 'waehrung' && (
-                      <span className="material-icons text-white text-sm">check</span>
-                    )}
-                  </div>
-                </div>
-                
-                <p className="text-gray-700 mb-4">
-                  Falls du lieber mit deinen liebsten spielen magst, aber trotzdem nicht um den Hauptpreis bangen willst: Wir sammeln Eventwährung vom Spielbrett.
-                </p>
-                
-                <div className="bg-[#0A3A68]/10 p-3 rounded-md mb-3">
-                  <div className="font-semibold text-[#0A3A68]">Preistabelle:</div>
-                  <div className="flex justify-between text-sm mt-1">
-                    <span>15.000 Eventwährung - 25€</span>
-                  </div>
-                  <div className="flex justify-between text-sm mt-1">
-                    <span>25.000 Eventwährung - 35€</span>
-                  </div>
-                </div>
+              <div className="flex justify-center">
+                <Link href={`/checkout/partnerevent?price=${partnerPrice}`}>
+                  <button
+                    className="bg-[#FF4C00] hover:bg-[#E03A00] text-white py-3 px-12 rounded-full transition-colors font-bold text-lg"
+                  >
+                    Partner buchen
+                  </button>
+                </Link>
               </div>
             </div>
             
-            {/* Partner Bereich - nur anzeigen, wenn Partner ausgewählt ist */}
-            {selectedOption === 'partner' && (
-              <div className="bg-white border-2 border-[#0A3A68] rounded-lg p-6 mb-6">
-                <h3 className="text-xl font-bold text-[#0A3A68] mb-4">Partner buchen</h3>
-                
-                <div className="mb-6">
-                  <label htmlFor="partnerCount" className="block text-sm font-medium mb-2">Anzahl der Partner:</label>
-                  <select 
-                    id="partnerCount" 
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0A3A68] text-gray-700"
-                    value={partnerCount}
-                    onChange={handlePartnerCountChange}
-                  >
-                    {[1, 2, 3, 4].map(count => (
-                      <option key={count} value={count}>{count} {count === 1 ? 'Partner' : 'Partner'}</option>
-                    ))}
-                  </select>
-                </div>
-                
-                <div className="bg-gray-50 rounded-lg p-4 mb-6">
-                  <div className="flex justify-between items-center">
-                    <span>Preis pro Partner:</span>
-                    <span>{partnerCount === 4 ? '6,25' : '7,00'} €</span>
-                  </div>
-                  <div className="flex justify-between items-center font-bold text-lg mt-2 pt-2 border-t border-gray-200">
-                    <span>Gesamtpreis:</span>
-                    <span>{price.toFixed(2).replace('.', ',')} €</span>
-                  </div>
-                </div>
-                
-                <Link to={`/checkout/partnerevent?partner=${partnerCount}`} className="block">
-                  <button className="w-full bg-[#FF4C00] hover:bg-[#0A3A68] text-white py-3 px-4 rounded-md transition-colors font-bold">
-                    <span className="flex items-center justify-center">
-                      <span className="material-icons mr-2">shopping_cart</span>
-                      Partner buchen
-                    </span>
-                  </button>
-                </Link>
-              </div>
-            )}
+            <div className="border-t border-gray-200 my-10 max-w-2xl mx-auto"></div>
             
-            {/* Eventwährung Bereich - nur anzeigen, wenn Währung ausgewählt ist */}
-            {selectedOption === 'waehrung' && (
-              <div className="bg-white border-2 border-[#0A3A68] rounded-lg p-6 mb-6">
-                <h3 className="text-xl font-bold text-[#0A3A68] mb-4">Eventwährung kaufen</h3>
-                
-                <div className="mb-6">
-                  <label htmlFor="waehrungAmount" className="block text-sm font-medium mb-2">Menge wählen:</label>
-                  <select 
-                    id="waehrungAmount" 
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0A3A68] text-gray-700"
-                    onChange={(e) => setPrice(calculateWaehrungPrice(e.target.value))}
-                    defaultValue="15000"
-                  >
-                    {waehrungOptions.map(option => (
-                      <option key={option.amount} value={option.amount}>
-                        {parseInt(option.amount).toLocaleString('de-DE')} Eventwährung
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                
-                <div className="bg-gray-50 rounded-lg p-4 mb-6">
-                  <p className="text-sm text-gray-600 mb-4">
-                    Hier gelten dieselben Voraussetzungen wie für den Würfelboost.
-                  </p>
-                  <div className="flex justify-between items-center font-bold text-lg pt-2 border-t border-gray-200">
-                    <span>Preis:</span>
-                    <span>{price.toFixed(2).replace('.', ',')} €</span>
-                  </div>
-                </div>
-                
-                <Link to="/checkout/eventwaehrung?amount=15000" className="block">
-                  <button className="w-full bg-[#FF4C00] hover:bg-[#0A3A68] text-white py-3 px-4 rounded-md transition-colors font-bold">
-                    <span className="flex items-center justify-center">
-                      <span className="material-icons mr-2">shopping_cart</span>
-                      Jetzt kaufen
-                    </span>
-                  </button>
-                </Link>
-              </div>
-            )}
-            
-            {/* FAQ Box */}
-            <div className="bg-gray-50 rounded-lg p-6">
-              <h3 className="text-lg font-bold text-[#0A3A68] mb-4">FAQ</h3>
+            {/* Eventwährung Box */}
+            <div className="mb-8">
+              <h2 className="babixgoheader text-center text-3xl md:text-4xl font-bold mb-4 text-[#FF4C00]">
+                Eventwährung<br />leicht gemacht
+              </h2>
               
-              <ul className="space-y-3">
-                <li>
-                  <a href="/hilfe/partnerevent" className="text-[#0A3A68] hover:text-[#FF4C00] font-medium underline">
-                    Alle Informationen zum Partnerevent findest du hier
-                  </a>
-                </li>
-                <li>
-                  <a href="/hilfe/wuerfelboost" className="text-[#0A3A68] hover:text-[#FF4C00] font-medium underline">
-                    Die Voraussetzungen für die Eventwährung kannst du auch hier nachlesen
-                  </a>
-                </li>
-
-              </ul>
+              <p className="text-center text-gray-800 mb-8 max-w-2xl mx-auto">
+                Falls du lieber mit deinen liebsten spielen magst, aber trotzdem nicht um den Hauptpreis bangen willst: Wir sammeln Eventwährung vom Spielbrett.
+              </p>
+              
+              <div className="max-w-md mx-auto space-y-4 mb-6">
+                {waehrungOptions.map((item, index) => (
+                  <div 
+                    key={index} 
+                    className={`border rounded-lg p-3 cursor-pointer bg-white hover:border-[#FF4C00] transition-all ${waehrungPrice === item.price ? 'border-[#FF4C00] shadow-md' : 'border-gray-200'}`}
+                    onClick={() => handleWaehrungPriceChange(item.price)}
+                  >
+                    <div className="flex justify-between items-center">
+                      <div className="flex items-center">
+                        <span className="material-icons mr-2 text-[#FF4C00]">currency_exchange</span>
+                        <span className="font-medium">{item.amount}</span>
+                      </div>
+                      <span className="font-bold text-[#0A3A68]">{item.price} €</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              
+              <div className="flex justify-center">
+                <Link href={`/checkout/eventwaehrung?price=${waehrungPrice}`}>
+                  <button
+                    className="bg-[#0A3A68] hover:bg-[#072a4e] text-white py-3 px-12 rounded-full transition-colors font-bold text-lg"
+                  >
+                    Jetzt kaufen
+                  </button>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
         
-        {/* Kontaktbox wie in den anderen Seiten */}
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-          <div className="flex items-center mb-4">
-            <span className="material-icons text-[#00CFFF] text-2xl mr-3">help_outline</span>
-            <h2 className="text-2xl font-bold text-[#0A3A68]">Du hast noch Fragen?</h2>
-          </div>
+        {/* Noch Fragen */}
+        <div className="bg-white rounded-xl shadow p-6 mb-8">
+          <h3 className="font-bold text-lg text-[#0A3A68] mb-4">Noch Fragen?</h3>
           
           <p className="text-gray-700 mb-4">
-            Schreib uns gerne eine Nachricht. Alle Kontaktmöglichkeiten findest du hier:
+            Hier findest du weitere Informationen zu diesem Angebot:
           </p>
           
-          <Link href="/kontakt" className="inline-block">
-            <button className="bg-[#FF4C00] hover:bg-[#0A3A68] text-white py-2 px-4 rounded-md transition-colors inline-flex items-center font-bold">
-              <span className="material-icons mr-2">contact_support</span>
-              Kontakt aufnehmen
-            </button>
-          </Link>
+          <div className="space-y-3">
+            <Link href="/hilfe/partnerevent" className="text-[#8A2BE2] hover:text-[#7B1FA2] font-medium block">
+              <div className="flex items-center">
+                <span className="material-icons mr-2">article</span>
+                Alle Informationen zum Partnerevent findest du hier
+              </div>
+            </Link>
+            <Link href="/hilfe/wuerfelboost" className="text-[#8A2BE2] hover:text-[#7B1FA2] font-medium block">
+              <div className="flex items-center">
+                <span className="material-icons mr-2">article</span>
+                Die Voraussetzungen für die Eventwährung kannst du auch hier nachlesen
+              </div>
+            </Link>
+            
+            <div className="mt-6">
+              <Link href="/kontakt" className="inline-block">
+                <button className="bg-[#FF4C00] hover:bg-[#E03A00] text-white py-2 px-4 rounded-md transition-colors inline-flex items-center font-bold">
+                  <span className="material-icons mr-2">contact_support</span>
+                  Kontakt aufnehmen
+                </button>
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
-      
-      {/* Modal wurde durch direkte Links ersetzt und wird nicht mehr benötigt */}
     </div>
   );
 }
