@@ -26,7 +26,15 @@ export default function TycoonRacers() {
           <span className="material-icons mr-1">arrow_back</span>
           Zurück zu Produkten
         </Link>
-        <h1 className="babix-info-header text-3xl md:text-4xl font-bold mb-8 text-center">Tycoon Racers</h1>
+        <div className="w-full relative rounded-xl overflow-hidden">
+          <div className="h-48 md:h-64 bg-cover bg-center" style={{backgroundImage: 'url("/images/hero-backgrounds/tycoon-racers-hero.png")'}}>
+            <div className="absolute inset-0 bg-gradient-to-r from-[#0A3A68]/80 to-[#FF4C00]/80 flex items-center justify-center">
+              <h1 className="babix-info-header text-3xl md:text-5xl font-bold text-white text-center px-4 drop-shadow-lg">
+                Tycoon Racers
+              </h1>
+            </div>
+          </div>
+        </div>
       </div>
       
       <div className="max-w-4xl mx-auto mb-12">
