@@ -7,6 +7,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/hooks/use-auth';
 import SEOHead from '@/components/SEOHead';
+import { AlertTriangle } from "lucide-react";
 
 export default function AuthTokenTool() {
   const [redirectUrl, setRedirectUrl] = useState('');
@@ -140,20 +141,43 @@ export default function AuthTokenTool() {
         <CardContent className="space-y-6">
           <div className="space-y-4">
             <div>
-              <Button
-                asChild
-                className="bg-[#1877F2] hover:bg-[#0d65d9] text-white font-medium"
-              >
-                <a 
-                  href="https://www.facebook.com/v19.0/dialog/oauth?client_id=285025889266955&redirect_uri=https://m.facebook.com/connect/login_success.html&response_type=token&scope=public_profile" 
-                  target="_blank"
-                >
-                  Mit Facebook (Monopoly GO) einloggen
-                </a>
-              </Button>
-              <p className="mt-2 text-xs text-gray-500">
-                <strong>Hinweis:</strong> Die Facebook-Anmeldung erfolgt in einem separaten Tab und funktioniert unabhängig davon, ob du auf dieser Website eingeloggt bist.
-              </p>
+              {user ? (
+                <>
+                  <Button
+                    asChild
+                    className="bg-[#1877F2] hover:bg-[#0d65d9] text-white font-medium"
+                  >
+                    <a 
+                      href="https://www.facebook.com/v19.0/dialog/oauth?client_id=285025889266955&redirect_uri=https://m.facebook.com/connect/login_success.html&response_type=token&scope=public_profile" 
+                      target="_blank"
+                    >
+                      Mit Facebook (Monopoly GO) einloggen
+                    </a>
+                  </Button>
+                  <p className="mt-2 text-xs text-gray-500">
+                    <strong>Hinweis:</strong> Die Facebook-Anmeldung erfolgt in einem separaten Tab.
+                  </p>
+                </>
+              ) : (
+                <>
+                  <div className="p-4 rounded-lg bg-amber-50 border border-amber-200 mb-4">
+                    <p className="text-amber-800 flex items-center gap-2">
+                      <AlertTriangle size={18} />
+                      <span>Bitte logge dich zuerst auf unserer Website ein, um diese Funktion zu nutzen.</span>
+                    </p>
+                  </div>
+                  
+                  <Button
+                    disabled
+                    className="bg-gray-400 cursor-not-allowed"
+                  >
+                    Mit Facebook (Monopoly GO) einloggen
+                  </Button>
+                  <p className="mt-2 text-xs text-gray-500">
+                    <strong>Hinweis:</strong> Der Facebook-Login für das Auth-Token ist nur für eingeloggte Benutzer verfügbar.
+                  </p>
+                </>
+              )}
             </div>
 
             <div>
