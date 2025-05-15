@@ -5,8 +5,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import SEOHead from '@/components/SEOHead';
 
 // Lazy-geladene Komponenten mit Verzögerung
+// Definiere den Typ von einem dynamischen Import
+type LazyModule = Promise<typeof import('@/components/demo/LazyContentOne')>;
+
+// Lazy-geladene Komponenten mit Verzögerung
 const LazyContent1 = lazy(() => {
-  return new Promise((resolve) => {
+  return new Promise<typeof import('@/components/demo/LazyContentOne')>((resolve) => {
     // Importiere die Komponente direkt
     import('@/components/demo/LazyContentOne')
       .then((module) => {
@@ -19,7 +23,7 @@ const LazyContent1 = lazy(() => {
 });
 
 const LazyContent2 = lazy(() => {
-  return new Promise((resolve) => {
+  return new Promise<typeof import('@/components/demo/LazyContentTwo')>((resolve) => {
     import('@/components/demo/LazyContentTwo')
       .then((module) => {
         // Simuliere eine Verzögerung beim Laden
@@ -31,7 +35,7 @@ const LazyContent2 = lazy(() => {
 });
 
 const LazyContent3 = lazy(() => {
-  return new Promise((resolve) => {
+  return new Promise<typeof import('@/components/demo/LazyContentThree')>((resolve) => {
     import('@/components/demo/LazyContentThree')
       .then((module) => {
         // Simuliere eine Verzögerung beim Laden
