@@ -426,10 +426,10 @@ export default function StickerCheckout() {
             <div 
               className={`flex items-start space-x-2 p-3 rounded-lg border ${formData.agreedToTerms ? 'bg-[#00CFFF]/10 border-[#00CFFF]' : 'border-gray-200'}`}
               onClick={() => {
-                setFormData(prev => ({
-                  ...prev,
-                  agreedToTerms: !prev.agreedToTerms
-                }));
+                setFormData({
+                  ...formData,
+                  agreedToTerms: !formData.agreedToTerms
+                });
               }}
             >
               <input 
@@ -438,10 +438,10 @@ export default function StickerCheckout() {
                 className="h-4 w-4 mt-1 accent-[#00CFFF]"
                 checked={formData.agreedToTerms}
                 onChange={() => {
-                  setFormData(prev => ({
-                    ...prev,
-                    agreedToTerms: !prev.agreedToTerms
-                  }));
+                  setFormData({
+                    ...formData,
+                    agreedToTerms: !formData.agreedToTerms
+                  });
                 }}
               />
               <label 

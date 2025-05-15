@@ -1,123 +1,69 @@
-import React, { Suspense, ReactNode, useEffect, useState, useRef } from 'react';
+import React, { ComponentType, Suspense, useEffect, useRef } from 'react';
+import { Loader2 } from 'lucide-react';
 
 interface SmoothLazyLoadProps {
-  /**
-   * Die Komponente, die lazy geladen werden soll
-   */
-  component: React.ComponentType<any>;
-  
-  /**
-   * Props, die an die Komponente weitergegeben werden
-   */
-  componentProps?: Record<string, any>;
-  
-  /**
-   * Fallback-Komponente, die während des Ladens angezeigt wird
-   */
-  fallback?: ReactNode;
-  
-  /**
-   * Scrollverhalten beim Laden der Komponente
-   * - smooth: Sanftes Scrollen zur Komponente
-   * - auto: Direktes Springen zur Komponente
-   * - none: Kein automatisches Scrollen
-   */
+  component: ComponentType;
   scrollBehavior?: 'smooth' | 'auto' | 'none';
-  
-  /**
-   * Offset in Pixeln für das Scrollziel
-   */
   scrollOffset?: number;
-  
-  /**
-   * Verzögerung in Millisekunden vor dem Scrollen
-   */
-  scrollDelay?: number;
-  
-  /**
-   * CSS-Klasse für den Container
-   */
   className?: string;
-  
-  /**
-   * Eindeutige ID für das Scroll-Target
-   */
   id?: string;
 }
 
 /**
- * Komponente für das Lazy Loading mit Smooth Scrolling
- * Lädt Komponenten asynchron und scrollt sanft zu ihnen nach dem Laden
+ * Komponente für sanftes Lazy Loading von Inhalten mit automatischem Scrollen
+ * 
+ * Diese Komponente lädt Inhalte verzögert (lazy) und scrollt automatisch zum geladenen Inhalt,
+ * sobald dieser verfügbar ist. Sie bietet verschiedene Scroll-Optionen und einen anpassbaren Offset.
+ * 
+ * @param component Die lazy zu ladende Komponente
+ * @param scrollBehavior Das Scroll-Verhalten ('smooth', 'auto' oder 'none')
+ * @param scrollOffset Abstand vom oberen Rand in Pixeln (Standard: 0)
+ * @param className CSS-Klassen für den Container
+ * @param id Optional: ID für den Container
  */
 export function SmoothLazyLoad({
   component: Component,
-  componentProps = {},
-  fallback = <div className="animate-pulse p-4 bg-gray-100 rounded-md min-h-[100px]" />,
   scrollBehavior = 'smooth',
   scrollOffset = 0,
-  scrollDelay = 100,
-  className = '',
-  id
+  className,
+  id,
 }: SmoothLazyLoadProps) {
-  // Ref für den Container
-  const containerRef = useRef<HTMLDivElement>(null);
-  
-  // State für das Tracking des Ladestatus
-  const [isLoaded, setIsLoaded] = useState(false);
-  
-  // Eindeutige ID generieren, falls keine angegeben wurde
-  const componentId = id || `lazy-component-${Math.random().toString(36).substring(2, 9)}`;
-  
-  // Effekt für das Scrollverhalten nach dem Laden
-  useEffect(() => {
-    if (isLoaded && scrollBehavior !== 'none') {
-      // Verzögerung für das Scrollen, damit die Komponente vollständig gerendert werden kann
-      const scrollTimer = setTimeout(() => {
-        if (containerRef.current) {
-          const targetElement = document.getElementById(componentId);
-          
-          if (targetElement) {
-            const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - scrollOffset;
-            
-            window.scrollTo({
-              top: targetPosition,
-              behavior: scrollBehavior === 'smooth' ? 'smooth' : 'auto'
-            });
-          }
-        }
-      }, scrollDelay);
+  const componentRef = useRef<HTMLDivElement>(null);
+
+  // Funktion zum Scrollen zur Komponente
+  const scrollToComponent = () => {
+    if (componentRef.current && scrollBehavior !== 'none') {
+      const headerHeight = document.querySelector('header')?.clientHeight || 0;
+      const yOffset = -1 * (headerHeight + scrollOffset);
+      const y = componentRef.current.getBoundingClientRect().top + window.pageYOffset + yOffset;
       
-      return () => clearTimeout(scrollTimer);
+      window.scrollTo({
+        top: y,
+        behavior: scrollBehavior === 'smooth' ? 'smooth' : 'auto'
+      });
     }
-  }, [isLoaded, scrollBehavior, componentId, scrollOffset, scrollDelay]);
-  
+  };
+
+  // Nach dem Rendern zur Komponente scrollen
+  useEffect(() => {
+    // Verzögerung für das Scrollen, um sicherzustellen, dass die Komponente gerendert wurde
+    const timeoutId = setTimeout(() => {
+      scrollToComponent();
+    }, 100);
+
+    return () => clearTimeout(timeoutId);
+  }, []);
+
   return (
-    <div ref={containerRef} id={componentId} className={className}>
-      <Suspense fallback={fallback}>
-        <Component 
-          {...componentProps} 
-          onLoad={() => setIsLoaded(true)}
-          onLoadComplete={() => setIsLoaded(true)}
-        />
+    <div ref={componentRef} className={className} id={id}>
+      <Suspense fallback={
+        <div className="flex flex-col items-center justify-center p-8">
+          <Loader2 className="h-8 w-8 animate-spin text-[#00CFFF]" />
+          <p className="mt-4 text-[#0A3A68]">Inhalt wird geladen...</p>
+        </div>
+      }>
+        <Component />
       </Suspense>
     </div>
   );
-}
-
-/**
- * HOC (Higher Order Component) für das Wrapping einer Komponente mit SmoothLazyLoad
- */
-export function withSmoothLazyLoad<P extends object>(
-  Component: React.ComponentType<P>,
-  options: Omit<SmoothLazyLoadProps, 'component' | 'componentProps'> = {}
-) {
-  return function WithSmoothLazyLoad(props: P) {
-    return (
-      <SmoothLazyLoad
-        component={Component}
-        componentProps={props}
-        {...options}
-      />
-    );
-  };
 }
