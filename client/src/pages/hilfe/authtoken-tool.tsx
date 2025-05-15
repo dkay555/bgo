@@ -209,12 +209,28 @@ export default function AuthTokenTool() {
                 >
                   <span>Token kopieren</span>
                 </Button>
-                <Button 
-                  onClick={() => handleSaveToken(token)}
-                  className="bg-[#FF4C00] hover:bg-[#cc3b00]"
-                >
-                  Im Profil speichern
-                </Button>
+                
+                {user ? (
+                  <Button 
+                    onClick={() => handleSaveToken(token)}
+                    className="bg-[#FF4C00] hover:bg-[#cc3b00]"
+                  >
+                    Im Profil speichern
+                  </Button>
+                ) : (
+                  <div className="flex items-center">
+                    <Button 
+                      disabled
+                      className="bg-gray-400 cursor-not-allowed"
+                      title="Du musst eingeloggt sein, um diese Funktion zu nutzen"
+                    >
+                      Im Profil speichern
+                    </Button>
+                    <span className="ml-2 text-xs text-gray-500">
+                      (nur für eingeloggte Benutzer)
+                    </span>
+                  </div>
+                )}
               </div>
               <p className="text-xs mt-3 text-gray-500">
                 Wichtig: Bewahre diesen Token sicher auf, teile ihn nicht mit Dritten und verwende ihn nur für Monopoly GO.
