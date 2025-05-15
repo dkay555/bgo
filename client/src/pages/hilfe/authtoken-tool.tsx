@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'wouter';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
@@ -107,6 +108,27 @@ export default function AuthTokenTool() {
       <h1 className="font-['Baloo_2'] font-bold text-2xl md:text-3xl bg-[#00CFFF]/10 px-6 py-3 rounded-xl inline-block mb-8 border-b-2 border-[#00CFFF] text-[#FF4C00] babix-info-header">
         Monopoly GO – Facebook Token Tool
       </h1>
+      
+      {!user && (
+        <Card className="mb-6">
+          <CardContent className="p-6">
+            <div className="bg-amber-50 border-l-4 border-amber-500 p-4 mb-4">
+              <h3 className="font-semibold text-amber-800">Du musst eingeloggt sein, um dieses Tool vollständig zu nutzen</h3>
+              <p className="text-amber-700 mt-1">
+                Um deinen Auth-Token im Profil speichern zu können, musst du dich zuerst einloggen. 
+                Das Extrahieren und Kopieren des Tokens funktioniert jedoch auch ohne Login.
+              </p>
+            </div>
+            <div className="flex justify-center">
+              <Link href="/auth">
+                <Button className="bg-[#FF4C00] hover:bg-[#cc3b00]">
+                  Jetzt einloggen
+                </Button>
+              </Link>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       <Card className="mb-8">
         <CardHeader>
@@ -128,9 +150,19 @@ export default function AuthTokenTool() {
             </div>
 
             <div>
+              <div className="border-2 border-blue-200 p-4 rounded-lg mb-4 bg-blue-50">
+                <h4 className="font-semibold text-[#0A3A68] mb-2">Nach dem Klick auf "Mit Facebook (Monopoly GO) einloggen":</h4>
+                <ol className="list-decimal list-inside space-y-2">
+                  <li>Du wirst zu Facebook weitergeleitet und musst dich ggf. anmelden</li>
+                  <li>Nach der Anmeldung erscheint eine Seite mit einer langen URL in der Adressleiste</li>
+                  <li>Klicke in die Adressleiste und wähle die gesamte URL aus (<kbd>Strg+A</kbd>)</li>
+                  <li><strong>Kopiere</strong> die URL (<kbd>Strg+C</kbd>)</li>
+                  <li>Kehre zu dieser Seite zurück und <strong>füge</strong> die URL unten ein (<kbd>Strg+V</kbd>)</li>
+                </ol>
+              </div>
+              
               <p className="text-sm text-gray-500 mb-2">
-                Nach dem Login wirst du auf eine Facebook-Seite mit einer URL weitergeleitet.
-                <strong> Kopiere diese komplette URL und füge sie unten ein:</strong>
+                <strong>Füge die kopierte Facebook-URL hier ein:</strong>
               </p>
               <Textarea 
                 value={redirectUrl}
