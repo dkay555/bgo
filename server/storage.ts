@@ -8,38 +8,10 @@ import {
   emailTemplates, type EmailTemplate, type InsertEmailTemplate
 } from "@shared/schema";
 import { db } from "./db";
-import { eq, desc, and, SQL } from "drizzle-orm";
-import { PgTable } from "drizzle-orm/pg-core";
-import { Pool } from '@neondatabase/serverless';
+import { eq, desc, and } from "drizzle-orm";
 import session from "express-session";
 import connectPg from "connect-pg-simple";
 import { pool } from "./db";
-
-// Session-Store für PostgreSQL konfigurieren
-const PostgresSessionStore = connectPg(session);
-
-// Hilfsfunktionen für PostgreSQL-Vorgänge (mit RETURNING-Klausel)
-async function insertAndFetch<T extends PgTable, R>(
-  table: T, 
-  data: Record<string, any>,
-  idColumn: string = "id"
-): Promise<R> {
-  const [entity] = await db.insert(table).values(data).returning();
-  return entity as R;
-}
-
-async function updateAndFetch<T extends PgTable, R>(
-  table: T, 
-  id: number, 
-  data: Record<string, any>,
-  idColumn: string = "id"
-): Promise<R | undefined> {
-  const [entity] = await db.update(table)
-    .set(data)
-    .where(eq(table[idColumn as keyof T] as any, id))
-    .returning();
-  return entity as R;
-}
 
 // CRUD methods for User, Order and ContactMessage
 export interface IStorage {
@@ -106,11 +78,10 @@ export class DatabaseStorage implements IStorage {
   sessionStore: session.Store;
 
   constructor() {
-    // PostgreSQL Session Store konfigurieren
-    this.sessionStore = new PostgresSessionStore({
+    const PostgresSessionStore = connectPg(session);
+    this.sessionStore = new PostgresSessionStore({ 
       pool,
-      createTableIfMissing: true,
-      tableName: 'sessions'
+      createTableIfMissing: true 
     });
   }
 
@@ -131,15 +102,25 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createUser(insertUser: InsertUser): Promise<User> {
-    return await insertAndFetch<typeof users, User>(users, insertUser, table => table.id);
+    const [user] = await db
+      .insert(users)
+      .values(insertUser)
+      .returning();
+    return user;
   }
 
   async updateUserAuthToken(id: number, authToken: string): Promise<User | undefined> {
-    return await updateAndFetch<typeof users, User>(users, id, {
-      authToken,
-      authTokenUpdatedAt: new Date(),
-      updatedAt: new Date()
-    }, table => table.id);
+    const [updatedUser] = await db
+      .update(users)
+      .set({
+        authToken,
+        authTokenUpdatedAt: new Date(),
+        updatedAt: new Date()
+      })
+      .where(eq(users.id, id))
+      .returning();
+    
+    return updatedUser;
   }
   
   async updateUserProfile(id: number, userData: { name?: string; email?: string }): Promise<User | undefined> {
