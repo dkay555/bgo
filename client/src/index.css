@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-      --background: 0 0% 100%;
+      --background: 210 33% 96%;
 --foreground: 20 14.3% 4.1%;
 --muted: 60 4.8% 95.9%;
 --muted-foreground: 25 5.3% 44.7%;
@@ -31,6 +31,7 @@
 --orange-hover: #cc3b00;
 --white: #ffffff;
 --gray: #f0f0f0;
+--bg-light: #f0f5fa;
   }
   .dark {
       --background: 240 10% 3.9%;
