@@ -1,8 +1,8 @@
-import React, { ComponentType, Suspense, useEffect, useRef } from 'react';
+import React, { ComponentType, LazyExoticComponent, Suspense, useEffect, useRef } from 'react';
 import { Loader2 } from 'lucide-react';
 
 interface SmoothLazyLoadProps {
-  component: ComponentType;
+  component: LazyExoticComponent<ComponentType<any>>;
   scrollBehavior?: 'smooth' | 'auto' | 'none';
   scrollOffset?: number;
   className?: string;

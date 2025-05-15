@@ -1,111 +1,74 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 /**
- * Hook für die Persistierung von Formulardaten im localStorage
+ * Hook zur Persistierung von Formulardaten im localStorage
  * 
- * @param key Ein eindeutiger Schlüssel für die Speicherung der Daten
- * @param initialValue Anfangswert, falls keine gespeicherten Daten vorhanden sind
- * @param expirationMinutes Gültigkeitsdauer in Minuten (Optional, Standard: 60 Minuten)
- * @returns Ein Tupel mit dem aktuellen Wert, einer Setter-Funktion und einer Funktion zum Löschen der Daten
+ * Speichert Formulardaten unter einem eindeutigen Schlüssel im localStorage und
+ * stellt sie bei erneutem Laden der Seite wieder her.
+ * 
+ * @param key Ein eindeutiger Schlüssel für die gespeicherten Daten
+ * @param initialData Die initialen Standardwerte für das Formular
+ * @param ttl Time-to-live in Millisekunden (Optional, Standard: 24 Stunden)
+ * @returns Ein Tuple aus den aktuellen Daten und einer Funktion zum Aktualisieren der Daten
  */
 export function useFormPersistence<T>(
   key: string,
-  initialValue: T,
-  expirationMinutes: number = 60
-): [T, (value: T) => void, () => void] {
-  // Verwende den eindeutigen Schlüssel mit einem Präfix für bessere Organisation
-  const storageKey = `formData_${key}`;
-  
-  // Funktion zum Abrufen der gespeicherten Daten
-  const getStoredValue = (): T => {
-    if (typeof window === 'undefined') {
-      return initialValue;
-    }
-
+  initialData: T,
+  ttl: number = 24 * 60 * 60 * 1000 // 24 Stunden Standard-TTL
+): [T, React.Dispatch<React.SetStateAction<T>>, () => void] {
+  // Initialisiere State mit gespeicherten Daten oder initialData
+  const [data, setData] = useState<T>(() => {
+    // Versuche, gespeicherte Daten aus dem localStorage zu laden
     try {
-      const storedData = localStorage.getItem(storageKey);
-      
-      if (!storedData) {
-        return initialValue;
-      }
-      
-      const { value, expiry } = JSON.parse(storedData);
-      
-      // Prüfen, ob die Daten abgelaufen sind
-      if (expiry && new Date().getTime() > expiry) {
-        localStorage.removeItem(storageKey);
-        return initialValue;
-      }
-      
-      return value as T;
-    } catch (error) {
-      console.error('Fehler beim Lesen der gespeicherten Formulardaten:', error);
-      return initialValue;
-    }
-  };
-
-  // State mit den gespeicherten Daten oder Anfangswert initialisieren
-  const [value, setValue] = useState<T>(() => getStoredValue());
-
-  // Funktion zum Speichern eines neuen Werts
-  const setAndPersistValue = (newValue: T): void => {
-    try {
-      // State updaten
-      setValue(newValue);
-      
-      // Ablaufzeitpunkt berechnen
-      const expiry = new Date().getTime() + (expirationMinutes * 60 * 1000);
-      
-      // Im localStorage speichern
-      localStorage.setItem(
-        storageKey,
-        JSON.stringify({
-          value: newValue,
-          expiry
-        })
-      );
-    } catch (error) {
-      console.error('Fehler beim Speichern der Formulardaten:', error);
-    }
-  };
-
-  // Funktion zum Löschen der gespeicherten Daten
-  const clearValue = (): void => {
-    try {
-      setValue(initialValue);
-      localStorage.removeItem(storageKey);
-    } catch (error) {
-      console.error('Fehler beim Löschen der gespeicherten Formulardaten:', error);
-    }
-  };
-
-  // Gespeicherte Daten mit Event-Listener aktualisieren (für mehrere Tabs)
-  useEffect(() => {
-    const handleStorageChange = (event: StorageEvent) => {
-      if (event.key === storageKey && event.newValue) {
-        try {
-          const { value: newValue, expiry } = JSON.parse(event.newValue);
-          
-          // Prüfen, ob die Daten abgelaufen sind
-          if (expiry && new Date().getTime() > expiry) {
-            clearValue();
-          } else {
-            setValue(newValue as T);
-          }
-        } catch (error) {
-          console.error('Fehler beim Verarbeiten der geänderten Daten:', error);
+      const storedItem = localStorage.getItem(`form_${key}`);
+      if (storedItem) {
+        const parsedItem = JSON.parse(storedItem);
+        
+        // Überprüfe, ob die gespeicherten Daten abgelaufen sind
+        if (parsedItem.expiry && parsedItem.expiry > Date.now()) {
+          return parsedItem.data as T;
+        } else {
+          // Entferne abgelaufene Daten aus dem localStorage
+          localStorage.removeItem(`form_${key}`);
         }
       }
-    };
-
-    // Event-Listener für Änderungen im localStorage registrieren
-    window.addEventListener('storage', handleStorageChange);
+    } catch (error) {
+      console.error("Fehler beim Laden der gespeicherten Formulardaten:", error);
+      // Bei Fehler, lösche den Eintrag
+      localStorage.removeItem(`form_${key}`);
+    }
     
-    // Event-Listener beim Aufräumen entfernen
-    return () => {
-      window.removeEventListener('storage', handleStorageChange);
-    };
-  }, [storageKey]);
+    // Wenn keine gültigen Daten gefunden wurden, verwende initialData
+    return initialData;
+  });
 
-  return [value, setAndPersistValue, clearValue];
+  // Speichere Daten im localStorage, wenn sie sich ändern
+  useEffect(() => {
+    try {
+      // Berechne Ablaufzeit
+      const expiryTime = Date.now() + ttl;
+      
+      // Speichere Daten mit Ablaufzeit
+      const itemToStore = {
+        data,
+        expiry: expiryTime,
+      };
+      
+      localStorage.setItem(`form_${key}`, JSON.stringify(itemToStore));
+    } catch (error) {
+      console.error("Fehler beim Speichern der Formulardaten:", error);
+    }
+  }, [data, key, ttl]);
+  
+  // Funktion zum Zurücksetzen der gespeicherten Daten
+  const clearPersistedData = () => {
+    try {
+      localStorage.removeItem(`form_${key}`);
+      setData(initialData);
+    } catch (error) {
+      console.error("Fehler beim Löschen der gespeicherten Formulardaten:", error);
+    }
+  };
+
+  return [data, setData, clearPersistedData];
 }

@@ -4,34 +4,41 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import SEOHead from '@/components/SEOHead';
 
-// Komponenten für Lazy Loading
+// Lazy-geladene Komponenten mit Verzögerung
 const LazyContent1 = lazy(() => {
-  // Simuliere eine Verzögerung beim Laden
-  return new Promise(resolve => {
-    const component = import('@/components/demo/LazyContentOne');
-    setTimeout(() => {
-      resolve(component);
-    }, 1000);
+  return new Promise((resolve) => {
+    // Importiere die Komponente direkt
+    import('@/components/demo/LazyContentOne')
+      .then((module) => {
+        // Simuliere eine Verzögerung beim Laden
+        setTimeout(() => {
+          resolve(module);
+        }, 1000);
+      });
   });
 });
 
 const LazyContent2 = lazy(() => {
-  // Simuliere eine Verzögerung beim Laden
-  return new Promise(resolve => {
-    const component = import('@/components/demo/LazyContentTwo');
-    setTimeout(() => {
-      resolve(component);
-    }, 1500);
+  return new Promise((resolve) => {
+    import('@/components/demo/LazyContentTwo')
+      .then((module) => {
+        // Simuliere eine Verzögerung beim Laden
+        setTimeout(() => {
+          resolve(module);
+        }, 1500);
+      });
   });
 });
 
 const LazyContent3 = lazy(() => {
-  // Simuliere eine Verzögerung beim Laden
-  return new Promise(resolve => {
-    const component = import('@/components/demo/LazyContentThree');
-    setTimeout(() => {
-      resolve(component);
-    }, 2000);
+  return new Promise((resolve) => {
+    import('@/components/demo/LazyContentThree')
+      .then((module) => {
+        // Simuliere eine Verzögerung beim Laden
+        setTimeout(() => {
+          resolve(module);
+        }, 2000);
+      });
   });
 });
 
