@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, lazy } from 'react';
 import { useLocation } from 'wouter';
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from '@/lib/queryClient';
@@ -9,6 +9,8 @@ import { Input } from "@/components/ui/input";
 import { PayPalButtonWrapper } from "@/components/PayPalButtonWrapper";
 import { Link } from 'wouter';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { useFormPersistence } from '@/hooks/use-form-persistence';
+import { SmoothLazyLoad } from '@/components/SmoothLazyLoad';
 
 export default function StickerCheckout() {
   const [location] = useLocation();
@@ -44,7 +46,18 @@ export default function StickerCheckout() {
     };
   };
   
-  const [formData, setFormData] = useState(getInitialFormData());
+  // Verwende den Hook für die lokale Speicherung der Formulardaten
+  // Die Daten werden für 120 Minuten (2 Stunden) gespeichert
+  const [formData, setPersistedFormData, clearPersistedFormData] = useFormPersistence(
+    'sticker-checkout', 
+    getInitialFormData(),
+    120
+  );
+  
+  // Funktion zum Aktualisieren der Formulardaten
+  const setFormData = (newData: typeof formData) => {
+    setPersistedFormData(newData);
+  };
 
   // Laden der Material Icons
   useEffect(() => {
@@ -173,7 +186,12 @@ export default function StickerCheckout() {
     }
     
     setFormError('');
-    await createOrder();
+    const orderResult = await createOrder();
+    
+    // Nach erfolgreicher Bestellung die gespeicherten Formulardaten löschen
+    if (orderResult) {
+      clearPersistedFormData();
+    }
   };
   
   // Aktualisiert den Zahlungsstatus einer Bestellung nach erfolgreicher PayPal-Zahlung
@@ -378,10 +396,10 @@ export default function StickerCheckout() {
             <div 
               className={`flex items-start space-x-2 p-3 rounded-lg border ${formData.agreedToWithdrawalNotice ? 'bg-[#00CFFF]/10 border-[#00CFFF]' : 'border-gray-200'} mb-4`}
               onClick={() => {
-                setFormData(prev => ({
-                  ...prev,
-                  agreedToWithdrawalNotice: !prev.agreedToWithdrawalNotice
-                }));
+                setFormData({
+                  ...formData,
+                  agreedToWithdrawalNotice: !formData.agreedToWithdrawalNotice
+                });
               }}
             >
               <input 
@@ -390,10 +408,10 @@ export default function StickerCheckout() {
                 className="h-4 w-4 mt-1 accent-[#00CFFF]"
                 checked={formData.agreedToWithdrawalNotice}
                 onChange={() => {
-                  setFormData(prev => ({
-                    ...prev,
-                    agreedToWithdrawalNotice: !prev.agreedToWithdrawalNotice
-                  }));
+                  setFormData({
+                    ...formData,
+                    agreedToWithdrawalNotice: !formData.agreedToWithdrawalNotice
+                  });
                 }}
               />
               <label 
