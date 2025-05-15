@@ -140,13 +140,20 @@ export default function AuthTokenTool() {
         <CardContent className="space-y-6">
           <div className="space-y-4">
             <div>
-              <a 
-                href="https://www.facebook.com/v19.0/dialog/oauth?client_id=285025889266955&redirect_uri=https://m.facebook.com/connect/login_success.html&response_type=token&scope=public_profile" 
-                target="_blank"
-                className="inline-flex h-10 px-6 py-2 bg-[#00CFFF] hover:bg-[#009fc4] text-white font-medium rounded-md items-center"
+              <Button
+                asChild
+                className="bg-[#1877F2] hover:bg-[#0d65d9] text-white font-medium"
               >
-                Mit Facebook (Monopoly GO) einloggen
-              </a>
+                <a 
+                  href="https://www.facebook.com/v19.0/dialog/oauth?client_id=285025889266955&redirect_uri=https://m.facebook.com/connect/login_success.html&response_type=token&scope=public_profile" 
+                  target="_blank"
+                >
+                  Mit Facebook (Monopoly GO) einloggen
+                </a>
+              </Button>
+              <p className="mt-2 text-xs text-gray-500">
+                <strong>Hinweis:</strong> Die Facebook-Anmeldung erfolgt in einem separaten Tab und funktioniert unabhängig davon, ob du auf dieser Website eingeloggt bist.
+              </p>
             </div>
 
             <div>
