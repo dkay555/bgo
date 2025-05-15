@@ -177,6 +177,48 @@ export function setupAuth(app: Express) {
     });
   });
   
+  // Auth-Token des Benutzers aktualisieren
+  app.post("/api/user/authtoken", async (req, res) => {
+    try {
+      if (!req.isAuthenticated()) {
+        return res.status(401).json({
+          success: false,
+          message: "Nicht authentifiziert"
+        });
+      }
+
+      const userId = req.user!.id;
+      const { authToken } = req.body;
+
+      if (!authToken) {
+        return res.status(400).json({
+          success: false,
+          message: "Auth-Token ist erforderlich"
+        });
+      }
+
+      const updatedUser = await storage.updateUserAuthToken(userId, authToken);
+
+      if (!updatedUser) {
+        return res.status(404).json({
+          success: false,
+          message: "Benutzer nicht gefunden"
+        });
+      }
+
+      res.json({
+        success: true,
+        message: "Auth-Token erfolgreich aktualisiert"
+      });
+    } catch (error) {
+      console.error("Fehler beim Aktualisieren des Auth-Tokens:", error);
+      res.status(500).json({
+        success: false,
+        message: "Ein Serverfehler ist aufgetreten"
+      });
+    }
+  });
+  
   // Persönliche Benutzerdaten aktualisieren
   app.patch("/api/user/profile", async (req, res, next) => {
     try {
