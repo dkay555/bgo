@@ -3,6 +3,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/hooks/use-auth';
 import SEOHead from '@/components/SEOHead';
 
 export default function AuthTokenTool() {
@@ -11,6 +13,45 @@ export default function AuthTokenTool() {
   const [userData, setUserData] = useState<{ name: string; id: string; profilePic: string } | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
+  const { user } = useAuth();
+
+  // Funktion zum Speichern des Auth-Tokens im Benutzerprofil
+  const handleSaveToken = async (authToken: string) => {
+    if (!user) {
+      toast({
+        title: "Nicht eingeloggt",
+        description: "Sie müssen eingeloggt sein, um den Token im Profil zu speichern.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    try {
+      const response = await fetch('/api/user/authtoken', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ authToken }),
+      });
+      
+      if (response.ok) {
+        toast({
+          title: "Token gespeichert!",
+          description: "Der Token wurde erfolgreich in Ihrem Profil gespeichert.",
+        });
+      } else {
+        throw new Error('Fehler beim Speichern des Tokens');
+      }
+    } catch (err) {
+      toast({
+        title: "Fehler beim Speichern",
+        description: "Der Token konnte nicht gespeichert werden. Bitte versuchen Sie es später erneut.",
+        variant: "destructive",
+      });
+    }
+  };
 
   // Funktion zum Extrahieren des Tokens aus der URL
   const extractToken = async () => {
@@ -123,7 +164,27 @@ export default function AuthTokenTool() {
               <div className="p-3 bg-white rounded border overflow-x-auto">
                 <code className="text-sm break-all">{token}</code>
               </div>
-              <p className="text-xs mt-2 text-gray-500">
+              <div className="flex flex-wrap gap-3 mt-3">
+                <Button 
+                  onClick={() => {
+                    navigator.clipboard.writeText(token);
+                    toast({
+                      title: "Token kopiert!",
+                      description: "Der Token wurde in die Zwischenablage kopiert.",
+                    });
+                  }} 
+                  className="bg-[#0A3A68] hover:bg-[#08294d]"
+                >
+                  <span>Token kopieren</span>
+                </Button>
+                <Button 
+                  onClick={() => handleSaveToken(token)}
+                  className="bg-[#FF4C00] hover:bg-[#cc3b00]"
+                >
+                  Im Profil speichern
+                </Button>
+              </div>
+              <p className="text-xs mt-3 text-gray-500">
                 Wichtig: Bewahre diesen Token sicher auf, teile ihn nicht mit Dritten und verwende ihn nur für Monopoly GO.
               </p>
             </div>
