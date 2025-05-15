@@ -63,6 +63,7 @@ const AdminEmailVorlagenPage = lazy(() => import('@/pages/admin/EmailVorlagen'))
 
 // Test pages
 const PayPalTestPage = lazy(() => import('@/pages/PayPalTest'));
+const SmoothLoadExamplePage = lazy(() => import('@/pages/SmoothLoadExample'));
 
 const Ladebildschirm = () => (
   <div className="flex items-center justify-center min-h-screen">
@@ -186,6 +187,9 @@ function Router() {
           {/* Test-Seiten */}
           <Route path="/paypal-test">
             {() => <PayPalTestPage />}
+          </Route>
+          <Route path="/lazy-load-example">
+            {() => <SmoothLoadExamplePage />}
           </Route>
           
           {/* 404-Seite für alle unbekannten Routen */}
