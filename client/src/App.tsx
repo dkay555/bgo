@@ -46,6 +46,7 @@ const RaceHilfePage = lazy(() => import('@/pages/hilfe/race'));
 const LoginHilfePage = lazy(() => import('@/pages/hilfe/login'));
 const AccountsHilfePage = lazy(() => import('@/pages/hilfe/accounts'));
 const AuthTokenHilfePage = lazy(() => import('@/pages/hilfe/authtoken'));
+const AuthTokenToolPage = lazy(() => import('@/pages/hilfe/authtoken-tool'));
 const NewsPreiseAngebotPage = lazy(() => import('@/pages/hilfe/news_preise_angebot'));
 
 // Lazy-loaded ticket pages
@@ -117,6 +118,9 @@ function Router() {
           </Route>
           <Route path="/hilfe/authtoken">
             {() => <AuthTokenHilfePage />}
+          </Route>
+          <Route path="/hilfe/authtoken-tool">
+            {() => <AuthTokenToolPage />}
           </Route>
           <Route path="/hilfe/news_preise_angebot.html">
             {() => <NewsPreiseAngebotPage />}

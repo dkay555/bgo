@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Monopoly GO Facebook Token Tool</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f0f8ff;
+      color: #0a3a68;
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 1rem;
+      border-radius: 12px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.1);
+    }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    button, .login-button {
+      background: #00cfff;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      display: inline-block;
+      margin-bottom: 1rem;
+      text-decoration: none;
+    }
+    button:hover, .login-button:hover {
+      background: #009fc4;
+    }
+    .result {
+      background: #e0f7ff;
+      padding: 10px;
+      border-radius: 8px;
+      margin-top: 10px;
+      word-break: break-word;
+    }
+    .profile {
+      display: flex;
+      align-items: center;
+      margin-top: 1rem;
+      gap: 1rem;
+    }
+    .profile img {
+      border-radius: 50%;
+      width: 80px;
+      height: 80px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Monopoly GO – Facebook Token Tool</h2>
+  
+  <a class="login-button" href="https://www.facebook.com/v19.0/dialog/oauth?client_id=285025889266955&redirect_uri=https://m.facebook.com/connect/login_success.html&response_type=token&scope=public_profile" target="_blank">
+    Mit Facebook (Monopoly GO) einloggen
+  </a>
+
+  <p>Nach dem Login wirst du auf eine Facebook-Seite mit einer langen URL weitergeleitet.<br>
+  <strong>Kopiere diese URL und füge sie unten ein:</strong></p>
+
+  <textarea id="redirectUrl" rows="4" placeholder="https://m.facebook.com....."></textarea>
+  <button onclick="extractToken()">Token extrahieren & Profil anzeigen</button>
+
+  <div id="output" class="result" style="display:none;"></div>
+  <div id="profile" class="profile" style="display:none;"></div>
+
+  <script>
+    async function extractToken() {
+      const input = document.getElementById('redirectUrl').value;
+      const output = document.getElementById('output');
+      const profile = document.getElementById('profile');
+      const match = input.match(/access_token=([^&"]+)/);
+
+      if (!match) {
+        output.style.display = 'block';
+        output.innerHTML = "Kein Access Token gefunden.";
+        profile.style.display = 'none';
+        return;
+      }
+
+      const token = match[1];
+      output.style.display = 'block';
+      output.innerHTML = `<strong>Access Token:</strong><br><code>${token}</code>`;
+
+      try {
+        const res1 = await fetch(`https://graph.facebook.com/me?fields=id,name&access_token=${token}`);
+        const userData = await res1.json();
+
+        const res2 = await fetch(`https://graph.facebook.com/me/picture?type=large&redirect=false&access_token=${token}`);
+        const picData = await res2.json();
+
+        if (userData.name && picData.data?.url) {
+          profile.innerHTML = `
+            <img src="${picData.data.url}" alt="Profilbild">
+            <div>
+              <strong>Name:</strong><br>${userData.name}<br>
+              <strong>ID:</strong><br>${userData.id}
+            </div>
+          `;
+          profile.style.display = 'flex';
+        } else {
+          profile.innerHTML = "<p>Profil konnte nicht geladen werden.</p>";
+        }
+      } catch (err) {
+        profile.innerHTML = "<p>Fehler beim Laden der Profildaten.</p>";
+        profile.style.display = 'block';
+      }
+    }
+  </script>
+</body>
+</html>

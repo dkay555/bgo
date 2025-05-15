@@ -39,6 +39,21 @@ export default function AuthTokenHilfePage() {
             </div>
           </div>
         </div>
+
+        <div className="bg-orange-50 border-l-4 border-[#FF4C00] p-4 mb-6">
+          <div className="flex">
+            <Info className="h-6 w-6 text-[#FF4C00] mr-2" />
+            <div>
+              <p className="font-medium">NEU: Facebook Auth Token Tool</p>
+              <p className="mb-2">Wir haben ein neues Tool entwickelt, mit dem du deinen Auth-Token noch einfacher extrahieren kannst!</p>
+              <Link href="/hilfe/authtoken-tool">
+                <a className="inline-block px-4 py-2 bg-[#FF4C00] text-white font-medium rounded hover:bg-[#cc3b00] transition-colors">
+                  Zum Auth Token Tool
+                </a>
+              </Link>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
