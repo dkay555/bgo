@@ -65,10 +65,14 @@ const AdminEmailVorlagenPage = lazy(() => import('@/pages/admin/EmailVorlagen'))
 const PayPalTestPage = lazy(() => import('@/pages/PayPalTest'));
 const SmoothLoadExamplePage = lazy(() => import('@/pages/SmoothLoadExample'));
 
+import { DiceSpinner } from '@/components/DiceSpinner';
+
 const Ladebildschirm = () => (
   <div className="flex items-center justify-center min-h-screen">
     <div className="text-center">
-      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#00CFFF] mx-auto mb-4"></div>
+      <div className="mx-auto mb-4 flex justify-center">
+        <DiceSpinner size={60} color="#00CFFF" secondaryColor="#FF4C00" />
+      </div>
       <p className="text-[#0A3A68] font-bold">Wird geladen...</p>
     </div>
   </div>
