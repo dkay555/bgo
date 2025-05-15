@@ -1,22 +1,23 @@
-import { pgTable, text, serial, integer, boolean, timestamp, varchar, numeric, json } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, integer, boolean, timestamp, varchar, decimal, json, primaryKey } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
 // Session-Tabelle für Express-Session mit connect-pg-simple
-export const sessions = pgTable("session", {
-  sid: varchar("sid").primaryKey().notNull(),
-  sess: json("sess").notNull(),
-  expire: timestamp("expire", { mode: "date" }).notNull(),
+// Diese Tabelle wird automatisch vom PostgreSQL-Session-Store erstellt
+export const sessions = pgTable("sessions", {
+  session_id: varchar("session_id", { length: 128 }).primaryKey().notNull(),
+  data: text("data").notNull(),
+  expires: integer("expires").notNull(),
 });
 
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),
-  username: text("username").notNull().unique(),
-  password: text("password").notNull(),
-  email: text("email").unique(),
-  name: text("name"),
+  username: varchar("username", { length: 255 }).notNull().unique(),
+  password: varchar("password", { length: 255 }).notNull(),
+  email: varchar("email", { length: 255 }).unique(),
+  name: varchar("name", { length: 255 }),
   isAdmin: boolean("is_admin").default(false).notNull(),
-  authToken: text("auth_token"),
+  authToken: varchar("auth_token", { length: 255 }),
   authTokenUpdatedAt: timestamp("auth_token_updated_at"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
@@ -37,44 +38,44 @@ export type User = typeof users.$inferSelect;
 export const orders = pgTable("orders", {
   id: serial("id").primaryKey(),
   // Persönliche Daten
-  name: text("name").notNull(),
-  email: text("email").notNull(),
-  whatsapp: text("whatsapp"),
+  name: varchar("name", { length: 255 }).notNull(),
+  email: varchar("email", { length: 255 }).notNull(),
+  whatsapp: varchar("whatsapp", { length: 255 }),
   
   // Bestelldetails
-  productType: text("product_type").default("dice"), // "dice", "partnerevent", "tycoonracers", "sticker"
-  package: text("package").notNull(), // Produkt-Info (z.B. "25000" für Würfel, "3 Partner" für Partnerevent)
-  price: numeric("price").notNull(),   // Preis
+  productType: varchar("product_type", { length: 50 }).default("dice"), // "dice", "partnerevent", "tycoonracers", "sticker"
+  package: varchar("package", { length: 255 }).notNull(), // Produkt-Info (z.B. "25000" für Würfel, "3 Partner" für Partnerevent)
+  price: decimal("price", { precision: 10, scale: 2 }).notNull(),   // Preis
   
   // Zusätzliche Produktdaten als JSON (für Partner, Tycoon Racers, etc.)
   accountData: text("account_data"),
   
   // Monopoly-Daten
-  authMethod: text("auth_method").notNull(), // "authtoken" oder "login"
-  ingameName: text("ingame_name").notNull(),
+  authMethod: varchar("auth_method", { length: 50 }).notNull(), // "authtoken" oder "login"
+  ingameName: varchar("ingame_name", { length: 255 }).notNull(),
   
   // Facebook-Login und Daten
-  fbLogin: text("fb_login"),
-  authToken: text("auth_token"),
-  friendshipLink: text("friendship_link"),
-  accountName: text("account_name"),
+  fbLogin: varchar("fb_login", { length: 255 }),
+  authToken: varchar("auth_token", { length: 255 }),
+  friendshipLink: varchar("friendship_link", { length: 255 }),
+  accountName: varchar("account_name", { length: 255 }),
   
   // Ausführungsdetails für Würfelboost
-  executionTime: text("execution_time").default("schnellstmöglich"),
+  executionTime: varchar("execution_time", { length: 50 }).default("schnellstmöglich"),
   
   // Für Authtoken-Methode
-  authtoken: text("authtoken"),
+  authtoken: varchar("authtoken", { length: 255 }),
   
   // Für Login-Methode
-  loginEmail: text("login_email"),
-  password: text("password"),
-  recoveryCode1: text("recovery_code1"),
-  recoveryCode2: text("recovery_code2"),
+  loginEmail: varchar("login_email", { length: 255 }),
+  password: varchar("password", { length: 255 }),
+  recoveryCode1: varchar("recovery_code1", { length: 255 }),
+  recoveryCode2: varchar("recovery_code2", { length: 255 }),
   
   // Zahlungsdaten
-  paymentMethod: text("payment_method").notNull(), // z.B. "paypal", "bank_transfer"
-  paymentStatus: text("payment_status").notNull().default("pending"), // "pending", "completed", "failed"
-  paymentReference: text("payment_reference"), // Zahlungsreferenz oder Transaktions-ID
+  paymentMethod: varchar("payment_method", { length: 50 }).notNull(), // z.B. "paypal", "bank_transfer"
+  paymentStatus: varchar("payment_status", { length: 50 }).notNull().default("pending"), // "pending", "completed", "failed"
+  paymentReference: varchar("payment_reference", { length: 255 }), // Zahlungsreferenz oder Transaktions-ID
   
   // Timestamps
   createdAt: timestamp("created_at").defaultNow().notNull(),
@@ -140,11 +141,11 @@ export type Order = typeof orders.$inferSelect;
 // Tabelle für Kontaktanfragen
 export const contactMessages = pgTable("contact_messages", {
   id: serial("id").primaryKey(),
-  name: text("name").notNull(),
-  email: text("email").notNull(),
+  name: varchar("name", { length: 255 }).notNull(),
+  email: varchar("email", { length: 255 }).notNull(),
   message: text("message").notNull(),
-  subject: text("subject"),
-  phone: text("phone"),
+  subject: varchar("subject", { length: 255 }),
+  phone: varchar("phone", { length: 50 }),
   isRead: boolean("is_read").default(false).notNull(),
   isArchived: boolean("is_archived").default(false).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
@@ -167,10 +168,10 @@ export type ContactMessage = typeof contactMessages.$inferSelect;
 export const supportTickets = pgTable("support_tickets", {
   id: serial("id").primaryKey(),
   userId: integer("user_id").references(() => users.id),
-  subject: text("subject").notNull(),
+  subject: varchar("subject", { length: 255 }).notNull(),
   message: text("message").notNull(),
-  status: text("status").notNull().default("open"), // "open", "in_progress", "closed"
-  priority: text("priority").notNull().default("normal"), // "low", "normal", "high"
+  status: varchar("status", { length: 50 }).notNull().default("open"), // "open", "in_progress", "closed"
+  priority: varchar("priority", { length: 50 }).notNull().default("normal"), // "low", "normal", "high"
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
@@ -205,11 +206,11 @@ export type TicketReply = typeof ticketReplies.$inferSelect;
 // Produkttabelle für den Shop
 export const products = pgTable("products", {
   id: serial("id").primaryKey(),
-  name: text("name").notNull(),
+  name: varchar("name", { length: 255 }).notNull(),
   description: text("description"),
-  productType: text("product_type").notNull(), // 'dice', 'partnerevent', 'tycoonracers', 'sticker'
-  variant: text("variant"), // z.B. '25000', 'bronze', '100' usw.
-  price: numeric("price").notNull(),
+  productType: varchar("product_type", { length: 50 }).notNull(), // 'dice', 'partnerevent', 'tycoonracers', 'sticker'
+  variant: varchar("variant", { length: 50 }), // z.B. '25000', 'bronze', '100' usw.
+  price: decimal("price", { precision: 10, scale: 2 }).notNull(),
   isActive: boolean("is_active").default(true),
   stock: integer("stock").default(999), // Standardwert für digitale Produkte
   createdAt: timestamp("created_at").defaultNow(),
@@ -228,9 +229,9 @@ export type Product = typeof products.$inferSelect;
 // E-Mail-Vorlagen für Systembenachrichtigungen
 export const emailTemplates = pgTable("email_templates", {
   id: serial("id").primaryKey(),
-  templateKey: text("template_key").notNull().unique(),
-  name: text("name").notNull(),
-  subject: text("subject").notNull(),
+  templateKey: varchar("template_key", { length: 100 }).notNull().unique(),
+  name: varchar("name", { length: 255 }).notNull(),
+  subject: varchar("subject", { length: 255 }).notNull(),
   content: text("content").notNull(),
   variables: text("variables").notNull(), // JSON-String mit verfügbaren Variablen und Beschreibungen
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
