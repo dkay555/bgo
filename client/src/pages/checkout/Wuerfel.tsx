@@ -27,6 +27,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/hooks/use-auth';
 import SEOHead from '@/components/SEOHead';
+import { PayPalButtonWrapper } from '@/components/PayPalButtonWrapper';
 
 // Form schema type
 type BoostTime = "asap" | "tournament";
@@ -530,15 +531,29 @@ export default function WuerfelCheckout() {
               </CardContent>
             </Card>
             
-            {/* Submit Button */}
-            <div className="flex justify-center">
-              <Button 
-                type="submit" 
-                className="bg-[#FF4C00] hover:bg-[#FF4C00]/90 text-white px-8 py-6 text-lg"
-              >
-                Jetzt kaufen
-                <span className="ml-2">→</span>
-              </Button>
+            {/* PayPal Button */}
+            <div className="flex flex-col items-center space-y-4">
+              <div className="w-full max-w-md">
+                <PayPalButtonWrapper
+                  amount={selectedOption === '25000' ? '25.00' : 
+                         selectedOption === '35000' ? '35.00' : 
+                         selectedOption === '45000' ? '45.00' : 
+                         selectedOption === 'schnupper' ? '10.00' : '15.00'}
+                  currency="EUR"
+                  intent="CAPTURE"
+                  onPaymentComplete={async (paypalOrderId) => {
+                    toast({
+                      title: "Zahlung erfolgreich!",
+                      description: `Deine Bestellung wurde erfolgreich bezahlt. Transaktions-ID: ${paypalOrderId}`,
+                    });
+                    // Hier würde man normalerweise den Server benachrichtigen
+                    // await fetch('/api/orders/update-status', {...})
+                  }}
+                />
+              </div>
+              <p className="text-sm text-gray-500 text-center">
+                Mit Klick auf "Jetzt kaufen" wirst du zu PayPal weitergeleitet, um die Zahlung abzuschließen.
+              </p>
             </div>
           </form>
         </Form>
