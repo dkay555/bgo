@@ -80,7 +80,7 @@ export default function StartPage() {
               </Button>
               
               <Button variant="cyan" asChild className="font-bold flex items-center gap-2">
-                <Link href="/produkte">
+                <Link href="/shop">
                   <span className="material-icons">shopping_cart</span>
                   Shop
                 </Link>
