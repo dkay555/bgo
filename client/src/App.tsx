@@ -17,6 +17,7 @@ import Widerruf from "@/pages/Widerruf";
 import Hilfe from "@/pages/Hilfe";
 import Produkte from "@/pages/Produkte";
 import Preise from "@/pages/Preise";
+import Shop from "@/pages/Shop";
 import AuthPage from "@/pages/auth-page";
 import OrderHistory from "@/pages/order-history";
 import { AuthProvider } from "@/hooks/use-auth";
@@ -91,6 +92,7 @@ function Router() {
           <Route path="/blog" component={BlogPost} />
           <Route path="/news" component={News} />
           <Route path="/produkte" component={Produkte} />
+          <Route path="/shop" component={Shop} />
           <Route path="/preise" component={Preise} />
           
           {/* Rechtliche Seiten */}
@@ -145,6 +147,23 @@ function Router() {
           </Route>
           <Route path="/produkte/weitere">
             {() => <WeiterePage />}
+          </Route>
+          
+          {/* Shop-Unterseiten */}
+          <Route path="/shop/preise">
+            {() => <Preise />}
+          </Route>
+          <Route path="/shop/wuerfel">
+            {() => <WuerfelPage />}
+          </Route>
+          <Route path="/shop/sticker">
+            {() => <StickerPage />}
+          </Route>
+          <Route path="/shop/partnerevent">
+            {() => <PartnerPage />}
+          </Route>
+          <Route path="/shop/tycoonracers">
+            {() => <TycoonRacersPage />}
           </Route>
           
           {/* Checkout-Seiten */}
