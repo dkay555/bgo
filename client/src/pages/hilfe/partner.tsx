@@ -205,7 +205,7 @@ export default function PartnerHilfe() {
           <div className="bg-[#E6F7FF] border-l-4 border-[#00CFFF] p-4 rounded-r-md">
             <h4 className="font-bold text-[#0A3A68] mb-2 border-b-2 border-[#00CFFF] pb-2 inline-block">Partnerevent-Plätze kaufen</h4>
             <p className="text-gray-700 mb-3">In der Zwischenzeit können Sie bereits unsere Partnerevent-Angebote durchsuchen und bestellen.</p>
-            <Link href="/produkte/partner">
+            <Link href="/shop/partnerevent">
               <button className="bg-[#0A3A68] hover:bg-[#00CFFF] text-white py-2 px-4 rounded-md transition-colors inline-flex items-center">
                 <span className="material-icons mr-1">shopping_cart</span>
                 Zum Partnerevent-Shop

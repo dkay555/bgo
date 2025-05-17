@@ -75,7 +75,7 @@ export default function News() {
                   im Event erfolgreich zu sein.
                 </p>
                 <div className="flex justify-end">
-                  <Link href="/produkte/tycoonracers">
+                  <Link href="/shop/tycoonracers">
                     <Button variant="outline" className="text-sm px-3 py-1">
                       [Zu den Angeboten]
                     </Button>

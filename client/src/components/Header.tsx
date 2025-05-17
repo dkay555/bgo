@@ -273,7 +273,7 @@ export function Header() {
             <div className="grid grid-cols-2 gap-2 p-1">
               {/* Würfel */}
               <Link 
-                href="/produkte/wuerfel"
+                href="/shop/wuerfel"
                 className="text-white hover:bg-white/10 hover:text-[#FF4C00] p-2 rounded-md transition duration-300 border border-white/10 flex flex-col items-center"
                 onClick={closeMobileMenu}
               >
@@ -283,7 +283,7 @@ export function Header() {
               
               {/* Sticker */}
               <Link 
-                href="/produkte/sticker"
+                href="/shop/sticker"
                 className="text-white hover:bg-white/10 hover:text-[#FF4C00] p-2 rounded-md transition duration-300 border border-white/10 flex flex-col items-center"
                 onClick={closeMobileMenu}
               >
@@ -293,7 +293,7 @@ export function Header() {
               
               {/* Partnerevents */}
               <Link 
-                href="/produkte/partner"
+                href="/shop/partnerevent"
                 className="text-white hover:bg-white/10 hover:text-[#FF4C00] p-2 rounded-md transition duration-300 border border-white/10 flex flex-col items-center"
                 onClick={closeMobileMenu}
               >
@@ -303,7 +303,7 @@ export function Header() {
               
               {/* Tycoon Racers */}
               <Link 
-                href="/produkte/tycoonracers"
+                href="/shop/tycoonracers"
                 className="text-white hover:bg-white/10 hover:text-[#FF4C00] p-2 rounded-md transition duration-300 border border-white/10 flex flex-col items-center"
                 onClick={closeMobileMenu}
               >

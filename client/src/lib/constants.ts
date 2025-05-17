@@ -87,28 +87,28 @@ export const FOOTER_LINKS = [
 export const PRODUCT_CATEGORIES = [
   { 
     name: 'Würfelboost', 
-    path: '/produkte/wuerfel',
+    path: '/shop/wuerfel',
     icon: 'casino',
     image: 'kategorie_wuerfel_300_300.webp',
     description: 'Erhöhen Sie Ihre Würfelzahl im Spiel'
   },
   { 
     name: 'Sticker', 
-    path: '/produkte/sticker',
+    path: '/shop/sticker',
     icon: 'collections_bookmark',
     image: 'kategorie_sticker_300_300.webp',
     description: 'Vervollständigen Sie Ihre Sammlungen'
   },
   { 
     name: 'Partnerevents', 
-    path: '/produkte/partner',
+    path: '/shop/partnerevent',
     icon: 'people',
     image: 'kategorie_partner_300_300.webp',
     description: 'Finden Sie aktive Spielpartner'
   },
   { 
     name: 'Tycoon Racers', 
-    path: '/produkte/tycoonracers',
+    path: '/shop/tycoonracers',
     icon: 'emoji_events',
     image: 'kategorie_racers_200_300.webp',
     description: 'Unterstützung bei Events'

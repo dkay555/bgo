@@ -158,7 +158,7 @@ export default function Preise() {
         "Verlässlicher Service"
       ],
       cta: "Partner finden",
-      link: "/produkte/partner#top",
+      link: "/shop/partnerevent#top",
     },
     {
       title: "Eventwährung",
@@ -172,7 +172,7 @@ export default function Preise() {
         "Sicherer Prozess"
       ],
       cta: "Jetzt kaufen",
-      link: "/produkte/partner#top",
+      link: "/shop/partnerevent#top",
       highlight: true,
     }
   ];
