@@ -94,7 +94,7 @@ export default function WuerfelCheckout() {
   const form = useForm<FormData>({
     resolver: zodResolver(checkoutSchema),
     defaultValues: {
-      product: "25000",
+      product: selectedOption,
       name: user?.name || "",
       email: user?.email || "",
       whatsapp: "",
@@ -109,6 +109,7 @@ export default function WuerfelCheckout() {
       termsAccepted: false,
       withdrawalAccepted: false,
     },
+    mode: "onChange",
   });
 
   const handleProductChange = (value: string) => {
@@ -186,68 +187,93 @@ export default function WuerfelCheckout() {
                 <h2 className="text-xl font-bold text-[#0A3A68] mt-0 mb-2">Bitte wähle deine gewünschte Menge:</h2>
                 
                 <div className="grid gap-2">
-                  <FormField
-                    control={form.control}
-                    name="product"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormControl>
-                          <RadioGroup
-                            value={selectedOption}
-                            onValueChange={(val) => {
-                              handleProductChange(val);
-                              field.onChange(val);
-                            }}
-                            className="grid gap-2"
-                          >
-                            <div className="flex items-center space-x-3 w-full">
-                              <RadioGroupItem value="25000" id="25000" />
-                              <Label htmlFor="25000" className="text-gray-900 flex items-center w-full cursor-pointer">
-                                <span>25.000 Würfel</span>
-                                <span className="ml-2">🎲</span>
-                                <span className="ml-auto font-semibold text-[#FF4C00]">25€</span>
-                              </Label>
-                            </div>
-                            
-                            <div className="flex items-center space-x-3 w-full">
-                              <RadioGroupItem value="35000" id="35000" />
-                              <Label htmlFor="35000" className="text-gray-900 flex items-center w-full cursor-pointer">
-                                <span>35.000 Würfel</span>
-                                <span className="ml-2">🎲</span>
-                                <span className="ml-auto font-semibold text-[#FF4C00]">35€</span>
-                              </Label>
-                            </div>
-                            
-                            <div className="flex items-center space-x-3 w-full">
-                              <RadioGroupItem value="45000" id="45000" />
-                              <Label htmlFor="45000" className="text-gray-900 flex items-center w-full cursor-pointer">
-                                <span>45.000 Würfel</span>
-                                <span className="ml-2">🎲</span>
-                                <span className="ml-auto font-semibold text-[#FF4C00]">45€</span>
-                              </Label>
-                            </div>
-                            
-                            <div className="flex items-center space-x-3 w-full">
-                              <RadioGroupItem value="schnupper" id="schnupper" />
-                              <Label htmlFor="schnupper" className="text-gray-900 flex items-center w-full cursor-pointer">
-                                <span>Schnupperboost 10.000 Würfel</span>
-                                <span className="ml-auto font-semibold text-[#FF4C00]">10€</span>
-                              </Label>
-                            </div>
-                            
-                            <div className="flex items-center space-x-3 w-full">
-                              <RadioGroupItem value="schnupperEvent" id="schnupperEvent" />
-                              <Label htmlFor="schnupperEvent" className="text-gray-900 flex items-center w-full cursor-pointer">
-                                <span>Schnupperboost inkl. Events</span>
-                                <span className="ml-auto font-semibold text-[#FF4C00]">15€</span>
-                              </Label>
-                            </div>
-                          </RadioGroup>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                  <div>
+                    <div className="flex items-center space-x-3 w-full">
+                      <input 
+                        type="radio" 
+                        id="25000" 
+                        name="productType" 
+                        className="h-5 w-5 text-[#00CFFF] border-gray-300 focus:ring-[#00CFFF]" 
+                        checked={selectedOption === '25000'} 
+                        onChange={() => handleProductChange('25000')}
+                      />
+                      <label htmlFor="25000" className="text-gray-900 flex items-center w-full cursor-pointer">
+                        <span>25.000 Würfel</span>
+                        <span className="ml-2">🎲</span>
+                        <span className="ml-auto font-semibold text-[#FF4C00]">25€</span>
+                      </label>
+                    </div>
+                    
+                    <div className="flex items-center space-x-3 w-full mt-2">
+                      <input 
+                        type="radio" 
+                        id="35000" 
+                        name="productType" 
+                        className="h-5 w-5 text-[#00CFFF] border-gray-300 focus:ring-[#00CFFF]" 
+                        checked={selectedOption === '35000'} 
+                        onChange={() => handleProductChange('35000')}
+                      />
+                      <label htmlFor="35000" className="text-gray-900 flex items-center w-full cursor-pointer">
+                        <span>35.000 Würfel</span>
+                        <span className="ml-2">🎲</span>
+                        <span className="ml-auto font-semibold text-[#FF4C00]">35€</span>
+                      </label>
+                    </div>
+                    
+                    <div className="flex items-center space-x-3 w-full mt-2">
+                      <input 
+                        type="radio" 
+                        id="45000" 
+                        name="productType" 
+                        className="h-5 w-5 text-[#00CFFF] border-gray-300 focus:ring-[#00CFFF]" 
+                        checked={selectedOption === '45000'} 
+                        onChange={() => handleProductChange('45000')}
+                      />
+                      <label htmlFor="45000" className="text-gray-900 flex items-center w-full cursor-pointer">
+                        <span>45.000 Würfel</span>
+                        <span className="ml-2">🎲</span>
+                        <span className="ml-auto font-semibold text-[#FF4C00]">45€</span>
+                      </label>
+                    </div>
+                    
+                    <div className="flex items-center space-x-3 w-full mt-2">
+                      <input 
+                        type="radio" 
+                        id="schnupper" 
+                        name="productType" 
+                        className="h-5 w-5 text-[#00CFFF] border-gray-300 focus:ring-[#00CFFF]" 
+                        checked={selectedOption === 'schnupper'} 
+                        onChange={() => handleProductChange('schnupper')}
+                      />
+                      <label htmlFor="schnupper" className="text-gray-900 flex items-center w-full cursor-pointer">
+                        <span>Schnupperboost 10.000 Würfel</span>
+                        <span className="ml-auto font-semibold text-[#FF4C00]">10€</span>
+                      </label>
+                    </div>
+                    
+                    <div className="flex items-center space-x-3 w-full mt-2">
+                      <input 
+                        type="radio" 
+                        id="schnupperEvent" 
+                        name="productType" 
+                        className="h-5 w-5 text-[#00CFFF] border-gray-300 focus:ring-[#00CFFF]" 
+                        checked={selectedOption === 'schnupperEvent'} 
+                        onChange={() => handleProductChange('schnupperEvent')}
+                      />
+                      <label htmlFor="schnupperEvent" className="text-gray-900 flex items-center w-full cursor-pointer">
+                        <span>Schnupperboost inkl. Events</span>
+                        <span className="ml-auto font-semibold text-[#FF4C00]">15€</span>
+                      </label>
+                    </div>
+                    
+                    {/* Verstecktes Eingabefeld für das Formular */}
+                    <input 
+                      type="hidden" 
+                      name="product" 
+                      value={selectedOption} 
+                      {...form.register("product")}
+                    />
+                  </div>
                 </div>
               </CardContent>
             </Card>
