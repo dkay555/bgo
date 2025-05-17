@@ -9,7 +9,7 @@ packages = ["lsof", "jq", "imagemagick"]
 [deployment]
 deploymentTarget = "cloudrun"
 build = ["npm", "run", "build"]
-run = ["sh", "-c", "npm run app"]
+run = ["sh", "-c", "npm run start"]
 
 [[ports]]
 localPort = 5000
