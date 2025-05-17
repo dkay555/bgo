@@ -443,340 +443,356 @@ export default function WuerfelCheckoutPage() {
           </CardHeader>
           <CardContent>
             <div className="grid gap-4">
-              <div>
-                <Label htmlFor="name" className="mb-1 block">Name *</Label>
-                <Input 
-                  id="name" 
-                  name="name" 
-                  placeholder="Ihr vollständiger Name" 
-                  value={formData.name} 
-                  onChange={handleInputChange} 
-                  required
-                  className="border-[#00CFFF]/30 focus:border-[#00CFFF] focus:ring-[#00CFFF]"
-                />
-              </div>
-              
-              <div>
-                <Label htmlFor="email" className="mb-1 block">E-Mail *</Label>
-                <Input 
-                  id="email" 
-                  name="email" 
-                  type="email" 
-                  placeholder="ihre.email@beispiel.de" 
-                  value={formData.email} 
-                  onChange={handleInputChange} 
-                  required
-                  className="border-[#00CFFF]/30 focus:border-[#00CFFF] focus:ring-[#00CFFF]"
-                />
-              </div>
-              
-              <div>
-                <Label htmlFor="whatsapp" className="mb-1 block flex items-center">
-                  WhatsApp (optional)
-                  <span className="text-xs text-gray-500 ml-2">Für schnellere Kommunikation</span>
-                </Label>
-                <Input 
-                  id="whatsapp" 
-                  name="whatsapp" 
-                  placeholder="Ihre WhatsApp-Nummer" 
-                  value={formData.whatsapp} 
+              <div className="grid gap-2">
+                <Label htmlFor="name">Name *</Label>
+                <Input
+                  id="name"
+                  name="name"
+                  placeholder="Max Mustermann"
+                  value={formData.name}
                   onChange={handleInputChange}
-                  className="border-[#00CFFF]/30 focus:border-[#00CFFF] focus:ring-[#00CFFF]"
+                  required
+                />
+              </div>
+              
+              <div className="grid gap-2">
+                <Label htmlFor="email">E-Mail *</Label>
+                <Input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="max@beispiel.de"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              
+              <div className="grid gap-2">
+                <Label htmlFor="whatsapp">WhatsApp (optional)</Label>
+                <Input
+                  id="whatsapp"
+                  name="whatsapp"
+                  placeholder="+49 123 4567890"
+                  value={formData.whatsapp}
+                  onChange={handleInputChange}
+                />
+                <p className="text-xs text-gray-500">
+                  Um Sie bei Fragen kontaktieren zu können. Ohne Angabe einer WhatsApp-Nummer müssen wir Sie per E-Mail erreichen.
+                </p>
+              </div>
+              
+              <div className="grid gap-2">
+                <Label htmlFor="ingameName">Ingame-Name (optional)</Label>
+                <Input
+                  id="ingameName"
+                  name="ingameName"
+                  placeholder="Ihr Name im Spiel"
+                  value={formData.ingameName}
+                  onChange={handleInputChange}
                 />
               </div>
             </div>
           </CardContent>
         </Card>
         
-        {/* Monopoly-Account-Daten */}
+        {/* Zugangsdaten */}
         <Card className="mb-6">
           <CardHeader className="pb-2">
             <CardTitle className="flex items-center gap-2">
-              <span className="material-icons text-[#00CFFF]">videogame_asset</span>
-              Monopoly-Daten
+              <span className="material-icons text-[#00CFFF]">lock</span>
+              Zugangsdaten
             </CardTitle>
+            <CardDescription>
+              Wir benötigen temporären Zugang zu Ihrem Spiel, um den Boost durchzuführen.
+            </CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
-              <div>
-                <Label htmlFor="ingameName" className="mb-1 block">Spielername *</Label>
-                <Input 
-                  id="ingameName" 
-                  name="ingameName" 
-                  placeholder="Ihr Name im Spiel" 
-                  value={formData.ingameName} 
-                  onChange={handleInputChange} 
-                  required
-                  className="border-[#00CFFF]/30 focus:border-[#00CFFF] focus:ring-[#00CFFF]"
-                />
-              </div>
+            <Tabs 
+              defaultValue="authtoken" 
+              value={formData.authMethod}
+              onValueChange={(value) => {
+                setFormData({
+                  ...formData,
+                  authMethod: value
+                });
+              }}
+              className="w-full"
+            >
+              <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="authtoken">Mittels Auth-Token</TabsTrigger>
+                <TabsTrigger value="login">Mittels Login-Daten</TabsTrigger>
+              </TabsList>
               
-              <div>
-                <Label className="mb-1 block">Authentifizierungsmethode *</Label>
-                <Tabs
-                  value={formData.authMethod}
-                  onValueChange={(value) => setFormData({...formData, authMethod: value as 'authtoken' | 'login'})}
-                  className="w-full"
-                >
-                  <TabsList className="grid w-full grid-cols-2">
-                    <TabsTrigger value="authtoken">Auth-Token (empfohlen)</TabsTrigger>
-                    <TabsTrigger value="login">Facebook-Login</TabsTrigger>
-                  </TabsList>
-                  <TabsContent value="authtoken" className="pt-4">
-                    <div className="space-y-4">
-                      <div>
-                        <Label htmlFor="authToken" className="mb-1 block flex items-center">
-                          Auth-Token *
-                          <span className="text-xs text-gray-500 ml-2">
-                            <Link href="/hilfe/authtoken" className="text-[#00CFFF] hover:underline">
-                              Wie finde ich meinen Token?
-                            </Link>
-                          </span>
-                        </Label>
-                        <Input 
-                          id="authToken" 
-                          name="authToken" 
-                          placeholder="Ihr Auth-Token aus dem Spiel" 
-                          value={formData.authToken} 
-                          onChange={handleInputChange}
-                          className="border-[#00CFFF]/30 focus:border-[#00CFFF] focus:ring-[#00CFFF]"
-                        />
-                      </div>
+              <TabsContent value="authtoken" className="mt-4">
+                <div className="grid gap-4">
+                  <div className="rounded-lg bg-blue-50 p-4 text-sm">
+                    <p className="font-medium text-blue-800 mb-2">Was ist ein Auth-Token?</p>
+                    <p className="text-blue-700 mb-1">
+                      Der Auth-Token ist ein sicherer Weg, uns Zugriff auf Ihr Monopoly GO!-Konto zu gewähren, 
+                      ohne Ihre Login-Daten preiszugeben.
+                    </p>
+                    <Link href="/hilfe/auth-token" className="text-blue-600 font-medium hover:underline">
+                      Wie erhalte ich meinen Auth-Token? (Anleitung)
+                    </Link>
+                  </div>
+                  
+                  <div className="grid gap-2">
+                    <Label htmlFor="authToken">Auth-Token *</Label>
+                    <Input
+                      id="authToken"
+                      name="authToken"
+                      placeholder="Fügen Sie hier Ihren Auth-Token ein"
+                      value={formData.authToken}
+                      onChange={handleInputChange}
+                      required={formData.authMethod === 'authtoken'}
+                    />
+                  </div>
+                </div>
+              </TabsContent>
+              
+              <TabsContent value="login" className="mt-4">
+                <div className="rounded-lg bg-amber-50 p-4 text-sm mb-4">
+                  <p className="font-medium text-amber-800 mb-2">Wichtiger Hinweis zur Sicherheit</p>
+                  <p className="text-amber-700">
+                    Wir empfehlen die Nutzung des Auth-Tokens, da dies sicherer ist. Falls Sie 
+                    sich für die Anmeldung mit Login-Daten entscheiden, ändern Sie bitte nach 
+                    Abschluss unserer Dienstleistung Ihr Passwort.
+                  </p>
+                </div>
+                
+                <div className="grid gap-4">
+                  <div className="grid gap-2">
+                    <Label htmlFor="fbEmail">Facebook E-Mail *</Label>
+                    <Input
+                      id="fbEmail"
+                      name="fbEmail"
+                      type="email"
+                      placeholder="Ihre Facebook E-Mail"
+                      value={formData.fbEmail}
+                      onChange={handleInputChange}
+                      required={formData.authMethod === 'login'}
+                    />
+                  </div>
+                  
+                  <div className="grid gap-2">
+                    <Label htmlFor="fbPassword">Facebook Passwort *</Label>
+                    <Input
+                      id="fbPassword"
+                      name="fbPassword"
+                      type="password"
+                      placeholder="Ihr Facebook Passwort"
+                      value={formData.fbPassword}
+                      onChange={handleInputChange}
+                      required={formData.authMethod === 'login'}
+                    />
+                  </div>
+                  
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="grid gap-2">
+                      <Label htmlFor="recoveryCode1">Wiederherstellungscode 1 *</Label>
+                      <Input
+                        id="recoveryCode1"
+                        name="recoveryCode1"
+                        placeholder="Code 1"
+                        value={formData.recoveryCode1}
+                        onChange={handleInputChange}
+                        required={formData.authMethod === 'login'}
+                      />
                     </div>
-                  </TabsContent>
-                  <TabsContent value="login" className="pt-4">
-                    <div className="space-y-4">
-                      <div>
-                        <Label htmlFor="fbEmail" className="mb-1 block">Facebook E-Mail *</Label>
-                        <Input 
-                          id="fbEmail" 
-                          name="fbEmail" 
-                          placeholder="Ihre Facebook E-Mail" 
-                          value={formData.fbEmail} 
-                          onChange={handleInputChange}
-                          className="border-[#00CFFF]/30 focus:border-[#00CFFF] focus:ring-[#00CFFF]"
-                        />
-                      </div>
-                      <div>
-                        <Label htmlFor="fbPassword" className="mb-1 block">Facebook Passwort *</Label>
-                        <Input 
-                          id="fbPassword" 
-                          name="fbPassword" 
-                          type="password"
-                          placeholder="Ihr Facebook Passwort" 
-                          value={formData.fbPassword} 
-                          onChange={handleInputChange}
-                          className="border-[#00CFFF]/30 focus:border-[#00CFFF] focus:ring-[#00CFFF]"
-                        />
-                      </div>
-                      <div>
-                        <Label htmlFor="recoveryCode1" className="mb-1 block">Wiederherstellungscode 1 *</Label>
-                        <Input 
-                          id="recoveryCode1" 
-                          name="recoveryCode1" 
-                          placeholder="Erster Wiederherstellungscode" 
-                          value={formData.recoveryCode1 || ''} 
-                          onChange={handleInputChange}
-                          className="border-[#00CFFF]/30 focus:border-[#00CFFF] focus:ring-[#00CFFF]"
-                        />
-                      </div>
-                      <div>
-                        <Label htmlFor="recoveryCode2" className="mb-1 block">Wiederherstellungscode 2 *</Label>
-                        <Input 
-                          id="recoveryCode2" 
-                          name="recoveryCode2" 
-                          placeholder="Zweiter Wiederherstellungscode" 
-                          value={formData.recoveryCode2 || ''} 
-                          onChange={handleInputChange}
-                          className="border-[#00CFFF]/30 focus:border-[#00CFFF] focus:ring-[#00CFFF]"
-                        />
-                      </div>
+                    
+                    <div className="grid gap-2">
+                      <Label htmlFor="recoveryCode2">Wiederherstellungscode 2 *</Label>
+                      <Input
+                        id="recoveryCode2"
+                        name="recoveryCode2"
+                        placeholder="Code 2"
+                        value={formData.recoveryCode2}
+                        onChange={handleInputChange}
+                        required={formData.authMethod === 'login'}
+                      />
                     </div>
-                  </TabsContent>
-                </Tabs>
-              </div>
-            </div>
+                  </div>
+                  
+                  <div className="rounded-lg bg-gray-50 p-4 text-sm">
+                    <p className="font-medium text-gray-700 mb-2">Wie erhalte ich meine Wiederherstellungscodes?</p>
+                    <p className="text-gray-600">
+                      Öffnen Sie Facebook und gehen Sie zu Einstellungen &gt; Sicherheit &gt; Wiederherstellungscodes.
+                      Die Codes sind notwendig, falls eine Zweifaktor-Authentifizierung aktiviert ist.
+                    </p>
+                  </div>
+                </div>
+              </TabsContent>
+            </Tabs>
           </CardContent>
         </Card>
         
-        {/* Ausführungszeitpunkt */}
+        {/* Ausführungszeit */}
         <Card className="mb-6">
           <CardHeader className="pb-2">
             <CardTitle className="flex items-center gap-2">
               <span className="material-icons text-[#00CFFF]">schedule</span>
-              Ausführungszeitpunkt
+              Ausführungszeit
             </CardTitle>
-            <CardDescription>
-              Wann sollen die Würfel dem Account hinzugefügt werden?
-            </CardDescription>
           </CardHeader>
           <CardContent>
-            <RadioGroup 
-              defaultValue={formData.executionTime}
-              onValueChange={(value) => {
-                setFormData({
-                  ...formData,
-                  executionTime: value as 'sofort' | 'bahnhofsturnier'
-                });
-              }}
-              className="grid gap-4"
-            >
-              <div className={`flex items-center space-x-2 p-4 rounded-lg border ${formData.executionTime === 'sofort' ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border-gray-200 hover:bg-gray-50'}`}>
-                <RadioGroupItem value="sofort" id="time-sofort" className="text-[#00CFFF]" />
-                <Label htmlFor="time-sofort" className="w-full cursor-pointer">
-                  <span className="font-medium">Schnellstmöglich</span>
-                  <p className="text-sm text-gray-500">Die Würfel werden so bald wie möglich hinzugefügt</p>
-                </Label>
-              </div>
+            <div className="grid gap-4">
+              <RadioGroup 
+                defaultValue={formData.executionTime}
+                onValueChange={(value) => {
+                  setFormData({
+                    ...formData,
+                    executionTime: value
+                  });
+                }}
+                className="grid gap-3"
+              >
+                <div className={`flex items-center space-x-2 p-3 rounded-lg border ${formData.executionTime === 'sofort' ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border-gray-200 hover:bg-gray-50'}`}>
+                  <RadioGroupItem value="sofort" id="execution-sofort" className="text-[#00CFFF]" />
+                  <Label htmlFor="execution-sofort" className="cursor-pointer">
+                    <span className="font-medium">Sofort (sobald möglich)</span>
+                  </Label>
+                </div>
+                
+                <div className={`flex items-center space-x-2 p-3 rounded-lg border ${formData.executionTime === 'bahnhofsturnier' ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border-gray-200 hover:bg-gray-50'}`}>
+                  <RadioGroupItem value="bahnhofsturnier" id="execution-bahnhofsturnier" className="text-[#00CFFF]" />
+                  <Label htmlFor="execution-bahnhofsturnier" className="cursor-pointer">
+                    <span className="font-medium">Während eines Bahnhofsturniers</span>
+                  </Label>
+                </div>
+                
+                <div className={`flex items-center space-x-2 p-3 rounded-lg border ${formData.executionTime === 'spezifisch' ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border-gray-200 hover:bg-gray-50'}`}>
+                  <RadioGroupItem value="spezifisch" id="execution-spezifisch" className="text-[#00CFFF]" />
+                  <Label htmlFor="execution-spezifisch" className="w-full cursor-pointer">
+                    <span className="font-medium">Zu einem bestimmten Zeitpunkt</span>
+                  </Label>
+                </div>
+              </RadioGroup>
               
-              <div className={`flex items-center space-x-2 p-4 rounded-lg border ${formData.executionTime === 'bahnhofsturnier' ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border-gray-200 hover:bg-gray-50'}`}>
-                <RadioGroupItem value="bahnhofsturnier" id="time-bahnhofsturnier" className="text-[#00CFFF]" />
-                <Label htmlFor="time-bahnhofsturnier" className="w-full cursor-pointer">
-                  <span className="font-medium">Zum nächsten Bahnhofsturnier</span>
-                  <p className="text-sm text-gray-500">Die Würfel werden zum nächsten Bahnhofsturnier hinzugefügt</p>
-                </Label>
-              </div>
-            </RadioGroup>
+              {formData.executionTime === 'spezifisch' && (
+                <div className="grid gap-2 mt-2">
+                  <Label htmlFor="specificExecutionTime">Gewünschter Zeitpunkt *</Label>
+                  <Input
+                    id="specificExecutionTime"
+                    name="specificExecutionTime"
+                    placeholder="z.B. 'Morgen ab 18 Uhr' oder 'Samstag vormittag'"
+                    value={formData.specificExecutionTime}
+                    onChange={handleInputChange}
+                    required={formData.executionTime === 'spezifisch'}
+                  />
+                </div>
+              )}
+            </div>
           </CardContent>
         </Card>
         
-        {/* Checkboxen für AGBs und Widerrufsrecht */}
+        {/* Nutzungsbedingungen */}
         <Card className="mb-6">
-          <CardContent className="pt-6">
-            {/* Checkbox für Widerrufsrecht */}
-            <div 
-              className={`flex items-start space-x-2 p-3 rounded-lg border ${formData.agreedToWithdrawalNotice ? 'bg-[#00CFFF]/10 border-[#00CFFF]' : 'border-gray-200'} mb-4`}
-              onClick={() => {
-                setFormData(prev => ({
-                  ...prev,
-                  agreedToWithdrawalNotice: !prev.agreedToWithdrawalNotice
-                }));
-              }}
-            >
-              <input 
-                type="checkbox" 
-                id="withdrawalCheck"
-                className="h-4 w-4 mt-1 accent-[#00CFFF]"
-                checked={formData.agreedToWithdrawalNotice}
-                onChange={() => {
-                  setFormData(prev => ({
-                    ...prev,
-                    agreedToWithdrawalNotice: !prev.agreedToWithdrawalNotice
-                  }));
-                }}
-              />
-              <label 
-                htmlFor="withdrawalCheck" 
-                className="text-sm cursor-pointer"
-              >
-                Ich bin ausdrücklich damit einverstanden, dass mit der Ausführung des Auftrags vor Ablauf der Widerrufsfrist begonnen wird. Mir ist bekannt, dass mein <Link href="/widerruf" className="text-[#00CFFF] hover:underline">Widerrufsrecht</Link> mit Beginn der Ausführung erlischt.
-              </label>
-            </div>
-            
-            {/* Checkbox für AGB */}
-            <div 
-              className={`flex items-start space-x-2 p-3 rounded-lg border ${formData.agreedToTerms ? 'bg-[#00CFFF]/10 border-[#00CFFF]' : 'border-gray-200'}`}
-              onClick={() => {
-                setFormData(prev => ({
-                  ...prev,
-                  agreedToTerms: !prev.agreedToTerms
-                }));
-              }}
-            >
-              <input 
-                type="checkbox" 
-                id="termsCheck"
-                className="h-4 w-4 mt-1 accent-[#00CFFF]"
-                checked={formData.agreedToTerms}
-                onChange={() => {
-                  setFormData(prev => ({
-                    ...prev,
-                    agreedToTerms: !prev.agreedToTerms
-                  }));
-                }}
-              />
-              <label 
-                htmlFor="termsCheck" 
-                className="text-sm cursor-pointer"
-              >
-                Ich habe die <Link href="/agb" className="text-[#00CFFF] hover:underline">AGB</Link> und <Link href="/datenschutz" className="text-[#00CFFF] hover:underline">Datenschutzbestimmungen</Link> gelesen und akzeptiere diese.
-              </label>
-            </div>
-            
-            {/* Fehlermeldung */}
-            {formError && (
-              <div className="mt-4 p-3 bg-red-50 border border-red-200 text-red-600 rounded-md text-sm">
-                <span className="material-icons text-red-500 text-sm align-middle mr-1">error</span>
-                {formError}
+          <CardHeader className="pb-2">
+            <CardTitle className="flex items-center gap-2">
+              <span className="material-icons text-[#00CFFF]">gavel</span>
+              Rechtliches
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid gap-4">
+              <div className="flex items-start space-x-2">
+                <input
+                  type="checkbox"
+                  id="agreedToTerms"
+                  name="agreedToTerms"
+                  className="mt-1 h-4 w-4 text-[#00CFFF] border-gray-300 rounded focus:ring-[#00CFFF]"
+                  checked={formData.agreedToTerms}
+                  onChange={handleInputChange}
+                  required
+                />
+                <Label htmlFor="agreedToTerms" className="text-sm text-gray-700">
+                  Ich habe die <Link href="/agb" className="text-[#00CFFF] hover:underline">AGB</Link> gelesen und akzeptiere diese. *
+                </Label>
               </div>
-            )}
+              
+              <div className="flex items-start space-x-2">
+                <input
+                  type="checkbox"
+                  id="agreedToWithdrawalNotice"
+                  name="agreedToWithdrawalNotice"
+                  className="mt-1 h-4 w-4 text-[#00CFFF] border-gray-300 rounded focus:ring-[#00CFFF]"
+                  checked={formData.agreedToWithdrawalNotice}
+                  onChange={handleInputChange}
+                  required
+                />
+                <Label htmlFor="agreedToWithdrawalNotice" className="text-sm text-gray-700">
+                  Ich bin ausdrücklich damit einverstanden, dass mit der Ausführung des Auftrags bereits vor Ablauf der Widerrufsfrist begonnen wird. Mir ist bekannt, dass ich durch diese Zustimmung mein Widerrufsrecht verliere. *
+                </Label>
+              </div>
+              
+              {formError && (
+                <div className="bg-red-50 p-3 rounded-lg text-red-700 text-sm">
+                  {formError}
+                </div>
+              )}
+            </div>
           </CardContent>
         </Card>
         
-        {/* Kaufen Button und PayPal */}
-        <div className="mb-6 grid grid-cols-1 gap-4">
-          {/* Wenn wir noch keine Bestellung erstellt haben, zeigen wir den Bestellbutton an */}
-          {!showPayPal ? (
-            <Button 
-              type="submit" 
-              className="w-full bg-[#FF4C00] hover:bg-[#FF4C00]/80 text-white font-bold py-3"
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? (
-                <span className="flex items-center justify-center">
-                  <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                  </svg>
-                  Wird verarbeitet...
-                </span>
-              ) : 'Jetzt kaufen'}
-            </Button>
-          ) : (
-            /* Wenn wir eine Bestellung erstellt haben, zeigen wir die PayPal-Zahlung an */
-            <div className="mb-4">
-              <div className="bg-[#00CFFF]/10 p-4 border border-[#00CFFF] rounded-lg mb-4 text-center">
-                <h3 className="font-bold text-lg mb-2">Bestellung erstellt!</h3>
-                <p>Bitte schließen Sie Ihre Bestellung durch Zahlung über PayPal ab.</p>
-              </div>
-              
-              <div className="py-4 px-4 border border-gray-200 rounded-lg mb-4">
-                <div className="flex justify-between items-center mb-2 border-b pb-2">
-                  <span className="font-medium">Produkt:</span>
-                  <span>{formData.selectedAmount} Würfel</span>
-                </div>
-                <div className="flex justify-between items-center font-bold text-lg">
-                  <span>Gesamt:</span>
-                  <span className="text-[#FF4C00]">{orderAmount}€</span>
+        {/* Gesamtbetrag und Bezahlung */}
+        <Card className="mb-6">
+          <CardHeader className="pb-2">
+            <CardTitle className="flex items-center gap-2">
+              <span className="material-icons text-[#00CFFF]">payment</span>
+              Bezahlung
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid gap-6">
+              <div className="rounded-lg bg-gray-50 p-4">
+                <div className="flex justify-between items-center">
+                  <span className="text-lg font-medium">Gesamtbetrag:</span>
+                  <span className="text-xl font-bold text-[#FF4C00]">
+                    {parseFloat(orderAmount).toFixed(2).replace('.', ',')} €
+                  </span>
                 </div>
               </div>
               
-              <div className="my-4 mx-auto max-w-xs h-12">
-                <PayPalButtonWrapper 
-                  amount={orderAmount} 
-                  currency="EUR" 
-                  intent="CAPTURE" 
-                  orderId={orderId ?? undefined}
-                  onPaymentComplete={updateOrderPayment}
-                />
-              </div>
+              {!showPayPal ? (
+                <Button 
+                  type="submit" 
+                  className="bg-[#FF4C00] hover:bg-[#ff6a00] text-white w-full py-6 text-lg font-bold" 
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? (
+                    <div className="flex items-center">
+                      <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                      Erstelle Bestellung...
+                    </div>
+                  ) : (
+                    <>Jetzt kostenpflichtig bestellen</>
+                  )}
+                </Button>
+              ) : (
+                <div className="grid gap-4">
+                  <div className="bg-green-50 p-3 rounded-lg text-green-700 text-sm">
+                    Bestellung wurde erstellt. Bitte schließen Sie die Zahlung ab.
+                  </div>
+                  
+                  <div className="border rounded-lg p-4">
+                    <PayPalButtonWrapper 
+                      amount={orderAmount} 
+                      currency="EUR" 
+                      intent="CAPTURE"
+                      orderId={orderId || undefined}
+                      onPaymentComplete={updateOrderPayment}
+                    />
+                  </div>
+                </div>
+              )}
+              
+              <p className="text-xs text-gray-500 text-center">
+                Durch Klicken auf "Jetzt kostenpflichtig bestellen" bestätigen Sie Ihre Bestellung und stimmen der Bezahlung zu.
+              </p>
             </div>
-          )}
-
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <span className="w-full border-t border-gray-300"></span>
-            </div>
-            <div className="relative flex justify-center text-xs">
-              <span className="bg-white px-2 text-gray-500">oder zahle mit</span>
-            </div>
-          </div>
-          
-          <Button variant="outline" className="w-full" disabled>
-            <span className="material-icons mr-2 text-lg">account_balance</span>
-            Banküberweisung (bald verfügbar)
-          </Button>
-        </div>
+          </CardContent>
+        </Card>
       </form>
     </div>
   );
