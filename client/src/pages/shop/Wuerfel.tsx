@@ -96,6 +96,10 @@ export default function ShopWuerfel() {
                         <span className="font-medium">45.000 Würfel</span>
                         <span className="font-bold text-[#FF4C00]">45€</span>
                       </div>
+                      <div className="flex justify-between items-center border-b border-gray-100 py-2 bg-yellow-50">
+                        <span className="font-medium">40.000 - 50.000 Würfel <span className="text-sm text-gray-600">(während Lucky Chance/Dice Match/Frei Parken x2)</span></span>
+                        <span className="font-bold text-[#FF4C00]">50€</span>
+                      </div>
                     </div>
                   </div>
                   
