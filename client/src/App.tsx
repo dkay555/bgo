@@ -179,7 +179,7 @@ function Router() {
             {() => <NewTicketPage />}
           </Route>
           <Route path="/tickets/:id">
-            {params => <TicketDetailPage id={params.id} />}
+            {() => <TicketDetailPage />}
           </Route>
           
           {/* Admin-Bereich */}
@@ -214,6 +214,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <TooltipProvider>
+          <ScrollToTop />
           <Toaster />
           <Router />
         </TooltipProvider>
