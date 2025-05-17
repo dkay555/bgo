@@ -79,7 +79,7 @@ export const FOOTER_LINKS = [
   { name: 'Impressum', href: '/impressum' },
   { name: 'Datenschutz', href: '/datenschutz' },
   { name: 'AGB', href: '/agb' },
-  { name: 'Widerruf', href: '/widerruf' },uf' },
+  { name: 'Widerruf', href: '/widerruf' },
 ];
 
 // Produkt-Kategorien

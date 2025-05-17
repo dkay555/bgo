@@ -428,7 +428,7 @@ export default function TycoonRacersCheckout() {
                   <RadioGroupItem value="500" id="flags-500" className="text-[#00CFFF]" />
                   <Label htmlFor="flags-500" className="w-full cursor-pointer flex justify-between">
                     <span className="font-medium">500 Flaggen</span>
-                    <span className="font-bold text-[#FF4C00]">75,00 €</span>
+                    <span className="font-bold text-[#FF4C00]">75,00 €</span>pan>
                   </Label>
                 </div>
               </RadioGroup>
