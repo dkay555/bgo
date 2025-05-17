@@ -52,7 +52,7 @@ export const NAV_LINKS = [
     href: '/shop',
     isDropdown: true,
     dropdownItems: [
-      { name: 'Übersicht', href: '/shop/preise', icon: 'store' },
+      { name: 'Übersicht', href: '/shop/uebersicht', icon: 'store' },
       { name: 'Würfel', href: '/shop/wuerfel', icon: 'casino' },
       { name: 'Sticker', href: '/shop/sticker', icon: 'collections_bookmark' },
       { name: 'Partnerevents', href: '/shop/partnerevent', icon: 'people' },

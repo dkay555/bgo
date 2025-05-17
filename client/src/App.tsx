@@ -41,6 +41,9 @@ const PartnereventCheckoutPage = lazy(() => import('@/pages/checkout/Partnereven
 const TycoonRacersCheckoutPage = lazy(() => import('@/pages/checkout/TycoonRacers'));
 const EventwaehrungCheckoutPage = lazy(() => import('@/pages/checkout/Eventwaehrung'));
 
+// Lazy-loaded shop pages
+const UebersichtPage = lazy(() => import('@/pages/shop/Uebersicht'));
+
 // Lazy-loaded help pages
 const WuerfelHilfePage = lazy(() => import('@/pages/hilfe/wuerfel'));
 const PartnerHilfePage = lazy(() => import('@/pages/hilfe/partner'));
@@ -150,6 +153,9 @@ function Router() {
           </Route>
           
           {/* Shop-Unterseiten */}
+          <Route path="/shop/uebersicht">
+            {() => <UebersichtPage />}
+          </Route>
           <Route path="/shop/preise">
             {() => <Preise />}
           </Route>
