@@ -44,7 +44,7 @@ export default function Shop() {
                   Verschaffe dir einen Überblick über unser Angebot! Alle Produkte und Preise auf einen Blick.
                 </p>
                 <div className="flex justify-end">
-                  <Link href="/shop/preise">
+                  <Link href="/shop/uebersicht">
                     <Button variant="outline" className="text-sm px-3 py-1">
                       Zur Übersicht
                     </Button>

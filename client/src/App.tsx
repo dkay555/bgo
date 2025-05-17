@@ -1,4 +1,4 @@
-import { Switch, Route } from "wouter";
+import { Switch, Route, Navigate } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
@@ -94,17 +94,21 @@ function Router() {
           <Route path="/landing" component={LandingPage} />
           <Route path="/blog" component={BlogPost} />
           <Route path="/news" component={News} />
-          <Route path="/produkte" component={Shop} />
+          <Route path="/produkte" >
+             {() => <Navigate to="/shop/uebersicht" />}
+          </Route>
           <Route path="/shop" component={Shop} />
-          <Route path="/preise" component={Preise} />
-          
+          <Route path="/preise">
+             {() => <Navigate to="/shop/uebersicht" />}
+          </Route>
+
           {/* Rechtliche Seiten */}
           <Route path="/kontakt" component={Kontakt} />
           <Route path="/impressum" component={Impressum} />
           <Route path="/datenschutz" component={Datenschutz} />
           <Route path="/agb" component={AGB} />
           <Route path="/widerruf" component={Widerruf} />
-          
+
           {/* Hilfebereich */}
           <Route path="/hilfe" component={Hilfe} />
           <Route path="/hilfe/wuerfel">
@@ -131,7 +135,7 @@ function Router() {
           <Route path="/hilfe/news_preise_angebot.html">
             {() => <NewsPreiseAngebotPage />}
           </Route>
-          
+
           {/* Produkt-Unterseiten */}
           <Route path="/produkte/wuerfel">
             {() => <WuerfelPage />}
@@ -151,13 +155,13 @@ function Router() {
           <Route path="/produkte/weitere">
             {() => <WeiterePage />}
           </Route>
-          
+
           {/* Shop-Unterseiten */}
           <Route path="/shop/uebersicht">
             {() => <UebersichtPage />}
           </Route>
           <Route path="/shop/preise">
-            {() => <Preise />}
+             {() => <Navigate to="/shop/uebersicht" />}
           </Route>
           <Route path="/shop/wuerfel">
             {() => <WuerfelPage />}
@@ -171,7 +175,7 @@ function Router() {
           <Route path="/shop/tycoonracers">
             {() => <TycoonRacersPage />}
           </Route>
-          
+
           {/* Checkout-Seiten */}
           <Route path="/checkout/wuerfel">
             {() => <WuerfelCheckoutPage />}
@@ -188,14 +192,14 @@ function Router() {
           <Route path="/checkout/eventwaehrung">
             {() => <EventwaehrungCheckoutPage />}
           </Route>
-          
+
           {/* Auth-Routen */}
           <Route path="/auth" component={AuthPage} />
           <ProtectedRoute path="/order-history" component={OrderHistory} />
           <Route path="/profile">
             {() => <ProfilePage />}
           </Route>
-          
+
           {/* Ticket-System */}
           <Route path="/tickets">
             {() => <TicketsPage />}
@@ -206,7 +210,7 @@ function Router() {
           <Route path="/tickets/:id">
             {() => <TicketDetailPage />}
           </Route>
-          
+
           {/* Admin-Bereich */}
           <Route path="/admin/bestellungen">
             {() => <AdminBestellungenPage />}
@@ -217,7 +221,7 @@ function Router() {
           <Route path="/admin/email-vorlagen">
             {() => <AdminEmailVorlagenPage />}
           </Route>
-          
+
           {/* Test-Seiten */}
           <Route path="/paypal-test">
             {() => <PayPalTestPage />}
@@ -225,7 +229,7 @@ function Router() {
           <Route path="/lazy-load-example">
             {() => <SmoothLoadExamplePage />}
           </Route>
-          
+
           {/* 404-Seite für alle unbekannten Routen */}
           <Route component={NotFound} />
         </Switch>

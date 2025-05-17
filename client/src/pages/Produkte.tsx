@@ -106,10 +106,10 @@ export default function Produkte() {
         </div>
         
         <div className="text-center">
-          <Link href="/preise">
+          <Link href="/shop/uebersicht">
             <button className="bg-[#0A3A68] text-white py-3 px-8 rounded-md hover:bg-[#FF4C00] transition-colors inline-flex items-center">
               <span className="material-icons mr-2">price_check</span>
-              Unsere Preise ansehen
+              Zur Übersicht
             </button>
           </Link>
         </div>
