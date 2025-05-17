@@ -114,6 +114,12 @@ export default function WuerfelCheckout() {
   const handleProductChange = (value: string) => {
     setSelectedOption(value);
     form.setValue("product", value);
+    
+    // Bei Schnupperboost nur Auth-Token als Login-Methode erlauben
+    if (value === 'schnupper' || value === 'schnupperEvent') {
+      setLoginMethod('authtoken');
+      form.setValue("loginMethod", "authtoken");
+    }
   };
 
   const handleLoginMethodChange = (value: LoginMethod) => {
@@ -351,19 +357,22 @@ export default function WuerfelCheckout() {
                     </div>
                   )}
                   
-                  <div className="flex items-center space-x-3">
-                    <input
-                      type="radio"
-                      id="credentials"
-                      name="loginMethod"
-                      className="h-5 w-5 text-[#00CFFF] border-gray-300 focus:ring-[#00CFFF]"
-                      checked={loginMethod === 'credentials'}
-                      onChange={() => handleLoginMethodChange('credentials')}
-                    />
-                    <label htmlFor="credentials" className="text-gray-900 font-medium">
-                      Facebook Zugangsdaten
-                    </label>
-                  </div>
+                  {/* Nur anzeigen, wenn KEIN Schnupperboost ausgewählt ist */}
+                  {!selectedOption.includes('schnupper') && (
+                    <div className="flex items-center space-x-3">
+                      <input
+                        type="radio"
+                        id="credentials"
+                        name="loginMethod"
+                        className="h-5 w-5 text-[#00CFFF] border-gray-300 focus:ring-[#00CFFF]"
+                        checked={loginMethod === 'credentials'}
+                        onChange={() => handleLoginMethodChange('credentials')}
+                      />
+                      <label htmlFor="credentials" className="text-gray-900 font-medium">
+                        Facebook Zugangsdaten
+                      </label>
+                    </div>
+                  )}
                   
                   {loginMethod === 'credentials' && (
                     <div className="ml-8 grid gap-4">
