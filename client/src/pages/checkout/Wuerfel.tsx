@@ -129,10 +129,7 @@ export default function WuerfelCheckout() {
     }
     
     setLoginMethod(value);
-    form.setValue("loginMethod", value, { shouldDirty: true });
-    
-    // Sicherstellen, dass die Produktauswahl erhalten bleibt
-    form.setValue("product", selectedOption, { shouldDirty: true });
+    form.setValue("loginMethod", value);
   };
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
@@ -196,9 +193,10 @@ export default function WuerfelCheckout() {
                       <FormItem>
                         <FormControl>
                           <RadioGroup
-                            value={field.value}
+                            value={selectedOption}
                             onValueChange={(val) => {
                               handleProductChange(val);
+                              field.onChange(val);
                             }}
                             className="grid gap-2"
                           >
