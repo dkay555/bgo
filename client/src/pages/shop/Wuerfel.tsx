@@ -178,10 +178,10 @@ export default function ShopWuerfel() {
                   </div>
                   
                   <div className="flex justify-center mt-6">
-                    <a href="https://wa.me/4915223842897" target="_blank" rel="noopener noreferrer">
+                    <a href="https://wa.me/49176xxxxxxxx" target="_blank" rel="noopener noreferrer">
                       <Button className="bg-[#25D366] hover:bg-[#25D366]/90 text-white px-8 flex items-center">
                         <span className="material-icons mr-2">whatsapp</span>
-                        WhatsApp
+                        Per WhatsApp bestellen
                       </Button>
                     </a>
                   </div>
