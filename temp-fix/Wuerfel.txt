@@ -1,0 +1,799 @@
+import { useEffect, useState } from 'react';
+import { useLocation } from 'wouter';
+import { useToast } from "@/hooks/use-toast";
+import { apiRequest, queryClient } from '@/lib/queryClient';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { PayPalButtonWrapper } from "@/components/PayPalButtonWrapper";
+import { Link } from 'wouter';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Loader2 } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { useAuth } from "@/hooks/use-auth";
+
+// Produkttypen
+interface Product {
+  id: number;
+  name: string;
+  description: string;
+  productType: string;
+  variant: string;
+  price: string;
+  isActive: boolean;
+  stock: number;
+}
+
+export default function WuerfelCheckoutPage() {
+  const [location] = useLocation();
+  const { toast } = useToast();
+  const { user } = useAuth();
+  const [orderId, setOrderId] = useState<number | null>(null);
+  const [showPayPal, setShowPayPal] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [orderAmount, setOrderAmount] = useState("25.00");
+  const [selectedProductId, setSelectedProductId] = useState<number | null>(null);
+
+  // Parameter aus URL extrahieren (z.B. /checkout/wuerfel?amount=25000)
+  const searchParams = new URLSearchParams(location.split('?')[1] || '');
+  const amountParam = searchParams.get('amount');
+  
+  // Würfel-Produkte aus der Datenbank abrufen
+  const { data: diceProducts, isLoading: isLoadingProducts } = useQuery<{success: boolean, products: Product[]}>({
+    queryKey: ['/api/products/type/dice']
+  });
+
+  // Effekt zum Setzen des ausgewählten Produkts, wenn Daten geladen wurden
+  useEffect(() => {
+    if (diceProducts?.success && diceProducts.products.length > 0) {
+      // Default-Produkt basierend auf URL-Parameter oder erstes Produkt auswählen
+      const product = amountParam 
+        ? diceProducts.products.find((p: Product) => p.variant === amountParam) || diceProducts.products[0]
+        : diceProducts.products[0];
+      
+      setSelectedProductId(product.id);
+      setOrderAmount(product.price);
+    }
+  }, [diceProducts, amountParam]);
+  
+  // Ausgewähltes Produkt
+  const selectedProduct = diceProducts?.products?.find((p: Product) => p.id === selectedProductId);
+  
+  // State für Formular
+  const [formError, setFormError] = useState('');
+  
+  // Initiale Form-Daten
+  const getInitialFormData = () => {
+    // Standardwert für selected_amount ist die erste Variante aus den verfügbaren Paketen
+    // oder '25000' wenn keine Pakete vorhanden sind
+    const defaultAmount = diceProducts?.products?.[0]?.variant || '25000';
+    
+    return {
+      name: '',
+      email: '',
+      whatsapp: '',
+      selectedAmount: amountParam || defaultAmount,
+      authMethod: 'authtoken', // 'authtoken' oder 'login'
+      ingameName: '',
+      authToken: '',
+      fbEmail: '',
+      fbPassword: '',
+      recoveryCode1: '',
+      recoveryCode2: '',
+      executionTime: 'sofort', // 'sofort' oder 'bahnhofsturnier'
+      specificExecutionTime: '',
+      agreedToTerms: false,
+      agreedToWithdrawalNotice: false
+    };
+  };
+  
+  const [formData, setFormData] = useState(getInitialFormData());
+
+  // Laden der Material Icons
+  useEffect(() => {
+    document.title = 'Würfelboost | babixGO';
+    
+    const link = document.createElement('link');
+    link.href = 'https://fonts.googleapis.com/icon?family=Material+Icons';
+    link.rel = 'stylesheet';
+    document.head.appendChild(link);
+
+    return () => {
+      document.head.removeChild(link);
+    };
+  }, []);
+
+  // Aktualisiert den Bestellbetrag basierend auf dem ausgewählten Produkt
+  useEffect(() => {
+    // Wenn das Produkt in den Datenbankprodukten gefunden wird, verwenden wir dessen Preis
+    if (diceProducts?.products && diceProducts.products.length > 0) {
+      const selectedProduct = diceProducts.products.find(
+        (p: Product) => p.variant === formData.selectedAmount
+      );
+      
+      if (selectedProduct) {
+        setOrderAmount(selectedProduct.price);
+        setSelectedProductId(selectedProduct.id);
+        return;
+      }
+    }
+    
+    // Fallback zu den statischen Werten, falls das Produkt nicht gefunden wird
+    let price;
+    switch(formData.selectedAmount) {
+      case '25000':
+        price = 25.00;
+        break;
+      case '35000':
+        price = 35.00;
+        break;
+      case '45000':
+        price = 45.00;
+        break;
+      case 'schnupper':
+        price = 10.00; // Schnupperboost
+        break;
+      case 'schnupper_events':
+        price = 15.00; // Schnupperboost + Events
+        break;
+      default:
+        price = 25.00;
+    }
+    setOrderAmount(price.toFixed(2));
+  }, [formData.selectedAmount, diceProducts]);
+
+  // Funktion zur Handhabung von Formulareingaben
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value, type, checked } = e.target;
+    setFormData({
+      ...formData,
+      [name]: type === 'checkbox' ? checked : value
+    });
+  };
+
+  // Erzeugt eine strukturierte Order aus den Formulardaten
+  const createOrderData = () => {
+    // Authentifizierungsdaten basierend auf der Methode
+    const authData = formData.authMethod === 'authtoken' 
+      ? { authToken: formData.authToken }
+      : { 
+          fbEmail: formData.fbEmail, 
+          fbPassword: formData.fbPassword,
+          recoveryCode1: formData.recoveryCode1,
+          recoveryCode2: formData.recoveryCode2
+        };
+    
+    return {
+      // Persönliche Daten
+      name: formData.name,
+      email: formData.email,
+      whatsapp: formData.whatsapp || null,
+      
+      // Bestelldetails
+      productType: 'dice',
+      package: formData.selectedAmount,
+      price: orderAmount, // Als String belassen, wie in der Datenbank erwartet
+      
+      // Monopoly-Daten
+      authMethod: formData.authMethod,
+      ingameName: formData.ingameName,
+      
+      // Auth-Daten als JSON
+      accountData: JSON.stringify({
+        ...authData,
+        executionTime: formData.executionTime,
+        specificExecutionTime: formData.executionTime === 'spezifisch' ? formData.specificExecutionTime : null
+      }),
+      
+      // Zahlungsdetails
+      paymentMethod: "paypal",
+      paymentStatus: "pending",
+      
+      // Zustimmungen
+      agreedToTerms: formData.agreedToTerms,
+      agreedToWithdrawalNotice: formData.agreedToWithdrawalNotice
+    };
+  };
+
+  // Sendet die Bestellung an den Server und bereitet PayPal-Zahlung vor
+  const createOrder = async () => {
+    try {
+      setIsSubmitting(true);
+      
+      console.log("Formulardaten vor dem Senden:", formData);
+      
+      const orderData = createOrderData();
+      
+      // Sicherstellen, dass alle notwendigen Felder definiert sind
+      if (!orderData.authMethod) {
+        orderData.authMethod = 'authtoken'; // Default-Wert als Fallback
+      }
+      
+      // Sicherstellen, dass ingameName definiert ist
+      if (!orderData.ingameName) {
+        orderData.ingameName = 'Nicht angegeben'; // Fallback-Wert
+      }
+      
+      // Sicherstellen, dass der Preis als String im richtigen Format übergeben wird
+      const numericPrice = typeof orderData.price === 'number' 
+        ? orderData.price 
+        : parseFloat(orderData.price);
+      
+      orderData.price = numericPrice.toFixed(2);
+      
+      console.log("Zu sendende Bestelldaten:", orderData);
+      
+      const response = await apiRequest("POST", "/api/orders", orderData);
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Fehler beim Erstellen der Bestellung");
+      }
+      
+      const data = await response.json();
+      setOrderId(data.order.id);
+      setShowPayPal(true);
+      
+      toast({
+        title: "Bestellung erstellt",
+        description: "Bitte fahren Sie mit der Zahlung fort",
+      });
+      
+      return data.order;
+    } catch (error: any) {
+      toast({
+        title: "Fehler",
+        description: error.message || "Etwas ist schiefgelaufen",
+        variant: "destructive",
+      });
+      setIsSubmitting(false);
+      return null;
+    }
+  };
+
+  // Funktion zur Handhabung der Formularübermittlung
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Validierung der Checkboxen
+    if (!formData.agreedToTerms || !formData.agreedToWithdrawalNotice) {
+      setFormError('Bitte akzeptieren Sie sowohl die AGB als auch den Hinweis zum Widerrufsrecht.');
+      return;
+    }
+    
+    // Validiere Authentifizierungsdaten
+    if (formData.authMethod === 'authtoken' && !formData.authToken) {
+      setFormError('Bitte geben Sie Ihren Auth-Token ein.');
+      return;
+    }
+    
+    if (formData.authMethod === 'login' && (!formData.fbEmail || !formData.fbPassword)) {
+      setFormError('Bitte geben Sie Ihre Facebook-Anmeldedaten ein.');
+      return;
+    }
+    
+    // Validiere für FB Login die Wiederherstellungscodes
+    if (formData.authMethod === 'login' && (!formData.recoveryCode1 || !formData.recoveryCode2)) {
+      setFormError('Bitte geben Sie beide Wiederherstellungscodes ein.');
+      return;
+    }
+    
+    setFormError('');
+    await createOrder();
+  };
+  
+  // Aktualisiert den Zahlungsstatus einer Bestellung nach erfolgreicher PayPal-Zahlung
+  const updateOrderPayment = async (paymentId: string) => {
+    if (!orderId) return;
+    
+    try {
+      const response = await apiRequest("PATCH", `/api/orders/${orderId}/payment`, {
+        paymentStatus: "completed",
+        paymentReference: paymentId
+      });
+      
+      if (!response.ok) {
+        throw new Error("Fehler beim Aktualisieren des Zahlungsstatus");
+      }
+      
+      toast({
+        title: "Zahlung erfolgreich",
+        description: "Vielen Dank für Ihren Einkauf! Wir bearbeiten Ihre Bestellung umgehend.",
+      });
+      
+      // Hier könnte eine Weiterleitung zur Bestellbestätigungsseite erfolgen
+    } catch (error: any) {
+      toast({
+        title: "Fehler",
+        description: error.message || "Fehler beim Aktualisieren des Zahlungsstatus",
+        variant: "destructive",
+      });
+    }
+  };
+
+  return (
+    <div className="max-w-5xl mx-auto px-4 py-8 font-['Nunito_Sans'] text-[#0A3A68]">
+      <h1 className="font-['Baloo_2'] font-bold text-2xl md:text-3xl bg-[#00CFFF]/10 px-6 py-3 rounded-xl inline-block mx-auto my-4 border-b-2 border-[#00CFFF] text-[#FF4C00] babix-info-header">
+        Würfelboost bestellen
+      </h1>
+      
+      <form onSubmit={handleSubmit} className="max-w-3xl mx-auto">
+        {/* Würfelpaket auswählen */}
+        <Card className="mb-6">
+          <CardHeader className="pb-2">
+            <CardTitle className="flex items-center gap-2">
+              <span className="material-icons text-[#00CFFF]">casino</span>
+              Würfelpaket auswählen
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            {isLoadingProducts ? (
+              <div className="flex justify-center items-center py-8">
+                <Loader2 className="h-8 w-8 animate-spin text-[#00CFFF]" />
+                <span className="ml-2">Lade Würfelpakete...</span>
+              </div>
+            ) : (
+              <RadioGroup 
+                defaultValue={formData.selectedAmount}
+                onValueChange={(value) => {
+                  setFormData({
+                    ...formData,
+                    selectedAmount: value
+                  });
+                }}
+                className="grid gap-4"
+              >
+                {diceProducts?.success && diceProducts.products.length > 0 ? (
+                  // Dynamische Produkte aus der Datenbank
+                  diceProducts.products.map((product: Product) => (
+                    <div 
+                      key={product.id}
+                      className={`flex items-center space-x-2 p-4 rounded-lg border ${
+                        formData.selectedAmount === product.variant 
+                          ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' 
+                          : 'border-gray-200 hover:bg-gray-50'
+                      }`}
+                    >
+                      <RadioGroupItem 
+                        value={product.variant} 
+                        id={`w-${product.id}`} 
+                        className="text-[#00CFFF]" 
+                      />
+                      <Label 
+                        htmlFor={`w-${product.id}`} 
+                        className="w-full cursor-pointer flex justify-between"
+                      >
+                        <div>
+                          <span className="font-medium">{product.name}</span>
+                          {product.description && (
+                            <p className="text-sm text-gray-500">{product.description}</p>
+                          )}
+                        </div>
+                        <span className="font-bold text-[#FF4C00]">
+                          {parseFloat(product.price).toFixed(2).replace('.', ',')} €
+                        </span>
+                      </Label>
+                    </div>
+                  ))
+                ) : (
+                  // Fallback zu statischen Optionen, falls keine Produkte aus der Datenbank verfügbar sind
+                  <>
+                    <div className={`flex items-center space-x-2 p-4 rounded-lg border ${formData.selectedAmount === '25000' ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border-gray-200 hover:bg-gray-50'}`}>
+                      <RadioGroupItem value="25000" id="w-25000" className="text-[#00CFFF]" />
+                      <Label htmlFor="w-25000" className="w-full cursor-pointer flex justify-between">
+                        <span className="font-medium">25.000 Würfel</span>
+                        <span className="font-bold text-[#FF4C00]">25,00 €</span>
+                      </Label>
+                    </div>
+                    
+                    <div className={`flex items-center space-x-2 p-4 rounded-lg border ${formData.selectedAmount === '35000' ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border-gray-200 hover:bg-gray-50'}`}>
+                      <RadioGroupItem value="35000" id="w-35000" className="text-[#00CFFF]" />
+                      <Label htmlFor="w-35000" className="w-full cursor-pointer flex justify-between">
+                        <span className="font-medium">35.000 Würfel</span>
+                        <span className="font-bold text-[#FF4C00]">35,00 €</span>
+                      </Label>
+                    </div>
+                    
+                    <div className={`flex items-center space-x-2 p-4 rounded-lg border ${formData.selectedAmount === '45000' ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border-gray-200 hover:bg-gray-50'}`}>
+                      <RadioGroupItem value="45000" id="w-45000" className="text-[#00CFFF]" />
+                      <Label htmlFor="w-45000" className="w-full cursor-pointer flex justify-between">
+                        <span className="font-medium">45.000 Würfel</span>
+                        <span className="font-bold text-[#FF4C00]">45,00 €</span>
+                      </Label>
+                    </div>
+                    
+                    <div className={`flex items-center space-x-2 p-4 rounded-lg border ${formData.selectedAmount === 'schnupper' ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border-gray-200 hover:bg-gray-50'}`}>
+                      <RadioGroupItem value="schnupper" id="w-schnupper" className="text-[#00CFFF]" />
+                      <Label htmlFor="w-schnupper" className="w-full cursor-pointer flex justify-between">
+                        <div>
+                          <span className="font-medium">Schnupperboost</span>
+                          <p className="text-sm text-gray-500">Kleinerer Boost zum Testen</p>
+                        </div>
+                        <span className="font-bold text-[#FF4C00]">10,00 €</span>
+                      </Label>
+                    </div>
+                    
+                    <div className={`flex items-center space-x-2 p-4 rounded-lg border ${formData.selectedAmount === 'schnupper_events' ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border-gray-200 hover:bg-gray-50'}`}>
+                      <RadioGroupItem value="schnupper_events" id="w-schnupper_events" className="text-[#00CFFF]" />
+                      <Label htmlFor="w-schnupper_events" className="w-full cursor-pointer flex justify-between">
+                        <div>
+                          <span className="font-medium">Schnupperboost + Events</span>
+                          <p className="text-sm text-gray-500">Kleinerer Boost inkl. Events</p>
+                        </div>
+                        <span className="font-bold text-[#FF4C00]">15,00 €</span>
+                      </Label>
+                    </div>
+                  </>
+                )}
+              </RadioGroup>
+            )}
+          </CardContent>
+        </Card>
+        
+        {/* Persönliche Daten */}
+        <Card className="mb-6">
+          <CardHeader className="pb-2">
+            <CardTitle className="flex items-center gap-2">
+              <span className="material-icons text-[#00CFFF]">person</span>
+              Persönliche Daten
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid gap-4">
+              <div className="grid gap-2">
+                <Label htmlFor="name">Name *</Label>
+                <Input
+                  id="name"
+                  name="name"
+                  placeholder="Max Mustermann"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              
+              <div className="grid gap-2">
+                <Label htmlFor="email">E-Mail *</Label>
+                <Input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="max@beispiel.de"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              
+              <div className="grid gap-2">
+                <Label htmlFor="whatsapp">WhatsApp (optional)</Label>
+                <Input
+                  id="whatsapp"
+                  name="whatsapp"
+                  placeholder="+49 123 4567890"
+                  value={formData.whatsapp}
+                  onChange={handleInputChange}
+                />
+                <p className="text-xs text-gray-500">
+                  Um Sie bei Fragen kontaktieren zu können. Ohne Angabe einer WhatsApp-Nummer müssen wir Sie per E-Mail erreichen.
+                </p>
+              </div>
+              
+              <div className="grid gap-2">
+                <Label htmlFor="ingameName">Ingame-Name (optional)</Label>
+                <Input
+                  id="ingameName"
+                  name="ingameName"
+                  placeholder="Ihr Name im Spiel"
+                  value={formData.ingameName}
+                  onChange={handleInputChange}
+                />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+        
+        {/* Zugangsdaten */}
+        <Card className="mb-6">
+          <CardHeader className="pb-2">
+            <CardTitle className="flex items-center gap-2">
+              <span className="material-icons text-[#00CFFF]">lock</span>
+              Zugangsdaten
+            </CardTitle>
+            <CardDescription>
+              Wir benötigen temporären Zugang zu Ihrem Spiel, um den Boost durchzuführen.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Tabs 
+              defaultValue="authtoken" 
+              value={formData.authMethod}
+              onValueChange={(value) => {
+                setFormData({
+                  ...formData,
+                  authMethod: value
+                });
+              }}
+              className="w-full"
+            >
+              <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="authtoken">Mittels Auth-Token</TabsTrigger>
+                <TabsTrigger value="login">Mittels Login-Daten</TabsTrigger>
+              </TabsList>
+              
+              <TabsContent value="authtoken" className="mt-4">
+                <div className="grid gap-4">
+                  <div className="rounded-lg bg-blue-50 p-4 text-sm">
+                    <p className="font-medium text-blue-800 mb-2">Was ist ein Auth-Token?</p>
+                    <p className="text-blue-700 mb-1">
+                      Der Auth-Token ist ein sicherer Weg, uns Zugriff auf Ihr Monopoly GO!-Konto zu gewähren, 
+                      ohne Ihre Login-Daten preiszugeben.
+                    </p>
+                    <Link href="/hilfe/auth-token" className="text-blue-600 font-medium hover:underline">
+                      Wie erhalte ich meinen Auth-Token? (Anleitung)
+                    </Link>
+                  </div>
+                  
+                  <div className="grid gap-2">
+                    <Label htmlFor="authToken">Auth-Token *</Label>
+                    <Input
+                      id="authToken"
+                      name="authToken"
+                      placeholder="Fügen Sie hier Ihren Auth-Token ein"
+                      value={formData.authToken}
+                      onChange={handleInputChange}
+                      required={formData.authMethod === 'authtoken'}
+                    />
+                  </div>
+                </div>
+              </TabsContent>
+              
+              <TabsContent value="login" className="mt-4">
+                <div className="rounded-lg bg-amber-50 p-4 text-sm mb-4">
+                  <p className="font-medium text-amber-800 mb-2">Wichtiger Hinweis zur Sicherheit</p>
+                  <p className="text-amber-700">
+                    Wir empfehlen die Nutzung des Auth-Tokens, da dies sicherer ist. Falls Sie 
+                    sich für die Anmeldung mit Login-Daten entscheiden, ändern Sie bitte nach 
+                    Abschluss unserer Dienstleistung Ihr Passwort.
+                  </p>
+                </div>
+                
+                <div className="grid gap-4">
+                  <div className="grid gap-2">
+                    <Label htmlFor="fbEmail">Facebook E-Mail *</Label>
+                    <Input
+                      id="fbEmail"
+                      name="fbEmail"
+                      type="email"
+                      placeholder="Ihre Facebook E-Mail"
+                      value={formData.fbEmail}
+                      onChange={handleInputChange}
+                      required={formData.authMethod === 'login'}
+                    />
+                  </div>
+                  
+                  <div className="grid gap-2">
+                    <Label htmlFor="fbPassword">Facebook Passwort *</Label>
+                    <Input
+                      id="fbPassword"
+                      name="fbPassword"
+                      type="password"
+                      placeholder="Ihr Facebook Passwort"
+                      value={formData.fbPassword}
+                      onChange={handleInputChange}
+                      required={formData.authMethod === 'login'}
+                    />
+                  </div>
+                  
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="grid gap-2">
+                      <Label htmlFor="recoveryCode1">Wiederherstellungscode 1 *</Label>
+                      <Input
+                        id="recoveryCode1"
+                        name="recoveryCode1"
+                        placeholder="Code 1"
+                        value={formData.recoveryCode1}
+                        onChange={handleInputChange}
+                        required={formData.authMethod === 'login'}
+                      />
+                    </div>
+                    
+                    <div className="grid gap-2">
+                      <Label htmlFor="recoveryCode2">Wiederherstellungscode 2 *</Label>
+                      <Input
+                        id="recoveryCode2"
+                        name="recoveryCode2"
+                        placeholder="Code 2"
+                        value={formData.recoveryCode2}
+                        onChange={handleInputChange}
+                        required={formData.authMethod === 'login'}
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="rounded-lg bg-gray-50 p-4 text-sm">
+                    <p className="font-medium text-gray-700 mb-2">Wie erhalte ich meine Wiederherstellungscodes?</p>
+                    <p className="text-gray-600">
+                      Öffnen Sie Facebook und gehen Sie zu Einstellungen &gt; Sicherheit &gt; Wiederherstellungscodes.
+                      Die Codes sind notwendig, falls eine Zweifaktor-Authentifizierung aktiviert ist.
+                    </p>
+                  </div>
+                </div>
+              </TabsContent>
+            </Tabs>
+          </CardContent>
+        </Card>
+        
+        {/* Ausführungszeit */}
+        <Card className="mb-6">
+          <CardHeader className="pb-2">
+            <CardTitle className="flex items-center gap-2">
+              <span className="material-icons text-[#00CFFF]">schedule</span>
+              Ausführungszeit
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid gap-4">
+              <RadioGroup 
+                defaultValue={formData.executionTime}
+                onValueChange={(value) => {
+                  setFormData({
+                    ...formData,
+                    executionTime: value
+                  });
+                }}
+                className="grid gap-3"
+              >
+                <div className={`flex items-center space-x-2 p-3 rounded-lg border ${formData.executionTime === 'sofort' ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border-gray-200 hover:bg-gray-50'}`}>
+                  <RadioGroupItem value="sofort" id="execution-sofort" className="text-[#00CFFF]" />
+                  <Label htmlFor="execution-sofort" className="cursor-pointer">
+                    <span className="font-medium">Sofort (sobald möglich)</span>
+                  </Label>
+                </div>
+                
+                <div className={`flex items-center space-x-2 p-3 rounded-lg border ${formData.executionTime === 'bahnhofsturnier' ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border-gray-200 hover:bg-gray-50'}`}>
+                  <RadioGroupItem value="bahnhofsturnier" id="execution-bahnhofsturnier" className="text-[#00CFFF]" />
+                  <Label htmlFor="execution-bahnhofsturnier" className="cursor-pointer">
+                    <span className="font-medium">Während eines Bahnhofsturniers</span>
+                  </Label>
+                </div>
+                
+                <div className={`flex items-center space-x-2 p-3 rounded-lg border ${formData.executionTime === 'spezifisch' ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border-gray-200 hover:bg-gray-50'}`}>
+                  <RadioGroupItem value="spezifisch" id="execution-spezifisch" className="text-[#00CFFF]" />
+                  <Label htmlFor="execution-spezifisch" className="w-full cursor-pointer">
+                    <span className="font-medium">Zu einem bestimmten Zeitpunkt</span>
+                  </Label>
+                </div>
+              </RadioGroup>
+              
+              {formData.executionTime === 'spezifisch' && (
+                <div className="grid gap-2 mt-2">
+                  <Label htmlFor="specificExecutionTime">Gewünschter Zeitpunkt *</Label>
+                  <Input
+                    id="specificExecutionTime"
+                    name="specificExecutionTime"
+                    placeholder="z.B. 'Morgen ab 18 Uhr' oder 'Samstag vormittag'"
+                    value={formData.specificExecutionTime}
+                    onChange={handleInputChange}
+                    required={formData.executionTime === 'spezifisch'}
+                  />
+                </div>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+        
+        {/* Nutzungsbedingungen */}
+        <Card className="mb-6">
+          <CardHeader className="pb-2">
+            <CardTitle className="flex items-center gap-2">
+              <span className="material-icons text-[#00CFFF]">gavel</span>
+              Rechtliches
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid gap-4">
+              <div className="flex items-start space-x-2">
+                <input
+                  type="checkbox"
+                  id="agreedToTerms"
+                  name="agreedToTerms"
+                  className="mt-1 h-4 w-4 text-[#00CFFF] border-gray-300 rounded focus:ring-[#00CFFF]"
+                  checked={formData.agreedToTerms}
+                  onChange={handleInputChange}
+                  required
+                />
+                <Label htmlFor="agreedToTerms" className="text-sm text-gray-700">
+                  Ich habe die <Link href="/agb" className="text-[#00CFFF] hover:underline">AGB</Link> gelesen und akzeptiere diese. *
+                </Label>
+              </div>
+              
+              <div className="flex items-start space-x-2">
+                <input
+                  type="checkbox"
+                  id="agreedToWithdrawalNotice"
+                  name="agreedToWithdrawalNotice"
+                  className="mt-1 h-4 w-4 text-[#00CFFF] border-gray-300 rounded focus:ring-[#00CFFF]"
+                  checked={formData.agreedToWithdrawalNotice}
+                  onChange={handleInputChange}
+                  required
+                />
+                <Label htmlFor="agreedToWithdrawalNotice" className="text-sm text-gray-700">
+                  Ich bin ausdrücklich damit einverstanden, dass mit der Ausführung des Auftrags bereits vor Ablauf der Widerrufsfrist begonnen wird. Mir ist bekannt, dass ich durch diese Zustimmung mein Widerrufsrecht verliere. *
+                </Label>
+              </div>
+              
+              {formError && (
+                <div className="bg-red-50 p-3 rounded-lg text-red-700 text-sm">
+                  {formError}
+                </div>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+        
+        {/* Gesamtbetrag und Bezahlung */}
+        <Card className="mb-6">
+          <CardHeader className="pb-2">
+            <CardTitle className="flex items-center gap-2">
+              <span className="material-icons text-[#00CFFF]">payment</span>
+              Bezahlung
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid gap-6">
+              <div className="rounded-lg bg-gray-50 p-4">
+                <div className="flex justify-between items-center">
+                  <span className="text-lg font-medium">Gesamtbetrag:</span>
+                  <span className="text-xl font-bold text-[#FF4C00]">
+                    {parseFloat(orderAmount).toFixed(2).replace('.', ',')} €
+                  </span>
+                </div>
+              </div>
+              
+              {!showPayPal ? (
+                <Button 
+                  type="submit" 
+                  className="bg-[#FF4C00] hover:bg-[#ff6a00] text-white w-full py-6 text-lg font-bold" 
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? (
+                    <div className="flex items-center">
+                      <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                      Erstelle Bestellung...
+                    </div>
+                  ) : (
+                    <>Jetzt kostenpflichtig bestellen</>
+                  )}
+                </Button>
+              ) : (
+                <div className="grid gap-4">
+                  <div className="bg-green-50 p-3 rounded-lg text-green-700 text-sm">
+                    Bestellung wurde erstellt. Bitte schließen Sie die Zahlung ab.
+                  </div>
+                  
+                  <div className="border rounded-lg p-4">
+                    <PayPalButtonWrapper 
+                      amount={orderAmount} 
+                      currency="EUR" 
+                      intent="CAPTURE"
+                      orderId={orderId || undefined}
+                      onPaymentComplete={updateOrderPayment}
+                    />
+                  </div>
+                </div>
+              )}
+              
+              <p className="text-xs text-gray-500 text-center">
+                Durch Klicken auf "Jetzt kostenpflichtig bestellen" bestätigen Sie Ihre Bestellung und stimmen der Bezahlung zu.
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+      </form>
+    </div>
+  );
+}
