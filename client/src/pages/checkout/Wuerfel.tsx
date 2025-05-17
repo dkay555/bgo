@@ -94,7 +94,7 @@ export default function WuerfelCheckout() {
   const form = useForm<FormData>({
     resolver: zodResolver(checkoutSchema),
     defaultValues: {
-      product: selectedOption,
+      product: "25000",
       name: user?.name || "",
       email: user?.email || "",
       whatsapp: "",
@@ -326,40 +326,56 @@ export default function WuerfelCheckout() {
                 </div>
                 
                 <div className="grid gap-6">
+                  <div className="border-b border-gray-200 mb-4">
+                    <nav className="-mb-px flex" aria-label="Tabs">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setLoginMethod('authtoken');
+                          form.setValue("loginMethod", "authtoken");
+                        }}
+                        className={`
+                          w-1/2 py-4 px-1 text-center border-b-2 font-medium text-sm 
+                          ${loginMethod === 'authtoken' 
+                            ? 'border-[#00CFFF] text-[#00CFFF]' 
+                            : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}
+                        `}
+                      >
+                        Facebook Auth-Token
+                      </button>
+                      
+                      {/* Nur anzeigen, wenn KEIN Schnupperboost ausgewählt ist */}
+                      {!selectedOption.includes('schnupper') ? (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setLoginMethod('credentials');
+                            form.setValue("loginMethod", "credentials");
+                          }}
+                          className={`
+                            w-1/2 py-4 px-1 text-center border-b-2 font-medium text-sm 
+                            ${loginMethod === 'credentials' 
+                              ? 'border-[#00CFFF] text-[#00CFFF]' 
+                              : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}
+                          `}
+                        >
+                          Facebook Zugangsdaten
+                        </button>
+                      ) : (
+                        <div className="w-1/2 py-4 px-1 text-center border-b-2 border-transparent bg-gray-100 text-gray-400 text-sm">
+                          Facebook Zugangsdaten
+                        </div>
+                      )}
+                    </nav>
+                  </div>
+                  
                   <FormField
                     control={form.control}
                     name="loginMethod"
                     render={({ field }) => (
-                      <FormItem>
+                      <FormItem className="hidden">
                         <FormControl>
-                          <RadioGroup
-                            value={loginMethod}
-                            onValueChange={(val) => {
-                              if (selectedOption.includes('schnupper') && val !== 'authtoken') {
-                                return; // Nicht wechseln bei Schnupperboost
-                              }
-                              setLoginMethod(val as LoginMethod);
-                              field.onChange(val);
-                            }}
-                            className="grid gap-2"
-                          >
-                            <div className="flex items-center space-x-3">
-                              <RadioGroupItem value="authtoken" id="authtoken" />
-                              <Label htmlFor="authtoken" className="text-gray-900 font-medium">
-                                Facebook Auth-Token
-                              </Label>
-                            </div>
-                            
-                            {/* Nur anzeigen, wenn KEIN Schnupperboost ausgewählt ist */}
-                            {!selectedOption.includes('schnupper') && (
-                              <div className="flex items-center space-x-3">
-                                <RadioGroupItem value="credentials" id="credentials" />
-                                <Label htmlFor="credentials" className="text-gray-900 font-medium">
-                                  Facebook Zugangsdaten
-                                </Label>
-                              </div>
-                            )}
-                          </RadioGroup>
+                          <input type="hidden" {...field} value={loginMethod} />
                         </FormControl>
                       </FormItem>
                     )}
