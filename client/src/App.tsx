@@ -96,7 +96,10 @@ function Router() {
           <Route path="/produkte" component={Shop} />
           <Route path="/shop" component={Shop} />
           <Route path="/preise">
-            {() => <Redirect href="/shop/uebersicht" />}
+            {() => {
+              window.location.href = "/shop/uebersicht";
+              return null;
+            }}
           </Route>
           
           {/* Rechtliche Seiten */}
@@ -158,7 +161,10 @@ function Router() {
             {() => <UebersichtPage />}
           </Route>
           <Route path="/shop/preise">
-            {() => <StartPage />}
+            {() => {
+              window.location.href = "/shop/uebersicht";
+              return null;
+            }}
           </Route>
           <Route path="/shop/wuerfel">
             {() => <WuerfelPage />}
