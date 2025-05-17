@@ -94,7 +94,7 @@ function Router() {
           <Route path="/landing" component={LandingPage} />
           <Route path="/blog" component={BlogPost} />
           <Route path="/news" component={News} />
-          <Route path="/produkte" component={Produkte} />
+          <Route path="/produkte" component={Shop} />
           <Route path="/shop" component={Shop} />
           <Route path="/preise" component={Preise} />
           
