@@ -129,7 +129,10 @@ export default function WuerfelCheckout() {
     }
     
     setLoginMethod(value);
-    form.setValue("loginMethod", value);
+    form.setValue("loginMethod", value, { shouldDirty: true });
+    
+    // Sicherstellen, dass die Produktauswahl erhalten bleibt
+    form.setValue("product", selectedOption, { shouldDirty: true });
   };
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
