@@ -1,4 +1,4 @@
-import { Switch, Route, Navigate } from "wouter";
+import { Switch, Route, Redirect } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
@@ -95,11 +95,11 @@ function Router() {
           <Route path="/blog" component={BlogPost} />
           <Route path="/news" component={News} />
           <Route path="/produkte" >
-             {() => <Navigate to="/shop/uebersicht" />}
+             {() => <Redirect to="/shop/uebersicht" />}
           </Route>
           <Route path="/shop" component={Shop} />
           <Route path="/preise">
-             {() => <Navigate to="/shop/uebersicht" />}
+             {() => <Redirect to="/shop/uebersicht" />}
           </Route>
 
           {/* Rechtliche Seiten */}
@@ -161,7 +161,7 @@ function Router() {
             {() => <UebersichtPage />}
           </Route>
           <Route path="/shop/preise">
-             {() => <Navigate to="/shop/uebersicht" />}
+             {() => <Redirect to="/shop/uebersicht" />}
           </Route>
           <Route path="/shop/wuerfel">
             {() => <WuerfelPage />}
