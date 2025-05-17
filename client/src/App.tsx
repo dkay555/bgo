@@ -1,4 +1,4 @@
-import { Switch, Route, Redirect } from "wouter";
+import { Switch, Route } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
@@ -16,6 +16,7 @@ import AGB from "@/pages/AGB";
 import Widerruf from "@/pages/Widerruf";
 import Hilfe from "@/pages/Hilfe";
 import Produkte from "@/pages/Produkte";
+import Preise from "@/pages/Preise";
 import Shop from "@/pages/Shop";
 import AuthPage from "@/pages/auth-page";
 import OrderHistory from "@/pages/order-history";
@@ -95,12 +96,7 @@ function Router() {
           <Route path="/news" component={News} />
           <Route path="/produkte" component={Shop} />
           <Route path="/shop" component={Shop} />
-          <Route path="/preise">
-            {() => {
-              window.location.href = "/shop/uebersicht";
-              return null;
-            }}
-          </Route>
+          <Route path="/preise" component={Preise} />
           
           {/* Rechtliche Seiten */}
           <Route path="/kontakt" component={Kontakt} />
@@ -161,10 +157,7 @@ function Router() {
             {() => <UebersichtPage />}
           </Route>
           <Route path="/shop/preise">
-            {() => {
-              window.location.href = "/shop/uebersicht";
-              return null;
-            }}
+            {() => <Preise />}
           </Route>
           <Route path="/shop/wuerfel">
             {() => <WuerfelPage />}
