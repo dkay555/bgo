@@ -113,3 +113,9 @@ export const PRODUCT_CATEGORIES = [
     description: 'Unterstützung bei Events'
   }
 ];
+
+export const PAYMENT_STEPS = [
+  { title: "Produktauswahl", description: "Wählen Sie Ihr gewünschtes Produkt aus" },
+  { title: "Bezahlung", description: "Bezahlen Sie sicher mit PayPal" },
+  { title: "Lieferung", description: "Erhalten Sie Ihre Würfel innerhalb von 10-30 Minuten nach Zahlung" },
+];
