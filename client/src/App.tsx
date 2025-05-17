@@ -16,7 +16,9 @@ import AGB from "@/pages/AGB";
 import Widerruf from "@/pages/Widerruf";
 import Hilfe from "@/pages/Hilfe";
 import Produkte from "@/pages/Produkte";
-import Preise from "@/pages/Preise";
+// import Preise from "@/pages/Preise";
+// Using direct reference to Preise file
+const PreisePage = lazy(() => import('@/pages/Preise'));
 import Shop from "@/pages/Shop";
 import AuthPage from "@/pages/auth-page";
 import OrderHistory from "@/pages/order-history";
@@ -157,7 +159,7 @@ function Router() {
             {() => <UebersichtPage />}
           </Route>
           <Route path="/shop/preise">
-            {() => <Preise />}
+            {() => <PreisePage />}
           </Route>
           <Route path="/shop/wuerfel">
             {() => <WuerfelPage />}
