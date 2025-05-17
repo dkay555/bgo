@@ -326,19 +326,44 @@ export default function WuerfelCheckout() {
                 </div>
                 
                 <div className="grid gap-6">
-                  <div className="flex items-center space-x-3">
-                    <input
-                      type="radio"
-                      id="authtoken"
-                      name="loginMethod"
-                      className="h-5 w-5 text-[#00CFFF] border-gray-300 focus:ring-[#00CFFF]"
-                      checked={loginMethod === 'authtoken'}
-                      onChange={() => handleLoginMethodChange('authtoken')}
-                    />
-                    <label htmlFor="authtoken" className="text-gray-900 font-medium">
-                      Facebook Auth-Token
-                    </label>
-                  </div>
+                  <FormField
+                    control={form.control}
+                    name="loginMethod"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <RadioGroup
+                            value={loginMethod}
+                            onValueChange={(val) => {
+                              if (selectedOption.includes('schnupper') && val !== 'authtoken') {
+                                return; // Nicht wechseln bei Schnupperboost
+                              }
+                              setLoginMethod(val as LoginMethod);
+                              field.onChange(val);
+                            }}
+                            className="grid gap-2"
+                          >
+                            <div className="flex items-center space-x-3">
+                              <RadioGroupItem value="authtoken" id="authtoken" />
+                              <Label htmlFor="authtoken" className="text-gray-900 font-medium">
+                                Facebook Auth-Token
+                              </Label>
+                            </div>
+                            
+                            {/* Nur anzeigen, wenn KEIN Schnupperboost ausgewählt ist */}
+                            {!selectedOption.includes('schnupper') && (
+                              <div className="flex items-center space-x-3">
+                                <RadioGroupItem value="credentials" id="credentials" />
+                                <Label htmlFor="credentials" className="text-gray-900 font-medium">
+                                  Facebook Zugangsdaten
+                                </Label>
+                              </div>
+                            )}
+                          </RadioGroup>
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
                   
                   {loginMethod === 'authtoken' && (
                     <div className="ml-8 grid gap-4">
@@ -369,23 +394,6 @@ export default function WuerfelCheckout() {
                           </FormItem>
                         )}
                       />
-                    </div>
-                  )}
-                  
-                  {/* Nur anzeigen, wenn KEIN Schnupperboost ausgewählt ist */}
-                  {!selectedOption.includes('schnupper') && (
-                    <div className="flex items-center space-x-3">
-                      <input
-                        type="radio"
-                        id="credentials"
-                        name="loginMethod"
-                        className="h-5 w-5 text-[#00CFFF] border-gray-300 focus:ring-[#00CFFF]"
-                        checked={loginMethod === 'credentials'}
-                        onChange={() => handleLoginMethodChange('credentials')}
-                      />
-                      <label htmlFor="credentials" className="text-gray-900 font-medium">
-                        Facebook Zugangsdaten
-                      </label>
                     </div>
                   )}
                   
