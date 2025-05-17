@@ -194,7 +194,9 @@ export default function WuerfelCheckout() {
                         <FormControl>
                           <RadioGroup
                             value={field.value}
-                            onValueChange={field.onChange}
+                            onValueChange={(val) => {
+                              handleProductChange(val);
+                            }}
                             className="grid gap-2"
                           >
                             <div className="flex items-center space-x-3 w-full">
