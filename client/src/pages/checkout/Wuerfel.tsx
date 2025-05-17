@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Link } from 'wouter';
@@ -22,12 +22,15 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/hooks/use-auth';
 import SEOHead from '@/components/SEOHead';
+
+// Form schema type
+type BoostTime = "asap" | "tournament";
+type LoginMethod = "authtoken" | "credentials";
 
 // Form schema
 const checkoutSchema = z.object({
@@ -41,7 +44,7 @@ const checkoutSchema = z.object({
     message: "Bitte gib eine gültige E-Mail-Adresse ein",
   }),
   whatsapp: z.string().optional(),
-  loginMethod: z.enum(["authtoken", "credentials"], {
+  loginMethod: z.enum(["authtoken", "credentials"] as const, {
     required_error: "Bitte wähle eine Login-Methode",
   }),
   ingameName: z.string().min(2, {
@@ -52,14 +55,14 @@ const checkoutSchema = z.object({
   facebookPassword: z.string().optional(),
   recoveryCode1: z.string().optional(),
   recoveryCode2: z.string().optional(),
-  boostTime: z.enum(["asap", "tournament"], {
+  boostTime: z.enum(["asap", "tournament"] as const, {
     required_error: "Bitte wähle, wann der Boost erfolgen soll",
   }),
-  termsAccepted: z.literal(true, {
-    errorMap: () => ({ message: "Du musst die AGB akzeptieren" }),
+  termsAccepted: z.boolean().refine(val => val === true, {
+    message: "Du musst die AGB akzeptieren",
   }),
-  withdrawalAccepted: z.literal(true, {
-    errorMap: () => ({ message: "Du musst auf dein Widerrufsrecht verzichten" }),
+  withdrawalAccepted: z.boolean().refine(val => val === true, {
+    message: "Du musst auf dein Widerrufsrecht verzichten",
   }),
 }).refine((data) => {
   if (data.loginMethod === "authtoken") {
@@ -85,7 +88,7 @@ export default function WuerfelCheckout() {
   const { user } = useAuth();
   const { toast } = useToast();
   const [selectedOption, setSelectedOption] = useState('25000');
-  const [loginMethod, setLoginMethod] = useState<'authtoken' | 'credentials'>('authtoken');
+  const [loginMethod, setLoginMethod] = useState<LoginMethod>('authtoken');
 
   const form = useForm<FormData>({
     resolver: zodResolver(checkoutSchema),
@@ -112,12 +115,12 @@ export default function WuerfelCheckout() {
     form.setValue("product", value);
   };
 
-  const handleLoginMethodChange = (value: 'authtoken' | 'credentials') => {
+  const handleLoginMethodChange = (value: LoginMethod) => {
     setLoginMethod(value);
     form.setValue("loginMethod", value);
   };
 
-  const onSubmit = (data: FormData) => {
+  const onSubmit: SubmitHandler<FormData> = (data) => {
     console.log(data);
     // Here you would normally send the data to the server or redirect to PayPal
     toast({
@@ -469,31 +472,23 @@ export default function WuerfelCheckout() {
                     name="boostTime"
                     render={({ field }) => (
                       <FormItem>
-                        <div className="flex flex-col space-y-3">
-                          <div className="flex items-center space-x-3">
-                            <FormControl>
-                              <RadioGroupItem 
-                                value="asap" 
-                                id="asap" 
-                                checked={field.value === "asap"}
-                                onChange={() => field.onChange("asap")}
-                              />
-                            </FormControl>
-                            <Label htmlFor="asap" className="font-normal">Schnellstmöglich</Label>
-                          </div>
-                          
-                          <div className="flex items-center space-x-3">
-                            <FormControl>
-                              <RadioGroupItem 
-                                value="tournament" 
-                                id="tournament" 
-                                checked={field.value === "tournament"}
-                                onChange={() => field.onChange("tournament")}
-                              />
-                            </FormControl>
-                            <Label htmlFor="tournament" className="font-normal">Mit dem nächsten Bahnhofsturnier</Label>
-                          </div>
-                        </div>
+                        <FormControl>
+                          <RadioGroup
+                            value={field.value}
+                            onValueChange={field.onChange}
+                            className="flex flex-col space-y-3"
+                          >
+                            <div className="flex items-center space-x-3">
+                              <RadioGroupItem value="asap" id="asap" />
+                              <Label htmlFor="asap" className="font-normal">Schnellstmöglich</Label>
+                            </div>
+                            
+                            <div className="flex items-center space-x-3">
+                              <RadioGroupItem value="tournament" id="tournament" />
+                              <Label htmlFor="tournament" className="font-normal">Mit dem nächsten Bahnhofsturnier</Label>
+                            </div>
+                          </RadioGroup>
+                        </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -516,7 +511,7 @@ export default function WuerfelCheckout() {
                         <FormControl>
                           <Checkbox 
                             checked={field.value}
-                            onCheckedChange={field.onChange}
+                            onCheckedChange={(checked) => field.onChange(checked)}
                           />
                         </FormControl>
                         <div className="space-y-1 leading-none">
@@ -537,7 +532,7 @@ export default function WuerfelCheckout() {
                         <FormControl>
                           <Checkbox 
                             checked={field.value}
-                            onCheckedChange={field.onChange}
+                            onCheckedChange={(checked) => field.onChange(checked)}
                           />
                         </FormControl>
                         <div className="space-y-1 leading-none">
