@@ -28,7 +28,7 @@ import { ScrollToTop } from "@/components/ScrollToTop";
 import { lazy, Suspense } from "react";
 
 // Lazy-loaded product pages
-const WuerfelPage = lazy(() => import('@/pages/produkte/Wuerfel'));
+const WuerfelPage = lazy(() => import('@/pages/shop/Wuerfel'));
 const StickerPage = lazy(() => import('@/pages/produkte/Sticker'));
 const PartnerPage = lazy(() => import('@/pages/produkte/Partner'));
 const TycoonRacersPage = lazy(() => import('@/pages/produkte/TycoonRacers'));
