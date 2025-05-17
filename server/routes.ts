@@ -290,16 +290,7 @@ ${message}
     }
   });
 
-  // API routes (prefix all with /api)
-  app.get("/api/products", (req, res) => {
-    res.json({
-      products: [
-        { id: "dice-25000", name: "25.000 Würfel", price: "25.00" },
-        { id: "dice-35000", name: "35.000 Würfel", price: "35.00" },
-        { id: "dice-45000", name: "45.000 Würfel", price: "45.00" }
-      ]
-    });
-  });
+  // API routes with dynamic data from storage
   
   // Admin routes mit Basic Auth Middleware
   app.get("/api/admin/orders", adminAuthMiddleware, async (req, res) => {

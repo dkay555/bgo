@@ -178,7 +178,7 @@ function Router() {
             {() => <NewTicketPage />}
           </Route>
           <Route path="/tickets/:id">
-            {params => <TicketDetailPage />}
+            {params => <TicketDetailPage id={params.id} />}
           </Route>
           
           {/* Admin-Bereich */}

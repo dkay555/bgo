@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import BackToTop from '@/components/BackToTop';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+import BackToTop from '../components/BackToTop';
 import { PricingGrid } from '@/components/PricingCard';
 
 export default function Home() {

@@ -1,20 +1,20 @@
-// Meta-Tag Konfigurationen für SEO-Optimierung
-interface PageMeta {
+
+export interface PageMeta {
   title: string;
   description: string;
   keywords: string;
-  ogTitle?: string;
-  ogDescription?: string;
-  ogImage?: string;
+  ogTitle: string;
+  ogDescription: string;
+  ogImage: string;
 }
 
-// Standard-Meta-Tags, wenn keine spezifischen gefunden werden
+// Default meta tags
 export const DEFAULT_META: PageMeta = {
-  title: 'babixGO | Erfolgreicher im Monopoly Go Spiel mit unserer Hilfe',
-  description: 'babixGO bietet professionelle Hilfe für Monopoly Go Spieler. Würfelboost, Sticker, Partnerevents und Tycoon Racers Support zu fairen Preisen.',
-  keywords: 'Monopoly Go, babixGO, Würfel, Sticker, Partnerevents, Tycoon Racers, Spielhilfe',
-  ogTitle: 'babixGO | Dein Partner für Erfolg bei Monopoly Go',
-  ogDescription: 'Steigere dein Spielerlebnis mit professionellem Support für alle Bereiche von Monopoly Go - von Würfelboost bis Tycoon Racers.',
+  title: 'babixGO | Dein Partner für Monopoly Go Services',
+  description: 'babixGO bietet professionelle Services für Monopoly Go - Würfelboost, Sticker, Partnerevents und mehr zu fairen Preisen und mit sicherer Abwicklung.',
+  keywords: 'Monopoly Go, babixGO, Würfel, Sticker, Partnerevents, Tycoon Racers, Monopoly Go Service',
+  ogTitle: 'babixGO | Professionelle Monopoly Go Services',
+  ogDescription: 'Dein vertrauenswürdiger Partner für alle Monopoly Go Bedürfnisse - sicher, fair und zuverlässig',
   ogImage: '/images/babixgo-share.jpg'
 };
 
@@ -61,25 +61,16 @@ export const PAGE_META: Record<string, PageMeta> = {
     description: 'Maximiere deine Erfolge bei Tycoon Racers in Monopoly Go. Teamplätze und Flaggen-Sammlung zu günstigen Preisen für mehr Belohnungen.',
     keywords: 'Monopoly Go Tycoon Racers, Race Events, Flaggen sammeln, Teamplätze kaufen',
     ogTitle: 'Mehr Erfolg bei Monopoly Go Tycoon Racers',
-    ogDescription: 'Sichere dir alle Rundenbelohnungen in den Tycoon Racers mit unseren Teamplätzen und Flaggen-Services.',
+    ogDescription: 'Sichere dir alle Rundenbelohnungen in den Tycoon Racers mit unseren Teamplätzen und Flaggen-Service.',
     ogImage: '/images/tycoonracers-share.jpg'
   },
 
-  preise: {
-    title: 'Preisübersicht | Transparente Preise für alle Services | babixGO',
-    description: 'Überblick über alle Preise für unsere Monopoly Go Services: Würfelboost, Sticker, Partnerevents und Tycoon Racers - transparent und fair kalkuliert.',
-    keywords: 'Monopoly Go Preise, babixGO Kosten, Würfelboost Preise, Sticker Kosten, Partnerevents Preise',
-    ogTitle: 'Transparente Preise für alle Monopoly Go Services',
-    ogDescription: 'Alle Preise auf einen Blick für unsere Services rund um Monopoly Go - fair und nachvollziehbar.',
-    ogImage: '/images/preise-share.jpg'
-  },
-  
   news: {
-    title: 'Neuigkeiten zu Monopoly Go und babixGO | News & Updates',
-    description: 'Bleibe auf dem Laufenden mit den neuesten Entwicklungen zu Monopoly Go und unseren Services. Neue Eventformate, Sonderaktionen und mehr.',
-    keywords: 'Monopoly Go News, babixGO Updates, neue Events, Sonderaktionen, Spielupdates',
-    ogTitle: 'Aktuelle News zu Monopoly Go und babixGO',
-    ogDescription: 'Erfahre als Erstes von neuen Entwicklungen, Sonderaktionen und Updates rund um Monopoly Go und unsere Services.',
+    title: 'News | Aktuelles rund um Monopoly Go | babixGO',
+    description: 'Bleibe auf dem Laufenden mit den neuesten Updates, Angeboten und Aktionen rund um Monopoly Go und unsere Services.',
+    keywords: 'Monopoly Go News, babixGO News, Monopoly Go Updates, aktuelle Angebote',
+    ogTitle: 'Neuigkeiten zu Monopoly Go und babixGO',
+    ogDescription: 'Erfahre mehr über die neuesten Entwicklungen, Angebote und Updates für Monopoly Go und unsere Services.',
     ogImage: '/images/news-share.jpg'
   },
 
@@ -99,5 +90,8 @@ export const PAGE_META: Record<string, PageMeta> = {
  * @returns Meta-Tag-Informationen
  */
 export function getMetaForPage(pageName: string): PageMeta {
-  return PAGE_META[pageName] || DEFAULT_META;
+  if (pageName in PAGE_META) {
+    return PAGE_META[pageName];
+  }
+  return DEFAULT_META;
 }
