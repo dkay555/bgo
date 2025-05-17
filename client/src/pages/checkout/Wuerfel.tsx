@@ -170,7 +170,7 @@ export default function WuerfelCheckout() {
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             {/* Product Selection */}
             <Card>
-              <CardContent className="pt-2 pb-2">
+              <CardContent className="pt-0 pb-2">
                 <h2 className="text-xl font-bold text-[#0A3A68] mb-1">Bitte wähle deine gewünschte Menge:</h2>
                 
                 <div className="grid gap-2">
@@ -239,7 +239,7 @@ export default function WuerfelCheckout() {
             
             {/* Personal Information */}
             <Card>
-              <CardContent className="pt-2 pb-2">
+              <CardContent className="pt-0 pb-2">
                 <h2 className="text-xl font-bold text-[#0A3A68] mb-1">Persönliche Daten</h2>
                 
                 <div className="grid gap-4 md:grid-cols-2">
@@ -293,7 +293,7 @@ export default function WuerfelCheckout() {
             
             {/* Login Method */}
             <Card>
-              <CardContent className="pt-2 pb-2">
+              <CardContent className="pt-0 pb-2">
                 <div className="flex flex-wrap items-center justify-between mb-1">
                   <h2 className="text-xl font-bold text-[#0A3A68]">Wie sollen wir uns einloggen?</h2>
                   <Link href="/hilfe/loginmoeglichkeiten">
@@ -445,7 +445,7 @@ export default function WuerfelCheckout() {
             
             {/* Boost Timing */}
             <Card>
-              <CardContent className="pt-2 pb-2">
+              <CardContent className="pt-0 pb-2">
                 <h2 className="text-xl font-bold text-[#0A3A68] mb-1">Wann soll der Boost erfolgen?</h2>
                 
                 <div className="grid gap-4">
@@ -481,7 +481,7 @@ export default function WuerfelCheckout() {
             
             {/* Terms and Conditions */}
             <Card>
-              <CardContent className="pt-2 pb-2">
+              <CardContent className="pt-0 pb-2">
                 <h2 className="text-xl font-bold text-[#0A3A68] mb-1">Rechtliches</h2>
                 
                 <div className="grid gap-4">
