@@ -171,7 +171,7 @@ export default function WuerfelCheckout() {
             {/* Product Selection */}
             <Card>
               <CardContent className="py-4">
-                <h2 className="text-xl font-bold text-[#0A3A68] mb-2">Bitte wähle deine gewünschte Menge:</h2>
+                <h2 className="text-xl font-bold text-[#0A3A68] mt-0 mb-2">Bitte wähle deine gewünschte Menge:</h2>
                 
                 <div className="grid gap-2">
                   <FormField
@@ -240,7 +240,7 @@ export default function WuerfelCheckout() {
             {/* Personal Information */}
             <Card>
               <CardContent className="py-4">
-                <h2 className="text-xl font-bold text-[#0A3A68] mb-2">Persönliche Daten</h2>
+                <h2 className="text-xl font-bold text-[#0A3A68] mt-0 mb-2">Persönliche Daten</h2>
                 
                 <div className="grid gap-4 md:grid-cols-2">
                   <FormField
@@ -295,7 +295,7 @@ export default function WuerfelCheckout() {
             <Card>
               <CardContent className="py-4">
                 <div className="flex flex-wrap items-center justify-between mb-2">
-                  <h2 className="text-xl font-bold text-[#0A3A68]">Wie sollen wir uns einloggen?</h2>
+                  <h2 className="text-xl font-bold text-[#0A3A68] mt-0">Wie sollen wir uns einloggen?</h2>
                   <Link href="/hilfe/loginmoeglichkeiten">
                     <span className="text-[#00CFFF] text-sm hover:underline">
                       Du bist dir unsicher? Hier bekommst du mehr Infos dazu
@@ -446,7 +446,7 @@ export default function WuerfelCheckout() {
             {/* Boost Timing */}
             <Card>
               <CardContent className="py-4">
-                <h2 className="text-xl font-bold text-[#0A3A68] mb-2">Wann soll der Boost erfolgen?</h2>
+                <h2 className="text-xl font-bold text-[#0A3A68] mt-0 mb-2">Wann soll der Boost erfolgen?</h2>
                 
                 <div className="grid gap-4">
                   <FormField
@@ -482,7 +482,7 @@ export default function WuerfelCheckout() {
             {/* Terms and Conditions */}
             <Card>
               <CardContent className="py-4">
-                <h2 className="text-xl font-bold text-[#0A3A68] mb-2">Rechtliches</h2>
+                <h2 className="text-xl font-bold text-[#0A3A68] mt-0 mb-2">Rechtliches</h2>
                 
                 <div className="grid gap-4">
                   <FormField
