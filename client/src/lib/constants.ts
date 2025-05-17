@@ -49,13 +49,14 @@ export const NAV_LINKS = [
   { name: 'News', href: '/news' },
   { 
     name: 'Shop', 
-    href: '/produkte',
+    href: '/shop',
     isDropdown: true,
     dropdownItems: [
-      { name: 'Würfel', href: '/produkte/wuerfel', icon: 'casino' },
-      { name: 'Sticker', href: '/produkte/sticker', icon: 'collections_bookmark' },
-      { name: 'Partnerevents', href: '/produkte/partner', icon: 'people' },
-      { name: 'Tycoon Racers', href: '/produkte/tycoonracers', icon: 'emoji_events' },
+      { name: 'Übersicht', href: '/shop/preise', icon: 'store' },
+      { name: 'Würfel', href: '/shop/wuerfel', icon: 'casino' },
+      { name: 'Sticker', href: '/shop/sticker', icon: 'collections_bookmark' },
+      { name: 'Partnerevents', href: '/shop/partnerevent', icon: 'people' },
+      { name: 'Tycoon Racers', href: '/shop/tycoonracers', icon: 'emoji_events' },
     ]
   },
   { name: 'Login', href: '/auth' },
