@@ -133,8 +133,11 @@ export default function WuerfelCheckoutPage() {
       case '45000':
         price = 45.00;
         break;
-      case 'special':
-        price = 99.00; // Sonderangebot
+      case 'schnupper':
+        price = 10.00; // Schnupperboost
+        break;
+      case 'schnupper_events':
+        price = 15.00; // Schnupperboost + Events
         break;
       default:
         price = 25.00;
@@ -402,14 +405,25 @@ export default function WuerfelCheckoutPage() {
                       </Label>
                     </div>
                     
-                    <div className={`flex items-center space-x-2 p-4 rounded-lg border ${formData.selectedAmount === 'special' ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border-gray-200 hover:bg-gray-50'}`}>
-                      <RadioGroupItem value="special" id="w-special" className="text-[#00CFFF]" />
-                      <Label htmlFor="w-special" className="w-full cursor-pointer flex justify-between">
+                    <div className={`flex items-center space-x-2 p-4 rounded-lg border ${formData.selectedAmount === 'schnupper' ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border-gray-200 hover:bg-gray-50'}`}>
+                      <RadioGroupItem value="schnupper" id="w-schnupper" className="text-[#00CFFF]" />
+                      <Label htmlFor="w-schnupper" className="w-full cursor-pointer flex justify-between">
                         <div>
-                          <span className="font-medium">SONDERANGEBOT</span>
-                          <p className="text-sm text-gray-500">100.000 Würfel + 10.000 BONUS</p>
+                          <span className="font-medium">Schnupperboost</span>
+                          <p className="text-sm text-gray-500">Kleinerer Boost zum Testen</p>
                         </div>
-                        <span className="font-bold text-[#FF4C00]">99,00 €</span>
+                        <span className="font-bold text-[#FF4C00]">10,00 €</span>
+                      </Label>
+                    </div>
+                    
+                    <div className={`flex items-center space-x-2 p-4 rounded-lg border ${formData.selectedAmount === 'schnupper_events' ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border-gray-200 hover:bg-gray-50'}`}>
+                      <RadioGroupItem value="schnupper_events" id="w-schnupper_events" className="text-[#00CFFF]" />
+                      <Label htmlFor="w-schnupper_events" className="w-full cursor-pointer flex justify-between">
+                        <div>
+                          <span className="font-medium">Schnupperboost + Events</span>
+                          <p className="text-sm text-gray-500">Kleinerer Boost inkl. Events</p>
+                        </div>
+                        <span className="font-bold text-[#FF4C00]">15,00 €</span>
                       </Label>
                     </div>
                   </>
