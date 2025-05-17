@@ -113,7 +113,7 @@ function Router() {
           <Route path="/widerruf" component={Widerruf} />
 
           {/* Hilfebereich */}
-          <Route path="/hilfe/uebersicht">
+          <Route path="/hilfe">
             {() => <HilfeUebersichtPage />}
           </Route>
           <Route path="/hilfe/wuerfel">
