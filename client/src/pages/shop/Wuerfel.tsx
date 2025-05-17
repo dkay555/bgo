@@ -98,7 +98,7 @@ export default function ShopWuerfel() {
                       </div>
                       <div className="flex justify-between items-center border-b border-gray-100 py-2 bg-yellow-50">
                         <span className="font-medium">40.000 - 50.000 Würfel <span className="text-sm text-gray-600">(während Lucky Chance/Dice Match/Frei Parken x2)</span></span>
-                        <span className="font-bold text-[#FF4C00]">50€</span>
+                        <span className="font-bold text-[#FF4C00]">30€</span>
                       </div>
                     </div>
                   </div>
@@ -213,8 +213,8 @@ export default function ShopWuerfel() {
             
             <Card>
               <CardContent className="p-4">
-                <h3 className="font-bold text-lg mb-2">Ist der Boost sicher für meinen Account?</h3>
-                <p>Ja, wir nutzen speziell entwickelte Anti-Anticheat-Maßnahmen, um deine Accountsicherheit zu gewährleisten. Wir haben langjährige Erfahrung und tausende zufriedene Kunden.</p>
+                <h3 className="font-bold text-lg mb-2">Wie kann ich bezahlen?</h3>
+                <p>Im Shop hast du die Möglichkeit mit PayPal zu bezahlen. Alternativ bieten wir die Bezahlung via Überweisung an. Schicke uns dafür eine Nachricht.</p>
               </CardContent>
             </Card>
           </div>
