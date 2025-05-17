@@ -21,6 +21,7 @@ import AuthPage from "@/pages/auth-page";
 import OrderHistory from "@/pages/order-history";
 import { AuthProvider } from "@/hooks/use-auth";
 import { ProtectedRoute } from "@/lib/protected-route";
+import { ScrollToTop } from "@/components/ScrollToTop";
 
 // Lazy loading für Unterseiten, die nicht sofort benötigt werden
 import { lazy, Suspense } from "react";
