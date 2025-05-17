@@ -123,6 +123,11 @@ export default function WuerfelCheckout() {
   };
 
   const handleLoginMethodChange = (value: LoginMethod) => {
+    // Bei Schnupperboost nur Auth-Token erlauben
+    if (selectedOption.includes('schnupper') && value !== 'authtoken') {
+      return; // Nicht wechseln, wenn Schnupperboost aktiv ist
+    }
+    
     setLoginMethod(value);
     form.setValue("loginMethod", value);
   };
