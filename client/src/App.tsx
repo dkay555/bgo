@@ -44,6 +44,9 @@ const EventwaehrungCheckoutPage = lazy(() => import('@/pages/checkout/Eventwaehr
 // Lazy-loaded shop pages
 const UebersichtPage = lazy(() => import('@/pages/shop/Uebersicht'));
 
+// Lazy-loaded Hilfe pages
+const HilfeUebersichtPage = lazy(() => import('@/pages/hilfe/Uebersicht'));
+
 // Lazy-loaded help pages
 const WuerfelHilfePage = lazy(() => import('@/pages/hilfe/wuerfel'));
 const PartnerHilfePage = lazy(() => import('@/pages/hilfe/partner'));
@@ -111,6 +114,9 @@ function Router() {
 
           {/* Hilfebereich */}
           <Route path="/hilfe" component={Hilfe} />
+          <Route path="/hilfe/uebersicht">
+            {() => <HilfeUebersichtPage />}
+          </Route>
           <Route path="/hilfe/wuerfel">
             {() => <WuerfelHilfePage />}
           </Route>
