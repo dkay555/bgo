@@ -284,76 +284,76 @@ export function Header() {
               {/* Sticker */}
               <Link 
                 href="/shop/sticker"
-                className="text-white hover:bg-white/10 hover:text-[#FF4C00] p-2 rounded-md transition duration-300 border border-white/10 flex flex-col items-center"
+                className="text-white hover:bg-white/10 hover:text-[#FF4C00] p-1 rounded-md transition duration-300 border border-white/10 flex flex-col items-center text-xs"
                 onClick={closeMobileMenu}
               >
-                <span className="material-icons text-[#00CFFF] text-xl mb-1">collections_bookmark</span>
+                <span className="material-icons text-[#00CFFF] text-sm mb-0.5">collections_bookmark</span>
                 <span className="font-bold">Sticker</span>
               </Link>
               
               {/* Partnerevents */}
               <Link 
                 href="/shop/partnerevent"
-                className="text-white hover:bg-white/10 hover:text-[#FF4C00] p-2 rounded-md transition duration-300 border border-white/10 flex flex-col items-center"
+                className="text-white hover:bg-white/10 hover:text-[#FF4C00] p-1 rounded-md transition duration-300 border border-white/10 flex flex-col items-center text-xs"
                 onClick={closeMobileMenu}
               >
-                <span className="material-icons text-[#00CFFF] text-xl mb-1">people</span>
+                <span className="material-icons text-[#00CFFF] text-sm mb-0.5">people</span>
                 <span className="font-bold">Partnerevents</span>
               </Link>
               
               {/* Tycoon Racers */}
               <Link 
                 href="/shop/tycoonracers"
-                className="text-white hover:bg-white/10 hover:text-[#FF4C00] p-2 rounded-md transition duration-300 border border-white/10 flex flex-col items-center"
+                className="text-white hover:bg-white/10 hover:text-[#FF4C00] p-1 rounded-md transition duration-300 border border-white/10 flex flex-col items-center text-xs"
                 onClick={closeMobileMenu}
               >
-                <span className="material-icons text-[#00CFFF] text-xl mb-1">emoji_events</span>
+                <span className="material-icons text-[#00CFFF] text-sm mb-0.5">emoji_events</span>
                 <span className="font-bold">Tycoon Racers</span>
               </Link>
             </div>
           </div>
           
           {/* Login/User Bereich für Mobil */}
-          <div className="mt-4 mb-2 px-4">
+          <div className="mt-2 mb-2 px-3">
             {user ? (
-              <div className="border border-white/10 rounded-md p-3 bg-white/5">
-                <div className="flex items-center space-x-3 mb-2">
-                  <Avatar>
-                    <AvatarFallback className="bg-[#00CFFF]/20 text-white">
+              <div className="border border-white/10 rounded-md p-2 bg-white/5">
+                <div className="flex items-center space-x-2 mb-1.5">
+                  <Avatar className="h-6 w-6">
+                    <AvatarFallback className="bg-[#00CFFF]/20 text-white text-xs">
                       {user.name ? user.name.charAt(0).toUpperCase() : 
                        user.username.charAt(0).toUpperCase()}
                     </AvatarFallback>
                   </Avatar>
                   <div>
-                    <p className="text-white font-bold">{user.name || user.username}</p>
+                    <p className="text-white font-bold text-xs">{user.name || user.username}</p>
                     {user.email && (
-                      <p className="text-white/70 text-xs">{user.email}</p>
+                      <p className="text-white/70 text-[10px]">{user.email}</p>
                     )}
                   </div>
                 </div>
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-2 gap-1">
                   <Link
                     href="/profile"
-                    className="flex items-center justify-center bg-white/10 hover:bg-white/20 text-white py-2 px-3 rounded-md text-sm"
+                    className="flex items-center justify-center bg-white/10 hover:bg-white/20 text-white py-1 px-2 rounded-md text-xs"
                     onClick={closeMobileMenu}
                   >
-                    <User className="mr-2 h-4 w-4" />
+                    <User className="mr-1 h-3 w-3" />
                     Profil
                   </Link>
                   <Link
                     href="/order-history"
-                    className="flex items-center justify-center bg-white/10 hover:bg-white/20 text-white py-2 px-3 rounded-md text-sm"
+                    className="flex items-center justify-center bg-white/10 hover:bg-white/20 text-white py-1 px-2 rounded-md text-xs"
                     onClick={closeMobileMenu}
                   >
-                    <ClipboardList className="mr-2 h-4 w-4" />
+                    <ClipboardList className="mr-1 h-3 w-3" />
                     Bestellungen
                   </Link>
                   <Link
                     href="/tickets"
-                    className="flex items-center justify-center bg-white/10 hover:bg-white/20 text-white py-2 px-3 rounded-md text-sm col-span-2"
+                    className="flex items-center justify-center bg-white/10 hover:bg-white/20 text-white py-1 px-2 rounded-md text-xs col-span-2"
                     onClick={closeMobileMenu}
                   >
-                    <Ticket className="mr-2 h-4 w-4" />
+                    <Ticket className="mr-1 h-3 w-3" />
                     Tickets
                   </Link>
                   <button
@@ -361,9 +361,9 @@ export function Header() {
                       logoutMutation.mutate();
                       closeMobileMenu();
                     }}
-                    className="flex items-center justify-center bg-red-500/20 hover:bg-red-500/30 text-red-500 py-2 px-3 rounded-md text-sm col-span-2 mt-1"
+                    className="flex items-center justify-center bg-red-500/20 hover:bg-red-500/30 text-red-500 py-1 px-2 rounded-md text-xs col-span-2 mt-0.5"
                   >
-                    <LogOut className="mr-2 h-4 w-4" />
+                    <LogOut className="mr-1 h-3 w-3" />
                     Abmelden
                   </button>
                 </div>
@@ -371,19 +371,19 @@ export function Header() {
             ) : (
               <Link
                 href="/auth"
-                className="flex items-center justify-center bg-[#00CFFF]/20 hover:bg-[#00CFFF]/30 text-white py-3 px-4 rounded-md font-bold w-full"
+                className="flex items-center justify-center bg-[#00CFFF]/20 hover:bg-[#00CFFF]/30 text-white py-1.5 px-3 rounded-md font-bold w-full text-xs"
                 onClick={closeMobileMenu}
               >
-                <User className="mr-2 h-5 w-5" />
+                <User className="mr-1 h-3 w-3" />
                 Anmelden / Registrieren
               </Link>
             )}
           </div>
 
-          <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-white/10">
-            <div className="text-white/80 text-center text-sm">
+          <div className="absolute bottom-0 left-0 right-0 p-2 border-t border-white/10">
+            <div className="text-white/80 text-center text-xs">
               <p>© {new Date().getFullYear()} babixGO</p>
-              <p className="mt-1">Monopoly GO Service</p>
+              <p className="mt-0.5">Monopoly GO Service</p>
             </div>
           </div>
         </div>
