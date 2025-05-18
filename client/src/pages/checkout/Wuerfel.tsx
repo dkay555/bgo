@@ -179,7 +179,7 @@ export default function WuerfelCheckout() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="px-4 py-6 md:py-10 flex-grow font-['Nunito_Sans'] text-[#0A3A68]">
       <SEOHead 
         pageName="Würfel kaufen - Checkout" 
         customTitle="Würfel kaufen - Checkout | babixGO" 
@@ -187,24 +187,25 @@ export default function WuerfelCheckout() {
       />
       
       <div className="max-w-4xl mx-auto">
-        <h1 className="babix-info-header font-bold text-3xl md:text-4xl px--2 py-2 text-center mb-8">
-          Checkout
+        <h1 className="babix-info-header font-bold text-3xl md:text-4xl px-4 py-3 mb-8 text-center bg-[#00CFFF]/10 border-b-2 border-[#00CFFF] text-[#FF4C00] rounded-xl inline-block mx-auto">
+          Würfel bestellen
         </h1>
         
         {/* Login Prompt */}
         {!user && (
-          <div className="bg-blue-50 p-4 rounded-lg mb-8 flex flex-col sm:flex-row justify-between items-center">
+          <div className="bg-gradient-to-r from-[#0A3A68]/10 to-[#00CFFF]/10 p-5 rounded-lg mb-8 flex flex-col sm:flex-row justify-between items-center border border-[#00CFFF]/20">
             <div>
-              <p className="text-[#0A3A68] font-semibold mb-2">Logge dich ein zum automatischen Ausfüllen deiner Daten:</p>
+              <p className="text-[#0A3A68] font-semibold mb-2">Für schnellere Bestellungen in der Zukunft:</p>
+              <p className="text-sm text-gray-600">Deine Daten werden automatisch gespeichert und ausgefüllt</p>
             </div>
-            <div className="flex gap-4 mt-3 sm:mt-0">
+            <div className="flex gap-4 mt-4 sm:mt-0">
               <Link href="/auth">
-                <Button variant="default" className="bg-[#0A3A68]">
+                <Button variant="default" className="bg-[#0A3A68] hover:bg-[#0A3A68]/90">
                   Login
                 </Button>
               </Link>
               <Link href="/auth?register=true">
-                <Button variant="outline" className="text-[#0A3A68] border-[#0A3A68]">
+                <Button variant="outline" className="text-[#0A3A68] border-[#0A3A68] hover:bg-[#0A3A68]/10">
                   Registrieren
                 </Button>
               </Link>
