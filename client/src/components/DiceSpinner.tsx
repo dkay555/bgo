@@ -19,246 +19,231 @@ export function DiceSpinner({
   secondaryColor = '#FF4C00',
   className = ''
 }: DiceSpinnerProps) {
-  // Schatten für besseren 3D-Effekt
-  const boxShadowStyle = `0 0 ${size/8}px rgba(0,0,0,0.2), 0 0 ${size/15}px rgba(0,0,0,0.3) inset`;
-  
   return (
-    <div className={`relative ${className}`} style={{ width: size, height: size }}>
-      <div 
-        className="dice rotating-dice" 
-        style={{
-          width: size,
-          height: size,
-          position: 'relative',
-          perspective: `${size * 3}px`,
-          transformStyle: 'preserve-3d'
-        }}
-      >
-        {/* Vorderseite - 1 */}
-        <div
-          className="absolute rounded-md flex items-center justify-center"
-          style={{
-            width: size,
-            height: size,
-            transform: `translateZ(${size / 2}px)`,
-            backgroundColor: color,
-            boxShadow: boxShadowStyle
-          }}
-        >
-          <div 
-            className="rounded-full" 
-            style={{ 
-              width: size / 5, 
-              height: size / 5,
-              backgroundColor: secondaryColor,
-            }} 
-          />
+    <div className={`dice-container ${className}`} style={{ width: size, height: size }}>
+      <div className="dice" style={{ width: size, height: size }}>
+        {/* Vorderseite mit einer Punkt */}
+        <div className="dice-face front" style={{ 
+          width: size, 
+          height: size, 
+          backgroundColor: color,
+          transform: `translateZ(${size/2}px)`
+        }}>
+          <div className="dice-dot" style={{ 
+            width: size/5, 
+            height: size/5, 
+            backgroundColor: secondaryColor,
+            left: '50%',
+            top: '50%',
+            transform: 'translate(-50%, -50%)'
+          }}></div>
         </div>
-
-        {/* Rückseite - 6 */}
-        <div
-          className="absolute rounded-md grid grid-cols-2 gap-1 p-2"
-          style={{
-            width: size,
-            height: size,
-            transform: `translateZ(-${size / 2}px) rotateY(180deg)`,
-            backgroundColor: color,
-            boxShadow: boxShadowStyle
-          }}
-        >
-          {[...Array(6)].map((_, i) => (
-            <div 
-              key={i} 
-              className="rounded-full" 
-              style={{ 
-                width: size / 6, 
-                height: size / 6,
-                backgroundColor: secondaryColor
-              }} 
-            />
-          ))}
+        
+        {/* Rückseite mit sechs Punkten */}
+        <div className="dice-face back" style={{ 
+          width: size, 
+          height: size, 
+          backgroundColor: color,
+          transform: `translateZ(-${size/2}px) rotateY(180deg)`
+        }}>
+          <div className="dice-dot" style={{ 
+            width: size/6, 
+            height: size/6, 
+            backgroundColor: secondaryColor,
+            left: '25%',
+            top: '25%',
+            transform: 'translate(-50%, -50%)'
+          }}></div>
+          <div className="dice-dot" style={{ 
+            width: size/6, 
+            height: size/6, 
+            backgroundColor: secondaryColor,
+            left: '25%',
+            top: '50%',
+            transform: 'translate(-50%, -50%)'
+          }}></div>
+          <div className="dice-dot" style={{ 
+            width: size/6, 
+            height: size/6, 
+            backgroundColor: secondaryColor,
+            left: '25%',
+            top: '75%',
+            transform: 'translate(-50%, -50%)'
+          }}></div>
+          <div className="dice-dot" style={{ 
+            width: size/6, 
+            height: size/6, 
+            backgroundColor: secondaryColor,
+            left: '75%',
+            top: '25%',
+            transform: 'translate(-50%, -50%)'
+          }}></div>
+          <div className="dice-dot" style={{ 
+            width: size/6, 
+            height: size/6, 
+            backgroundColor: secondaryColor,
+            left: '75%',
+            top: '50%',
+            transform: 'translate(-50%, -50%)'
+          }}></div>
+          <div className="dice-dot" style={{ 
+            width: size/6, 
+            height: size/6, 
+            backgroundColor: secondaryColor,
+            left: '75%',
+            top: '75%',
+            transform: 'translate(-50%, -50%)'
+          }}></div>
         </div>
-
-        {/* Oberseite - 2 */}
-        <div
-          className="absolute rounded-md flex items-center justify-between p-2"
-          style={{
-            width: size,
-            height: size,
-            transform: `rotateX(90deg) translateZ(${size / 2}px)`,
-            backgroundColor: color,
-            boxShadow: boxShadowStyle
-          }}
-        >
-          <div 
-            className="rounded-full" 
-            style={{ 
-              width: size / 5, 
-              height: size / 5,
-              backgroundColor: secondaryColor
-            }} 
-          />
-          <div 
-            className="rounded-full" 
-            style={{ 
-              width: size / 5, 
-              height: size / 5,
-              backgroundColor: secondaryColor
-            }} 
-          />
+        
+        {/* Oberseite mit zwei Punkten */}
+        <div className="dice-face top" style={{ 
+          width: size, 
+          height: size, 
+          backgroundColor: color,
+          transform: `rotateX(90deg) translateZ(${size/2}px)`
+        }}>
+          <div className="dice-dot" style={{ 
+            width: size/5, 
+            height: size/5, 
+            backgroundColor: secondaryColor,
+            left: '25%',
+            top: '25%',
+            transform: 'translate(-50%, -50%)'
+          }}></div>
+          <div className="dice-dot" style={{ 
+            width: size/5, 
+            height: size/5, 
+            backgroundColor: secondaryColor,
+            left: '75%',
+            top: '75%',
+            transform: 'translate(-50%, -50%)'
+          }}></div>
         </div>
-
-        {/* Unterseite - 5 */}
-        <div
-          className="absolute rounded-md grid grid-cols-3 items-center justify-items-center"
-          style={{
-            width: size,
-            height: size,
-            transform: `rotateX(-90deg) translateZ(${size / 2}px)`,
-            backgroundColor: color,
-            boxShadow: boxShadowStyle,
-            padding: size / 8
-          }}
-        >
-          <div 
-            className="rounded-full" 
-            style={{ 
-              width: size / 6, 
-              height: size / 6,
-              backgroundColor: secondaryColor
-            }} 
-          />
-          <div style={{ width: size / 6, height: size / 6 }} /> {/* Leerer Platz */}
-          <div 
-            className="rounded-full" 
-            style={{ 
-              width: size / 6, 
-              height: size / 6,
-              backgroundColor: secondaryColor
-            }} 
-          />
-          <div style={{ width: size / 6, height: size / 6 }} /> {/* Leerer Platz */}
-          <div 
-            className="rounded-full" 
-            style={{ 
-              width: size / 6, 
-              height: size / 6,
-              backgroundColor: secondaryColor
-            }} 
-          />
-          <div style={{ width: size / 6, height: size / 6 }} /> {/* Leerer Platz */}
-          <div 
-            className="rounded-full" 
-            style={{ 
-              width: size / 6, 
-              height: size / 6,
-              backgroundColor: secondaryColor
-            }} 
-          />
-          <div style={{ width: size / 6, height: size / 6 }} /> {/* Leerer Platz */}
-          <div 
-            className="rounded-full" 
-            style={{ 
-              width: size / 6, 
-              height: size / 6,
-              backgroundColor: secondaryColor
-            }} 
-          />
+        
+        {/* Unterseite mit fünf Punkten */}
+        <div className="dice-face bottom" style={{ 
+          width: size, 
+          height: size, 
+          backgroundColor: color,
+          transform: `rotateX(-90deg) translateZ(${size/2}px)`
+        }}>
+          <div className="dice-dot" style={{ 
+            width: size/5, 
+            height: size/5, 
+            backgroundColor: secondaryColor,
+            left: '25%',
+            top: '25%',
+            transform: 'translate(-50%, -50%)'
+          }}></div>
+          <div className="dice-dot" style={{ 
+            width: size/5, 
+            height: size/5, 
+            backgroundColor: secondaryColor,
+            left: '75%',
+            top: '25%',
+            transform: 'translate(-50%, -50%)'
+          }}></div>
+          <div className="dice-dot" style={{ 
+            width: size/5, 
+            height: size/5, 
+            backgroundColor: secondaryColor,
+            left: '50%',
+            top: '50%',
+            transform: 'translate(-50%, -50%)'
+          }}></div>
+          <div className="dice-dot" style={{ 
+            width: size/5, 
+            height: size/5, 
+            backgroundColor: secondaryColor,
+            left: '25%',
+            top: '75%',
+            transform: 'translate(-50%, -50%)'
+          }}></div>
+          <div className="dice-dot" style={{ 
+            width: size/5, 
+            height: size/5, 
+            backgroundColor: secondaryColor,
+            left: '75%',
+            top: '75%',
+            transform: 'translate(-50%, -50%)'
+          }}></div>
         </div>
-
-        {/* Linke Seite - 4 */}
-        <div
-          className="absolute rounded-md grid grid-cols-2 gap-1 items-center justify-items-center"
-          style={{
-            width: size,
-            height: size,
-            transform: `rotateY(-90deg) translateZ(${size / 2}px)`,
-            backgroundColor: color,
-            boxShadow: boxShadowStyle,
-            padding: size / 8
-          }}
-        >
-          <div 
-            className="rounded-full" 
-            style={{ 
-              width: size / 5, 
-              height: size / 5,
-              backgroundColor: secondaryColor
-            }} 
-          />
-          <div 
-            className="rounded-full" 
-            style={{ 
-              width: size / 5, 
-              height: size / 5,
-              backgroundColor: secondaryColor
-            }} 
-          />
-          <div 
-            className="rounded-full" 
-            style={{ 
-              width: size / 5, 
-              height: size / 5,
-              backgroundColor: secondaryColor
-            }} 
-          />
-          <div 
-            className="rounded-full" 
-            style={{ 
-              width: size / 5, 
-              height: size / 5,
-              backgroundColor: secondaryColor
-            }} 
-          />
+        
+        {/* Linke Seite mit vier Punkten */}
+        <div className="dice-face left" style={{ 
+          width: size, 
+          height: size, 
+          backgroundColor: color,
+          transform: `rotateY(-90deg) translateZ(${size/2}px)`
+        }}>
+          <div className="dice-dot" style={{ 
+            width: size/5, 
+            height: size/5, 
+            backgroundColor: secondaryColor,
+            left: '25%',
+            top: '25%',
+            transform: 'translate(-50%, -50%)'
+          }}></div>
+          <div className="dice-dot" style={{ 
+            width: size/5, 
+            height: size/5, 
+            backgroundColor: secondaryColor,
+            left: '25%',
+            top: '75%',
+            transform: 'translate(-50%, -50%)'
+          }}></div>
+          <div className="dice-dot" style={{ 
+            width: size/5, 
+            height: size/5, 
+            backgroundColor: secondaryColor,
+            left: '75%',
+            top: '25%',
+            transform: 'translate(-50%, -50%)'
+          }}></div>
+          <div className="dice-dot" style={{ 
+            width: size/5, 
+            height: size/5, 
+            backgroundColor: secondaryColor,
+            left: '75%',
+            top: '75%',
+            transform: 'translate(-50%, -50%)'
+          }}></div>
         </div>
-
-        {/* Rechte Seite - 3 */}
-        <div
-          className="absolute rounded-md"
-          style={{
-            width: size,
-            height: size,
-            transform: `rotateY(90deg) translateZ(${size / 2}px)`,
-            backgroundColor: color,
-            boxShadow: boxShadowStyle
-          }}
-        >
-          <div className="flex flex-col h-full justify-between p-2">
-            <div className="self-start">
-              <div 
-                className="rounded-full" 
-                style={{ 
-                  width: size / 5, 
-                  height: size / 5,
-                  backgroundColor: secondaryColor
-                }} 
-              />
-            </div>
-            <div className="self-center">
-              <div 
-                className="rounded-full" 
-                style={{ 
-                  width: size / 5, 
-                  height: size / 5,
-                  backgroundColor: secondaryColor
-                }} 
-              />
-            </div>
-            <div className="self-end">
-              <div 
-                className="rounded-full" 
-                style={{ 
-                  width: size / 5, 
-                  height: size / 5,
-                  backgroundColor: secondaryColor
-                }} 
-              />
-            </div>
-          </div>
+        
+        {/* Rechte Seite mit drei Punkten */}
+        <div className="dice-face right" style={{ 
+          width: size, 
+          height: size, 
+          backgroundColor: color,
+          transform: `rotateY(90deg) translateZ(${size/2}px)`
+        }}>
+          <div className="dice-dot" style={{ 
+            width: size/5, 
+            height: size/5, 
+            backgroundColor: secondaryColor,
+            left: '25%',
+            top: '25%',
+            transform: 'translate(-50%, -50%)'
+          }}></div>
+          <div className="dice-dot" style={{ 
+            width: size/5, 
+            height: size/5, 
+            backgroundColor: secondaryColor,
+            left: '50%',
+            top: '50%',
+            transform: 'translate(-50%, -50%)'
+          }}></div>
+          <div className="dice-dot" style={{ 
+            width: size/5, 
+            height: size/5, 
+            backgroundColor: secondaryColor,
+            left: '75%',
+            top: '75%',
+            transform: 'translate(-50%, -50%)'
+          }}></div>
         </div>
       </div>
-      
-{/* Animation wird über globale CSS-Klasse definiert */}
     </div>
   );
 }
