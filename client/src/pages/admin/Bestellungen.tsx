@@ -55,6 +55,7 @@ import {
   Link2,
   Clock
 } from "lucide-react";
+import { AdminNavigation } from "@/components/AdminNavigation";
 
 interface AdminCredentials {
   username: string;
@@ -469,36 +470,7 @@ export default function Bestellungen() {
   return (
     <div className="container mx-auto p-4">
       {/* Admin-Navigation */}
-      <div className="bg-white shadow mb-6 rounded-lg">
-        <div className="flex items-center p-4">
-          <h2 className="text-xl font-bold mr-6">Admin-Bereich</h2>
-          <div className="flex flex-wrap gap-2">
-            <a 
-              href="/admin/bestellungen" 
-              className="px-4 py-2 rounded-md bg-blue-100 text-blue-800 font-medium"
-            >
-              Bestellungen
-            </a>
-            <a 
-              href="/admin/benutzer" 
-              className="px-4 py-2 rounded-md hover:bg-gray-100 transition-colors"
-            >
-              Benutzer
-            </a>
-            <a 
-              href="/admin/email-vorlagen" 
-              className="px-4 py-2 rounded-md hover:bg-gray-100 transition-colors"
-            >
-              E-Mail-Vorlagen
-            </a>
-          </div>
-          <div className="ml-auto">
-            <Button onClick={handleLogout} variant="outline" size="sm">
-              Abmelden
-            </Button>
-          </div>
-        </div>
-      </div>
+      <AdminNavigation onLogout={handleLogout} />
     
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Bestellungsübersicht</h1>
