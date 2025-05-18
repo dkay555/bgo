@@ -141,10 +141,9 @@ export default function FlaggenCheckout() {
 
   // Berechne den Preis basierend auf der Anzahl der Flaggen
   const calculatePrice = (count: string): number => {
-    if (count === '10') return 20;
-    if (count === '25') return 40;
-    if (count === '50') return 70;
-    return 20; // Standardpreis als Fallback
+    if (count === '10') return 25;
+    if (count === '20') return 45;
+    return 25; // Standardpreis als Fallback
   };
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
@@ -166,9 +165,8 @@ export default function FlaggenCheckout() {
   };
 
   const flagOptions = [
-    { value: "10", label: "10 Flaggen", price: 20 },
-    { value: "25", label: "25 Flaggen", price: 40 },
-    { value: "50", label: "50 Flaggen", price: 70 },
+    { value: "10", label: "10.000 Flaggen", price: 25 },
+    { value: "20", label: "20.000 Flaggen", price: 45 },
   ];
 
   return (

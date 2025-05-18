@@ -102,12 +102,13 @@ export default function TycoonRacersCheckout() {
     const teamSlotCount = parseInt(count);
     
     // Preistabelle:
-    if (teamSlotCount === 1) return 15;
-    if (teamSlotCount === 3) return 40;
-    if (teamSlotCount === 5) return 60;
+    if (teamSlotCount === 1) return 20;
+    if (teamSlotCount === 2) return 38;
+    if (teamSlotCount === 3) return 55;
+    if (teamSlotCount === 4) return 71;
     
-    // Für höhere Zahlen: 12€ pro Teamplatz
-    return teamSlotCount * 12;
+    // Für höhere Zahlen: 17€ pro Teamplatz
+    return teamSlotCount * 17;
   };
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
@@ -129,9 +130,10 @@ export default function TycoonRacersCheckout() {
   };
 
   const teamSlotOptions = [
-    { value: "1", label: "1 Teamplatz", price: 15 },
-    { value: "3", label: "3 Teamplätze", price: 40 },
-    { value: "5", label: "5 Teamplätze", price: 60 }
+    { value: "1", label: "1 Teamplatz", price: 20 },
+    { value: "2", label: "2 Teamplätze", price: 38 },
+    { value: "3", label: "3 Teamplätze", price: 55 },
+    { value: "4", label: "4 Teamplätze", price: 71 }
   ];
 
   return (
