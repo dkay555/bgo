@@ -100,7 +100,7 @@ export default function StickerCheckout() {
       price: orderAmount, // String anstatt Zahl
       
       // Monopoly Daten
-      authMethod: "authtoken", // Erforderliches Feld
+      authMethod: "friendshipLink", // Korrekter Wert für die gewählte Methode
       ingameName: formData.ingameName,
       friendshipLink: formData.friendshipLink,
       
@@ -124,7 +124,8 @@ export default function StickerCheckout() {
       
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || "Fehler beim Erstellen der Bestellung");
+        console.error("Bestellungsfehler:", errorData);
+        throw new Error(errorData.message || (errorData.errors && errorData.errors.length > 0 ? errorData.errors[0].message : "Fehler beim Erstellen der Bestellung"));
       }
       
       const data = await response.json();
