@@ -3,12 +3,15 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import SEOHead from '@/components/SEOHead';
+import { useToast } from '@/hooks/use-toast';
+import { Link } from 'wouter';
 
 export default function AuthTokenTool() {
   const [redirectUrl, setRedirectUrl] = useState('');
   const [token, setToken] = useState('');
   const [profile, setProfile] = useState<{ name?: string; id?: string; imageUrl?: string } | null>(null);
   const [error, setError] = useState('');
+  const { toast } = useToast();
 
   const extractToken = async () => {
     const match = redirectUrl.match(/access_token=([^&"]+)/);
@@ -50,6 +53,34 @@ export default function AuthTokenTool() {
     }
   };
 
+  const copyTokenToClipboard = () => {
+    if (token) {
+      navigator.clipboard.writeText(token).then(
+        () => {
+          toast({
+            title: "Erfolg!",
+            description: "Der Token wurde in die Zwischenablage kopiert.",
+          });
+        },
+        (err) => {
+          toast({
+            title: "Fehler",
+            description: "Der Token konnte nicht kopiert werden: " + err,
+            variant: "destructive",
+          });
+        }
+      );
+    }
+  };
+
+  const saveTokenToAccount = () => {
+    // Diese Funktion würde den Token im Kundenkonto speichern
+    toast({
+      title: "Hinweis",
+      description: "Diese Funktion ist noch in Entwicklung und wird bald verfügbar sein.",
+    });
+  };
+
   return (
     <div className="container mx-auto px-4 py-8">
       <SEOHead 
@@ -58,22 +89,45 @@ export default function AuthTokenTool() {
         customDescription="Extrahiere und validiere deinen Facebook Auth-Token für Monopoly GO"
       />
       
-      <div className="max-w-2xl mx-auto">
-        <Card className="bg-[#f0f8ff] shadow-lg">
+      <div className="max-w-4xl mx-auto">
+        <h1 className="babix-info-header font-bold text-3xl md:text-4xl text-center mb-8">
+          FB Authtoken Tool
+        </h1>
+        
+        <div className="mb-8 bg-white p-6 rounded-lg shadow-md">
+          <p className="text-lg mb-4">Mit Hilfe dieses Tools kannst du ganz einfach an deinen Authtoken gelangen. Beachte: Dieser ist bis zu 60 Tage gültig. Er gewährt nur Zugriff auf deinen Monopoly Go Account.</p>
+          
+          <div className="bg-blue-50 p-4 rounded-lg mb-6">
+            <h3 className="font-bold text-[#0A3A68] mb-2">Anleitung:</h3>
+            <ol className="list-decimal pl-5 space-y-2">
+              <li>Klicke auf den Button "Mit Facebook (Monopoly GO) anmelden"</li>
+              <li>Melde dich bei Facebook an oder wenn du schon angemeldet bist klicke auf fortfahren</li>
+              <li><strong>Nun musst du schnell sein:</strong> Klicke direkt auf die Adressleiste deines Browser und kopiere den Link. Aus Sicherheitsgründen ändert er sich nach kurzer Zeit.</li>
+              <li>Kehre zum Tool zurück und füge den Link ein</li>
+              <li>Wähle "Token extrahieren"</li>
+              <li>Wenn alles funktioniert hat, sollte der Token & dein Facebook Profil angezeigt werden</li>
+              <li>Du kannst diesen nun kopieren oder in deinem Konto speichern</li>
+            </ol>
+          </div>
+        </div>
+        
+        <h2 className="text-2xl font-bold text-[#0A3A68] mb-4 text-center">Token Tool</h2>
+        
+        <Card className="bg-[#f0f8ff] shadow-lg mb-6">
           <CardContent className="py-6">
-            <h2 className="text-2xl font-bold text-[#0A3A68] mb-4">Monopoly GO – Facebook Token Tool</h2>
-            
-            <a 
-              href="https://www.facebook.com/v19.0/dialog/oauth?client_id=285025889266955&redirect_uri=https://m.facebook.com/connect/login_success.html&response_type=token&scope=public_profile" 
-              target="_blank"
-              className="inline-block bg-[#00CFFF] hover:bg-[#009FC4] text-white font-bold py-2 px-4 rounded-lg mb-4 text-center"
-            >
-              Mit Facebook (Monopoly GO) einloggen
-            </a>
+            <div className="flex justify-center mb-6">
+              <a 
+                href="https://www.facebook.com/v19.0/dialog/oauth?client_id=285025889266955&redirect_uri=https://m.facebook.com/connect/login_success.html&response_type=token&scope=public_profile" 
+                target="_blank"
+                className="inline-block bg-[#00CFFF] hover:bg-[#009FC4] text-white font-bold py-3 px-6 rounded-lg text-center"
+              >
+                Mit Facebook (Monopoly GO) anmelden
+              </a>
+            </div>
 
-            <p className="text-[#0A3A68] mb-4">
+            <p className="text-[#0A3A68] mb-4 text-center font-semibold">
               Nach dem Login wirst du auf eine Facebook-Seite mit einer langen URL weitergeleitet.<br />
-              <strong>Kopiere diese URL und füge sie unten ein:</strong>
+              Kopiere diese URL und füge sie unten ein:
             </p>
 
             <Textarea
@@ -85,28 +139,48 @@ export default function AuthTokenTool() {
               className="w-full p-3 mb-4 border border-gray-300 rounded-lg"
             />
             
-            <Button 
-              onClick={extractToken}
-              className="bg-[#00CFFF] hover:bg-[#009FC4] text-white font-bold"
-            >
-              Token extrahieren & Profil anzeigen
-            </Button>
+            <div className="flex justify-center">
+              <Button 
+                onClick={extractToken}
+                className="bg-[#00CFFF] hover:bg-[#009FC4] text-white font-bold py-3 px-6"
+                size="lg"
+              >
+                Token extrahieren
+              </Button>
+            </div>
 
             {token && !error && (
-              <div className="mt-4 p-3 bg-[#e0f7ff] rounded-lg break-words">
-                <strong>Access Token:</strong><br />
-                <code className="text-sm">{token}</code>
+              <div className="mt-6 p-4 bg-[#e0f7ff] rounded-lg break-words">
+                <strong className="block mb-1 text-lg">Access Token:</strong>
+                <code className="text-sm block p-2 bg-white rounded border border-gray-200 mb-4">{token}</code>
+                
+                <div className="flex justify-center gap-4 mt-2">
+                  <Button 
+                    onClick={copyTokenToClipboard}
+                    variant="outline" 
+                    className="border-[#00CFFF] text-[#00CFFF] hover:bg-[#00CFFF] hover:text-white"
+                  >
+                    Token kopieren
+                  </Button>
+                  <Button 
+                    onClick={saveTokenToAccount}
+                    variant="outline"
+                    className="border-[#FF4C00] text-[#FF4C00] hover:bg-[#FF4C00] hover:text-white"
+                  >
+                    Token speichern
+                  </Button>
+                </div>
               </div>
             )}
 
             {error && (
-              <div className="mt-4 p-3 bg-red-50 text-red-700 rounded-lg">
+              <div className="mt-6 p-4 bg-red-50 text-red-700 rounded-lg">
                 {error}
               </div>
             )}
 
             {profile && (
-              <div className="mt-4 flex items-center gap-4 p-4 bg-[#e0f7ff] rounded-lg">
+              <div className="mt-6 flex items-center gap-4 p-4 bg-[#e0f7ff] rounded-lg">
                 {profile.imageUrl && (
                   <img 
                     src={profile.imageUrl} 
