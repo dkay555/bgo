@@ -33,25 +33,24 @@ export default function StickerCheckout() {
   const [formError, setFormError] = useState('');
 
   // Lade Spielerdaten aus dem Profil
-  const getProfileGameData = () => {
+  const [profileData, setProfileData] = useState<{ingameName?: string, friendshipLink?: string}>({});
+  
+  // Lade Profildaten beim ersten Laden der Komponente
+  useEffect(() => {
     try {
-      const profileData = localStorage.getItem('userGameProfile');
-      if (profileData) {
-        const parsedData = JSON.parse(profileData);
-        setProfileDataLoaded(true);
-        return {
+      const storedProfileData = localStorage.getItem('userGameProfile');
+      if (storedProfileData) {
+        const parsedData = JSON.parse(storedProfileData);
+        setProfileData({
           ingameName: parsedData.ingameName || '',
           friendshipLink: parsedData.friendLink || '', // Freundschaftslink aus dem Profil
-        };
+        });
+        setProfileDataLoaded(true);
       }
     } catch (error) {
       console.error('Fehler beim Laden der Profildaten:', error);
     }
-    return {};
-  };
-
-  // Profildaten abrufen
-  const profileData = getProfileGameData();
+  }, []);
 
   // Initiale Form-Daten
   const getInitialFormData = () => {
@@ -253,16 +252,46 @@ export default function StickerCheckout() {
         </p>
       </div>
 
-      {/* Login/Register Hinweis */}
-      <div className="bg-gradient-to-r from-[#0A3A68]/10 to-[#00CFFF]/10 p-4 rounded-lg mb-8 max-w-3xl mx-auto">
-        <div className="flex items-center gap-3">
-          <span className="material-icons text-[#00CFFF]">account_circle</span>
-          <div>
-            <p className="font-medium">Bereits Kunde? <Link href="/auth" className="text-[#00CFFF] hover:underline">Hier einloggen</Link></p>
-            <p className="text-sm text-gray-600">Oder <Link href="/auth" className="text-[#00CFFF] hover:underline">neues Konto erstellen</Link> für schnellere Bestellungen in Zukunft</p>
+      {/* Login/Register Hinweis oder Profildaten-Info */}
+      {!user ? (
+        <div className="bg-gradient-to-r from-[#0A3A68]/10 to-[#00CFFF]/10 p-4 rounded-lg mb-8 max-w-3xl mx-auto">
+          <div className="flex items-center gap-3">
+            <span className="material-icons text-[#00CFFF]">account_circle</span>
+            <div>
+              <p className="font-medium">Bereits Kunde? <Link href="/auth" className="text-[#00CFFF] hover:underline">Hier einloggen</Link></p>
+              <p className="text-sm text-gray-600">Oder <Link href="/auth" className="text-[#00CFFF] hover:underline">neues Konto erstellen</Link> für schnellere Bestellungen in Zukunft</p>
+            </div>
           </div>
         </div>
-      </div>
+      ) : profileDataLoaded ? (
+        <div className="bg-green-50 border border-green-200 p-4 rounded-lg mb-6 max-w-3xl mx-auto flex items-start gap-3">
+          <InfoIcon className="text-green-600 mt-0.5 flex-shrink-0" size={20} />
+          <div>
+            <p className="text-green-800 font-semibold">Spielerdaten aus deinem Profil geladen</p>
+            <p className="text-green-700 text-sm mt-1">
+              Die Formularfelder wurden automatisch mit deinen gespeicherten Spielerdaten ausgefüllt. 
+              Du kannst sie bei Bedarf für diese Bestellung anpassen.
+            </p>
+            <p className="text-green-700 text-sm mt-1">
+              <Link href="/profile" className="text-green-700 underline hover:text-green-800">
+                Zum Profil
+              </Link> um deine gespeicherten Daten zu bearbeiten.
+            </p>
+          </div>
+        </div>
+      ) : (
+        <div className="bg-gray-50 border border-gray-200 p-4 rounded-lg mb-6 max-w-3xl mx-auto">
+          <div className="flex items-center gap-3">
+            <span className="material-icons text-blue-500">info</span>
+            <div>
+              <p className="font-medium">Tipp: Spielerdaten speichern</p>
+              <p className="text-sm text-gray-600">
+                Du kannst deine Monopoly GO Daten in deinem <Link href="/profile" className="text-[#00CFFF] hover:underline">Profil speichern</Link>, damit diese bei zukünftigen Bestellungen automatisch ausgefüllt werden.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
 
       <form onSubmit={handleSubmit} className="max-w-3xl mx-auto">
         {/* Sticker Auswahl anzeigen */}
