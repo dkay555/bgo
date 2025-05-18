@@ -186,9 +186,26 @@ export default function WuerfelHilfe() {
         
         <div className="mb-8" id="sicherheit">
           <h2 className="text-xl font-bold text-[#0A3A68] mb-4 border-b-2 border-[#00CFFF] pb-2 inline-block">Accountsicherheit</h2>
-          <p className="text-gray-700 mb-4">Solltest du diese Dinge beachten ist das Risiko eines Banns / einer Suspension äußerst gering. Unter 0,1% der von uns durchgeführten Boosts führten zu einer Sperre. Die meisten davon sind mit Sicherheit auf das nicht beachten dieser Punkte zurückzuführen.</p>
-          <p className="text-gray-700 mb-4">Wir kennen viele Peaks, unternehmen gegen viele Tracker etwas, nutzen Methoden die lokal, also ungesehen, ins Spiel eingreifen dennoch sei auch hier noch einmal gesagt: Wir können nicht garantieren dass dem so bleibt.</p>
-          <p className="text-gray-700">Sollte es zu einer Sperre kommen gibt es beim 1. Vergehen eine 3 Tage Suspension, beim 2. mal eine 7 Tage Suspension gefolgt von dem permamenten Bann.</p>
+          <p className="text-gray-700 mb-4">Wenn du die beschriebenen Hinweise beachtest, ist das Risiko eines Banns oder einer Suspension <strong>äußerst gering</strong>. <strong>Weniger als 0,1%</strong> der von uns durchgeführten Boosts führten zu einer Sperre – und diese waren fast immer auf das Nicht-Einhalten der Empfehlungen zurückzuführen.</p>
+          
+          <p className="text-gray-700 mb-4">Wir kennen viele Ingame-Peaks, umgehen diverse Tracker und nutzen ausschließlich lokale Methoden, die <strong>unsichtbar ins Spiel eingreifen</strong>. Trotzdem können wir nicht garantieren, dass das dauerhaft so bleibt.</p>
+          
+          <p className="text-gray-700 mb-4"><strong>Im Falle einer Sperre gilt:</strong></p>
+          
+          <div className="ml-4 space-y-2 mb-4">
+            <div className="flex items-center">
+              <div className="rounded-full border border-[#0A3A68] text-[#0A3A68] w-6 h-6 flex items-center justify-center mr-3 font-bold">1</div>
+              <p className="text-gray-700">Verstoß: 3 Tage Suspension</p>
+            </div>
+            <div className="flex items-center">
+              <div className="rounded-full border border-[#0A3A68] text-[#0A3A68] w-6 h-6 flex items-center justify-center mr-3 font-bold">2</div>
+              <p className="text-gray-700">Verstoß: 7 Tage Suspension</p>
+            </div>
+            <div className="flex items-center">
+              <div className="rounded-full border border-[#0A3A68] text-[#0A3A68] w-6 h-6 flex items-center justify-center mr-3 font-bold">3</div>
+              <p className="text-gray-700">Verstoß: Permanenter Bann</p>
+            </div>
+          </div>
         </div>
         
         <div id="angebote">
