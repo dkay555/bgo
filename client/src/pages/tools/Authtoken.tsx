@@ -190,10 +190,14 @@ export default function AuthTokenTool() {
           <h2 className="text-2xl font-bold text-[#0A3A68] mb-6 text-center">Anleitung</h2>
           
           <div className="mb-8 border border-gray-200 rounded-lg p-4 flex justify-center">
-            {/* Video-Platzhalter - hier könnte später ein echtes Video eingefügt werden */}
-            <div className="bg-gray-100 w-full max-w-2xl h-64 flex items-center justify-center">
-              <p className="text-gray-500">Video-Anleitung (kommt bald)</p>
-            </div>
+            <video 
+              className="w-full max-w-2xl" 
+              controls
+              poster="/images/auth-token/video-poster.jpg"
+            >
+              <source src="/videos/auth-token-anleitung.mp4" type="video/mp4" />
+              Dein Browser unterstützt keine Videos. Bitte sieh dir die Anleitung weiter unten an.
+            </video>
           </div>
           
           <h3 className="text-xl font-bold text-[#0A3A68] mb-3">Schriftliche Anleitung</h3>
