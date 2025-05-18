@@ -94,21 +94,19 @@ export default function AuthTokenTool() {
           FB Authtoken Tool
         </h1>
         
-        <div className="mb-8 bg-white p-6 rounded-lg shadow-md">
+        <div className="mb-8">
           <p className="text-lg mb-4">Mit Hilfe dieses Tools kannst du ganz einfach an deinen Authtoken gelangen. Beachte: Dieser ist bis zu 60 Tage gültig. Er gewährt nur Zugriff auf deinen Monopoly Go Account.</p>
           
-          <div className="bg-blue-50 p-4 rounded-lg mb-6">
-            <h3 className="font-bold text-[#0A3A68] mb-2">Anleitung:</h3>
-            <ol className="list-decimal pl-5 space-y-2">
-              <li>Klicke auf den Button "Mit Facebook (Monopoly GO) anmelden"</li>
-              <li>Melde dich bei Facebook an oder wenn du schon angemeldet bist klicke auf fortfahren</li>
-              <li><strong>Nun musst du schnell sein:</strong> Klicke direkt auf die Adressleiste deines Browser und kopiere den Link. Aus Sicherheitsgründen ändert er sich nach kurzer Zeit.</li>
-              <li>Kehre zum Tool zurück und füge den Link ein</li>
-              <li>Wähle "Token extrahieren"</li>
-              <li>Wenn alles funktioniert hat, sollte der Token & dein Facebook Profil angezeigt werden</li>
-              <li>Du kannst diesen nun kopieren oder in deinem Konto speichern</li>
-            </ol>
-          </div>
+          <h3 className="font-bold text-[#0A3A68] mb-2">Anleitung:</h3>
+          <ol className="list-decimal pl-5 space-y-2">
+            <li>Klicke auf den Button "Mit Facebook (Monopoly GO) anmelden"</li>
+            <li>Melde dich bei Facebook an oder wenn du schon angemeldet bist klicke auf fortfahren</li>
+            <li><strong>Nun musst du schnell sein:</strong> Klicke direkt auf die Adressleiste deines Browser und kopiere den Link. Aus Sicherheitsgründen ändert er sich nach kurzer Zeit.</li>
+            <li>Kehre zum Tool zurück und füge den Link ein</li>
+            <li>Wähle "Token extrahieren"</li>
+            <li>Wenn alles funktioniert hat, sollte der Token & dein Facebook Profil angezeigt werden</li>
+            <li>Du kannst diesen nun kopieren oder in deinem Konto speichern</li>
+          </ol>
         </div>
         
         <h2 className="text-2xl font-bold text-[#0A3A68] mb-4 text-center">Token Tool</h2>
