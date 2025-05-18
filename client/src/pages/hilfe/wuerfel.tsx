@@ -14,174 +14,145 @@ export default function WuerfelHilfe() {
           Zurück zur Hilfe
         </Link>
         <h1 className="font-['Baloo_2'] font-bold text-2xl md:text-3xl bg-[#00CFFF]/10 px-6 py-3 rounded-xl inline-block mx-auto mb-4 border-b-2 border-[#00CFFF] text-[#FF4C00]">
-          Würfelboost - Hilfe & Informationen
+          Monopoly Go Würfel für deinen Account
         </h1>
       </div>
       
       <div className="max-w-3xl mx-auto">
         <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-          <h2 className="babix-info-header mx-auto mb-6">Der Würfelboost - Würfel für deinen Monopoly GO Account</h2>
-          <p className="text-gray-600 text-sm mb-6">Zuletzt aktualisiert: 2. März</p>
+          <p className="text-gray-700 mb-6">Erfahre mehr darüber wie genau du Würfel (oder Flaggen/Eventwährung) bekommst, welche Voraussetzungen gelten und was beachtet werden sollte um die Accountsicherheit zu wahren.</p>
+          
+          <div className="flex flex-wrap gap-3 mb-8">
+            <a href="#voraussetzungen" className="bg-[#0A3A68] text-white px-4 py-2 rounded-md hover:bg-[#00CFFF] transition-colors">Voraussetzungen</a>
+            <a href="#ablauf" className="bg-[#0A3A68] text-white px-4 py-2 rounded-md hover:bg-[#00CFFF] transition-colors">Ablauf</a>
+            <a href="#nachBoost" className="bg-[#0A3A68] text-white px-4 py-2 rounded-md hover:bg-[#00CFFF] transition-colors">Nach dem Boost</a>
+            <a href="#sicherheit" className="bg-[#0A3A68] text-white px-4 py-2 rounded-md hover:bg-[#00CFFF] transition-colors">Accountsicherheit</a>
+            <a href="#angebote" className="bg-[#0A3A68] text-white px-4 py-2 rounded-md hover:bg-[#00CFFF] transition-colors">Weitere Würfel-Angebote</a>
+          </div>
           
           <div className="mb-8" id="voraussetzungen">
-            <h3 className="text-xl font-bold text-[#0A3A68] mb-4 border-b-2 border-[#00CFFF] pb-2 inline-block">Voraussetzungen</h3>
+            <h2 className="text-xl font-bold text-[#0A3A68] mb-4 border-b-2 border-[#00CFFF] pb-2 inline-block">Voraussetzungen Würfelboost</h2>
             <ul className="list-disc pl-5 space-y-4 text-gray-700">
               <li>
-                <p><strong>Event-Status:</strong> Topevent oder Bahnhofsturnier sollten maximal bis kurz vor dem 1. High Roller bespielt sein oder müssen einen späteren High Roller als nächste Belohnung haben.</p>
+                <p>Ab 100 Würfel ist es ein Versuch Wert, im Optimalfall sollten es 200 sein.</p>
+                <div className="bg-[#E6F7FF] border-l-4 border-[#00CFFF] p-4 rounded-r-md my-3">
+                  <h4 className="text-[#0A3A68] font-bold text-lg mb-1">Zu wenig Würfel?</h4>
+                  <p>Lässt sich ein Set vervollständigen? Ist der Freundschaftsbalken gefüllt? Schreib uns und wir finden gemeinsam auch dann eine Lösung wenn es schnell gehen muss.</p>
+                </div>
               </li>
               <li>
-                <p><strong>Würfelbestand:</strong> Es sollten mindestens 200 Würfel vorhanden sein. Je mehr, desto besser und schneller kann dein Boost beendet werden.</p>
+                <p>Ein verfügbarer High Roller. Aktuell gibt es diesen als 7. Belohnung im Bahnhofsturnier oder als Flash Event. Aktuelle Listen findest du zum Beispiel auf <a href="https://monopolygo.wiki" target="_blank" rel="noopener noreferrer" className="text-[#00CFFF] hover:text-[#FF4C00] underline">monopolygo.wiki</a>.</p>
+                <div className="my-3 rounded-md max-w-md mx-auto bg-[#0A3A68]/10 p-6 text-center border border-[#0A3A68]/20">
+                  <span className="material-icons text-[#0A3A68] text-4xl">casino</span>
+                  <p className="font-bold mt-2">Bahnhofsturnier mit High Roller als 7. Belohnung</p>
+                </div>
               </li>
               <li>
-                <p><strong>Account-Verknüpfung:</strong> Der Account muss mit Facebook oder Google Play Games verknüpft sein. Es werden nicht zwingend deine FB Zugangsdaten benötigt.</p>
+                <p>Dein Account muss mit Facebook oder Google verbunden sein. Es ist nicht erforderlich deine FB Zugangsdaten zu teilen.</p>
+                <p><Link href="/hilfe/login" className="text-[#00CFFF] hover:text-[#FF4C00] underline">Mehr zu dem Thema → Login-Methoden für den Würfelboost</Link></p>
               </li>
             </ul>
+            
+            <div className="bg-[#FFEBCC] border-l-4 border-[#FF4C00] p-4 rounded-r-md mt-6">
+              <h4 className="text-[#0A3A68] font-bold text-lg mb-2">Zusätzliche Voraussetzungen für das "Lucky Chance/Dice Roll/Frei Parken x2" Angebot:</h4>
+              <p className="mb-3">Eines der Events muss einlösbar sein. Sollen wir ein zeitliches begrenztes Flash Event nutzen, solltest du dich früh genug melden & deinen Platz reservieren. Die Plätze sind aufgrund des zeitlichen Fensters sehr begrenzt. Schick uns einfach eine Nachricht wenn du ein Event im Blick hast.</p>
+              <div className="mt-2 rounded-md max-w-md mx-auto bg-[#FF4C00]/10 p-6 text-center border border-[#FF4C00]/20 flex flex-col items-center">
+                <div className="flex items-center justify-center gap-4">
+                  <span className="material-icons text-[#FF4C00] text-4xl">auto_awesome</span>
+                  <span className="material-icons text-[#FF4C00] text-4xl">casino</span>
+                  <span className="material-icons text-[#FF4C00] text-4xl">local_parking</span>
+                </div>
+                <p className="font-bold mt-3">Lucky Chance / Dice Roll / Frei Parken x2</p>
+                <p className="text-sm mt-1 text-gray-600">Flash Events für optimalen Würfelboost</p>
+              </div>
+            </div>
           </div>
           
           <div className="mb-8" id="ablauf">
-            <h3 className="text-xl font-bold text-[#0A3A68] mb-4 border-b-2 border-[#00CFFF] pb-2 inline-block">Ablauf</h3>
-            <ol className="list-decimal pl-5 space-y-4 text-gray-700">
-              <li>
-                <p><strong>Vorbereitung:</strong> Wir bereiten eine "ungenutzte Umgebung" für deinen Account vor. Für Scopely wirkt es also so, als würdest Du auf einem neuen Gerät spielen. Dadurch verhindern wir unnötige Multi-Account-Flags auf deinen Account.</p>
-              </li>
-              <li>
-                <p><strong>Login:</strong> Wir loggen uns ein, dafür gibt es 2 Möglichkeiten:</p>
-                <ul className="list-disc pl-5 mt-2 space-y-2">
-                  <li><span className="font-medium">Einfach und schnell:</span> Über deine Facebook / Google Zugangsdaten. Je nach deinen Account Einstellungen musst Du den LogIn bestätigen. <Link href="/hilfe/login" className="text-[#00CFFF] hover:text-[#FF4C00] underline">Mehr zu Login-Methoden</Link></li>
-                  <li><span className="font-medium">Über den FB-Authtoken:</span> Um an diesen zu gelangen musst du 4 einfache Schritte ausführen. Gerne sind wir dabei behilflich. <Link href="/hilfe/login" className="text-[#00CFFF] hover:text-[#FF4C00] underline">Mehr Infos hier</Link></li>
+            <h2 className="text-xl font-bold text-[#0A3A68] mb-4 border-b-2 border-[#00CFFF] pb-2 inline-block">Ablauf</h2>
+            <ul className="list-disc pl-5 space-y-3 text-gray-700">
+              <li>Wir erstellen eine virtuelle Umgebung für deinen Account. Mit deinem Einverständnis speichern wir diese für den nächsten Boost.</li>
+              <li>Wir informieren dich, dass wir starten.</li>
+            </ul>
+            
+            <div className="bg-[#FFEBEB] border-l-4 border-[#FF4C00] p-4 mt-4 mb-4 rounded-r-md">
+              <p className="font-bold text-[#FF4C00] mb-1">Wichtiger Hinweis:</p>
+              <p className="text-gray-700">Während wir uns im Spiel befinden öffne nicht die Monopoly Go App. Dies führt zu einem Abbruch und meist zu einer Verzögerung des Würfelboosts.</p>
+            </div>
+            
+            <ul className="list-disc pl-5 space-y-3 text-gray-700">
+              <li>Nach dem Login erspielen wir die vereinbarten Würfel. Falls wir uns mit deinen Zugangsdaten eingeloggt haben kannst du diese bereits jetzt ändern.</li>
+            </ul>
+            
+            <div className="bg-[#E6F7FF] border-l-4 border-[#00CFFF] p-4 mt-4 rounded-r-md flex items-start">
+              <span className="material-icons text-[#00CFFF] mr-2 mt-1">schedule</span>
+              <p className="text-gray-700">Der Boost dauert für z.B. 35k Würfel zwischen 15 und 30 Minuten.</p>
+            </div>
+            
+            <ul className="list-disc pl-5 space-y-3 text-gray-700 mt-4">
+              <li>Nach Fertigstellung kontaktieren wir dich per Email/WhatsApp. Du kannst nun wieder ins Spiel gehen.</li>
+            </ul>
+          </div>
+          
+          <div className="mb-8" id="nachBoost">
+            <h2 className="text-xl font-bold text-[#0A3A68] mb-4 border-b-2 border-[#00CFFF] pb-2 inline-block">Nach dem Boost</h2>
+            <p className="text-gray-700 mb-4">Es kann vorkommen das wir nicht genug Würfel erspielen oder Events nicht zu Ende bringen können. Dies ist zwar selten der Fall, aber wir bitten um Nachsicht. Selbstverständlich werdet ihr zum nächstmöglichen Zeitpunkt all eure Würfel erhalten. Sollte dir etwas auffallen, schick uns eine Nachricht und wir suchen gemeinsam ein passendes Zeitfenster.</p>
+            
+            <div className="bg-[#FFEBEB] border-l-4 border-[#FF4C00] p-4 rounded-r-md">
+              <h4 className="text-[#0A3A68] font-bold text-lg mb-2 flex items-center">
+                <span className="material-icons text-[#FF4C00] mr-2">warning</span>
+                Wichtig:
+              </h4>
+              <p className="mb-2">So wie wir vor und während des Boosts einige Dinge beachten müssen, solltest du auch einige Sachen beherzigen:</p>
+              <ol className="list-decimal pl-5 space-y-2">
+                <li>Baue nicht mehr Städte als üblich. Durch den Boost erhältst du eine Menge Ingame Geld. Vor allem mit niedrigem Vermögenswert kann es da verlockend sein den Wheelboost zu nutzen. Scopely trackt allerdings die Steigerung des Vermögenswert ganz akribisch.</li>
+                <li>Drehe ein paar Runden ums Brett. Auf x1 reicht da bereits völlig aus.</li>
+                <li>Und zum Schluss: Spiele klug, stoppe rechtzeitig in Events & versuche nicht auf Teufel komm raus die nächste Belohnung im Event zu erreichen. Nutze Flash Events wie z.B. Frei Parken x2. Denn je weniger Boosts du brauchst, desto sicherer ist es für deinen Account.</li>
+              </ol>
+            </div>
+          </div>
+          
+          <div className="mb-8" id="sicherheit">
+            <h2 className="text-xl font-bold text-[#0A3A68] mb-4 border-b-2 border-[#00CFFF] pb-2 inline-block">Accountsicherheit</h2>
+            <p className="text-gray-700 mb-4">Solltest du diese Dinge beachten ist das Risiko eines Banns / einer Suspension äußerst gering. Unter 0,1% der von uns durchgeführten Boosts führten zu einer Sperre. Die meisten davon sind mit Sicherheit auf das nicht beachten dieser Punkte zurückzuführen.</p>
+            <p className="text-gray-700 mb-4">Wir kennen viele Peaks, unternehmen gegen viele Tracker etwas, nutzen Methoden die lokal, also ungesehen, ins Spiel eingreifen dennoch sei auch hier noch einmal gesagt: Wir können nicht garantieren dass dem so bleibt.</p>
+            <p className="text-gray-700">Sollte es zu einer Sperre kommen gibt es beim 1. Vergehen eine 3 Tage Suspension, beim 2. mal eine 7 Tage Suspension gefolgt von dem permamenten Bann.</p>
+          </div>
+          
+          <div id="angebote">
+            <h2 className="text-xl font-bold text-[#0A3A68] mb-6 border-b-2 border-[#00CFFF] pb-2 inline-block">Weitere Würfelangebote</h2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="bg-[#FFEBCC]/30 p-5 rounded-lg border border-[#FF4C00]/30 shadow-md">
+                <h3 className="text-[#0A3A68] font-bold text-lg mb-3">Retterpaket</h3>
+                <p className="mb-4">Kein High Roller in Sicht aber du brauchst schnell ein paar Würfel um das Event noch beenden zu können? Dann ist dies der Boost deiner Wahl.</p>
+                <p className="mb-4 text-sm">Nur per WhatsApp buchbar um sicher zu gehen dass es zeitlich für beide Seiten passt.</p>
+                <p className="font-bold text-lg mb-4">4.000 Würfel → 10€</p>
+                <Link href="/shop/wuerfel">
+                  <button className="bg-[#0A3A68] hover:bg-[#00CFFF] text-white py-2 px-4 rounded-md transition-colors w-full">
+                    Zum Shop
+                  </button>
+                </Link>
+              </div>
+              
+              <div className="bg-[#E6F7FF]/30 p-5 rounded-lg border border-[#00CFFF]/30 shadow-md">
+                <h3 className="text-[#0A3A68] font-bold text-lg mb-3">Kennenlern-Paket</h3>
+                <p className="font-bold text-lg mb-3">10.000 Würfel für 10€</p>
+                <p className="mb-3">Nur online im Shop zu kaufen.</p>
+                <p className="mb-4">Da zu viele kleine Boosts das Bannrisiko erheblich erhöhen, gibt es hier einige Einschränkungen:</p>
+                <ul className="list-disc pl-5 mb-4 space-y-1 text-gray-700">
+                  <li>Pro Account nur alle 7 Tage möglich.</li>
+                  <li>Nur mit dem Authtoken als Login möglich.</li>
+                  <li>Abschluss von Top- und Seitenevent kostet 5€ extra.</li>
+                  <li>Ansonsten gelten dieselben Voraussetzungen wie für den normalen Boost.</li>
                 </ul>
-              </li>
-              <li>
-                <p><strong>Durchführung:</strong> Wir erspielen die Würfel / Eventwährung / etc.</p>
-              </li>
-            </ol>
-            
-            <div className="bg-[#FFEBEB] border-l-4 border-[#FF4C00] p-4 mt-4 rounded-r-md">
-              <p className="font-bold text-[#FF4C00] mb-1">Wichtige Hinweise:</p>
-              <ul className="list-disc pl-5 space-y-1 text-gray-700">
-                <li>Wir können aus dem Spiel geworfen werden, was zu einer Verzögerung des Würfelboosts führen kann.</li>
-                <li>Es wird eine Multi-Device-Meldung an den Server gesendet.</li>
-              </ul>
-            </div>
-          </div>
-          
-          <div className="mb-8" id="preise">
-            <h3 className="text-xl font-bold text-[#0A3A68] mb-4 border-b-2 border-[#00CFFF] pb-2 inline-block">Preise</h3>
-            <p className="mb-3 text-gray-700">Grundsätzlich ist jede Würfelmenge möglich. <strong>Hinweis:</strong> Würfelangaben haben eine Toleranz von ±2.500 Würfeln.</p>
-            <p className="mb-3 text-sm text-gray-600">Beispiel: Bei 25.000 Würfeln erhaltet ihr zwischen 22.500 und 27.500.</p>
-            
-            <div className="mt-5 mb-5 bg-[#E6F7FF] border-l-4 border-[#00CFFF] p-4 rounded-r-md">
-              <h4 className="babix-info-header text-[#0A3A68] mb-2">💡 Zu wenig Würfel?</h4>
-              <p className="text-gray-700">Lässt sich ein Set vervollständigen? Ist der Freundschaftsbalken gefüllt? Schreib uns und wir finden gemeinsam auch dann eine Lösung wenn es schnell gehen muss.</p>
-            </div>
-            
-            <div className="overflow-x-auto">
-              <table className="w-full border-collapse">
-                <thead>
-                  <tr className="bg-[#0A3A68] text-white">
-                    <th className="py-2 px-4 text-left">Menge</th>
-                    <th className="py-2 px-4 text-left">Preis</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className="border-b border-gray-200 hover:bg-gray-50">
-                    <td className="py-3 px-4 font-medium">25.000 Würfel 🎲</td>
-                    <td className="py-3 px-4">25€</td>
-                  </tr>
-                  <tr className="border-b border-gray-200 hover:bg-gray-50">
-                    <td className="py-3 px-4 font-medium">35.000 Würfel 🎲</td>
-                    <td className="py-3 px-4">35€</td>
-                  </tr>
-                  <tr className="border-b border-gray-200 hover:bg-gray-50">
-                    <td className="py-3 px-4 font-medium">45.000 Würfel 🎲</td>
-                    <td className="py-3 px-4">45€</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            
-            <div className="mt-6 bg-[#FFEBEB] border-l-4 border-[#FF4C00] p-4 rounded-r-md">
-              <h4 className="font-bold text-[#FF4C00] mb-2">💥 Sonderangebot</h4>
-              <p className="mb-1 text-gray-700">(während „Lucky Chance" oder „Dice Roll", nach Absprache)</p>
-              <p className="font-bold text-lg">40.000–50.000 Würfel → 30€ 🎲</p>
-            </div>
-          </div>
-          
-          <div className="mb-8">
-            <h3 className="text-xl font-bold text-[#0A3A68] mb-4 border-b-2 border-[#00CFFF] pb-2 inline-block">Häufig gestellte Fragen</h3>
-            
-            <div className="mt-5 mb-5 bg-[#FFEBCC] border-l-4 border-[#FF4C00] p-4 rounded-r-md">
-              <h4 className="font-bold text-[#0A3A68] mb-2 border-b-2 border-[#FF4C00] pb-2 inline-block">⚠️ Wichtiger Hinweis</h4>
-              <p className="text-gray-700 font-semibold">Öffne nicht die Monopoly Go App solange der Würfelboost läuft - warte damit auf unsere Rückmeldung.</p>
-            </div>
-            
-            <div className="space-y-4">
-              <div className="border border-gray-200 rounded-lg mb-2">
-                <div className="bg-gray-50 p-4 rounded-t-lg cursor-pointer flex justify-between items-center">
-                  <h4 className="babix-info-header text-[#0A3A68]">Werden das Top- und Bahnhofsevent mit abgeschlossen?</h4>
-                  <span className="material-icons text-[#00CFFF]">expand_more</span>
-                </div>
-                <div className="p-4 border-t border-gray-200">
-                  <p className="text-gray-700">Ab dem Paket mit 25.000 Würfeln sind die Eventabschlüsse (Topevent + 1 Tages Bahnhofsturnier) mit inbegriffen.</p>
-                </div>
-              </div>
-              
-              <div className="border border-gray-200 rounded-lg mb-2">
-                <div className="bg-gray-50 p-4 rounded-t-lg cursor-pointer flex justify-between items-center">
-                  <h4 className="babix-info-header text-[#0A3A68]">Wie kann ich wissen ob noch ein High Roller im Turnier folgt?</h4>
-                  <span className="material-icons text-[#00CFFF]">expand_more</span>
-                </div>
-                <div className="p-4 border-t border-gray-200">
-                  <p className="text-gray-700">Besuche <a href="https://monopolygo.wiki/" target="_blank" rel="noopener noreferrer" className="text-[#00CFFF] hover:text-[#FF4C00] underline transition-colors">https://monopolygo.wiki/</a> für eine aktuelle Liste der Turnierbelohnungen oder um kommende Special Events in Erfahrung zu bringen.</p>
-                </div>
-              </div>
-              
-              <div className="border border-gray-200 rounded-lg mb-2">
-                <div className="bg-gray-50 p-4 rounded-t-lg cursor-pointer flex justify-between items-center">
-                  <h4 className="babix-info-header text-[#0A3A68]">Wie lange dauert der Boost?</h4>
-                  <span className="material-icons text-[#00CFFF]">expand_more</span>
-                </div>
-                <div className="p-4 border-t border-gray-200">
-                  <p className="text-gray-700">Um ein paar Werte zu nennen:</p>
-                  <ul className="list-disc pl-5 mt-2 text-gray-700">
-                    <li>25.000 Würfel dauern im Durchschnitt 15, maximal 30 Minuten sobald man im Spiel ist.</li>
-                    <li>40.000 Würfel 30 Minuten im Durchschnitt, bis zu maximal 45 Minuten.</li>
-                  </ul>
-                </div>
-              </div>
-              
-              <div className="border border-gray-200 rounded-lg mb-2">
-                <div className="bg-gray-50 p-4 rounded-t-lg cursor-pointer flex justify-between items-center">
-                  <h4 className="babix-info-header text-[#0A3A68]">Können größere Würfelboost Pakete aufgeteilt werden?</h4>
-                  <span className="material-icons text-[#00CFFF]">expand_more</span>
-                </div>
-                <div className="p-4 border-t border-gray-200">
-                  <p className="text-gray-700">Natürlich, vorausgesetzt unsere Kapazitäten lassen es zu. Ab 60.000 Würfeln kann der Boost auf zwei Mal verteilt werden. So kannst du z.B. das Top- und Bahnhofsevent ein weiteres Mal abgeschlossen bekommen. Frag uns einfach beim Kauf ob und wie es passt.</p>
-                </div>
-              </div>
-              
-              <div className="border border-gray-200 rounded-lg mb-2">
-                <div className="bg-gray-50 p-4 rounded-t-lg cursor-pointer flex justify-between items-center">
-                  <h4 className="babix-info-header text-[#0A3A68]">Kann ich dafür gesperrt werden?</h4>
-                  <span className="material-icons text-[#00CFFF]">expand_more</span>
-                </div>
-                <div className="p-4 border-t border-gray-200">
-                  <p className="text-gray-700">Ja! Die Gefahr besteht. Wir räumen durch diverse Maßnahmen einige Gefahren aus dem Weg. Komplett ausschließen können wir sie aber nicht. Bisher ist uns in fast 24 Monaten allerdings nur 1 Fall bekannt in dem ein Account gesperrt wurde in dem wir aktiv waren.</p>
-                  <p className="text-gray-700 mt-1">Dazu und zum Thema Accountsicherheit folgt "mit Sicherheit" noch ein größerer Beitrag.</p>
-                </div>
+                <Link href="/shop/wuerfel">
+                  <button className="bg-[#0A3A68] hover:bg-[#00CFFF] text-white py-2 px-4 rounded-md transition-colors w-full">
+                    Zum Shop
+                  </button>
+                </Link>
               </div>
             </div>
-          </div>
-          
-          <div className="bg-[#E6F7FF] border-l-4 border-[#00CFFF] p-4 rounded-r-md">
-            <h4 className="babix-info-header text-[#0A3A68] mb-2">Noch Fragen?</h4>
-            <p className="text-gray-700 mb-3">Gerne beantworten wir deine Fragen zum Würfelboost und helfen dir bei der Auswahl des richtigen Pakets.</p>
-            <Link href="/kontakt">
-              <button className="bg-[#0A3A68] hover:bg-[#00CFFF] text-white py-2 px-4 rounded-md transition-colors inline-flex items-center">
-                <span className="material-icons mr-1">contact_support</span>
-                Kontakt aufnehmen
-              </button>
-            </Link>
           </div>
         </div>
       </div>
