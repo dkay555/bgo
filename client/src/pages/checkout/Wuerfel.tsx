@@ -28,6 +28,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/hooks/use-auth';
 import SEOHead from '@/components/SEOHead';
 import { PayPalButtonWrapper } from '@/components/PayPalButtonWrapper';
+import { InfoIcon } from 'lucide-react';
 
 // Form schema type
 type BoostTime = "asap" | "tournament";
@@ -90,6 +91,7 @@ export default function WuerfelCheckout() {
   const { toast } = useToast();
   const [selectedOption, setSelectedOption] = useState('25000');
   const [loginMethod, setLoginMethod] = useState<LoginMethod>('authtoken');
+  const [profileDataLoaded, setProfileDataLoaded] = useState(false);
 
   // Versuche, gespeicherte Daten aus localStorage zu laden
   const getSavedFormData = (): Partial<FormData> => {
@@ -104,7 +106,28 @@ export default function WuerfelCheckout() {
     return {};
   };
   
+  // Lade Spielerdaten aus dem Profil
+  const getProfileGameData = (): Partial<FormData> => {
+    try {
+      const profileData = localStorage.getItem('userGameProfile');
+      if (profileData) {
+        const parsedData = JSON.parse(profileData);
+        return {
+          ingameName: parsedData.ingameName || '',
+          authToken: parsedData.authToken || '',
+          facebookEmail: parsedData.phoneNumber || '', // E-Mail/Handynummer für Login
+          facebookPassword: parsedData.fbPassword || '',
+        };
+      }
+    } catch (error) {
+      console.error('Fehler beim Laden der Profildaten:', error);
+    }
+    return {};
+  };
+  
+  // Kombiniere gespeicherte Checkout-Daten mit Profildaten, wobei Checkout-Daten Vorrang haben
   const savedData = getSavedFormData();
+  const profileData = getProfileGameData();
 
   const form = useForm<FormData>({
     resolver: zodResolver(checkoutSchema),
@@ -114,10 +137,11 @@ export default function WuerfelCheckout() {
       email: savedData.email || user?.email || "",
       whatsapp: savedData.whatsapp || "",
       loginMethod: savedData.loginMethod || "authtoken",
-      ingameName: savedData.ingameName || "",
-      authToken: savedData.authToken || "",
-      facebookEmail: savedData.facebookEmail || "",
-      facebookPassword: savedData.facebookPassword || "",
+      // Priorität: 1. Gespeicherte Checkout-Daten, 2. Profildaten, 3. Leer
+      ingameName: savedData.ingameName || profileData.ingameName || "",
+      authToken: savedData.authToken || profileData.authToken || "",
+      facebookEmail: savedData.facebookEmail || profileData.facebookEmail || "",
+      facebookPassword: savedData.facebookPassword || profileData.facebookPassword || "",
       recoveryCode1: savedData.recoveryCode1 || "",
       recoveryCode2: savedData.recoveryCode2 || "",
       boostTime: savedData.boostTime || "asap",
@@ -191,8 +215,8 @@ export default function WuerfelCheckout() {
           Checkout
         </h1>
         
-        {/* Login Prompt */}
-        {!user && (
+        {/* Login/Profil Prompt */}
+        {!user ? (
           <div className="bg-blue-50 p-4 rounded-lg mb-8 flex flex-col sm:flex-row justify-between items-center">
             <div>
               <p className="text-[#0A3A68] font-semibold mb-2">Logge dich ein zum automatischen Ausfüllen deiner Daten:</p>
@@ -208,6 +232,22 @@ export default function WuerfelCheckout() {
                   Registrieren
                 </Button>
               </Link>
+            </div>
+          </div>
+        ) : (
+          <div className="bg-green-50 border border-green-200 p-4 rounded-lg mb-6 flex items-start gap-3">
+            <InfoIcon className="text-green-600 mt-0.5 flex-shrink-0" size={20} />
+            <div>
+              <p className="text-green-800 font-semibold">Spielerdaten aus deinem Profil geladen</p>
+              <p className="text-green-700 text-sm mt-1">
+                Die Formularfelder wurden automatisch mit deinen gespeicherten Spielerdaten ausgefüllt. 
+                Du kannst sie bei Bedarf für diese Bestellung anpassen.
+              </p>
+              <p className="text-green-700 text-sm mt-1">
+                <Link href="/profile" className="text-green-700 underline hover:text-green-800">
+                  Zum Profil
+                </Link> um deine gespeicherten Daten zu bearbeiten.
+              </p>
             </div>
           </div>
         )}
