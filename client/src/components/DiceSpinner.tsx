@@ -27,7 +27,8 @@ export function DiceSpinner({
           width: size,
           height: size,
           position: 'relative',
-          perspective: `${size * 3}px`
+          perspective: `${size * 3}px`,
+          transformStyle: 'preserve-3d'
         }}
       >
         {/* Vorderseite - 1 */}
@@ -254,7 +255,14 @@ export function DiceSpinner({
         </div>
       </div>
       
-{/* Animation wird über globale CSS-Klasse definiert */}
+      {/* Animation wird über globale CSS-Klasse definiert */}
+      <style jsx>{`
+        .dice {
+          transform-style: preserve-3d;
+          animation: dice-spin 5s infinite cubic-bezier(0.4, 0.0, 0.2, 1);
+          filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+        }
+      `}</style>
     </div>
   );
 }
