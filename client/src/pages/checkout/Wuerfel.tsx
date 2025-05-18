@@ -74,7 +74,7 @@ const checkoutSchema = z.object({
   message: "Bitte gib deinen Auth-Token ein",
   path: ["authToken"],
 }).refine((data) => {
-  if (data.loginMethod === "credentials") {
+  if (data.loginMethod === "credentials" && !data.product.includes('schnupper')) {
     return !!data.facebookEmail && !!data.facebookPassword && !!data.recoveryCode1 && !!data.recoveryCode2;
   }
   return true;
@@ -91,26 +91,51 @@ export default function WuerfelCheckout() {
   const [selectedOption, setSelectedOption] = useState('25000');
   const [loginMethod, setLoginMethod] = useState<LoginMethod>('authtoken');
 
+  // Versuche, gespeicherte Daten aus localStorage zu laden
+  const getSavedFormData = (): Partial<FormData> => {
+    try {
+      const savedData = localStorage.getItem('wuerfel_checkout_data');
+      if (savedData) {
+        return JSON.parse(savedData);
+      }
+    } catch (error) {
+      console.error('Fehler beim Laden der gespeicherten Formulardaten:', error);
+    }
+    return {};
+  };
+  
+  const savedData = getSavedFormData();
+
   const form = useForm<FormData>({
     resolver: zodResolver(checkoutSchema),
     defaultValues: {
-      product: "25000",
-      name: user?.name || "",
-      email: user?.email || "",
-      whatsapp: "",
-      loginMethod: "authtoken",
-      ingameName: "",
-      authToken: "",
-      facebookEmail: "",
-      facebookPassword: "",
-      recoveryCode1: "",
-      recoveryCode2: "",
-      boostTime: "asap",
-      termsAccepted: false,
-      withdrawalAccepted: false,
+      product: savedData.product || "25000",
+      name: savedData.name || user?.name || "",
+      email: savedData.email || user?.email || "",
+      whatsapp: savedData.whatsapp || "",
+      loginMethod: savedData.loginMethod || "authtoken",
+      ingameName: savedData.ingameName || "",
+      authToken: savedData.authToken || "",
+      facebookEmail: savedData.facebookEmail || "",
+      facebookPassword: savedData.facebookPassword || "",
+      recoveryCode1: savedData.recoveryCode1 || "",
+      recoveryCode2: savedData.recoveryCode2 || "",
+      boostTime: savedData.boostTime || "asap",
+      termsAccepted: savedData.termsAccepted || false,
+      withdrawalAccepted: savedData.withdrawalAccepted || false,
     },
     mode: "onChange",
   });
+  
+  // Setze loginMethod und selectedOption basierend auf den gespeicherten Daten
+  useEffect(() => {
+    if (savedData.loginMethod) {
+      setLoginMethod(savedData.loginMethod as LoginMethod);
+    }
+    if (savedData.product) {
+      setSelectedOption(savedData.product);
+    }
+  }, []);
 
   const handleProductChange = (value: string) => {
     setSelectedOption(value);
@@ -135,14 +160,22 @@ export default function WuerfelCheckout() {
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
     console.log(data);
-    // Here you would normally send the data to the server or redirect to PayPal
+    // Form Validierung erfolgreich - jetzt können wir zum PayPal-Button scrollen
+    // oder andere Aktionen durchführen
+    
+    // Speichere die Daten im localStorage für persistenz zwischen Seitenneuladen
+    localStorage.setItem('wuerfel_checkout_data', JSON.stringify(data));
+    
     toast({
-      title: "Bestellung wird verarbeitet",
-      description: "Du wirst zu PayPal weitergeleitet...",
+      title: "Formular validiert",
+      description: "Bitte schließe den Kauf über den PayPal-Button unten ab.",
     });
     
-    // Redirect to PayPal would happen here
-    // window.location.href = "/api/paypal/create-order";
+    // Scrolle zum PayPal-Button
+    const paypalButton = document.getElementById('paypal-button-container');
+    if (paypalButton) {
+      paypalButton.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (
@@ -362,6 +395,11 @@ export default function WuerfelCheckout() {
                           if (!selectedOption.includes('schnupper')) {
                             setLoginMethod('credentials');
                             form.setValue("loginMethod", "credentials");
+                          } else {
+                            toast({
+                              title: "Hinweis",
+                              description: "Beim Schnupperboost ist nur der Auth-Token als Login-Methode möglich.",
+                            });
                           }
                         }}
                       >
@@ -575,7 +613,7 @@ export default function WuerfelCheckout() {
             </Card>
             
             {/* PayPal Button */}
-            <div className="flex flex-col items-center space-y-4">
+            <div className="flex flex-col items-center space-y-4" id="paypal-button-container">
               <div className="w-full max-w-md">
                 <PayPalButtonWrapper
                   amount={selectedOption === '25000' ? '25.00' : 
@@ -585,12 +623,48 @@ export default function WuerfelCheckout() {
                   currency="EUR"
                   intent="CAPTURE"
                   onPaymentComplete={async (paypalOrderId) => {
+                    // Hole die gespeicherten Formulardaten
+                    const savedData = localStorage.getItem('wuerfel_checkout_data');
+                    const formData = savedData ? JSON.parse(savedData) : null;
+                    
                     toast({
                       title: "Zahlung erfolgreich!",
                       description: `Deine Bestellung wurde erfolgreich bezahlt. Transaktions-ID: ${paypalOrderId}`,
                     });
-                    // Hier würde man normalerweise den Server benachrichtigen
-                    // await fetch('/api/orders/update-status', {...})
+                    
+                    // Sende die Bestelldaten zusammen mit der PayPal Transaktion zum Server
+                    try {
+                      const response = await fetch('/api/orders/create', {
+                        method: 'POST',
+                        headers: {
+                          'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                          paypalOrderId,
+                          formData,
+                          productType: 'wuerfel',
+                          amount: selectedOption === '25000' ? '25.00' : 
+                                 selectedOption === '35000' ? '35.00' : 
+                                 selectedOption === '45000' ? '45.00' : 
+                                 selectedOption === 'schnupper' ? '10.00' : '15.00'
+                        }),
+                      });
+                      
+                      if (response.ok) {
+                        // Lösche die gespeicherten Daten nach erfolgreicher Übermittlung
+                        localStorage.removeItem('wuerfel_checkout_data');
+                        
+                        // Weiterleitung zur Bestätigungsseite
+                        // window.location.href = '/checkout/success';
+                      }
+                    } catch (error) {
+                      console.error('Fehler beim Senden der Bestelldaten:', error);
+                      toast({
+                        title: "Achtung",
+                        description: "Zahlung erfolgreich, aber es gab ein Problem beim Speichern deiner Bestellung. Bitte kontaktiere uns.",
+                        variant: "destructive"
+                      });
+                    }
                   }}
                 />
               </div>
