@@ -24,8 +24,8 @@ export default function LoginHilfe() {
           Hier erklären wir dir die verschiedenen Methoden, wie wir uns in deinen Account einloggen können.
         </p>
 
-        <div className="bg-[#E6F7FF] border-l-4 border-[#00CFFF] p-4 mb-6 rounded-r-md">
-          <h3 className="text-[#0A3A68] mb-2 font-bold font-['Baloo_2'] text-[1.2rem]">💡 Wichtiger Hinweis</h3>
+        <div className="babix-info-box">
+          <h3 className="babix-box-title">💡 Wichtiger Hinweis</h3>
           <p className="text-gray-700">Wir verstehen, dass es für manche ein sensibles Thema ist und garantieren, dass wir den Login nur nutzen, um die nötigen Spieldaten zu erhalten. In aller Regel kann das Passwort wenige Minuten nach dem Login von dir geändert werden.</p>
         </div>
         
