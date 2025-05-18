@@ -441,10 +441,12 @@ export default function StickerCheckout() {
             {/* Checkbox für Widerrufsrecht */}
             <div 
               className={`flex items-start p-4 rounded-lg border ${formData.agreedToWithdrawalNotice ? 'bg-[#00CFFF]/10 border-[#00CFFF]' : 'border-gray-200'} mb-5 transition-all hover:shadow-sm cursor-pointer`}
-              onClick={() => {
+              onClick={(e) => {
+                e.preventDefault();
+                const newValue = !formData.agreedToWithdrawalNotice;
                 setFormData({
                   ...formData,
-                  agreedToWithdrawalNotice: !formData.agreedToWithdrawalNotice
+                  agreedToWithdrawalNotice: newValue
                 });
               }}
             >
@@ -454,10 +456,11 @@ export default function StickerCheckout() {
                   id="withdrawalCheck"
                   className="h-5 w-5 accent-[#00CFFF] cursor-pointer"
                   checked={formData.agreedToWithdrawalNotice}
-                  onChange={() => {
+                  onChange={(e) => {
+                    const newValue = e.target.checked;
                     setFormData({
                       ...formData,
-                      agreedToWithdrawalNotice: !formData.agreedToWithdrawalNotice
+                      agreedToWithdrawalNotice: newValue
                     });
                   }}
                 />
@@ -465,19 +468,22 @@ export default function StickerCheckout() {
               <label 
                 htmlFor="withdrawalCheck" 
                 className="text-sm cursor-pointer"
+                onClick={(e) => e.stopPropagation()}
               >
                 <span className="font-medium block mb-1 text-[#0A3A68]">Widerrufsbelehrung</span>
-                Ich bin ausdrücklich damit einverstanden, dass mit der Ausführung des Auftrags vor Ablauf der Widerrufsfrist begonnen wird. Mir ist bekannt, dass mein <Link href="/widerruf" className="text-[#00CFFF] hover:underline inline-flex items-center">Widerrufsrecht <span className="material-icons text-xs ml-0.5">open_in_new</span></Link> mit Beginn der Ausführung erlischt.
+                Ich bin ausdrücklich damit einverstanden, dass mit der Ausführung des Auftrags vor Ablauf der Widerrufsfrist begonnen wird. Mir ist bekannt, dass mein <Link href="/widerruf" className="text-[#00CFFF] hover:underline inline-flex items-center" target="_blank">Widerrufsrecht <span className="material-icons text-xs ml-0.5">open_in_new</span></Link> mit Beginn der Ausführung erlischt.
               </label>
             </div>
             
             {/* Checkbox für AGB */}
             <div 
               className={`flex items-start p-4 rounded-lg border ${formData.agreedToTerms ? 'bg-[#00CFFF]/10 border-[#00CFFF]' : 'border-gray-200'} mb-5 transition-all hover:shadow-sm cursor-pointer`}
-              onClick={() => {
+              onClick={(e) => {
+                e.preventDefault();
+                const newValue = !formData.agreedToTerms;
                 setFormData({
                   ...formData,
-                  agreedToTerms: !formData.agreedToTerms
+                  agreedToTerms: newValue
                 });
               }}
             >
@@ -487,10 +493,11 @@ export default function StickerCheckout() {
                   id="termsCheck"
                   className="h-5 w-5 accent-[#00CFFF] cursor-pointer"
                   checked={formData.agreedToTerms}
-                  onChange={() => {
+                  onChange={(e) => {
+                    const newValue = e.target.checked;
                     setFormData({
                       ...formData,
-                      agreedToTerms: !formData.agreedToTerms
+                      agreedToTerms: newValue
                     });
                   }}
                 />
@@ -498,6 +505,7 @@ export default function StickerCheckout() {
               <label 
                 htmlFor="termsCheck" 
                 className="text-sm cursor-pointer"
+                onClick={(e) => e.stopPropagation()}
               >
                 <span className="font-medium block mb-1 text-[#0A3A68]">AGB & Datenschutz</span>
                 Ich habe die <Link href="/agb" className="text-[#00CFFF] hover:underline" target="_blank">Allgemeinen Geschäftsbedingungen</Link> und <Link href="/datenschutz" className="text-[#00CFFF] hover:underline" target="_blank">Datenschutzbestimmungen</Link> gelesen und akzeptiere diese.
