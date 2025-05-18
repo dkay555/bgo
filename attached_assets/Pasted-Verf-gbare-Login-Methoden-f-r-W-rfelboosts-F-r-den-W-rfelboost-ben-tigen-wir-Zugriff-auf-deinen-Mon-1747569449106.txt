@@ -1,0 +1,59 @@
+Verfügbare Login-Methoden für Würfelboosts
+
+Für den Würfelboost benötigen wir Zugriff auf deinen Monopoly GO Account. 
+Hier erklären wir dir die verschiedenen Methoden, wie wir uns in deinen Account einloggen können. 
+
+💡 Wichtiger Hinweis
+Wir verstehen, dass es für manche ein sensibles Thema ist und garantieren, dass wir den Login nur nutzen, um die nötigen Spieldaten zu erhalten. In aller Regel kann das Passwort wenige Minuten nach dem Login von dir geändert werden.
+
+Login-Methoden im Überblick
+1. Facebook: Zugangsdaten
+-> Was wir benötigen 
+-> Wiederherstellungscodes? 
+2. Facebook: Authtoken (empfohlen)
+-> Was ist der Authtoken?
+-> Wie bekomme ich diesen? 
+3. Google Play Games: Zugangsdaten
+-> Was wir benötigen 
+
+loginMethode 1: Direkte Zugangsdaten
+Login mit deinen Zugangsdaten
+Was wir von dir benötigen:
+• Die hinterlegte E-Mail Adresse oder Handynummer
+• Dein Passwort
+Für Käufe über den Shop: 
+Wenn du eine 2 Faktor Authentifizierung nutzt benötigen wir außerdem noch:
+• 2 Wiederherstellungscodes
+Die Wiederherstellungscodes benötigen wir um die 2 Faktor Authentifizierung zu umgehen.
+Wie du die Codes erhältst, ob deine 2 FA überhaupt aktiv ist und weitere Informationen dazu findest du direkt bei Facebook unter folgenden Link: https://m.facebook.com/help/148104135383285/?locale=de_DE
+Alternativ zu den Codes kannst du den Login auch selbst bestätigen. Dafür muss man im Moment des Logins in Kontakt stehen, daher nutzen wir diese Möglichkeit nur bei Käufen über WhatsApp oder dem Messenger.
+tokenMethode 2: Facebook Auth-Token
+Login mit dem Authtoken
+Dieser Token wird nach deinem Anmeldevorgang generiert. Monopoly schickt diesen an Facebook als Beweis dafür, dass du die erforderlichen Berechtigungen erteilt hast. 
+Er ist nur für Monopoly Go gültig!
+Was wir von dir benötigen:
+• Deinen Authtoken
+
+So erhältst du den Token:
+
+Wir haben ein Tool bereitgestellt mit welchem ihr diesen ganz einfach erhaltet: Link zu /tools/authtoken
+Alternative: 
+1. Den Link im Messenger verschicken & anklicken
+
+2. Fortfahren
+
+3. Es öffnet sich eine weiße Seite. Oben rechts auf die 3 Punkte klicken
+
+4. Link kopieren wählen & mir diesen schicken
+Den Link den ihr erhaltet hat dieses Format:
+https://m.facebook.com/dialog/return/arbiter?protocol=https&response=%7B%22access_token%22%3A%22EAAEDOsLhrQsBOzRy2O1iBmrfaTY9jvAk2Vk4mUlKiogi4XZCWjfqndrLXUfhfghcdvxfvfXIFow1dnrMnbfnRDrCKHPm3qFGcGlFXMnHrZAcqlJXZghgggfgh......
+phone_androidMethode 3: Google Play Games
+Google Play Games
+Sollte dein Account mit Google Play Games verknüpft sein, schreibe uns bitte über WhatsApp oder über Facebook.
+Was wir von dir benötigen:
+• Deine Gmail-Adresse
+• Dein Google-Konto-Passwort
+Du musst den Login unter Umständen auf deinem Gerät bestätigen.
+Hast du noch Fragen?
+Falls du Hilfe benötigst oder noch Fragen zu dem Thema hast zögere nicht uns anzuschreiben.
+contact_supportKontakt aufnehmen

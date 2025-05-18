@@ -13,25 +13,21 @@ export default function LoginHilfe() {
           <span className="material-icons mr-1">arrow_back</span>
           Zurück zur Hilfe
         </Link>
-        <h1 className="font-['Baloo_2'] font-bold text-2xl md:text-3xl bg-[#00CFFF]/10 px-6 py-3 rounded-xl inline-block mx-auto mb-4 border-b-2 border-[#00CFFF] text-[#FF4C00]">
-          Login-Methoden für den Würfelboost
+        <h1 className="babix-info-header font-bold text-2xl md:text-3xl bg-[#00CFFF]/10 px-6 py-3 rounded-xl inline-block mx-auto mb-4 border-b-2 border-[#00CFFF] text-[#FF4C00]">
+          Verfügbare Login-Methoden für Würfelboosts
         </h1>
       </div>
       
       <div className="max-w-3xl mx-auto">
         <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-          <h2 className="babix-info-header mx-auto mb-6">Verfügbare Login-Methoden für Würfelboosts</h2>
-          <p className="text-gray-600 text-sm mb-6">Zuletzt aktualisiert: 11. Mai 2025</p>
-          
-          <div className="mb-8">
-            <p className="text-gray-700 mb-4">
-              Für unseren Würfelboost-Service benötigen wir Zugriff auf deinen Monopoly GO Account. Hier erklären wir dir die verschiedenen Methoden, wie wir uns sicher in deinen Account einloggen können.
-            </p>
+          <p className="text-gray-700 mb-4">
+            Für den Würfelboost benötigen wir Zugriff auf deinen Monopoly GO Account. 
+            Hier erklären wir dir die verschiedenen Methoden, wie wir uns in deinen Account einloggen können.
+          </p>
 
-            <div className="bg-[#E6F7FF] border-l-4 border-[#00CFFF] p-4 mb-6 rounded-r-md">
-              <h4 className="babix-info-header text-[#0A3A68] mb-2">💡 Wichtiger Hinweis</h4>
-              <p className="text-gray-700">Wir verstehen, dass es für manche ein sensibles Thema ist und garantieren, dass wir den Login nur nutzen, um die nötigen Spieldaten zu erhalten. In aller Regel kann das Passwort wenige Minuten nach dem Login von dir geändert werden.</p>
-            </div>
+          <div className="bg-[#E6F7FF] border-l-4 border-[#00CFFF] p-4 mb-6 rounded-r-md">
+            <h4 className="font-bold text-[#0A3A68] mb-2">💡 Wichtiger Hinweis</h4>
+            <p className="text-gray-700">Wir verstehen, dass es für manche ein sensibles Thema ist und garantieren, dass wir den Login nur nutzen, um die nötigen Spieldaten zu erhalten. In aller Regel kann das Passwort wenige Minuten nach dem Login von dir geändert werden.</p>
           </div>
           
           <div className="mb-8">
@@ -42,7 +38,7 @@ export default function LoginHilfe() {
                 <div className="bg-gray-50 p-4 rounded-t-lg">
                   <h4 className="font-bold text-[#0A3A68] flex items-center">
                     <span className="material-icons mr-2 text-[#00CFFF]">login</span>
-                    Methode 1: Direkte Zugangsdaten
+                    Methode 1: Facebook: Zugangsdaten
                   </h4>
                 </div>
                 <div className="p-4 border-t border-gray-200">
@@ -50,14 +46,15 @@ export default function LoginHilfe() {
                   <p className="text-gray-700 mb-3">Was wir von dir benötigen:</p>
                   
                   <ul className="mb-5 space-y-2 text-gray-700">
-                    <li className="pl-4">Die hinterlegte E-Mail Adresse oder Handynummer</li>
-                    <li className="pl-4">Dein Passwort</li>
+                    <li className="pl-4">• Die hinterlegte E-Mail Adresse oder Handynummer</li>
+                    <li className="pl-4">• Dein Passwort</li>
                   </ul>
                   
+                  <p className="text-gray-700 mb-3 font-semibold">Für Käufe über den Shop:</p>
                   <p className="text-gray-700 mb-3">Wenn du eine 2 Faktor Authentifizierung nutzt benötigen wir außerdem noch:</p>
                   
                   <ul className="mb-5 space-y-2 text-gray-700">
-                    <li className="pl-4">2 Wiederherstellungscodes</li>
+                    <li className="pl-4">• 2 Wiederherstellungscodes</li>
                   </ul>
                   
                   <p className="text-gray-700 mb-3">Die Wiederherstellungscodes benötigen wir um die 2 Faktor Authentifizierung zu umgehen.</p>
@@ -70,9 +67,9 @@ export default function LoginHilfe() {
               
               <div className="border border-gray-200 rounded-lg">
                 <div className="bg-gray-50 p-4 rounded-t-lg">
-                  <h4 className="babix-info-header text-[#0A3A68] flex items-center">
+                  <h4 className="font-bold text-[#0A3A68] flex items-center">
                     <span className="material-icons mr-2 text-[#00CFFF]">token</span>
-                    Methode 2: Facebook Auth-Token
+                    Methode 2: Facebook: Authtoken (empfohlen)
                   </h4>
                 </div>
                 <div className="p-4 border-t border-gray-200">
@@ -81,26 +78,35 @@ export default function LoginHilfe() {
                   
                   <p className="text-gray-700 mb-3">Was wir von dir benötigen:</p>
                   <ul className="mb-5 space-y-2 text-gray-700">
-                    <li className="pl-4">Deinen Authtoken</li>
+                    <li className="pl-4">• Deinen Authtoken</li>
                   </ul>
                   
-                  <p className="text-gray-700 mb-4">So erhältst du den Token:</p>
+                  <p className="text-gray-700 mb-4 font-semibold">So erhältst du den Token:</p>
+                  
+                  <div className="bg-[#E6F7FF] p-3 rounded-lg mb-4">
+                    <p className="text-gray-700 mb-2">Wir haben ein Tool bereitgestellt mit welchem ihr diesen ganz einfach erhaltet:</p>
+                    <Link href="/tools/authtoken" className="text-[#00CFFF] hover:text-[#FF4C00] font-bold underline transition-colors">
+                      Zum Auth-Token-Tool
+                    </Link>
+                  </div>
+                  
+                  <p className="text-gray-700 mb-3 font-semibold">Alternative:</p>
                   
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-5">
                     <div className="border border-gray-200 p-2 rounded-lg">
-                      <img src="/step1.webp" alt="Schritt 1: Den Link im Messenger verschicken & anklicken" className="w-full h-auto" />
+                      <img src="/images/auth-token/step1.webp" alt="Schritt 1: Den Link im Messenger verschicken & anklicken" className="w-full h-auto" />
                       <p className="text-center mt-2 text-sm text-gray-700">1. Den Link im Messenger verschicken & anklicken</p>
                     </div>
                     <div className="border border-gray-200 p-2 rounded-lg">
-                      <img src="/step2.webp" alt="Schritt 2: Fortfahren" className="w-full h-auto" />
+                      <img src="/images/auth-token/step2.webp" alt="Schritt 2: Fortfahren" className="w-full h-auto" />
                       <p className="text-center mt-2 text-sm text-gray-700">2. Fortfahren</p>
                     </div>
                     <div className="border border-gray-200 p-2 rounded-lg">
-                      <img src="/step3.webp" alt="Schritt 3: Es öffnet sich eine weiße Seite. Oben rechts auf die 3 Punkte klicken" className="w-full h-auto" />
+                      <img src="/images/auth-token/step3.webp" alt="Schritt 3: Es öffnet sich eine weiße Seite. Oben rechts auf die 3 Punkte klicken" className="w-full h-auto" />
                       <p className="text-center mt-2 text-sm text-gray-700">3. Es öffnet sich eine weiße Seite. Oben rechts auf die 3 Punkte klicken</p>
                     </div>
                     <div className="border border-gray-200 p-2 rounded-lg">
-                      <img src="/step4.webp" alt="Schritt 4: Link kopieren wählen & mir diesen schicken" className="w-full h-auto" />
+                      <img src="/images/auth-token/step4.webp" alt="Schritt 4: Link kopieren wählen & mir diesen schicken" className="w-full h-auto" />
                       <p className="text-center mt-2 text-sm text-gray-700">4. Link kopieren wählen & mir diesen schicken</p>
                     </div>
                   </div>
@@ -116,7 +122,7 @@ export default function LoginHilfe() {
                 <div className="bg-gray-50 p-4 rounded-t-lg">
                   <h4 className="font-bold text-[#0A3A68] flex items-center">
                     <span className="material-icons mr-2 text-[#00CFFF]">phone_android</span>
-                    Methode 3: Google Play Games
+                    Methode 3: Google Play Games: Zugangsdaten
                   </h4>
                 </div>
                 <div className="p-4 border-t border-gray-200">
@@ -125,8 +131,8 @@ export default function LoginHilfe() {
                   
                   <p className="text-gray-700 mb-3">Was wir von dir benötigen:</p>
                   <ul className="mb-5 space-y-2 text-gray-700">
-                    <li className="pl-4">Deine Gmail-Adresse</li>
-                    <li className="pl-4">Dein Google-Konto-Passwort</li>
+                    <li className="pl-4">• Deine Gmail-Adresse</li>
+                    <li className="pl-4">• Dein Google-Konto-Passwort</li>
                   </ul>
                   
                   <p className="text-gray-700">Du musst den Login unter Umständen auf deinem Gerät bestätigen.</p>
