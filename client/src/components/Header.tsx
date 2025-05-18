@@ -156,27 +156,27 @@ export function Header() {
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem asChild>
-                      <Link href="/profile" className="cursor-pointer flex w-full items-center">
+                      <Link href="/profile" className="w-full cursor-pointer">
                         <User className="mr-2 h-4 w-4" />
                         <span>Mein Profil</span>
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
-                      <Link href="/order-history" className="cursor-pointer flex w-full items-center">
+                      <Link href="/order-history" className="w-full cursor-pointer">
                         <ClipboardList className="mr-2 h-4 w-4" />
-                        <span>Bestellhistorie</span>
+                        <span>Bestellungen</span>
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
-                      <Link href="/tickets" className="cursor-pointer flex w-full items-center">
+                      <Link href="/tickets" className="w-full cursor-pointer">
                         <Ticket className="mr-2 h-4 w-4" />
-                        <span>Support-Tickets</span>
+                        <span>Support Tickets</span>
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem 
-                      onClick={() => logoutMutation.mutate()} 
-                      className="cursor-pointer text-red-600 focus:text-red-600"
+                    <DropdownMenuItem
+                      onClick={() => logoutMutation.mutate()}
+                      className="text-red-600 focus:text-red-600"
                     >
                       <LogOut className="mr-2 h-4 w-4" />
                       <span>Abmelden</span>
@@ -233,157 +233,180 @@ export function Header() {
             </button>
           </div>
           
-          <div className="px-2 pt-2 pb-3">
-            {/* Hauptnavigation: Start, Hilfe und Kontakt */}
-            <div className="grid grid-cols-3 gap-1 mb-2">
-              <Link 
-                href="/"
-                className="text-white hover:bg-white/10 hover:text-[#FF4C00] py-1 px-2 rounded-md font-medium text-center transition duration-300 border border-white/10 text-xs"
-                onClick={closeMobileMenu}
-              >
-                <span className="material-icons mb-0.5 text-[#00CFFF] block mx-auto text-sm">home</span>
-                Start
-              </Link>
-              
-              <Link 
-                href="/hilfe"
-                className="text-white hover:bg-white/10 hover:text-[#FF4C00] py-1 px-2 rounded-md font-medium text-center transition duration-300 border border-white/10 text-xs"
-                onClick={closeMobileMenu}
-              >
-                <span className="material-icons mb-0.5 text-[#00CFFF] block mx-auto text-sm">help</span>
-                Hilfe
-              </Link>
-              
-              <Link 
-                href="/kontakt"
-                className="text-white hover:bg-white/10 hover:text-[#FF4C00] py-1 px-2 rounded-md font-medium text-center transition duration-300 border border-white/10 text-xs"
-                onClick={closeMobileMenu}
-              >
-                <span className="material-icons mb-0.5 text-[#00CFFF] block mx-auto text-sm">contact_support</span>
-                Kontakt
-              </Link>
-            </div>
-            
-            {/* Leistungen Kategorie-Überschrift */}
-            <div className="text-white/70 py-0.5 mb-1 text-xs uppercase tracking-wider border-b border-white/10 text-center font-medium">
-              Leistungen
-            </div>
-            
-            {/* Dienste mit Symbol und Name */}
-            <div className="grid grid-cols-3 gap-1 p-0.5">
-              {/* Würfel */}
-              <Link 
-                href="/shop/wuerfel"
-                className="text-white hover:bg-white/10 hover:text-[#FF4C00] p-1 rounded-md transition duration-300 border border-white/10 flex flex-col items-center text-xs"
-                onClick={closeMobileMenu}
-              >
-                <span className="material-icons text-[#00CFFF] text-sm mb-0.5">casino</span>
-                <span className="font-bold">Würfel</span>
-              </Link>
-              
-              {/* Sticker */}
-              <Link 
-                href="/shop/sticker"
-                className="text-white hover:bg-white/10 hover:text-[#FF4C00] p-1 rounded-md transition duration-300 border border-white/10 flex flex-col items-center text-xs"
-                onClick={closeMobileMenu}
-              >
-                <span className="material-icons text-[#00CFFF] text-sm mb-0.5">collections_bookmark</span>
-                <span className="font-bold">Sticker</span>
-              </Link>
-              
-              {/* Partnerevents */}
-              <Link 
-                href="/shop/partnerevent"
-                className="text-white hover:bg-white/10 hover:text-[#FF4C00] p-1 rounded-md transition duration-300 border border-white/10 flex flex-col items-center text-xs"
-                onClick={closeMobileMenu}
-              >
-                <span className="material-icons text-[#00CFFF] text-sm mb-0.5">people</span>
-                <span className="font-bold">Partnerevents</span>
-              </Link>
-              
-              {/* Tycoon Racers */}
-              <Link 
-                href="/shop/tycoonracers"
-                className="text-white hover:bg-white/10 hover:text-[#FF4C00] p-1 rounded-md transition duration-300 border border-white/10 flex flex-col items-center text-xs"
-                onClick={closeMobileMenu}
-              >
-                <span className="material-icons text-[#00CFFF] text-sm mb-0.5">emoji_events</span>
-                <span className="font-bold">Tycoon Racers</span>
-              </Link>
-            </div>
-          </div>
-          
-          {/* Login/User Bereich für Mobil */}
-          <div className="mt-2 mb-2 px-3">
-            {user ? (
-              <div className="border border-white/10 rounded-md p-2 bg-white/5">
-                <div className="flex items-center space-x-2 mb-1.5">
-                  <Avatar className="h-6 w-6">
-                    <AvatarFallback className="bg-[#00CFFF]/20 text-white text-xs">
-                      {user.name ? user.name.charAt(0).toUpperCase() : 
-                       user.username.charAt(0).toUpperCase()}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <p className="text-white font-bold text-xs">{user.name || user.username}</p>
-                    {user.email && (
-                      <p className="text-white/70 text-[10px]">{user.email}</p>
-                    )}
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 gap-1">
-                  <Link
-                    href="/profile"
-                    className="flex items-center justify-center bg-white/10 hover:bg-white/20 text-white py-1 px-2 rounded-md text-xs"
-                    onClick={closeMobileMenu}
-                  >
-                    <User className="mr-1 h-3 w-3" />
-                    Profil
-                  </Link>
-                  <Link
-                    href="/order-history"
-                    className="flex items-center justify-center bg-white/10 hover:bg-white/20 text-white py-1 px-2 rounded-md text-xs"
-                    onClick={closeMobileMenu}
-                  >
-                    <ClipboardList className="mr-1 h-3 w-3" />
-                    Bestellungen
-                  </Link>
-                  <Link
-                    href="/tickets"
-                    className="flex items-center justify-center bg-white/10 hover:bg-white/20 text-white py-1 px-2 rounded-md text-xs col-span-2"
-                    onClick={closeMobileMenu}
-                  >
-                    <Ticket className="mr-1 h-3 w-3" />
-                    Tickets
-                  </Link>
-                  <button
-                    onClick={() => {
-                      logoutMutation.mutate();
-                      closeMobileMenu();
-                    }}
-                    className="flex items-center justify-center bg-red-500/20 hover:bg-red-500/30 text-red-500 py-1 px-2 rounded-md text-xs col-span-2 mt-0.5"
-                  >
-                    <LogOut className="mr-1 h-3 w-3" />
-                    Abmelden
-                  </button>
-                </div>
+          <div className="h-full overflow-y-auto pb-16">
+            <div className="px-2 pt-2 pb-3">
+              {/* Hauptnavigation: Start, News, Hilfe, Kontakt */}
+              <div className="grid grid-cols-2 gap-1 mb-2">
+                <Link 
+                  href="/"
+                  className="text-white hover:bg-white/10 hover:text-[#FF4C00] py-2 px-3 rounded-md text-center transition duration-300 border border-white/10 flex flex-col items-center"
+                  onClick={closeMobileMenu}
+                >
+                  <span className="material-icons text-[#00CFFF] text-lg mb-1">home</span>
+                  <span className="text-xs font-medium">Start</span>
+                </Link>
+                
+                <Link 
+                  href="/news"
+                  className="text-white hover:bg-white/10 hover:text-[#FF4C00] py-2 px-3 rounded-md text-center transition duration-300 border border-white/10 flex flex-col items-center"
+                  onClick={closeMobileMenu}
+                >
+                  <span className="material-icons text-[#00CFFF] text-lg mb-1">article</span>
+                  <span className="text-xs font-medium">News</span>
+                </Link>
+                
+                <Link 
+                  href="/hilfe"
+                  className="text-white hover:bg-white/10 hover:text-[#FF4C00] py-2 px-3 rounded-md text-center transition duration-300 border border-white/10 flex flex-col items-center"
+                  onClick={closeMobileMenu}
+                >
+                  <span className="material-icons text-[#00CFFF] text-lg mb-1">help</span>
+                  <span className="text-xs font-medium">Hilfe</span>
+                </Link>
+                
+                <Link 
+                  href="/kontakt"
+                  className="text-white hover:bg-white/10 hover:text-[#FF4C00] py-2 px-3 rounded-md text-center transition duration-300 border border-white/10 flex flex-col items-center"
+                  onClick={closeMobileMenu}
+                >
+                  <span className="material-icons text-[#00CFFF] text-lg mb-1">contact_support</span>
+                  <span className="text-xs font-medium">Kontakt</span>
+                </Link>
               </div>
-            ) : (
-              <Link
-                href="/auth"
-                className="flex items-center justify-center bg-[#00CFFF]/20 hover:bg-[#00CFFF]/30 text-white py-1.5 px-3 rounded-md font-bold w-full text-xs"
-                onClick={closeMobileMenu}
-              >
-                <User className="mr-1 h-3 w-3" />
-                Anmelden / Registrieren
-              </Link>
-            )}
-          </div>
+              
+              {/* Leistungen Kategorie-Überschrift */}
+              <div className="text-white/70 py-1 mb-1 text-xs uppercase tracking-wider border-b border-white/10 text-center font-medium">
+                Leistungen
+              </div>
+              
+              {/* Dienste mit Symbol und Name - Würfel & Sticker */}
+              <div className="grid grid-cols-2 gap-1 mb-1">
+                {/* Würfel */}
+                <Link 
+                  href="/shop/wuerfel"
+                  className="text-white hover:bg-white/10 hover:text-[#FF4C00] py-2 px-3 rounded-md transition duration-300 border border-white/10 flex flex-col items-center"
+                  onClick={closeMobileMenu}
+                >
+                  <span className="material-icons text-[#00CFFF] text-lg mb-1">casino</span>
+                  <span className="text-xs font-medium">Würfel</span>
+                </Link>
+                
+                {/* Sticker */}
+                <Link 
+                  href="/shop/sticker"
+                  className="text-white hover:bg-white/10 hover:text-[#FF4C00] py-2 px-3 rounded-md transition duration-300 border border-white/10 flex flex-col items-center"
+                  onClick={closeMobileMenu}
+                >
+                  <span className="material-icons text-[#00CFFF] text-lg mb-1">collections_bookmark</span>
+                  <span className="text-xs font-medium">Sticker</span>
+                </Link>
+              </div>
+              
+              {/* Dienste - Partnerevents & Tycoon Racers */}
+              <div className="grid grid-cols-2 gap-1">
+                {/* Partnerevents */}
+                <Link 
+                  href="/shop/partnerevent"
+                  className="text-white hover:bg-white/10 hover:text-[#FF4C00] py-2 px-3 rounded-md transition duration-300 border border-white/10 flex flex-col items-center"
+                  onClick={closeMobileMenu}
+                >
+                  <span className="material-icons text-[#00CFFF] text-lg mb-1">people</span>
+                  <span className="text-xs font-medium">Partnerevents</span>
+                </Link>
+                
+                {/* Tycoon Racers */}
+                <Link 
+                  href="/shop/tycoonracers"
+                  className="text-white hover:bg-white/10 hover:text-[#FF4C00] py-2 px-3 rounded-md transition duration-300 border border-white/10 flex flex-col items-center"
+                  onClick={closeMobileMenu}
+                >
+                  <span className="material-icons text-[#00CFFF] text-lg mb-1">emoji_events</span>
+                  <span className="text-xs font-medium">Tycoon Racers</span>
+                </Link>
+              </div>
+              
+              {/* Kundenkonto Überschrift */}
+              <div className="text-white/70 py-1 mt-2 mb-1 text-xs uppercase tracking-wider border-b border-white/10 text-center font-medium">
+                Kundenkonto
+              </div>
+            
+              {/* Login/User Bereich für Mobil */}
+              <div className="grid grid-cols-2 gap-1 mt-1">
+                {user ? (
+                  <>
+                    {/* Profil */}
+                    <Link
+                      href="/profile"
+                      className="text-white hover:bg-white/10 hover:text-[#FF4C00] py-2 px-3 rounded-md transition duration-300 border border-white/10 flex flex-col items-center"
+                      onClick={closeMobileMenu}
+                    >
+                      <User className="text-[#00CFFF] h-5 w-5 mb-1" />
+                      <span className="text-xs font-medium">Profil</span>
+                    </Link>
+                    
+                    {/* Bestellungen */}
+                    <Link
+                      href="/order-history"
+                      className="text-white hover:bg-white/10 hover:text-[#FF4C00] py-2 px-3 rounded-md transition duration-300 border border-white/10 flex flex-col items-center"
+                      onClick={closeMobileMenu}
+                    >
+                      <ClipboardList className="text-[#00CFFF] h-5 w-5 mb-1" />
+                      <span className="text-xs font-medium">Bestellungen</span>
+                    </Link>
+                    
+                    {/* Tickets */}
+                    <Link
+                      href="/tickets"
+                      className="text-white hover:bg-white/10 hover:text-[#FF4C00] py-2 px-3 rounded-md transition duration-300 border border-white/10 flex flex-col items-center"
+                      onClick={closeMobileMenu}
+                    >
+                      <Ticket className="text-[#00CFFF] h-5 w-5 mb-1" />
+                      <span className="text-xs font-medium">Tickets</span>
+                    </Link>
+                    
+                    {/* Abmelden */}
+                    <button
+                      onClick={() => {
+                        logoutMutation.mutate();
+                        closeMobileMenu();
+                      }}
+                      className="text-white hover:bg-white/10 hover:text-[#FF4C00] py-2 px-3 rounded-md transition duration-300 border border-white/10 flex flex-col items-center w-full"
+                    >
+                      <LogOut className="text-red-400 h-5 w-5 mb-1" />
+                      <span className="text-xs font-medium">Abmelden</span>
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    {/* Anmelden */}
+                    <Link
+                      href="/auth"
+                      className="text-white hover:bg-white/10 hover:text-[#FF4C00] py-2 px-3 rounded-md transition duration-300 border border-white/10 flex flex-col items-center"
+                      onClick={closeMobileMenu}
+                    >
+                      <User className="text-[#00CFFF] h-5 w-5 mb-1" />
+                      <span className="text-xs font-medium">Anmelden</span>
+                    </Link>
+                    
+                    {/* Registrieren */}
+                    <Link
+                      href="/auth?register=true"
+                      className="text-white hover:bg-white/10 hover:text-[#FF4C00] py-2 px-3 rounded-md transition duration-300 border border-white/10 flex flex-col items-center"
+                      onClick={closeMobileMenu}
+                    >
+                      <span className="material-icons text-[#00CFFF] text-lg mb-1">person_add</span>
+                      <span className="text-xs font-medium">Registrieren</span>
+                    </Link>
+                  </>
+                )}
+              </div>
+            </div>
 
-          <div className="absolute bottom-0 left-0 right-0 p-2 border-t border-white/10">
-            <div className="text-white/80 text-center text-xs">
-              <p>© {new Date().getFullYear()} babixGO</p>
-              <p className="mt-0.5">Monopoly GO Service</p>
+            <div className="absolute bottom-0 left-0 right-0 p-2 border-t border-white/10">
+              <div className="text-white/80 text-center text-xs">
+                <p>© {new Date().getFullYear()} babixGO</p>
+                <p className="mt-0.5">Monopoly GO Service</p>
+              </div>
             </div>
           </div>
         </div>
