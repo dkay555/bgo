@@ -24,6 +24,24 @@
   }
 }
 
+@keyframes spin {
+  0% {
+    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  }
+  25% {
+    transform: rotateX(90deg) rotateY(45deg) rotateZ(60deg);
+  }
+  50% {
+    transform: rotateX(180deg) rotateY(180deg) rotateZ(120deg);
+  }
+  75% {
+    transform: rotateX(270deg) rotateY(270deg) rotateZ(180deg);
+  }
+  100% {
+    transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
+  }
+}
+
 .rotating-dice {
   animation: rotate-dice 3s infinite linear;
   transform-style: preserve-3d;
