@@ -22,10 +22,13 @@ import { useAuth } from '@/hooks/use-auth';
 import SEOHead from '@/components/SEOHead';
 import { PayPalButtonWrapper } from '@/components/PayPalButtonWrapper';
 
+// Form schema type
+type LoginMethod = "authtoken" | "credentials";
+
 // Form schema
 const checkoutSchema = z.object({
-  teamSlotCount: z.string({
-    required_error: "Bitte wähle eine Anzahl von Teamplätzen",
+  flagCount: z.string({
+    required_error: "Bitte wähle eine Anzahl von Flaggen",
   }),
   name: z.string().min(2, {
     message: "Der Name muss mindestens 2 Zeichen lang sein",
@@ -34,31 +37,56 @@ const checkoutSchema = z.object({
     message: "Bitte gib eine gültige E-Mail-Adresse ein",
   }),
   whatsapp: z.string().optional(),
+  loginMethod: z.enum(["authtoken", "credentials"] as const, {
+    required_error: "Bitte wähle eine Login-Methode",
+  }),
   ingameName: z.string().min(2, {
     message: "Bitte gib deinen In-Game Namen ein",
   }),
   friendCode: z.string().min(2, {
     message: "Bitte gib deinen Freundschaftslink oder -code ein",
   }),
+  authToken: z.string().optional(),
+  facebookEmail: z.string().optional(),
+  facebookPassword: z.string().optional(),
+  recoveryCode1: z.string().optional(),
+  recoveryCode2: z.string().optional(),
   termsAccepted: z.boolean().refine(val => val === true, {
     message: "Du musst die AGB akzeptieren",
   }),
   withdrawalAccepted: z.boolean().refine(val => val === true, {
     message: "Du musst auf dein Widerrufsrecht verzichten",
   }),
+}).refine((data) => {
+  if (data.loginMethod === "authtoken") {
+    return !!data.authToken;
+  }
+  return true;
+}, {
+  message: "Bitte gib deinen Auth-Token ein",
+  path: ["authToken"],
+}).refine((data) => {
+  if (data.loginMethod === "credentials") {
+    return !!data.facebookEmail && !!data.facebookPassword && !!data.recoveryCode1 && !!data.recoveryCode2;
+  }
+  return true;
+}, {
+  message: "Bitte fülle alle Zugangsdaten aus",
+  path: ["facebookEmail"],
 });
 
 type FormData = z.infer<typeof checkoutSchema>;
 
-export default function TycoonRacersCheckout() {
+export default function FlaggenCheckout() {
   const { user } = useAuth();
   const { toast } = useToast();
-  const [selectedOption, setSelectedOption] = useState('1');
+  const [selectedOption, setSelectedOption] = useState('10');
+  const [loginMethod, setLoginMethod] = useState<LoginMethod>('authtoken');
 
   // Versuche, gespeicherte Daten aus localStorage zu laden
   const getSavedFormData = (): Partial<FormData> => {
     try {
-      const savedData = localStorage.getItem('tycoonracers_checkout_data');
+      const savedData = localStorage.getItem('flaggen_checkout_data');
       if (savedData) {
         return JSON.parse(savedData);
       }
@@ -73,48 +101,57 @@ export default function TycoonRacersCheckout() {
   const form = useForm<FormData>({
     resolver: zodResolver(checkoutSchema),
     defaultValues: {
-      teamSlotCount: savedData.teamSlotCount || "1",
+      flagCount: savedData.flagCount || "10",
       name: savedData.name || user?.name || "",
       email: savedData.email || user?.email || "",
       whatsapp: savedData.whatsapp || "",
+      loginMethod: savedData.loginMethod || "authtoken",
       ingameName: savedData.ingameName || "",
       friendCode: savedData.friendCode || "",
+      authToken: savedData.authToken || "",
+      facebookEmail: savedData.facebookEmail || "",
+      facebookPassword: savedData.facebookPassword || "",
+      recoveryCode1: savedData.recoveryCode1 || "",
+      recoveryCode2: savedData.recoveryCode2 || "",
       termsAccepted: savedData.termsAccepted || false,
       withdrawalAccepted: savedData.withdrawalAccepted || false,
     },
     mode: "onChange",
   });
   
-  // Setze selectedOption basierend auf den gespeicherten Daten
+  // Setze loginMethod und selectedOption basierend auf den gespeicherten Daten
   useEffect(() => {
-    if (savedData.teamSlotCount) {
-      setSelectedOption(savedData.teamSlotCount);
+    if (savedData.loginMethod) {
+      setLoginMethod(savedData.loginMethod as LoginMethod);
+    }
+    if (savedData.flagCount) {
+      setSelectedOption(savedData.flagCount);
     }
   }, []);
 
-  const handleTeamSlotCountChange = (value: string) => {
+  const handleFlagCountChange = (value: string) => {
     setSelectedOption(value);
-    form.setValue("teamSlotCount", value);
+    form.setValue("flagCount", value);
   };
 
-  // Berechne den Preis basierend auf der Anzahl der Teamplätze
+  const handleLoginMethodChange = (value: LoginMethod) => {
+    setLoginMethod(value);
+    form.setValue("loginMethod", value);
+  };
+
+  // Berechne den Preis basierend auf der Anzahl der Flaggen
   const calculatePrice = (count: string): number => {
-    const teamSlotCount = parseInt(count);
-    
-    // Preistabelle:
-    if (teamSlotCount === 1) return 15;
-    if (teamSlotCount === 3) return 40;
-    if (teamSlotCount === 5) return 60;
-    
-    // Für höhere Zahlen: 12€ pro Teamplatz
-    return teamSlotCount * 12;
+    if (count === '10') return 20;
+    if (count === '25') return 40;
+    if (count === '50') return 70;
+    return 20; // Standardpreis als Fallback
   };
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
     console.log(data);
     
     // Speichere die Daten im localStorage für persistenz zwischen Seitenneuladen
-    localStorage.setItem('tycoonracers_checkout_data', JSON.stringify(data));
+    localStorage.setItem('flaggen_checkout_data', JSON.stringify(data));
     
     toast({
       title: "Formular validiert",
@@ -128,18 +165,18 @@ export default function TycoonRacersCheckout() {
     }
   };
 
-  const teamSlotOptions = [
-    { value: "1", label: "1 Teamplatz", price: 15 },
-    { value: "3", label: "3 Teamplätze", price: 40 },
-    { value: "5", label: "5 Teamplätze", price: 60 }
+  const flagOptions = [
+    { value: "10", label: "10 Flaggen", price: 20 },
+    { value: "25", label: "25 Flaggen", price: 40 },
+    { value: "50", label: "50 Flaggen", price: 70 },
   ];
 
   return (
     <div className="container mx-auto px-4 py-8">
       <SEOHead 
-        pageName="Tycoon Racers Teamplatz - Checkout" 
-        customTitle="Tycoon Racers Teamplatz - Checkout | babixGO" 
-        customDescription="Tycoon Racers Teamplatz für Monopoly GO buchen - Checkout"
+        pageName="Flaggen sammeln - Checkout" 
+        customTitle="Flaggen sammeln - Checkout | babixGO" 
+        customDescription="Flaggen für Monopoly GO Sammlungen kaufen - Checkout"
       />
       
       <div className="max-w-4xl mx-auto">
@@ -170,31 +207,31 @@ export default function TycoonRacersCheckout() {
         
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            {/* Team Slot Count Selection */}
+            {/* Flag Count Selection */}
             <Card>
               <CardContent className="py-4">
-                <h2 className="text-xl font-bold text-[#0A3A68] mt-0 mb-2">Wie viele Teamplätze möchtest du buchen?</h2>
+                <h2 className="text-xl font-bold text-[#0A3A68] mt-0 mb-2">Wie viele Flaggen möchtest du sammeln?</h2>
                 
                 <div className="grid gap-2">
                   <FormField
                     control={form.control}
-                    name="teamSlotCount"
+                    name="flagCount"
                     render={({ field }) => (
                       <FormItem>
                         <FormControl>
                           <RadioGroup
                             value={selectedOption}
                             onValueChange={(val) => {
-                              handleTeamSlotCountChange(val);
+                              handleFlagCountChange(val);
                             }}
                             className="grid gap-2"
                           >
-                            {teamSlotOptions.map((option) => (
+                            {flagOptions.map((option) => (
                               <div key={option.value} className="flex items-center space-x-3 w-full">
-                                <RadioGroupItem value={option.value} id={`teamslot-${option.value}`} />
-                                <Label htmlFor={`teamslot-${option.value}`} className="text-gray-900 flex items-center w-full cursor-pointer">
+                                <RadioGroupItem value={option.value} id={`flag-${option.value}`} />
+                                <Label htmlFor={`flag-${option.value}`} className="text-gray-900 flex items-center w-full cursor-pointer">
                                   <span>{option.label}</span>
-                                  <span className="ml-2">🏎️</span>
+                                  <span className="ml-2">🏳️</span>
                                   <span className="ml-auto font-semibold text-[#FF4C00]">{option.price}€</span>
                                 </Label>
                               </div>
@@ -296,6 +333,186 @@ export default function TycoonRacersCheckout() {
                       </FormItem>
                     )}
                   />
+                </div>
+              </CardContent>
+            </Card>
+            
+            {/* Login Method */}
+            <Card>
+              <CardContent className="py-4">
+                <div className="flex flex-wrap items-center justify-between mb-2">
+                  <h2 className="text-xl font-bold text-[#0A3A68] mt-0">Wie sollen wir uns einloggen?</h2>
+                  <Link href="/hilfe/loginmoeglichkeiten">
+                    <span className="text-[#00CFFF] text-sm hover:underline">
+                      Du bist dir unsicher? Hier bekommst du mehr Infos dazu
+                    </span>
+                  </Link>
+                </div>
+                
+                <div className="grid gap-6">
+                  <div className="border-b border-gray-200 mb-4">
+                    <div className="flex" role="tablist">
+                      <div
+                        role="tab"
+                        aria-selected={loginMethod === 'authtoken'}
+                        className={`
+                          w-1/2 py-4 px-1 text-center border-b-2 font-medium text-sm cursor-pointer
+                          ${loginMethod === 'authtoken' 
+                            ? 'border-[#00CFFF] text-[#00CFFF]' 
+                            : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}
+                        `}
+                        onClick={() => handleLoginMethodChange('authtoken')}
+                      >
+                        Facebook Auth-Token
+                      </div>
+                      
+                      <div
+                        role="tab"
+                        aria-selected={loginMethod === 'credentials'}
+                        className={`
+                          w-1/2 py-4 px-1 text-center border-b-2 font-medium text-sm cursor-pointer
+                          ${loginMethod === 'credentials' 
+                            ? 'border-[#00CFFF] text-[#00CFFF]' 
+                            : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}
+                        `}
+                        onClick={() => handleLoginMethodChange('credentials')}
+                      >
+                        Zugangsdaten
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Auth Token Method */}
+                  {loginMethod === 'authtoken' && (
+                    <div className="space-y-4">
+                      <div className="space-y-2">
+                        <p className="text-sm text-gray-600">
+                          Wir benötigen deinen Facebook Auth-Token, um Flaggen in dein Spiel zu bringen. 
+                          Keine Sorge, dies wird nur verwendet, um die Flaggen zu übertragen.
+                        </p>
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <FormField
+                          control={form.control}
+                          name="authToken"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Facebook Auth-Token</FormLabel>
+                              <FormControl>
+                                <Input 
+                                  placeholder="EAABb..."
+                                  {...field} 
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        
+                        <div className="pt-2">
+                          <Link href="/hilfe/authtoken">
+                            <span className="text-[#00CFFF] text-sm hover:underline">
+                              Wie erhalte ich meinen Auth-Token? Hier klicken für eine Anleitung
+                            </span>
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {/* Credentials Method */}
+                  {loginMethod === 'credentials' && (
+                    <div className="space-y-4">
+                      <div className="space-y-2">
+                        <p className="text-sm text-gray-600">
+                          Wir benötigen deine Facebook-Zugangsdaten und die Wiederherstellungscodes, 
+                          um Flaggen in dein Spiel zu bringen.
+                        </p>
+                      </div>
+                      
+                      <div className="space-y-4 border-t border-gray-100 pt-4">
+                        <FormField
+                          control={form.control}
+                          name="facebookEmail"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Facebook E-Mail/Telefon</FormLabel>
+                              <FormControl>
+                                <Input 
+                                  placeholder="Deine Facebook E-Mail oder Telefonnummer"
+                                  {...field} 
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        
+                        <FormField
+                          control={form.control}
+                          name="facebookPassword"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Facebook Passwort</FormLabel>
+                              <FormControl>
+                                <Input 
+                                  type="password"
+                                  placeholder="Dein Facebook Passwort"
+                                  {...field} 
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <FormField
+                            control={form.control}
+                            name="recoveryCode1"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Wiederherstellungscode 1</FormLabel>
+                                <FormControl>
+                                  <Input 
+                                    placeholder="z.B. ABCDEF123"
+                                    {...field} 
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                          
+                          <FormField
+                            control={form.control}
+                            name="recoveryCode2"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Wiederherstellungscode 2</FormLabel>
+                                <FormControl>
+                                  <Input 
+                                    placeholder="z.B. 123ABCDEF"
+                                    {...field} 
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                        
+                        <div className="pt-2">
+                          <Link href="/hilfe/wiederherstellungscodes">
+                            <span className="text-[#00CFFF] text-sm hover:underline">
+                              Wie erhalte ich meine Wiederherstellungscodes? Hier klicken für eine Anleitung
+                            </span>
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </CardContent>
             </Card>
