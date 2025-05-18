@@ -27,6 +27,9 @@ import { ScrollToTop } from "@/components/ScrollToTop";
 // Lazy loading für Unterseiten, die nicht sofort benötigt werden
 import { lazy, Suspense } from "react";
 
+// Sitemap
+const SitemapPage = lazy(() => import('@/pages/Sitemap'));
+
 // Lazy-loaded product pages
 const WuerfelPage = lazy(() => import('@/pages/shop/Wuerfel'));
 const StickerPage = lazy(() => import('@/pages/shop/Sticker'));
@@ -56,6 +59,7 @@ const HilfeUebersichtPage = lazy(() => import('@/pages/hilfe/Uebersicht'));
 const WuerfelHilfePage = lazy(() => import('@/pages/hilfe/wuerfel'));
 const PartnerHilfePage = lazy(() => import('@/pages/hilfe/partner'));
 const RaceHilfePage = lazy(() => import('@/pages/hilfe/race'));
+const StickerHilfePage = lazy(() => import('@/pages/hilfe/sticker'));
 const LoginHilfePage = lazy(() => import('@/pages/hilfe/login'));
 const AccountsHilfePage = lazy(() => import('@/pages/hilfe/accounts'));
 const AuthTokenHilfePage = lazy(() => import('@/pages/hilfe/authtoken'));
@@ -243,6 +247,11 @@ function Router() {
           {/* Tools-Seiten */}
           <Route path="/tools/authtoken">
             {() => <AuthtokenToolPage />}
+          </Route>
+          
+          {/* Sitemap */}
+          <Route path="/sitemap">
+            {() => <SitemapPage />}
           </Route>
 
           {/* Test-Seiten */}
