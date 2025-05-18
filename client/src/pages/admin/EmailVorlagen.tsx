@@ -6,6 +6,7 @@ import { Search } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 import { Pencil, X, RefreshCw, Check } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
+import { AdminNavigation } from "@/components/AdminNavigation";
 
 // UI Components
 import {
@@ -241,36 +242,7 @@ export default function AdminEmailVorlagenPage() {
       <SEOHead pageName="E-Mail-Vorlagen verwalten" customTitle="E-Mail-Vorlagen verwalten | babixGO Admin" />
       
       {/* Admin-Navigation */}
-      <div className="bg-white shadow mb-6 rounded-lg">
-        <div className="flex flex-wrap items-center p-4">
-          <h2 className="text-xl font-bold mr-6">Admin-Bereich</h2>
-          <div className="flex flex-wrap gap-2">
-            <a 
-              href="/admin/bestellungen" 
-              className="px-4 py-2 rounded-md hover:bg-gray-100 transition-colors"
-            >
-              Bestellungen
-            </a>
-            <a 
-              href="/admin/benutzer" 
-              className="px-4 py-2 rounded-md hover:bg-gray-100 transition-colors"
-            >
-              Benutzer
-            </a>
-            <a 
-              href="/admin/email-vorlagen" 
-              className="px-4 py-2 rounded-md bg-blue-100 text-blue-800 font-medium"
-            >
-              E-Mail-Vorlagen
-            </a>
-          </div>
-          <div className="ml-auto mt-2 sm:mt-0">
-            <Button onClick={handleLogout} variant="outline" size="sm">
-              Abmelden
-            </Button>
-          </div>
-        </div>
-      </div>
+      <AdminNavigation onLogout={handleLogout} />
     
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
         <h1 className="text-2xl font-bold">E-Mail-Vorlagen</h1>
