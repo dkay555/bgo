@@ -433,22 +433,29 @@ export default function ShopSticker() {
           <div className="space-y-4">
             <Card>
               <CardContent className="p-4">
-                <h3 className="font-bold text-lg mb-2">Wie werden die Sticker geliefert?</h3>
-                <p>Nach deiner Bestellung tauschen wir die ausgewählten Sticker mit deinem Account. Dies erfolgt in der Regel innerhalb von 60 Minuten nach Zahlungseingang.</p>
+                <h3 className="font-bold text-lg mb-2">Wann bekomme ich die Sticker?</h3>
+                <p>Wir versenden in der Regel innerhalb von 60 Minuten, spätestens zum Reset des Trade Limits. In dringenden Fällen schick uns deshalb am Besten eine Nachricht vor dem Kauf.</p>
               </CardContent>
             </Card>
             
             <Card>
               <CardContent className="p-4">
-                <h3 className="font-bold text-lg mb-2">Wann kann ich Goldsticker erhalten?</h3>
-                <p>Goldsticker können nur während eines Goldtausch-Events ("Goldener Blitz") im Spiel getauscht werden. Bitte kontaktiere uns vorab, um die aktuelle Verfügbarkeit zu prüfen.</p>
+                <h3 className="font-bold text-lg mb-2">Was benötigt ihr für Daten?</h3>
+                <p>Wir benötigen nur deinen Freundschaftslink oder -code. Der Sticker wird ganz normal über die Ingame Funktion verschickt.</p>
+              </CardContent>
+            </Card>
+            
+            <Card>
+              <CardContent className="p-4">
+                <h3 className="font-bold text-lg mb-2">Kann ich Goldsticker kaufen?</h3>
+                <p>Ja, allerdings nur wenn ein Goldener Blitz angekündigt ist. Schicke uns eine Nachricht um deine Sticker zu reservieren!</p>
               </CardContent>
             </Card>
             
             <Card>
               <CardContent className="p-4">
                 <h3 className="font-bold text-lg mb-2">Wie kann ich bezahlen?</h3>
-                <p>Im Shop hast du die Möglichkeit mit PayPal zu bezahlen. Alternativ bieten wir die Bezahlung via Überweisung an. Schicke uns dafür eine Nachricht.</p>
+                <p>Im Shop hast du die Möglichkeit mit PayPal zu bezahlen. Alternativ kannst du per Banküberweisung bezahlen, schicke uns dafür bitte eine Nachricht.</p>
               </CardContent>
             </Card>
           </div>
