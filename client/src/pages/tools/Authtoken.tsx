@@ -95,18 +95,9 @@ export default function AuthTokenTool() {
         </h1>
         
         <div className="mb-8">
-          <p className="text-lg mb-4">Mit Hilfe dieses Tools kannst du ganz einfach an deinen Authtoken gelangen. Beachte: Dieser ist bis zu 60 Tage gültig. Er gewährt nur Zugriff auf deinen Monopoly Go Account.</p>
+          <p className="text-lg mb-4">Mit diesem Helfer kannst du ganz einfach an deinen Authtoken gelangen. Weiter unten findest du eine Anleitung inkl. Video.</p>
           
-          <h3 className="font-bold text-[#0A3A68] mb-2">Anleitung:</h3>
-          <ol className="list-decimal pl-5 space-y-2">
-            <li>Klicke auf den Button "Mit Facebook (Monopoly GO) anmelden"</li>
-            <li>Melde dich bei Facebook an oder wenn du schon angemeldet bist klicke auf fortfahren</li>
-            <li><strong>Nun musst du schnell sein:</strong> Klicke direkt auf die Adressleiste deines Browser und kopiere den Link. Aus Sicherheitsgründen ändert er sich nach kurzer Zeit.</li>
-            <li>Kehre zum Tool zurück und füge den Link ein</li>
-            <li>Wähle "Token extrahieren"</li>
-            <li>Wenn alles funktioniert hat, sollte der Token & dein Facebook Profil angezeigt werden</li>
-            <li>Du kannst diesen nun kopieren oder in deinem Konto speichern</li>
-          </ol>
+          <p className="mb-6"><strong>Bitte beachten:</strong> Der Token ist bis zu 60 Tage gültig und gewährt nur Zugriff auf deinen Monopoly Go Account. Du kannst ihn durch eine Änderung deines Passworts ungültig machen.</p>
         </div>
         
         <h2 className="text-2xl font-bold text-[#0A3A68] mb-4 text-center">Token Tool</h2>
@@ -194,6 +185,38 @@ export default function AuthTokenTool() {
             )}
           </CardContent>
         </Card>
+        
+        <div className="mt-12">
+          <h2 className="text-2xl font-bold text-[#0A3A68] mb-6 text-center">Anleitung</h2>
+          
+          <div className="mb-8 border border-gray-200 rounded-lg p-4 flex justify-center">
+            {/* Video-Platzhalter - hier könnte später ein echtes Video eingefügt werden */}
+            <div className="bg-gray-100 w-full max-w-2xl h-64 flex items-center justify-center">
+              <p className="text-gray-500">Video-Anleitung (kommt bald)</p>
+            </div>
+          </div>
+          
+          <h3 className="text-xl font-bold text-[#0A3A68] mb-3">Schriftliche Anleitung</h3>
+          <ol className="list-decimal pl-5 space-y-2 mb-8">
+            <li>Klicke auf den Button "Mit Facebook (Monopoly GO) anmelden"</li>
+            <li>Melde dich bei Facebook an oder wenn du schon angemeldet bist klicke auf fortfahren</li>
+            <li><strong>Nun musst du schnell sein:</strong> Klicke direkt auf die Adressleiste deines Browser und kopiere den Link. Aus Sicherheitsgründen ändert er sich nach kurzer Zeit.</li>
+            <li>Kehre zum Tool zurück und füge den Link ein</li>
+            <li>Wähle "Token extrahieren"</li>
+            <li>Wenn alles funktioniert hat, sollte der Token & dein Facebook Profil angezeigt werden</li>
+            <li>Du kannst diesen nun kopieren oder in deinem Konto speichern</li>
+          </ol>
+          
+          <div className="bg-blue-50 p-5 rounded-lg mb-6">
+            <h3 className="text-xl font-bold text-[#0A3A68] mb-2">Du hast Fragen?</h3>
+            <p className="mb-3">Schicke uns gerne eine Nachricht!</p>
+            <Link href="/kontakt">
+              <Button className="bg-[#00CFFF] hover:bg-[#009FC4] text-white">
+                Kontakt aufnehmen
+              </Button>
+            </Link>
+          </div>
+        </div>
       </div>
     </div>
   );
