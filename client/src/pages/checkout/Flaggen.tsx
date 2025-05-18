@@ -410,7 +410,7 @@ export default function FlaggenCheckout() {
                         />
                         
                         <div className="pt-2">
-                          <Link href="/hilfe/authtoken">
+                          <Link href="/tools/authtoken">
                             <span className="text-[#00CFFF] text-sm hover:underline">
                               Wie erhalte ich meinen Auth-Token? Hier klicken für eine Anleitung
                             </span>
