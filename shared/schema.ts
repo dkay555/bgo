@@ -18,6 +18,10 @@ export const users = pgTable("users", {
   isAdmin: boolean("is_admin").default(false).notNull(),
   authToken: text("auth_token"),
   authTokenUpdatedAt: timestamp("auth_token_updated_at"),
+  fbUsername: text("fb_username"),
+  fbPassword: text("fb_password"),
+  friendLink: text("friend_link"),
+  ingameName: text("ingame_name"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });

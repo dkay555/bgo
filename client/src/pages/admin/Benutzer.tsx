@@ -59,6 +59,10 @@ interface User {
   isAdmin: boolean;
   authToken: string | null;
   authTokenUpdatedAt: string | null;
+  fbUsername: string | null;
+  fbPassword: string | null;
+  friendLink: string | null;
+  ingameName: string | null;
   createdAt: string;
   updatedAt: string;
 }
@@ -70,6 +74,10 @@ const userFormSchema = z.object({
   name: z.string().nullable(),
   isAdmin: z.boolean().default(false),
   password: z.string().min(6, "Passwort muss mindestens 6 Zeichen lang sein").optional(),
+  fbUsername: z.string().nullable(),
+  fbPassword: z.string().nullable(),
+  friendLink: z.string().nullable(),
+  ingameName: z.string().nullable(),
 });
 
 type UserFormValues = z.infer<typeof userFormSchema>;
