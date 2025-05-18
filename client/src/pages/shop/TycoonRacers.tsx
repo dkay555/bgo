@@ -78,7 +78,7 @@ export default function ShopTycoonRacers() {
                 </div>
                 <CardContent className="p-6">
                   <p className="mb-4">
-                    Weitere Voraussetzungen, Infos zum Ablauf usw. bekommst du hier:
+                    Hier findest du weitere Infos zum Event und dem Ablauf:
                     <Link href="/hilfe/tycoon-racers">
                       <span className="text-[#00CFFF] hover:underline ml-1 inline-flex items-center">
                         Hilfsartikel lesen
@@ -122,8 +122,8 @@ export default function ShopTycoonRacers() {
                 </div>
                 <CardContent className="p-6">
                   <p className="mb-4">
-                    Wir sammeln Flaggen für dich, wenn du selbst keine Zeit hast. Weitere Informationen findest du hier:
-                    <Link href="/hilfe/flaggen">
+                    Wir sammeln Flaggen für dich, wenn du selbst keine Zeit hast. Es gelten dieselben Voraussetzungen wie für den Würfelboost. Diese kannst du hier nachlesen:
+                    <Link href="/hilfe/wuerfel">
                       <span className="text-[#00CFFF] hover:underline ml-1 inline-flex items-center">
                         Hilfsartikel lesen
                         <span className="material-icons text-sm ml-1">help_outline</span>
