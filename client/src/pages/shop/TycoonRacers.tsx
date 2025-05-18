@@ -168,22 +168,36 @@ export default function ShopTycoonRacers() {
           <div className="space-y-4">
             <Card>
               <CardContent className="p-4">
-                <h3 className="font-bold text-lg mb-2">Wie funktionieren Tycoon Racers Teams?</h3>
-                <p>Bei Tycoon Racers bist du Teil unseres Teams und erhältst alle 54 Rundenbelohnungen, ohne selbst aktiv spielen zu müssen. Wir kümmern uns um alles und stellen sicher, dass unser Team die Ziele erreicht.</p>
+                <h3 className="font-bold text-lg mb-2">Wie sind die Teams aufgebaut?</h3>
+                <p>Wir befüllen jedes Team mit mindestens 2 unserer Accounts. Die restlichen Plätze bieten wir euch an.</p>
               </CardContent>
             </Card>
             
             <Card>
               <CardContent className="p-4">
-                <h3 className="font-bold text-lg mb-2">Wie lange dauert ein Tycoon Racers Event?</h3>
-                <p>Ein Tycoon Racers Event dauert in der Regel 3-4 Tage. Während dieser Zeit sammelt unser Team fleißig Flaggen, um alle Belohnungen freizuschalten.</p>
+                <h3 className="font-bold text-lg mb-2">Wie läuft das ab?</h3>
+                <p>Du bekommst spätestens zum Start des Events den Freundschaftslink und Ingame Namen deines Teampartners mitgeteilt.</p>
               </CardContent>
             </Card>
             
             <Card>
               <CardContent className="p-4">
-                <h3 className="font-bold text-lg mb-2">Wie kann ich bezahlen?</h3>
-                <p>Im Shop hast du die Möglichkeit mit PayPal zu bezahlen. Alternativ bieten wir die Bezahlung via Überweisung an. Schicke uns dafür eine Nachricht.</p>
+                <h3 className="font-bold text-lg mb-2">Was muss ich beachten?</h3>
+                <p>Tritt keinen anderen Team bei und lasse niemand anderen ins Team! Sobald ein Team komplett ist kann man es nicht mehr verlassen.</p>
+              </CardContent>
+            </Card>
+            
+            <Card>
+              <CardContent className="p-4">
+                <h3 className="font-bold text-lg mb-2">Gewinnen wir ganz sicher?</h3>
+                <p>Nein. Wir erspielen 45.000 Punkte - das wars. Sollte es mal knapp werden legen wir noch etwas nach um Platz 1 zu erreichen, wir beteiligen uns aber nicht an Rennen mit Gegnern die mehrere 100k Punkte pro Rennen erspielen.</p>
+              </CardContent>
+            </Card>
+            
+            <Card>
+              <CardContent className="p-4">
+                <h3 className="font-bold text-lg mb-2">Wie oft gewinnt ihr?</h3>
+                <p>Über 90% unserer Teams haben Platz 1 erreicht!</p>
               </CardContent>
             </Card>
           </div>
