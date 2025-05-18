@@ -68,7 +68,9 @@ export default function WuerfelHilfe() {
               <div>
                 <p><strong>Ein verfügbarer High Roller.</strong></p>
                 <p className="ml-4">→ Aktuell gibt es diesen als 7. Belohnung im Bahnhofsturnier oder als Flash Event. Aktuelle Listen findest du zum Beispiel auf <a href="https://monopolygo.wiki" target="_blank" rel="noopener noreferrer" className="text-[#00CFFF] hover:text-[#FF4C00] underline">monopolygo.wiki</a>.</p>
-                <img src="/bahnhofsturnier.jpg" alt="Bahnhofsturnier mit High Roller" className="my-3 rounded-md max-w-md mx-auto border border-[#0A3A68]/20" />
+                <div className="flex justify-center">
+                  <img src="/bahnhofsturnier.jpg" alt="Bahnhofsturnier mit High Roller" className="my-3 rounded-md w-64 h-auto border border-[#0A3A68]/20" />
+                </div>
               </div>
             </div>
             
