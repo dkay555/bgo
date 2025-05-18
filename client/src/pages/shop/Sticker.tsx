@@ -1,19 +1,23 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'wouter';
+import { Link, useLocation } from 'wouter';
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Sticker, stickersWithSets, getAvailableSets, getStickersBySet, calculatePrice } from '@/lib/stickerData';
 import { CONTACT } from '@/lib/constants';
 import SEOHead from '@/components/SEOHead';
 import StickerCart from '@/components/StickerCart';
+import { useStickerCart } from '@/hooks/use-sticker-cart';
 
 export default function ShopSticker() {
+  const [location, navigate] = useLocation();
   const [activeSection, setActiveSection] = useState('stickerpreise');
   const [selectedSetNumber, setSelectedSetNumber] = useState<number | null>(null);
   const [selectedStickerId, setSelectedStickerId] = useState<number | null>(null);
   const [stickerDetails, setStickerDetails] = useState<Sticker | null>(null);
-  const [cart, setCart] = useState<Sticker[]>([]);
   const [availableSets, setAvailableSets] = useState<number[]>([]);
+  
+  // Nutze den Warenkorb-Hook statt eines lokalen States
+  const { cartItems, addToCart, removeFromCart, totalPrice } = useStickerCart();
 
   // Lade verfügbare Sets
   useEffect(() => {
@@ -58,7 +62,7 @@ export default function ShopSticker() {
   };
 
   // Fügt den ausgewählten Sticker zum Warenkorb hinzu
-  const addToCart = () => {
+  const handleAddToCart = () => {
     if (stickerDetails) {
       // Wenn der Sticker golden ist, fügen wir ihn nicht direkt zum Warenkorb hinzu
       if (stickerDetails.isGold) {
@@ -66,20 +70,13 @@ export default function ShopSticker() {
         return;
       }
       
-      setCart([...cart, stickerDetails]);
+      addToCart(stickerDetails);
     }
   };
 
-  // Entfernt einen Sticker aus dem Warenkorb
-  const removeFromCart = (index: number) => {
-    const newCart = [...cart];
-    newCart.splice(index, 1);
-    setCart(newCart);
-  };
-
-  // Berechnet den Gesamtpreis des Warenkorbs
-  const calculateTotal = () => {
-    return cart.reduce((total, item) => total + calculatePrice(item), 0).toFixed(2);
+  // Zum Checkout navigieren
+  const goToCheckout = () => {
+    navigate('/checkout/sticker');
   };
 
   return (
@@ -342,7 +339,7 @@ export default function ShopSticker() {
                           )}
                           
                           <button
-                            onClick={addToCart}
+                            onClick={handleAddToCart}
                             className={`w-full ${
                               stickerDetails.isGold 
                                 ? 'bg-gray-400 hover:bg-gray-500' 
@@ -369,14 +366,14 @@ export default function ShopSticker() {
                   <p className="text-white/80">Überprüfe deine Auswahl und fahre mit der Bestellung fort.</p>
                 </div>
                 <CardContent className="p-6">
-                  {cart.length === 0 ? (
+                  {cartItems.length === 0 ? (
                     <div className="bg-gray-50 p-4 rounded-md text-center">
                       <p className="text-gray-500">Du hast noch keine Sticker ausgewählt.</p>
                     </div>
                   ) : (
                     <div>
                       <ul className="mb-6 border rounded-md divide-y">
-                        {cart.map((item, index) => (
+                        {cartItems.map((item, index) => (
                           <li key={index} className="py-3 px-4 flex justify-between items-center">
                             <div>
                               <p className="font-medium">{item.name} (Set {Math.ceil(item.id / 9)})</p>
@@ -407,16 +404,17 @@ export default function ShopSticker() {
                       <div className="bg-gray-50 p-4 rounded-md mb-6">
                         <div className="flex justify-between items-center text-lg font-bold">
                           <span>Gesamtsumme:</span>
-                          <span className="text-[#FF4C00]">{calculateTotal().replace('.', ',')} €</span>
+                          <span className="text-[#FF4C00]">{totalPrice.toFixed(2).replace('.', ',')} €</span>
                         </div>
                       </div>
                       
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <Link href="/checkout/sticker" className="md:col-span-2">
-                          <Button className="w-full bg-[#FF4C00] hover:bg-[#FF4C00]/90 text-white">
-                            Zur Kasse gehen
-                          </Button>
-                        </Link>
+                        <button 
+                          onClick={goToCheckout}
+                          className="md:col-span-2 w-full bg-[#FF4C00] hover:bg-[#FF4C00]/90 text-white py-2 px-4 rounded-lg font-bold"
+                        >
+                          Zur Kasse gehen
+                        </button>
                       </div>
                     </div>
                   )}
