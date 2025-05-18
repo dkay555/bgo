@@ -19,12 +19,12 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         // Custom button variants for babixGO
-        cyan: "bg-[#00CFFF] text-white hover:bg-[#00CFFF]/90 focus:ring-2 focus:ring-[#00CFFF]/50",
-        orange: "bg-[#FF4C00] text-white hover:bg-[#cc3b00] focus:ring-2 focus:ring-[#FF4C00]/50",
-        darkblue: "bg-[#0A3A68] text-white hover:bg-[#0A3A68]/90 focus:ring-2 focus:ring-[#0A3A68]/50",
-        whatsapp: "bg-transparent text-[#25D366] border-2 border-[#25D366] hover:bg-[#25D366] hover:text-white transition-colors duration-300",
-        facebook: "bg-transparent text-[#1877F2] border-2 border-[#1877F2] hover:bg-[#1877F2] hover:text-white transition-colors duration-300",
-        email: "bg-transparent text-[#FF4C00] border-2 border-[#FF4C00] hover:bg-[#FF4C00] hover:text-white transition-colors duration-300",
+        cyan: "bg-gradient-to-r from-[#00CFFF] to-[#00B8E5] text-white hover:from-[#00B8E5] hover:to-[#00A6CF] shadow-md hover:shadow-lg focus:ring-2 focus:ring-[#00CFFF]/50 transform hover:-translate-y-0.5 transition-all duration-200",
+        orange: "bg-gradient-to-r from-[#FF4C00] to-[#FF6E33] text-white hover:from-[#FF6E33] hover:to-[#cc3b00] shadow-md hover:shadow-lg focus:ring-2 focus:ring-[#FF4C00]/50 transform hover:-translate-y-0.5 transition-all duration-200",
+        darkblue: "bg-gradient-to-r from-[#0A3A68] to-[#0D4B88] text-white hover:from-[#0D4B88] hover:to-[#0A3A68] shadow-md hover:shadow-lg focus:ring-2 focus:ring-[#0A3A68]/50 transform hover:-translate-y-0.5 transition-all duration-200",
+        whatsapp: "bg-transparent text-[#25D366] border-2 border-[#25D366] hover:bg-[#25D366] hover:text-white transition-all duration-300 shadow-sm hover:shadow-md transform hover:-translate-y-0.5",
+        facebook: "bg-transparent text-[#1877F2] border-2 border-[#1877F2] hover:bg-[#1877F2] hover:text-white transition-all duration-300 shadow-sm hover:shadow-md transform hover:-translate-y-0.5",
+        email: "bg-transparent text-[#FF4C00] border-2 border-[#FF4C00] hover:bg-[#FF4C00] hover:text-white transition-all duration-300 shadow-sm hover:shadow-md transform hover:-translate-y-0.5",
       },
       size: {
         default: "h-10 px-4 py-2",

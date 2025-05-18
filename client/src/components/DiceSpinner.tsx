@@ -26,7 +26,8 @@ export function DiceSpinner({
         style={{
           width: size,
           height: size,
-          position: 'relative'
+          position: 'relative',
+          perspective: `${size * 3}px`
         }}
       >
         {/* Vorderseite - 1 */}
