@@ -19,10 +19,13 @@ export function DiceSpinner({
   secondaryColor = '#FF4C00',
   className = ''
 }: DiceSpinnerProps) {
+  // Schatten für besseren 3D-Effekt
+  const boxShadowStyle = `0 0 ${size/8}px rgba(0,0,0,0.2), 0 0 ${size/15}px rgba(0,0,0,0.3) inset`;
+  
   return (
     <div className={`relative ${className}`} style={{ width: size, height: size }}>
       <div 
-        className="dice" 
+        className="dice rotating-dice" 
         style={{
           width: size,
           height: size,
@@ -39,7 +42,7 @@ export function DiceSpinner({
             height: size,
             transform: `translateZ(${size / 2}px)`,
             backgroundColor: color,
-            boxShadow: `0 0 ${size / 10}px rgba(0, 0, 0, 0.2) inset`
+            boxShadow: boxShadowStyle
           }}
         >
           <div 
