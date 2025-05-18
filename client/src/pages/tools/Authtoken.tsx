@@ -193,6 +193,8 @@ export default function AuthTokenTool() {
             <video 
               className="w-full max-w-2xl" 
               controls
+              autoPlay={false}
+              preload="metadata"
               poster="/images/auth-token/step1.webp"
             >
               <source src="/videos/anleitung_tokentool.mp4" type="video/mp4" />
