@@ -29,7 +29,7 @@ import { lazy, Suspense } from "react";
 
 // Lazy-loaded product pages
 const WuerfelPage = lazy(() => import('@/pages/shop/Wuerfel'));
-const StickerPage = lazy(() => import('@/pages/produkte/Sticker'));
+const StickerPage = lazy(() => import('@/pages/shop/Sticker'));
 const PartnerPage = lazy(() => import('@/pages/produkte/Partner'));
 const TycoonRacersPage = lazy(() => import('@/pages/produkte/TycoonRacers'));
 const WeiterePage = lazy(() => import('@/pages/produkte/Weitere'));
@@ -146,7 +146,7 @@ function Router() {
             {() => <WuerfelPage />}
           </Route>
           <Route path="/produkte/sticker">
-            {() => <StickerPage />}
+            {() => <Redirect to="/shop/sticker" />}
           </Route>
           <Route path="/produkte/partner">
             {() => <PartnerPage />}
