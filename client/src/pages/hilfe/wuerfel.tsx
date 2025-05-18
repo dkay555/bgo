@@ -48,27 +48,38 @@ export default function WuerfelHilfe() {
         
         <div className="mb-8" id="voraussetzungen">
           <h2 className="text-xl font-bold text-[#0A3A68] mb-4 border-b-2 border-[#00CFFF] pb-2 inline-block">Voraussetzungen Würfelboost</h2>
-          <ul className="list-disc pl-5 space-y-4 text-gray-700">
-            <li>
-              <p>Ab 100 Würfel ist es ein Versuch Wert, im Optimalfall sollten es 200 sein.</p>
-              <div className="bg-[#E6F7FF] border-l-4 border-[#00CFFF] p-4 rounded-r-md my-3">
-                <h4 className="text-[#0A3A68] font-bold text-lg mb-1 flex items-center">
-                  <span className="material-icons text-[#00CFFF] mr-2">lightbulb</span>
-                  Zu wenig Würfel?
-                </h4>
-                <p>Lässt sich ein Set vervollständigen? Ist der Freundschaftsbalken gefüllt? Schreib uns und wir finden gemeinsam auch dann eine Lösung wenn es schnell gehen muss.</p>
+          <div className="space-y-4 text-gray-700">
+            <div className="flex items-start">
+              <span className="material-icons text-[#0A3A68] mr-2 mt-1">check_circle</span>
+              <div>
+                <p><strong>Ab 100 Würfel ist es ein Versuch Wert</strong>, im Optimalfall sollten es 200 sein.</p>
+                <div className="bg-[#E6F7FF] border-l-4 border-[#00CFFF] p-4 rounded-r-md my-3">
+                  <h4 className="text-[#0A3A68] font-bold text-lg mb-1 flex items-center">
+                    <span className="material-icons text-[#00CFFF] mr-2">lightbulb</span>
+                    Zu wenig Würfel?
+                  </h4>
+                  <p>Lässt sich ein Set vervollständigen? Ist der Freundschaftsbalken gefüllt? Schreib uns und wir finden gemeinsam auch dann eine Lösung wenn es schnell gehen muss.</p>
+                </div>
               </div>
-            </li>
-            <li>
-              <p><strong>Ein verfügbarer High Roller.</strong></p>
-              <p className="ml-4">→ Aktuell gibt es diesen als 7. Belohnung im Bahnhofsturnier oder als Flash Event. Aktuelle Listen findest du zum Beispiel auf <a href="https://monopolygo.wiki" target="_blank" rel="noopener noreferrer" className="text-[#00CFFF] hover:text-[#FF4C00] underline">monopolygo.wiki</a>.</p>
-              <img src="/bahnhofsturnier.jpg" alt="Bahnhofsturnier mit High Roller" className="my-3 rounded-md max-w-md mx-auto border border-[#0A3A68]/20" />
-            </li>
-            <li>
-              <p><strong>Dein Account muss mit Facebook oder Google verbunden sein.</strong> Es ist nicht erforderlich deine FB Zugangsdaten zu teilen.</p>
-              <p><strong>Mehr zu dem Thema:</strong> <Link href="/hilfe/login" className="text-[#00CFFF] hover:text-[#FF4C00] underline">Login-Methoden für den Würfelboost</Link></p>
-            </li>
-          </ul>
+            </div>
+            
+            <div className="flex items-start">
+              <span className="material-icons text-[#0A3A68] mr-2 mt-1">check_circle</span>
+              <div>
+                <p><strong>Ein verfügbarer High Roller.</strong></p>
+                <p className="ml-4">→ Aktuell gibt es diesen als 7. Belohnung im Bahnhofsturnier oder als Flash Event. Aktuelle Listen findest du zum Beispiel auf <a href="https://monopolygo.wiki" target="_blank" rel="noopener noreferrer" className="text-[#00CFFF] hover:text-[#FF4C00] underline">monopolygo.wiki</a>.</p>
+                <img src="/bahnhofsturnier.jpg" alt="Bahnhofsturnier mit High Roller" className="my-3 rounded-md max-w-md mx-auto border border-[#0A3A68]/20" />
+              </div>
+            </div>
+            
+            <div className="flex items-start">
+              <span className="material-icons text-[#0A3A68] mr-2 mt-1">check_circle</span>
+              <div>
+                <p><strong>Dein Account muss mit Facebook oder Google verbunden sein.</strong> Es ist nicht erforderlich deine FB Zugangsdaten zu teilen.</p>
+                <p><strong>Mehr zu dem Thema:</strong> <Link href="/hilfe/login" className="text-[#00CFFF] hover:text-[#FF4C00] underline">Login-Methoden für den Würfelboost</Link></p>
+              </div>
+            </div>
+          </div>
           
           <div className="bg-[#FFEBCC] border-l-4 border-[#FF4C00] p-4 rounded-r-md mt-6">
             <h4 className="text-[#0A3A68] font-bold text-lg mb-2">Zusätzliche Voraussetzungen für das "Lucky Chance/Dice Roll/Frei Parken x2" Angebot:</h4>
