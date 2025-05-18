@@ -21,12 +21,29 @@ export default function WuerfelHilfe() {
       <div className="max-w-3xl mx-auto">
         <p className="text-gray-700 mb-6">Erfahre mehr darüber wie genau du Würfel (oder Flaggen/Eventwährung) bekommst, welche Voraussetzungen gelten und was beachtet werden sollte um die Accountsicherheit zu wahren.</p>
         
-        <div className="flex flex-wrap gap-3 mb-8">
-          <a href="#voraussetzungen" className="bg-[#0A3A68] text-white px-4 py-2 rounded-md hover:bg-[#00CFFF] transition-colors">Voraussetzungen</a>
-          <a href="#ablauf" className="bg-[#0A3A68] text-white px-4 py-2 rounded-md hover:bg-[#00CFFF] transition-colors">Ablauf</a>
-          <a href="#nachBoost" className="bg-[#0A3A68] text-white px-4 py-2 rounded-md hover:bg-[#00CFFF] transition-colors">Nach dem Boost</a>
-          <a href="#sicherheit" className="bg-[#0A3A68] text-white px-4 py-2 rounded-md hover:bg-[#00CFFF] transition-colors">Accountsicherheit</a>
-          <a href="#angebote" className="bg-[#0A3A68] text-white px-4 py-2 rounded-md hover:bg-[#00CFFF] transition-colors">Weitere Würfel-Angebote</a>
+        <div className="mb-8">
+          <ul className="space-y-2">
+            <li className="flex items-center">
+              <span className="material-icons text-[#0A3A68] mr-2">list</span>
+              <a href="#voraussetzungen" className="font-bold hover:text-[#00CFFF] transition-colors">Voraussetzungen</a>
+            </li>
+            <li className="flex items-center">
+              <span className="material-icons text-[#0A3A68] mr-2">list</span>
+              <a href="#ablauf" className="font-bold hover:text-[#00CFFF] transition-colors">Ablauf</a>
+            </li>
+            <li className="flex items-center">
+              <span className="material-icons text-[#0A3A68] mr-2">list</span>
+              <a href="#nachBoost" className="font-bold hover:text-[#00CFFF] transition-colors">Nach dem Boost</a>
+            </li>
+            <li className="flex items-center">
+              <span className="material-icons text-[#0A3A68] mr-2">list</span>
+              <a href="#sicherheit" className="font-bold hover:text-[#00CFFF] transition-colors">Accountsicherheit</a>
+            </li>
+            <li className="flex items-center">
+              <span className="material-icons text-[#0A3A68] mr-2">list</span>
+              <a href="#angebote" className="font-bold hover:text-[#00CFFF] transition-colors">Weitere Würfel-Angebote</a>
+            </li>
+          </ul>
         </div>
         
         <div className="mb-8" id="voraussetzungen">
@@ -35,34 +52,43 @@ export default function WuerfelHilfe() {
             <li>
               <p>Ab 100 Würfel ist es ein Versuch Wert, im Optimalfall sollten es 200 sein.</p>
               <div className="bg-[#E6F7FF] border-l-4 border-[#00CFFF] p-4 rounded-r-md my-3">
-                <h4 className="text-[#0A3A68] font-bold text-lg mb-1">Zu wenig Würfel?</h4>
+                <h4 className="text-[#0A3A68] font-bold text-lg mb-1 flex items-center">
+                  <span className="material-icons text-[#00CFFF] mr-2">lightbulb</span>
+                  Zu wenig Würfel?
+                </h4>
                 <p>Lässt sich ein Set vervollständigen? Ist der Freundschaftsbalken gefüllt? Schreib uns und wir finden gemeinsam auch dann eine Lösung wenn es schnell gehen muss.</p>
               </div>
             </li>
             <li>
-              <p>Ein verfügbarer High Roller. Aktuell gibt es diesen als 7. Belohnung im Bahnhofsturnier oder als Flash Event. Aktuelle Listen findest du zum Beispiel auf <a href="https://monopolygo.wiki" target="_blank" rel="noopener noreferrer" className="text-[#00CFFF] hover:text-[#FF4C00] underline">monopolygo.wiki</a>.</p>
-              <div className="my-3 rounded-md max-w-md mx-auto bg-[#0A3A68]/10 p-6 text-center border border-[#0A3A68]/20">
-                <span className="material-icons text-[#0A3A68] text-4xl">casino</span>
-                <p className="font-bold mt-2">Bahnhofsturnier mit High Roller als 7. Belohnung</p>
-              </div>
+              <p><strong>Ein verfügbarer High Roller.</strong></p>
+              <p className="ml-4">→ Aktuell gibt es diesen als 7. Belohnung im Bahnhofsturnier oder als Flash Event. Aktuelle Listen findest du zum Beispiel auf <a href="https://monopolygo.wiki" target="_blank" rel="noopener noreferrer" className="text-[#00CFFF] hover:text-[#FF4C00] underline">monopolygo.wiki</a>.</p>
+              <img src="/bahnhofsturnier.jpg" alt="Bahnhofsturnier mit High Roller" className="my-3 rounded-md max-w-md mx-auto border border-[#0A3A68]/20" />
             </li>
             <li>
-              <p>Dein Account muss mit Facebook oder Google verbunden sein. Es ist nicht erforderlich deine FB Zugangsdaten zu teilen.</p>
-              <p><Link href="/hilfe/login" className="text-[#00CFFF] hover:text-[#FF4C00] underline">Mehr zu dem Thema → Login-Methoden für den Würfelboost</Link></p>
+              <p><strong>Dein Account muss mit Facebook oder Google verbunden sein.</strong> Es ist nicht erforderlich deine FB Zugangsdaten zu teilen.</p>
+              <p><strong>Mehr zu dem Thema:</strong> <Link href="/hilfe/login" className="text-[#00CFFF] hover:text-[#FF4C00] underline">Login-Methoden für den Würfelboost</Link></p>
             </li>
           </ul>
           
           <div className="bg-[#FFEBCC] border-l-4 border-[#FF4C00] p-4 rounded-r-md mt-6">
             <h4 className="text-[#0A3A68] font-bold text-lg mb-2">Zusätzliche Voraussetzungen für das "Lucky Chance/Dice Roll/Frei Parken x2" Angebot:</h4>
             <p className="mb-3">Eines der Events muss einlösbar sein. Sollen wir ein zeitliches begrenztes Flash Event nutzen, solltest du dich früh genug melden & deinen Platz reservieren. Die Plätze sind aufgrund des zeitlichen Fensters sehr begrenzt. Schick uns einfach eine Nachricht wenn du ein Event im Blick hast.</p>
-            <div className="mt-2 rounded-md max-w-md mx-auto bg-[#FF4C00]/10 p-6 text-center border border-[#FF4C00]/20 flex flex-col items-center">
+            <div className="mt-2 rounded-md max-w-md mx-auto bg-[#FF4C00]/10 p-6 text-center border border-[#FF4C00]/20">
               <div className="flex items-center justify-center gap-4">
-                <span className="material-icons text-[#FF4C00] text-4xl">auto_awesome</span>
-                <span className="material-icons text-[#FF4C00] text-4xl">casino</span>
-                <span className="material-icons text-[#FF4C00] text-4xl">local_parking</span>
+                <div className="flex flex-col items-center">
+                  <img src="/images/flash-events/LuckyChance_icon.png" alt="Lucky Chance" className="w-14 h-14 object-contain" />
+                  <p className="text-xs mt-1">Lucky Chance</p>
+                </div>
+                <div className="flex flex-col items-center">
+                  <img src="/images/flash-events/RollMatch_icon.png" alt="Dice Roll" className="w-14 h-14 object-contain" />
+                  <p className="text-xs mt-1">Dice Roll</p>
+                </div>
+                <div className="flex flex-col items-center">
+                  <img src="/images/flash-events/FreiParken_icon.png" alt="Frei Parken" className="w-14 h-14 object-contain" />
+                  <p className="text-xs mt-1">Frei Parken x2</p>
+                </div>
               </div>
-              <p className="font-bold mt-3">Lucky Chance / Dice Roll / Frei Parken x2</p>
-              <p className="text-sm mt-1 text-gray-600">Flash Events für optimalen Würfelboost</p>
+              <p className="font-bold mt-3">Flash Events für optimalen Würfelboost</p>
             </div>
           </div>
         </div>
