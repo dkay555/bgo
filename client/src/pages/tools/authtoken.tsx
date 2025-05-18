@@ -1,122 +1,263 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { Link } from 'wouter';
 import { Card, CardContent } from "@/components/ui/card";
-import { ChevronRight, Info } from 'lucide-react';
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { 
+  AlertTriangle, 
+  Check, 
+  ChevronRight, 
+  Copy, 
+  Facebook, 
+  Info, 
+  Search, 
+  Key,
+  HelpCircle
+} from 'lucide-react';
+import { useToast } from "@/hooks/use-toast";
+import babixLogo from '@assets/babixGO (200 x 200 px)trans.png';
 
-// Importiere die Anweisungsbilder
-import authtokenStep1 from '@assets/Authtoken_Anleitung_1_720_1561.webp';
-import authtokenStep2 from '@assets/Authtoken_Anleitung_2_720_1561.webp';
-import authtokenStep3 from '@assets/Authtoken_Anleitung_3_720_1561.webp';
-import authtokenStep4 from '@assets/Authtoken_Anleitung_4_720_1561.webp';
+export default function AuthTokenToolPage() {
+  const [inputValue, setInputValue] = useState('');
+  const [extractedToken, setExtractedToken] = useState('');
+  const [isValidToken, setIsValidToken] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const { toast } = useToast();
 
-export default function AuthTokenHilfePage() {
+  const extractToken = () => {
+    setIsLoading(true);
+    
+    // Token-Extraktionslogik
+    setTimeout(() => {
+      try {
+        const tokenRegex = /EAA[a-zA-Z0-9]{50,}/g;
+        const matches = inputValue.match(tokenRegex);
+        
+        if (matches && matches.length > 0) {
+          setExtractedToken(matches[0]);
+          setIsValidToken(true);
+          toast({
+            title: "Token gefunden!",
+            description: "Der Auth-Token wurde erfolgreich extrahiert.",
+            variant: "success"
+          });
+        } else {
+          setExtractedToken('');
+          setIsValidToken(false);
+          toast({
+            title: "Kein Token gefunden",
+            description: "In dem eingegebenen Text konnte kein gültiger Auth-Token gefunden werden.",
+            variant: "destructive"
+          });
+        }
+      } catch (error) {
+        setExtractedToken('');
+        setIsValidToken(false);
+        toast({
+          title: "Fehler bei der Verarbeitung",
+          description: "Ein unerwarteter Fehler ist aufgetreten. Bitte versuche es erneut.",
+          variant: "destructive"
+        });
+      }
+      
+      setIsLoading(false);
+    }, 500);
+  };
+
+  const handleCopy = () => {
+    if (extractedToken) {
+      navigator.clipboard.writeText(extractedToken)
+        .then(() => {
+          setCopied(true);
+          toast({
+            title: "Kopiert!",
+            description: "Der Auth-Token wurde in die Zwischenablage kopiert.",
+            variant: "success"
+          });
+          setTimeout(() => setCopied(false), 2000);
+        })
+        .catch(() => {
+          toast({
+            title: "Fehler beim Kopieren",
+            description: "Der Token konnte nicht kopiert werden. Bitte kopiere ihn manuell.",
+            variant: "destructive"
+          });
+        });
+    }
+  };
+
   return (
-    <div className="container mx-auto p-4 md:p-8">
+    <div className="container mx-auto px-4 py-8 md:px-8">
       <div className="mb-4">
-        <Link href="/hilfe">
+        <Link href="/">
           <a className="text-[#0A3A68] hover:text-[#00CFFF] flex items-center">
             <ChevronRight className="h-4 w-4 rotate-180 mr-1" />
-            Zurück zur Hilfe-Übersicht
+            Zurück zur Startseite
           </a>
         </Link>
       </div>
 
-      <h1 className="text-3xl font-bold text-[#0A3A68] mb-2">Auth-Token Anleitung</h1>
-      <div className="w-16 h-1 bg-gradient-to-r from-[#00CFFF] to-[#0A3A68] mb-6"></div>
+      <div className="flex items-center justify-center mb-6">
+        <img src={babixLogo} alt="BabixGO Logo" className="h-12 w-12 mr-3" />
+        <h1 className="text-3xl font-bold text-[#0A3A68]">Facebook Auth-Token Tool</h1>
+      </div>
+      <div className="w-48 h-1 bg-gradient-to-r from-[#00CFFF] to-[#0A3A68] mx-auto mb-8"></div>
 
-      <div className="mb-8">
-        <p className="text-lg mb-4">
-          Um deine Würfel sicher auf dein Monopoly GO! Konto zu erhalten, benötigen wir deinen Auth-Token. 
-          Dies ist ein sicherer Weg, um auf dein Konto zuzugreifen, ohne deine Login-Daten zu teilen.
-        </p>
-        
-        <div className="bg-blue-50 border-l-4 border-[#00CFFF] p-4 mb-6">
-          <div className="flex">
-            <Info className="h-6 w-6 text-[#00CFFF] mr-2" />
-            <div>
-              <p className="font-medium">Wichtiger Hinweis:</p>
-              <p>Der Auth-Token ist nur für dich sichtbar und läuft nach einiger Zeit ab. Er muss daher kurz vor deiner Bestellung generiert werden.</p>
+      <div className="max-w-3xl mx-auto">
+        <Card className="mb-6 border-[#00CFFF] shadow-md">
+          <CardContent className="p-6">
+            <div className="flex items-start space-x-3">
+              <Info className="h-6 w-6 text-[#00CFFF] flex-shrink-0 mt-1" />
+              <div>
+                <h2 className="text-xl font-semibold text-[#0A3A68] mb-2">Was ist ein Auth-Token?</h2>
+                <p className="mb-4">
+                  Der Facebook Auth-Token ist ein sicherer Schlüssel, der es uns erlaubt, auf dein Monopoly GO!-Konto 
+                  zuzugreifen, ohne dass du deine Anmeldedaten teilen musst. Dieser Token gewährt nur temporären Zugriff
+                  und ist viel sicherer als das Teilen deines Passworts.
+                </p>
+                <div className="bg-blue-50 border-l-4 border-[#00CFFF] p-3 mb-4">
+                  <p className="text-sm">
+                    <span className="font-semibold">Wichtig:</span> Dein Auth-Token ist persönlich und sollte nur für
+                    diese Bestellung verwendet werden. Er läuft nach einiger Zeit automatisch ab.
+                  </p>
+                </div>
+                <Link href="/hilfe/authtoken">
+                  <a className="text-[#00CFFF] hover:text-[#0A3A68] flex items-center">
+                    <HelpCircle className="h-4 w-4 mr-1" />
+                    Ausführliche Anleitung zum manuellen Extrahieren des Tokens
+                  </a>
+                </Link>
+              </div>
             </div>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
 
-        <div className="bg-orange-50 border-l-4 border-[#FF4C00] p-4 mb-6">
-          <div className="flex">
-            <Info className="h-6 w-6 text-[#FF4C00] mr-2" />
-            <div>
-              <p className="font-medium">NEU: Facebook Auth Token Tool</p>
-              <p className="mb-2">Wir haben ein neues Tool entwickelt, mit dem du deinen Auth-Token noch einfacher extrahieren kannst!</p>
-              <Link href="/hilfe/authtoken-tool">
-                <a className="inline-block px-4 py-2 bg-[#FF4C00] text-white font-medium rounded hover:bg-[#cc3b00] transition-colors">
-                  Zum Auth Token Tool
+        <Card className="mb-6 border-[#0A3A68] shadow-md">
+          <CardContent className="p-6">
+            <h2 className="text-xl font-semibold text-[#0A3A68] flex items-center mb-4">
+              <Facebook className="h-5 w-5 mr-2 text-[#1877F2]" />
+              Auth-Token extrahieren
+            </h2>
+            
+            <div className="space-y-4">
+              <div>
+                <label htmlFor="tokenInput" className="block font-medium text-gray-700 mb-1">
+                  Füge hier den Text aus deinem Facebook-Netzwerk ein:
+                </label>
+                <Textarea
+                  id="tokenInput"
+                  ref={textareaRef}
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  placeholder="Kopiere den Text aus dem Facebook-Netzwerk-Tab deines Browsers hier hinein..."
+                  className="min-h-[100px]"
+                />
+              </div>
+              
+              <Button 
+                onClick={extractToken} 
+                disabled={!inputValue || isLoading} 
+                className="w-full bg-[#1877F2] hover:bg-[#166FE5]"
+              >
+                {isLoading ? (
+                  <>
+                    <span className="animate-spin mr-2">⏳</span>
+                    Token wird extrahiert...
+                  </>
+                ) : (
+                  <>
+                    <Search className="h-4 w-4 mr-2" />
+                    Auth-Token extrahieren
+                  </>
+                )}
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+
+        {extractedToken && (
+          <Card className={`mb-6 ${isValidToken ? 'border-green-500' : 'border-red-500'} shadow-md`}>
+            <CardContent className="p-6">
+              <h2 className="text-xl font-semibold flex items-center mb-4">
+                <Key className={`h-5 w-5 mr-2 ${isValidToken ? 'text-green-500' : 'text-red-500'}`} />
+                Extrahierter Auth-Token
+              </h2>
+              
+              <div className="mb-4">
+                <div className="relative">
+                  <Textarea
+                    value={extractedToken}
+                    readOnly
+                    className={`min-h-[60px] font-mono text-sm ${isValidToken ? 'border-green-500 bg-green-50' : 'border-red-500 bg-red-50'}`}
+                  />
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="absolute right-2 top-2"
+                    onClick={handleCopy}
+                  >
+                    {copied ? (
+                      <Check className="h-4 w-4 text-green-500" />
+                    ) : (
+                      <Copy className="h-4 w-4" />
+                    )}
+                  </Button>
+                </div>
+              </div>
+              
+              {isValidToken ? (
+                <div className="bg-green-50 border-l-4 border-green-500 p-3">
+                  <div className="flex">
+                    <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" />
+                    <p className="text-sm">
+                      <span className="font-semibold">Gültiger Token gefunden!</span> Dieser Auth-Token kann nun 
+                      für deine Bestellung verwendet werden. Du kannst ihn kopieren oder direkt im Bestellformular verwenden.
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                <div className="bg-red-50 border-l-4 border-red-500 p-3">
+                  <div className="flex">
+                    <AlertTriangle className="h-5 w-5 text-red-500 mr-2 flex-shrink-0" />
+                    <p className="text-sm">
+                      <span className="font-semibold">Fehler:</span> Der extrahierte Token scheint ungültig zu sein. 
+                      Bitte stelle sicher, dass du den korrekten Text aus dem Facebook-Netzwerk eingefügt hast.
+                    </p>
+                  </div>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        )}
+
+        <Card className="mb-6 border-gray-200 shadow-md">
+          <CardContent className="p-6">
+            <h2 className="text-xl font-semibold text-[#0A3A68] flex items-center mb-4">
+              <Info className="h-5 w-5 mr-2 text-[#00CFFF]" />
+              Hilfe & Support
+            </h2>
+            
+            <p className="mb-4">
+              Falls du Probleme bei der Extraktion deines Auth-Tokens hast, kannst du die detaillierte Anleitung 
+              mit Bildern auf unserer Hilfeseite ansehen oder uns direkt kontaktieren.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
+              <Link href="/hilfe/authtoken">
+                <a className="inline-block px-4 py-2 bg-[#0A3A68] text-white font-medium rounded hover:bg-[#072a4e] transition-colors text-center">
+                  Zur Anleitung
+                </a>
+              </Link>
+              <Link href="/kontakt">
+                <a className="inline-block px-4 py-2 bg-[#00CFFF] text-white font-medium rounded hover:bg-[#00b8e6] transition-colors text-center">
+                  Support kontaktieren
                 </a>
               </Link>
             </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-        <Card>
-          <CardContent className="p-6">
-            <h2 className="text-xl font-bold text-[#0A3A68] mb-4">Schritt 1: Link öffnen</h2>
-            <img src={authtokenStep1} alt="Schritt 1: Link öffnen" className="w-full rounded-lg mb-4" />
-            <p>Sende dir den bereitgestellten Link über Messenger (Facebook) und klicke ihn an.</p>
           </CardContent>
         </Card>
-
-        <Card>
-          <CardContent className="p-6">
-            <h2 className="text-xl font-bold text-[#0A3A68] mb-4">Schritt 2: Fortfahren</h2>
-            <img src={authtokenStep2} alt="Schritt 2: Fortfahren" className="w-full rounded-lg mb-4" />
-            <p>Klicke auf "Fortfahren", um den Prozess zu beginnen.</p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardContent className="p-6">
-            <h2 className="text-xl font-bold text-[#0A3A68] mb-4">Schritt 3: Optionsmenü öffnen</h2>
-            <img src={authtokenStep3} alt="Schritt 3: Optionsmenü öffnen" className="w-full rounded-lg mb-4" />
-            <p>Es öffnet sich eine weiße Seite. Klicke oben rechts auf die drei Punkte (Menüsymbol).</p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardContent className="p-6">
-            <h2 className="text-xl font-bold text-[#0A3A68] mb-4">Schritt 4: Link kopieren</h2>
-            <img src={authtokenStep4} alt="Schritt 4: Link kopieren" className="w-full rounded-lg mb-4" />
-            <p>Wähle "Link kopieren" und sende uns diesen Link. Der Auth-Token ist in diesem Link enthalten.</p>
-          </CardContent>
-        </Card>
-      </div>
-
-      <div className="bg-gray-50 p-6 rounded-lg mb-8">
-        <h2 className="text-xl font-bold text-[#0A3A68] mb-4">Häufig gestellte Fragen</h2>
-        
-        <div className="space-y-4">
-          <div>
-            <h3 className="font-semibold text-[#0A3A68]">Ist es sicher, meinen Auth-Token zu teilen?</h3>
-            <p>Ja, der Auth-Token ermöglicht nur einen temporären Zugriff, der nach kurzer Zeit abläuft. Er kann nicht für dauerhafte Änderungen an deinem Konto verwendet werden.</p>
-          </div>
-          
-          <div>
-            <h3 className="font-semibold text-[#0A3A68]">Was passiert, wenn ich meinen Auth-Token nicht finden kann?</h3>
-            <p>Solltest du Probleme haben, kannst du alternativ auch die Login-Methode wählen und uns deine Monopoly GO! Anmeldedaten zur Verfügung stellen.</p>
-          </div>
-          
-          <div>
-            <h3 className="font-semibold text-[#0A3A68]">Wie lange ist der Auth-Token gültig?</h3>
-            <p>Der Auth-Token ist für einen begrenzten Zeitraum gültig (ca. 24-48 Stunden). Daher ist es wichtig, ihn kurz vor deiner Bestellung zu generieren.</p>
-          </div>
-        </div>
-      </div>
-
-      <div className="text-center">
-        <Link href="/checkout/wuerfel">
-          <a className="inline-block px-6 py-3 bg-[#00CFFF] text-white font-bold rounded-lg hover:bg-[#0A3A68] transition-colors">
-            Jetzt Würfel bestellen
-          </a>
-        </Link>
       </div>
     </div>
   );
