@@ -168,22 +168,22 @@ export default function ShopPartnerevent() {
           <div className="space-y-4">
             <Card>
               <CardContent className="p-4">
-                <h3 className="font-bold text-lg mb-2">Wie funktionieren Partnerevents?</h3>
-                <p>Bei einem Partnerevent spielen wir mit dir gemeinsam, um die maximale Punktzahl zu erreichen. Du musst dabei nicht aktiv sein - wir übernehmen für dich. Detaillierte Informationen findest du in unserem Hilfsartikel.</p>
+                <h3 className="font-bold text-lg mb-2">Wann bekomme ich meine Partner?</h3>
+                <p>Spätestens zum Eventstart bekommst du den Freundschaftslink und Ingame Namen deines Partners mitgeteilt. Gerne kannst du diesen dann schon hinzufügen und eine Einladung senden. Ansonsten übernehmen wir das sobald der Account an der Reihe ist.</p>
               </CardContent>
             </Card>
             
             <Card>
               <CardContent className="p-4">
-                <h3 className="font-bold text-lg mb-2">Wie lange dauert ein Event?</h3>
-                <p>Die Dauer variiert je nach Event, in der Regel zwischen 1-3 Tagen. Während dieser Zeit kümmern wir uns um dein Konto und sammeln die benötigten Punkte.</p>
+                <h3 className="font-bold text-lg mb-2">Wann macht ihr den Turm fertig?</h3>
+                <p>Wir bieten bewusst keine "Rush Plätze" an. Alle Türme werden rechtzeitig beendet.</p>
               </CardContent>
             </Card>
             
             <Card>
               <CardContent className="p-4">
-                <h3 className="font-bold text-lg mb-2">Wie kann ich bezahlen?</h3>
-                <p>Im Shop hast du die Möglichkeit mit PayPal zu bezahlen. Alternativ bieten wir die Bezahlung via Überweisung an. Schicke uns dafür eine Nachricht.</p>
+                <h3 className="font-bold text-lg mb-2">Wie bekomme ich Eventwährung?</h3>
+                <p>Der Ablauf und die Voraussetzungen dafür sind dieselben wie beim Würfelboost. Wir sammeln erst Würfel und tauschen diese dann gegen Eventwährung ein.</p>
               </CardContent>
             </Card>
           </div>
