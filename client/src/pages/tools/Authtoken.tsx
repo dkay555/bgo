@@ -195,7 +195,7 @@ export default function AuthTokenTool() {
               controls
               poster="/images/auth-token/video-poster.jpg"
             >
-              <source src="/videos/auth-token-anleitung.mp4" type="video/mp4" />
+              <source src="/videos/anleitung_tokentool.mp4" type="video/mp4" />
               Dein Browser unterstützt keine Videos. Bitte sieh dir die Anleitung weiter unten an.
             </video>
           </div>
