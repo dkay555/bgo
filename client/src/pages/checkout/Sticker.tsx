@@ -204,48 +204,71 @@ export default function StickerCheckout() {
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8 font-['Nunito_Sans'] text-[#0A3A68]">
-      <h1 className="font-['Baloo_2'] font-bold text-2xl md:text-3xl bg-[#00CFFF]/10 px-6 py-3 rounded-xl inline-block mx-auto my-4 border-b-2 border-[#00CFFF] text-[#FF4C00] babix-info-header">
-        Sticker bestellen
-      </h1>
+      <div className="mb-8 text-center">
+        <h1 className="babixgoheader font-bold text-3xl md:text-4xl mb-2 text-[#0A3A68]">
+          Sticker bestellen
+        </h1>
+        <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+          Vervollständige deine Monopoly Go Sticker-Sammlung mit unseren individuellen Angeboten
+        </p>
+      </div>
+      
+      {/* Login/Register Hinweis */}
+      <div className="bg-gradient-to-r from-[#0A3A68]/10 to-[#00CFFF]/10 p-4 rounded-lg mb-8 max-w-3xl mx-auto">
+        <div className="flex items-center gap-3">
+          <span className="material-icons text-[#00CFFF]">account_circle</span>
+          <div>
+            <p className="font-medium">Bereits Kunde? <Link href="/auth" className="text-[#00CFFF] hover:underline">Hier einloggen</Link></p>
+            <p className="text-sm text-gray-600">Oder <Link href="/auth" className="text-[#00CFFF] hover:underline">neues Konto erstellen</Link> für schnellere Bestellungen in Zukunft</p>
+          </div>
+        </div>
+      </div>
       
       <form onSubmit={handleSubmit} className="max-w-3xl mx-auto">
         {/* Sticker Auswahl anzeigen */}
-        <Card className="mb-6">
-          <CardHeader className="pb-2">
-            <CardTitle className="flex items-center gap-2">
-              <span className="material-icons text-[#00CFFF]">collections</span>
-              Deine Sticker-Auswahl
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
+        <Card className="mb-6 overflow-hidden">
+          <div className="bg-gradient-to-r from-[#0A3A68] to-[#0A3A68]/80 p-6">
+            <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+              <span className="material-icons">shopping_cart</span>
+              Warenkorb
+            </h2>
+          </div>
+          <CardContent className="p-6">
             {cartItems.length === 0 ? (
-              <div className="p-4 bg-gray-50 rounded-md text-center">
+              <div className="p-6 bg-gray-50 rounded-md text-center">
+                <div className="text-gray-400 text-5xl mb-4">
+                  <span className="material-icons" style={{ fontSize: '4rem' }}>shopping_cart</span>
+                </div>
                 <p className="text-gray-500 mb-4">Du hast noch keine Sticker ausgewählt.</p>
                 <Link href="/shop/sticker">
-                  <Button variant="outline" className="mx-auto">
-                    Zurück zum Sticker-Shop
+                  <Button className="mx-auto bg-[#00CFFF] hover:bg-[#00CFFF]/80">
+                    <span className="material-icons mr-2">add_shopping_cart</span>
+                    Sticker auswählen
                   </Button>
                 </Link>
               </div>
             ) : (
-              <div className="space-y-4">
+              <div className="space-y-6">
                 <div>
-                  <h3 className="text-lg font-medium mb-2">Ausgewählte Sticker:</h3>
-                  <div className="max-h-[300px] overflow-y-auto border border-gray-200 rounded-md divide-y">
+                  <h3 className="text-lg font-medium mb-3">Deine ausgewählten Sticker:</h3>
+                  <div className="max-h-[300px] overflow-y-auto border border-gray-200 rounded-md shadow-sm divide-y">
                     {cartItems.map((item, index) => (
-                      <div key={index} className="p-3 flex justify-between items-center">
-                        <div>
-                          <p className="font-medium">{item.name} (Set {Math.ceil(item.id / 9)})</p>
+                      <div key={index} className="p-4 flex justify-between items-center hover:bg-gray-50 transition-colors">
+                        <div className="flex-1">
+                          <p className="font-medium text-[#0A3A68]">{item.name}</p>
                           <div className="flex items-center">
-                            {[...Array(item.stars)].map((_, i) => (
-                              <span key={i} className="material-icons text-yellow-500 text-sm">star</span>
-                            ))}
-                            <span className="text-sm text-gray-500 ml-2">
+                            <span className="text-sm text-gray-600 mr-2">Set {Math.ceil(item.id / 9)}</span>
+                            <div className="flex mr-2">
+                              {[...Array(item.stars)].map((_, i) => (
+                                <span key={i} className="material-icons text-yellow-500 text-sm">star</span>
+                              ))}
+                            </div>
+                            <span className="text-xs px-2 py-0.5 rounded-full bg-gray-100 text-gray-600">
                               {item.isGold ? 'Goldsticker' : 'Standard'}
                             </span>
                           </div>
                         </div>
-                        <span className="font-bold text-[#FF4C00]">
+                        <span className="font-bold text-[#FF4C00] text-lg">
                           {calculatePrice(item).toFixed(2).replace('.', ',')} €
                         </span>
                       </div>
@@ -253,19 +276,24 @@ export default function StickerCheckout() {
                   </div>
                 </div>
                 
-                <div className="bg-gray-50 p-4 rounded-md">
-                  <div className="flex justify-between items-center font-bold">
-                    <span>Gesamtbetrag:</span>
-                    <span className="text-[#FF4C00]">{totalPrice.toFixed(2).replace('.', ',')} €</span>
+                <div className="bg-[#FF4C00]/10 p-5 rounded-md shadow-sm border border-[#FF4C00]/20">
+                  <div className="flex justify-between items-center">
+                    <span className="font-bold text-lg">Gesamtbetrag:</span>
+                    <span className="font-bold text-[#FF4C00] text-xl">{totalPrice.toFixed(2).replace('.', ',')} €</span>
                   </div>
                 </div>
                 
-                <div className="flex justify-end">
+                <div className="flex justify-between items-center">
                   <Link href="/shop/sticker">
-                    <Button variant="outline" className="text-sm">
-                      Zurück zum Sticker-Shop
+                    <Button variant="outline" className="flex items-center gap-1">
+                      <span className="material-icons text-sm">arrow_back</span>
+                      Zurück zum Shop
                     </Button>
                   </Link>
+                  
+                  <div className="text-xs text-gray-500">
+                    Alle Preise inklusive MwSt.
+                  </div>
                 </div>
               </div>
             )}
@@ -273,108 +301,146 @@ export default function StickerCheckout() {
         </Card>
         
         {/* Persönliche Daten */}
-        <Card className="mb-6">
-          <CardHeader className="pb-2">
-            <CardTitle className="flex items-center gap-2">
-              <span className="material-icons text-[#00CFFF]">person</span>
+        <Card className="mb-6 overflow-hidden">
+          <div className="bg-gradient-to-r from-[#00CFFF] to-[#00CFFF]/80 p-6">
+            <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+              <span className="material-icons">person</span>
               Persönliche Daten
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid gap-4">
+            </h2>
+          </div>
+          <CardContent className="p-6">
+            <div className="grid gap-5">
               <div>
-                <Label htmlFor="name" className="mb-1 block">Name *</Label>
+                <Label htmlFor="name" className="text-[#0A3A68] font-medium mb-2 block">Name *</Label>
                 <Input 
                   id="name" 
                   name="name" 
-                  placeholder="Ihr vollständiger Name" 
+                  placeholder="Dein vollständiger Name" 
                   value={formData.name} 
                   onChange={handleInputChange} 
                   required
-                  className="border-[#00CFFF]/30 focus:border-[#00CFFF] focus:ring-[#00CFFF]"
+                  className="border-[#00CFFF]/30 focus:border-[#00CFFF] focus:ring-[#00CFFF] p-2.5 rounded-md"
                 />
               </div>
               
               <div>
-                <Label htmlFor="email" className="mb-1 block">E-Mail *</Label>
-                <Input 
-                  id="email" 
-                  name="email" 
-                  type="email" 
-                  placeholder="ihre.email@beispiel.de" 
-                  value={formData.email} 
-                  onChange={handleInputChange} 
-                  required
-                  className="border-[#00CFFF]/30 focus:border-[#00CFFF] focus:ring-[#00CFFF]"
-                />
+                <Label htmlFor="email" className="text-[#0A3A68] font-medium mb-2 block">E-Mail *</Label>
+                <div className="relative">
+                  <span className="absolute inset-y-0 left-3 flex items-center text-gray-400">
+                    <span className="material-icons text-sm">email</span>
+                  </span>
+                  <Input 
+                    id="email" 
+                    name="email" 
+                    type="email" 
+                    placeholder="deine.email@beispiel.de" 
+                    value={formData.email} 
+                    onChange={handleInputChange} 
+                    required
+                    className="border-[#00CFFF]/30 focus:border-[#00CFFF] focus:ring-[#00CFFF] p-2.5 pl-10 rounded-md"
+                  />
+                </div>
               </div>
               
               <div>
-                <Label htmlFor="whatsapp" className="mb-1 block flex items-center">
+                <Label htmlFor="whatsapp" className="text-[#0A3A68] font-medium mb-2 flex items-center">
                   WhatsApp (optional)
-                  <span className="text-xs text-gray-500 ml-2">Für schnellere Kommunikation</span>
+                  <span className="text-xs text-gray-500 ml-2 bg-gray-100 px-2 py-1 rounded-full">Für schnellere Kommunikation</span>
                 </Label>
-                <Input 
-                  id="whatsapp" 
-                  name="whatsapp" 
-                  placeholder="Ihre WhatsApp-Nummer" 
-                  value={formData.whatsapp} 
-                  onChange={handleInputChange}
-                  className="border-[#00CFFF]/30 focus:border-[#00CFFF] focus:ring-[#00CFFF]"
-                />
+                <div className="relative">
+                  <span className="absolute inset-y-0 left-3 flex items-center text-gray-400">
+                    <span className="material-icons text-sm">whatsapp</span>
+                  </span>
+                  <Input 
+                    id="whatsapp" 
+                    name="whatsapp" 
+                    placeholder="Deine WhatsApp-Nummer" 
+                    value={formData.whatsapp} 
+                    onChange={handleInputChange}
+                    className="border-[#00CFFF]/30 focus:border-[#00CFFF] focus:ring-[#00CFFF] p-2.5 pl-10 rounded-md"
+                  />
+                </div>
+              </div>
+              
+              <div className="bg-[#00CFFF]/5 p-4 rounded-md mt-2 border border-[#00CFFF]/10">
+                <p className="text-sm text-gray-600">
+                  <span className="font-medium text-[#0A3A68]">Datenschutzhinweis:</span> Deine Daten werden vertraulich behandelt und nur für die Bearbeitung deiner Bestellung verwendet.
+                </p>
               </div>
             </div>
           </CardContent>
         </Card>
         
         {/* Monopoly-Account-Daten */}
-        <Card className="mb-6">
-          <CardHeader className="pb-2">
-            <CardTitle className="flex items-center gap-2">
-              <span className="material-icons text-[#00CFFF]">videogame_asset</span>
+        <Card className="mb-6 overflow-hidden">
+          <div className="bg-gradient-to-r from-[#FF4C00] to-[#FF4C00]/80 p-6">
+            <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+              <span className="material-icons">videogame_asset</span>
               Monopoly-Daten
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
+            </h2>
+          </div>
+          <CardContent className="p-6">
+            <div className="space-y-5">
               <div>
-                <Label htmlFor="ingameName" className="mb-1 block">Spielername *</Label>
-                <Input 
-                  id="ingameName" 
-                  name="ingameName" 
-                  placeholder="Ihr Name im Spiel" 
-                  value={formData.ingameName} 
-                  onChange={handleInputChange} 
-                  required
-                  className="border-[#00CFFF]/30 focus:border-[#00CFFF] focus:ring-[#00CFFF]"
-                />
+                <Label htmlFor="ingameName" className="text-[#0A3A68] font-medium mb-2 block">Spielername *</Label>
+                <div className="relative">
+                  <span className="absolute inset-y-0 left-3 flex items-center text-gray-400">
+                    <span className="material-icons text-sm">person_pin</span>
+                  </span>
+                  <Input 
+                    id="ingameName" 
+                    name="ingameName" 
+                    placeholder="Dein Name im Spiel" 
+                    value={formData.ingameName} 
+                    onChange={handleInputChange} 
+                    required
+                    className="border-[#FF4C00]/30 focus:border-[#FF4C00] focus:ring-[#FF4C00] p-2.5 pl-10 rounded-md"
+                  />
+                </div>
               </div>
               
               <div>
-                <Label htmlFor="friendshipLink" className="mb-1 block flex items-center">
+                <Label htmlFor="friendshipLink" className="text-[#0A3A68] font-medium mb-2 flex items-center">
                   Freundschaftslink oder Code *
-                  <span className="text-xs text-gray-500 ml-2">Für die Stickerlieferung</span>
+                  <span className="text-xs text-gray-500 ml-2 bg-gray-100 px-2 py-1 rounded-full">Für die Stickerlieferung</span>
                 </Label>
-                <Input 
-                  id="friendshipLink" 
-                  name="friendshipLink" 
-                  placeholder="Ihr Freundschaftslink oder Code" 
-                  value={formData.friendshipLink} 
-                  onChange={handleInputChange} 
-                  required
-                  className="border-[#00CFFF]/30 focus:border-[#00CFFF] focus:ring-[#00CFFF]"
-                />
+                <div className="relative">
+                  <span className="absolute inset-y-0 left-3 flex items-center text-gray-400">
+                    <span className="material-icons text-sm">link</span>
+                  </span>
+                  <Input 
+                    id="friendshipLink" 
+                    name="friendshipLink" 
+                    placeholder="Dein Freundschaftslink oder Code" 
+                    value={formData.friendshipLink} 
+                    onChange={handleInputChange} 
+                    required
+                    className="border-[#FF4C00]/30 focus:border-[#FF4C00] focus:ring-[#FF4C00] p-2.5 pl-10 rounded-md"
+                  />
+                </div>
+                <div className="mt-3 bg-yellow-50 p-3 rounded-md border border-yellow-200">
+                  <p className="text-sm text-gray-700 flex items-start">
+                    <span className="material-icons text-yellow-500 mr-2 text-lg">info</span>
+                    <span>Du findest deinen Freundschaftslink im Spiel unter <strong>Freunde → Freunde hinzufügen</strong></span>
+                  </p>
+                </div>
               </div>
             </div>
           </CardContent>
         </Card>
         
         {/* Checkboxen für AGBs und Widerrufsrecht */}
-        <Card className="mb-6">
-          <CardContent className="pt-6">
+        <Card className="mb-6 overflow-hidden">
+          <div className="bg-gradient-to-r from-[#0A3A68] to-[#00CFFF] p-6">
+            <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+              <span className="material-icons">gavel</span>
+              Rechtliche Hinweise
+            </h2>
+          </div>
+          <CardContent className="p-6">
             {/* Checkbox für Widerrufsrecht */}
             <div 
-              className={`flex items-start space-x-2 p-3 rounded-lg border ${formData.agreedToWithdrawalNotice ? 'bg-[#00CFFF]/10 border-[#00CFFF]' : 'border-gray-200'} mb-4`}
+              className={`flex items-start p-4 rounded-lg border ${formData.agreedToWithdrawalNotice ? 'bg-[#00CFFF]/10 border-[#00CFFF]' : 'border-gray-200'} mb-5 transition-all hover:shadow-sm cursor-pointer`}
               onClick={() => {
                 setFormData({
                   ...formData,
@@ -382,29 +448,32 @@ export default function StickerCheckout() {
                 });
               }}
             >
-              <input 
-                type="checkbox" 
-                id="withdrawalCheck"
-                className="h-4 w-4 mt-1 accent-[#00CFFF]"
-                checked={formData.agreedToWithdrawalNotice}
-                onChange={() => {
-                  setFormData({
-                    ...formData,
-                    agreedToWithdrawalNotice: !formData.agreedToWithdrawalNotice
-                  });
-                }}
-              />
+              <div className="flex-shrink-0 mt-1 mr-3">
+                <input 
+                  type="checkbox" 
+                  id="withdrawalCheck"
+                  className="h-5 w-5 accent-[#00CFFF] cursor-pointer"
+                  checked={formData.agreedToWithdrawalNotice}
+                  onChange={() => {
+                    setFormData({
+                      ...formData,
+                      agreedToWithdrawalNotice: !formData.agreedToWithdrawalNotice
+                    });
+                  }}
+                />
+              </div>
               <label 
                 htmlFor="withdrawalCheck" 
                 className="text-sm cursor-pointer"
               >
-                Ich bin ausdrücklich damit einverstanden, dass mit der Ausführung des Auftrags vor Ablauf der Widerrufsfrist begonnen wird. Mir ist bekannt, dass mein <Link href="/widerruf" className="text-[#00CFFF] hover:underline">Widerrufsrecht</Link> mit Beginn der Ausführung erlischt.
+                <span className="font-medium block mb-1 text-[#0A3A68]">Widerrufsbelehrung</span>
+                Ich bin ausdrücklich damit einverstanden, dass mit der Ausführung des Auftrags vor Ablauf der Widerrufsfrist begonnen wird. Mir ist bekannt, dass mein <Link href="/widerruf" className="text-[#00CFFF] hover:underline inline-flex items-center">Widerrufsrecht <span className="material-icons text-xs ml-0.5">open_in_new</span></Link> mit Beginn der Ausführung erlischt.
               </label>
             </div>
             
             {/* Checkbox für AGB */}
             <div 
-              className={`flex items-start space-x-2 p-3 rounded-lg border ${formData.agreedToTerms ? 'bg-[#00CFFF]/10 border-[#00CFFF]' : 'border-gray-200'}`}
+              className={`flex items-start p-4 rounded-lg border ${formData.agreedToTerms ? 'bg-[#00CFFF]/10 border-[#00CFFF]' : 'border-gray-200'} mb-5 transition-all hover:shadow-sm cursor-pointer`}
               onClick={() => {
                 setFormData({
                   ...formData,
@@ -412,100 +481,159 @@ export default function StickerCheckout() {
                 });
               }}
             >
-              <input 
-                type="checkbox" 
-                id="termsCheck"
-                className="h-4 w-4 mt-1 accent-[#00CFFF]"
-                checked={formData.agreedToTerms}
-                onChange={() => {
-                  setFormData({
-                    ...formData,
-                    agreedToTerms: !formData.agreedToTerms
-                  });
-                }}
-              />
+              <div className="flex-shrink-0 mt-1 mr-3">
+                <input 
+                  type="checkbox" 
+                  id="termsCheck"
+                  className="h-5 w-5 accent-[#00CFFF] cursor-pointer"
+                  checked={formData.agreedToTerms}
+                  onChange={() => {
+                    setFormData({
+                      ...formData,
+                      agreedToTerms: !formData.agreedToTerms
+                    });
+                  }}
+                />
+              </div>
               <label 
                 htmlFor="termsCheck" 
                 className="text-sm cursor-pointer"
               >
-                Ich habe die <Link href="/agb" className="text-[#00CFFF] hover:underline">AGB</Link> und <Link href="/datenschutz" className="text-[#00CFFF] hover:underline">Datenschutzbestimmungen</Link> gelesen und akzeptiere diese.
+                <span className="font-medium block mb-1 text-[#0A3A68]">AGB & Datenschutz</span>
+                Ich habe die <Link href="/agb" className="text-[#00CFFF] hover:underline" target="_blank">Allgemeinen Geschäftsbedingungen</Link> und <Link href="/datenschutz" className="text-[#00CFFF] hover:underline" target="_blank">Datenschutzbestimmungen</Link> gelesen und akzeptiere diese.
               </label>
             </div>
             
             {/* Fehlermeldung */}
             {formError && (
-              <div className="mt-4 p-3 bg-red-50 border border-red-200 text-red-600 rounded-md text-sm">
-                <span className="material-icons text-red-500 text-sm align-middle mr-1">error</span>
-                {formError}
+              <div className="mt-4 p-4 bg-red-50 border border-red-200 text-red-600 rounded-md flex items-start">
+                <span className="material-icons text-red-500 mr-2">error_outline</span>
+                <span>{formError}</span>
               </div>
             )}
           </CardContent>
         </Card>
         
-        {/* Kaufen Button und PayPal */}
-        <div className="mb-6 grid grid-cols-1 gap-4">
-          {/* Wenn wir noch keine Bestellung erstellt haben, zeigen wir den Bestellbutton an */}
-          {!showPayPal ? (
-            <Button 
-              type="submit" 
-              className="w-full bg-[#FF4C00] hover:bg-[#FF4C00]/80 text-white font-bold py-3"
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? (
-                <span className="flex items-center justify-center">
-                  <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                  </svg>
-                  Wird verarbeitet...
-                </span>
-              ) : 'Jetzt kaufen'}
-            </Button>
-          ) : (
-            /* Wenn wir eine Bestellung erstellt haben, zeigen wir die PayPal-Zahlung an */
-            <div className="mb-4">
-              <div className="bg-[#00CFFF]/10 p-4 border border-[#00CFFF] rounded-lg mb-4 text-center">
-                <h3 className="font-bold text-lg mb-2">Bestellung erstellt!</h3>
-                <p>Bitte schließen Sie Ihre Bestellung durch Zahlung über PayPal ab.</p>
-              </div>
-              
-              <div className="py-4 px-4 border border-gray-200 rounded-lg mb-4">
-                <div className="flex justify-between items-center mb-2 border-b pb-2">
-                  <span className="font-medium">Produkt:</span>
-                  <span>Sticker Set {formData.selectedSet}</span>
-                </div>
-                <div className="flex justify-between items-center font-bold text-lg">
-                  <span>Gesamt:</span>
-                  <span className="text-[#FF4C00]">{orderAmount}€</span>
-                </div>
-              </div>
-              
-              <div className="my-4 mx-auto max-w-xs h-12">
-                <PayPalButtonWrapper 
-                  amount={orderAmount} 
-                  currency="EUR" 
-                  intent="CAPTURE" 
-                  orderId={orderId ?? undefined}
-                  onPaymentComplete={updateOrderPayment}
-                />
-              </div>
-            </div>
-          )}
-
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <span className="w-full border-t border-gray-300"></span>
-            </div>
-            <div className="relative flex justify-center text-xs">
-              <span className="bg-white px-2 text-gray-500">oder zahle mit</span>
-            </div>
+        {/* Zahlung */}
+        <Card className="mb-6 overflow-hidden">
+          <div className="bg-gradient-to-r from-[#FF4C00] to-[#FF4C00]/80 p-6">
+            <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+              <span className="material-icons">payments</span>
+              Bezahlung
+            </h2>
           </div>
-          
-          <Button variant="outline" className="w-full" disabled>
-            <span className="material-icons mr-2 text-lg">account_balance</span>
-            Banküberweisung (bald verfügbar)
-          </Button>
-        </div>
+          <CardContent className="p-6">
+            {/* Wenn wir noch keine Bestellung erstellt haben, zeigen wir den Bestellbutton an */}
+            {!showPayPal ? (
+              <div className="space-y-6">
+                <div className="bg-[#FF4C00]/5 p-5 rounded-lg border border-[#FF4C00]/20 text-center">
+                  <p className="text-[#0A3A68] font-medium">
+                    Gesamtbetrag: <span className="text-xl font-bold text-[#FF4C00] ml-2">{totalPrice.toFixed(2).replace('.', ',')} €</span>
+                  </p>
+                  <p className="text-gray-500 text-sm mt-1">Alle Preise inkl. MwSt.</p>
+                </div>
+                
+                <Button 
+                  type="submit" 
+                  className="w-full bg-[#FF4C00] hover:bg-[#FF4C00]/90 text-white font-bold py-4 text-lg rounded-md shadow-sm"
+                  disabled={isSubmitting || cartItems.length === 0}
+                >
+                  {isSubmitting ? (
+                    <span className="flex items-center justify-center">
+                      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Wird verarbeitet...
+                    </span>
+                  ) : cartItems.length === 0 ? (
+                    'Bitte wähle zuerst Sticker aus'
+                  ) : (
+                    <span className="flex items-center justify-center">
+                      <span className="material-icons mr-2">shopping_cart_checkout</span>
+                      Jetzt bestellen
+                    </span>
+                  )}
+                </Button>
+                
+                <div className="flex justify-center space-x-4 items-center">
+                  <img src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_37x23.jpg" alt="PayPal" className="h-6" />
+                  <div className="relative flex-1">
+                    <div className="absolute inset-0 flex items-center">
+                      <span className="w-full border-t border-gray-300"></span>
+                    </div>
+                    <div className="relative flex justify-center text-xs">
+                      <span className="bg-white px-2 text-gray-500">Bezahle sicher mit</span>
+                    </div>
+                  </div>
+                  <img src="https://cdn-icons-png.flaticon.com/512/6124/6124998.png" alt="Bank Transfer" className="h-6" />
+                </div>
+              </div>
+            ) : (
+              /* Wenn wir eine Bestellung erstellt haben, zeigen wir die PayPal-Zahlung an */
+              <div className="space-y-6">
+                <div className="bg-green-50 p-4 border border-green-200 rounded-lg mb-2 text-center">
+                  <span className="material-icons text-green-500 text-2xl mb-2">check_circle</span>
+                  <h3 className="font-bold text-lg text-[#0A3A68] mb-2">Bestellung erfolgreich erstellt!</h3>
+                  <p className="text-gray-700">Bitte schließe deine Bestellung mit der Zahlung ab.</p>
+                </div>
+                
+                <div className="bg-white p-5 rounded-lg border border-gray-200 shadow-sm">
+                  <h3 className="font-medium text-[#0A3A68] mb-3 pb-2 border-b">Bestellübersicht</h3>
+                  
+                  {cartItems.length > 0 ? (
+                    <div className="space-y-2 mb-4">
+                      {cartItems.map((item, index) => (
+                        <div key={index} className="flex justify-between items-center text-sm">
+                          <span>{item.name} ({item.stars}★)</span>
+                          <span className="font-medium">{calculatePrice(item).toFixed(2).replace('.', ',')} €</span>
+                        </div>
+                      ))}
+                      <div className="border-t border-gray-200 pt-2 mt-2 flex justify-between items-center font-bold text-lg">
+                        <span>Gesamt:</span>
+                        <span className="text-[#FF4C00]">{orderAmount.replace('.', ',')}€</span>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="py-3 px-4 border border-gray-200 rounded-lg mb-4">
+                      <div className="flex justify-between items-center mb-2 border-b pb-2">
+                        <span className="font-medium">Produkt:</span>
+                        <span>Sticker Set {formData.selectedSet}</span>
+                      </div>
+                      <div className="flex justify-between items-center font-bold text-lg">
+                        <span>Gesamt:</span>
+                        <span className="text-[#FF4C00]">{orderAmount.replace('.', ',')}€</span>
+                      </div>
+                    </div>
+                  )}
+                  
+                  <div className="bg-blue-50 p-3 rounded-md border border-blue-100 mb-4 flex items-start">
+                    <span className="material-icons text-blue-500 mr-2">info</span>
+                    <p className="text-sm text-gray-700">
+                      Nach erfolgreicher Zahlung erhältst du eine Bestätigungs-E-Mail mit deinen Bestelldetails.
+                    </p>
+                  </div>
+                  
+                  <div className="mt-4">
+                    <div className="w-full mx-auto rounded-md overflow-hidden shadow-sm border border-gray-200">
+                      <PayPalButtonWrapper 
+                        amount={orderAmount} 
+                        currency="EUR" 
+                        intent="CAPTURE" 
+                        orderId={orderId ?? undefined}
+                        onPaymentComplete={updateOrderPayment}
+                      />
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="text-center text-sm text-gray-500">
+                  <p>Hast du Fragen zu deiner Bestellung? <Link href="/kontakt" className="text-[#00CFFF] hover:underline">Kontaktiere uns</Link></p>
+                </div>
+              </div>
+            )}
+          </CardContent>
+        </Card>
       </form>
     </div>
   );
