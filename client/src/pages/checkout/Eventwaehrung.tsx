@@ -1,577 +1,374 @@
-import { useEffect, useState } from 'react';
-import { useLocation } from 'wouter';
-import { useToast } from "@/hooks/use-toast";
-import { apiRequest, queryClient } from '@/lib/queryClient';
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { PayPalButtonWrapper } from "@/components/PayPalButtonWrapper";
+import { useState, useEffect } from 'react';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 import { Link } from 'wouter';
+import { Button } from '@/components/ui/button';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Checkbox } from '@/components/ui/checkbox';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Loader2 } from "lucide-react";
-import { useQuery } from "@tanstack/react-query";
-import { useAuth } from "@/hooks/use-auth";
+import { Label } from '@/components/ui/label';
+import { Card, CardContent } from '@/components/ui/card';
+import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/hooks/use-auth';
+import SEOHead from '@/components/SEOHead';
+import { PayPalButtonWrapper } from '@/components/PayPalButtonWrapper';
 
-// Währungspakete
-const WAEHRUNG_PAKETE = [
-  { amount: '15000', price: '25.00', label: '15.000 Eventwährung (25,00 €)' },
-  { amount: '25000', price: '35.00', label: '25.000 Eventwährung (35,00 €)' }
-];
+// Form schema
+const checkoutSchema = z.object({
+  currencyAmount: z.string({
+    required_error: "Bitte wähle eine Menge an Eventwährung",
+  }),
+  name: z.string().min(2, {
+    message: "Der Name muss mindestens 2 Zeichen lang sein",
+  }),
+  email: z.string().email({
+    message: "Bitte gib eine gültige E-Mail-Adresse ein",
+  }),
+  whatsapp: z.string().optional(),
+  ingameName: z.string().min(2, {
+    message: "Bitte gib deinen In-Game Namen ein",
+  }),
+  friendCode: z.string().min(2, {
+    message: "Bitte gib deinen Freundschaftslink oder -code ein",
+  }),
+  termsAccepted: z.boolean().refine(val => val === true, {
+    message: "Du musst die AGB akzeptieren",
+  }),
+  withdrawalAccepted: z.boolean().refine(val => val === true, {
+    message: "Du musst auf dein Widerrufsrecht verzichten",
+  }),
+});
 
-export default function EventwaehrungCheckoutPage() {
-  const [location] = useLocation();
-  const { toast } = useToast();
+type FormData = z.infer<typeof checkoutSchema>;
+
+export default function EventwaehrungCheckout() {
   const { user } = useAuth();
-  const [orderId, setOrderId] = useState<number | null>(null);
-  const [showPayPal, setShowPayPal] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [orderAmount, setOrderAmount] = useState("25.00");
+  const { toast } = useToast();
+  const [selectedOption, setSelectedOption] = useState('10000');
 
-  // Parameter aus URL extrahieren (z.B. /checkout/eventwaehrung?amount=15000)
-  const searchParams = new URLSearchParams(location.split('?')[1] || '');
-  const amountParam = searchParams.get('amount');
-  
-  // Stelle sicher, dass der Parameter einer der erlaubten Werte ist
-  const validatedAmount = ['15000', '25000'].includes(amountParam || '') 
-    ? amountParam || '15000'
-    : '15000';
-    
-  // Preisberechnung für Eventwährung
-  const getWaehrungPrice = (amount: string): string => {
-    switch (amount) {
-      case '15000': return '25.00';
-      case '25000': return '35.00';
-      default: return '25.00';
-    }
-  };
-  
-  // State für Formular
-  const [formError, setFormError] = useState('');
-  
-  // Initiale Form-Daten
-  const getInitialFormData = () => {
-    return {
-      name: '',
-      email: '',
-      whatsapp: '',
-      selectedAmount: validatedAmount,
-      accountInfo: {
-        ingameName: '',
-        authMethod: 'facebook',
-        executionTime: 'automatic'
-      },
-      agreedToTerms: false,
-      agreedToWithdrawalNotice: false
-    };
-  };
-  
-  const [formData, setFormData] = useState(getInitialFormData());
-
-  // Bei Änderungen des Währungs-Parameters den Preis aktualisieren
-  useEffect(() => {
-    setOrderAmount(getWaehrungPrice(validatedAmount));
-    setFormData(prevData => ({
-      ...prevData,
-      selectedAmount: validatedAmount
-    }));
-  }, [validatedAmount]);
-
-  // Laden der Material Icons und Titel setzen
-  useEffect(() => {
-    document.title = 'Eventwährung | babixGO';
-    
-    const link = document.createElement('link');
-    link.href = 'https://fonts.googleapis.com/icon?family=Material+Icons';
-    link.rel = 'stylesheet';
-    document.head.appendChild(link);
-    
-    return () => {
-      const existingLink = document.querySelector('link[href="https://fonts.googleapis.com/icon?family=Material+Icons"]');
-      if (existingLink) {
-        document.head.removeChild(existingLink);
+  // Versuche, gespeicherte Daten aus localStorage zu laden
+  const getSavedFormData = (): Partial<FormData> => {
+    try {
+      const savedData = localStorage.getItem('eventwaehrung_checkout_data');
+      if (savedData) {
+        return JSON.parse(savedData);
       }
-    };
+    } catch (error) {
+      console.error('Fehler beim Laden der gespeicherten Formulardaten:', error);
+    }
+    return {};
+  };
+  
+  const savedData = getSavedFormData();
+
+  const form = useForm<FormData>({
+    resolver: zodResolver(checkoutSchema),
+    defaultValues: {
+      currencyAmount: savedData.currencyAmount || "10000",
+      name: savedData.name || user?.name || "",
+      email: savedData.email || user?.email || "",
+      whatsapp: savedData.whatsapp || "",
+      ingameName: savedData.ingameName || "",
+      friendCode: savedData.friendCode || "",
+      termsAccepted: savedData.termsAccepted || false,
+      withdrawalAccepted: savedData.withdrawalAccepted || false,
+    },
+    mode: "onChange",
+  });
+  
+  // Setze selectedOption basierend auf den gespeicherten Daten
+  useEffect(() => {
+    if (savedData.currencyAmount) {
+      setSelectedOption(savedData.currencyAmount);
+    }
   }, []);
 
-  // Benutzerinformationen vorausfüllen, wenn der Benutzer angemeldet ist
-  useEffect(() => {
-    if (user) {
-      setFormData(prevData => ({
-        ...prevData,
-        name: user.name || prevData.name,
-        email: user.email || prevData.email
-      }));
-    }
-  }, [user]);
-
-  // Handler für Formularänderungen
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    
-    // Für verschachtelte Objekte (accountInfo)
-    if (name.includes('.')) {
-      const [parent, child] = name.split('.');
-      setFormData({
-        ...formData,
-        [parent]: {
-          ...formData[parent as keyof typeof formData],
-          [child]: value
-        }
-      });
-    } else {
-      setFormData({
-        ...formData,
-        [name]: value
-      });
-    }
+  const handleCurrencyAmountChange = (value: string) => {
+    setSelectedOption(value);
+    form.setValue("currencyAmount", value);
   };
 
-  // Handler für Checkbox-Änderungen
-  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, checked } = e.target;
-    setFormData({
-      ...formData,
-      [name]: checked
+  // Berechne den Preis basierend auf der Menge der Eventwährung
+  const calculatePrice = (amount: string): number => {
+    if (amount === '10000') return 20;
+    if (amount === '20000') return 30;
+    return 20; // Standardpreis als Fallback
+  };
+
+  const onSubmit: SubmitHandler<FormData> = (data) => {
+    console.log(data);
+    
+    // Speichere die Daten im localStorage für persistenz zwischen Seitenneuladen
+    localStorage.setItem('eventwaehrung_checkout_data', JSON.stringify(data));
+    
+    toast({
+      title: "Formular validiert",
+      description: "Bitte schließe den Kauf über den PayPal-Button unten ab.",
     });
-  };
-
-  // Handler für Radio-Änderungen
-  const handleRadioChange = (name: string, value: string) => {
-    if (name.includes('.')) {
-      const [parent, child] = name.split('.');
-      setFormData({
-        ...formData,
-        [parent]: {
-          ...formData[parent as keyof typeof formData],
-          [child]: value
-        }
-      });
-    } else {
-      setFormData({
-        ...formData,
-        [name]: value
-      });
-    }
-  };
-
-  // Handler für Select-Änderungen
-  const handleSelectChange = (name: string, value: string) => {
-    if (name.includes('.')) {
-      const [parent, child] = name.split('.');
-      setFormData({
-        ...formData,
-        [parent]: {
-          ...formData[parent as keyof typeof formData],
-          [child]: value
-        }
-      });
-    } else {
-      setFormData({
-        ...formData,
-        [name]: value
-      });
-      
-      // Wenn das ausgewählte Paket geändert wird, aktualisiere den Preis
-      if (name === 'selectedAmount') {
-        setOrderAmount(getWaehrungPrice(value));
-      }
-    }
-  };
-
-  // Validierung des Formulars
-  const validateForm = () => {
-    if (!formData.name.trim()) {
-      setFormError('Bitte geben Sie Ihren Namen ein.');
-      return false;
-    }
     
-    if (!formData.email.trim() || !/\S+@\S+\.\S+/.test(formData.email)) {
-      setFormError('Bitte geben Sie eine gültige E-Mail-Adresse ein.');
-      return false;
-    }
-    
-    if (!formData.accountInfo.ingameName.trim()) {
-      setFormError('Bitte geben Sie Ihren Ingame-Namen ein.');
-      return false;
-    }
-    
-    if (!formData.agreedToTerms) {
-      setFormError('Bitte akzeptieren Sie die AGB.');
-      return false;
-    }
-    
-    if (!formData.agreedToWithdrawalNotice) {
-      setFormError('Bitte bestätigen Sie den Verzicht auf das Widerrufsrecht bei digitalen Inhalten.');
-      return false;
-    }
-    
-    setFormError('');
-    return true;
-  };
-
-  // Erzeugt eine strukturierte Order aus den Formulardaten
-  const createOrderData = () => {
-    return {
-      // Persönliche Daten
-      name: formData.name,
-      email: formData.email,
-      whatsapp: formData.whatsapp || null,
-      
-      // Bestelldetails
-      productType: 'eventwaehrung',
-      package: `${formData.selectedAmount} Eventwährung`,
-      price: parseFloat(orderAmount),
-      
-      // Accountdaten als JSON
-      accountData: JSON.stringify({
-        ingameName: formData.accountInfo.ingameName,
-        authMethod: formData.accountInfo.authMethod,
-        executionTime: formData.accountInfo.executionTime
-      }),
-      
-      // Zahlungsdetails
-      paymentMethod: "paypal",
-      paymentStatus: "pending",
-      
-      // Zustimmungen
-      agreedToTerms: formData.agreedToTerms,
-      agreedToWithdrawalNotice: formData.agreedToWithdrawalNotice
-    };
-  };
-
-  // Sendet die Bestellung an den Server und bereitet PayPal-Zahlung vor
-  const createOrder = async () => {
-    try {
-      setIsSubmitting(true);
-      
-      const orderData = createOrderData();
-      const response = await apiRequest("POST", "/api/orders", orderData);
-      
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Fehler beim Erstellen der Bestellung");
-      }
-      
-      const data = await response.json();
-      setOrderId(data.order.id);
-      setShowPayPal(true);
-      
-      // Erfolgsmeldung anzeigen
-      toast({
-        title: "Bestellung erstellt",
-        description: "Bitte schließen Sie die Zahlung ab.",
-      });
-      
-    } catch (error) {
-      console.error("Fehler beim Erstellen der Bestellung:", error);
-      toast({
-        title: "Fehler",
-        description: error instanceof Error ? error.message : "Ein unbekannter Fehler ist aufgetreten",
-        variant: "destructive",
-      });
-    } finally {
-      setIsSubmitting(false);
+    // Scrolle zum PayPal-Button
+    const paypalButton = document.getElementById('paypal-button-container');
+    if (paypalButton) {
+      paypalButton.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
-  // Handler für das Absenden des Formulars
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (validateForm()) {
-      createOrder();
-    } else {
-      // Scroll zum Fehler
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
-    }
-  };
-
-  // Erfolgreiche Zahlung
-  const handlePaymentComplete = async (paypalOrderId: string) => {
-    try {
-      if (!orderId) return;
-      
-      const response = await apiRequest("PATCH", `/api/orders/${orderId}/payment`, {
-        status: "completed",
-        reference: paypalOrderId
-      });
-      
-      if (!response.ok) {
-        throw new Error("Fehler beim Aktualisieren des Zahlungsstatus");
-      }
-      
-      // Cache für Bestellungen invalidieren
-      queryClient.invalidateQueries(["/api/user/orders"]);
-      
-      // Erfolgsmeldung anzeigen
-      toast({
-        title: "Zahlung erfolgreich",
-        description: "Vielen Dank für Ihre Bestellung! Sie werden in Kürze weitergeleitet.",
-      });
-      
-      // Nach erfolgreicher Zahlung zur Bestätigungsseite weiterleiten
-      setTimeout(() => {
-        window.location.href = `/order-success?id=${orderId}&type=eventwaehrung`;
-      }, 2000);
-      
-    } catch (error) {
-      console.error("Fehler bei der Zahlungsverarbeitung:", error);
-      toast({
-        title: "Fehler",
-        description: error instanceof Error ? error.message : "Ein unbekannter Fehler ist aufgetreten",
-        variant: "destructive",
-      });
-    }
-  };
+  const currencyOptions = [
+    { value: "10000", label: "10.000 Währung", price: 20 },
+    { value: "20000", label: "20.000 Währung", price: 30 },
+  ];
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="flex flex-col items-center mb-8">
-        <Link href="/produkte/partner" className="self-start text-[#0A3A68] hover:text-[#FF4C00] mb-4 inline-flex items-center transition-colors">
-          <span className="material-icons mr-1">arrow_back</span>
-          Zurück zur Auswahl
-        </Link>
-        <h1 className="babix-info-header text-3xl md:text-4xl font-bold mb-8 text-center">Eventwährung bestellen</h1>
-      </div>
+      <SEOHead 
+        pageName="Eventwährung kaufen - Checkout" 
+        customTitle="Eventwährung kaufen - Checkout | babixGO" 
+        customDescription="Eventwährung für Monopoly GO Events kaufen - Checkout"
+      />
       
       <div className="max-w-4xl mx-auto">
-        <Card className="mb-8">
-          <CardHeader>
-            <CardTitle>Eventwährung für das aktuelle Event</CardTitle>
-            <CardDescription>
-              Geben Sie Ihre Daten ein und wählen Sie ein Währungspaket aus.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            {formError && (
-              <div className="bg-red-50 border-l-4 border-red-500 p-4 mb-6">
-                <p className="text-red-700">{formError}</p>
-              </div>
-            )}
-            
-            {/* Wenn PayPal angezeigt werden soll und eine Bestellnummer vorhanden ist */}
-            {showPayPal && orderId ? (
-              <div className="space-y-4">
-                <div className="border-l-4 border-[#0A3A68] bg-blue-50 p-4 mb-4">
-                  <h3 className="font-medium text-[#0A3A68]">Bestellung erfolgreich erstellt</h3>
-                  <p>Bitte schließen Sie Ihre Zahlung ab, um Ihre Bestellung zu finanzieren.</p>
-                </div>
+        <h1 className="babix-info-header font-bold text-3xl md:text-4xl px--2 py-2 text-center mb-8">
+          Checkout
+        </h1>
+        
+        {/* Login Prompt */}
+        {!user && (
+          <div className="bg-blue-50 p-4 rounded-lg mb-8 flex flex-col sm:flex-row justify-between items-center">
+            <div>
+              <p className="text-[#0A3A68] font-semibold mb-2">Logge dich ein zum automatischen Ausfüllen deiner Daten:</p>
+            </div>
+            <div className="flex gap-4 mt-3 sm:mt-0">
+              <Link href="/auth">
+                <Button variant="default" className="bg-[#0A3A68]">
+                  Login
+                </Button>
+              </Link>
+              <Link href="/auth?register=true">
+                <Button variant="outline" className="text-[#0A3A68] border-[#0A3A68]">
+                  Registrieren
+                </Button>
+              </Link>
+            </div>
+          </div>
+        )}
+        
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            {/* Currency Amount Selection */}
+            <Card>
+              <CardContent className="py-4">
+                <h2 className="text-xl font-bold text-[#0A3A68] mt-0 mb-2">Wie viel Eventwährung möchtest du erhalten?</h2>
                 
-                <div className="flex flex-col items-center justify-center p-6 bg-gray-50 rounded-lg">
-                  <h3 className="font-bold text-xl mb-4">Zahlungsinformationen</h3>
-                  <p className="mb-4 text-gray-600">Bestellnummer: {orderId}</p>
-                  <p className="mb-6 text-gray-600">Betrag: {parseFloat(orderAmount).toFixed(2).replace('.', ',')} €</p>
-                  
-                  <div className="w-full max-w-md">
-                    <PayPalButtonWrapper 
-                      amount={orderAmount} 
-                      currency="EUR"
-                      intent="CAPTURE"
-                      orderId={orderId}
-                      onPaymentComplete={handlePaymentComplete}
-                    />
-                  </div>
+                <div className="grid gap-2">
+                  <FormField
+                    control={form.control}
+                    name="currencyAmount"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <RadioGroup
+                            value={selectedOption}
+                            onValueChange={(val) => {
+                              handleCurrencyAmountChange(val);
+                            }}
+                            className="grid gap-2"
+                          >
+                            {currencyOptions.map((option) => (
+                              <div key={option.value} className="flex items-center space-x-3 w-full">
+                                <RadioGroupItem value={option.value} id={`currency-${option.value}`} />
+                                <Label htmlFor={`currency-${option.value}`} className="text-gray-900 flex items-center w-full cursor-pointer">
+                                  <span>{option.label}</span>
+                                  <span className="ml-2">💰</span>
+                                  <span className="ml-auto font-semibold text-[#FF4C00]">{option.price}€</span>
+                                </Label>
+                              </div>
+                            ))}
+                          </RadioGroup>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                 </div>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit}>
-                <div className="space-y-6">
-                  {/* Persönliche Daten */}
-                  <div>
-                    <h3 className="text-lg font-medium mb-4">Persönliche Daten</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <Label htmlFor="name">Name <span className="text-red-500">*</span></Label>
-                        <Input
-                          id="name"
-                          name="name"
-                          value={formData.name}
-                          onChange={handleChange}
-                          className="mt-1"
-                          required
-                        />
-                      </div>
-                      <div>
-                        <Label htmlFor="email">E-Mail <span className="text-red-500">*</span></Label>
-                        <Input
-                          id="email"
-                          name="email"
-                          type="email"
-                          value={formData.email}
-                          onChange={handleChange}
-                          className="mt-1"
-                          required
-                        />
-                      </div>
-                      <div>
-                        <Label htmlFor="whatsapp">WhatsApp (optional)</Label>
-                        <Input
-                          id="whatsapp"
-                          name="whatsapp"
-                          value={formData.whatsapp}
-                          onChange={handleChange}
-                          className="mt-1"
-                          placeholder="Für Rückfragen"
-                        />
-                      </div>
-                    </div>
-                  </div>
+              </CardContent>
+            </Card>
+            
+            {/* Personal Information */}
+            <Card>
+              <CardContent className="py-4">
+                <h2 className="text-xl font-bold text-[#0A3A68] mt-0 mb-2">Persönliche Daten</h2>
+                
+                <div className="grid gap-4 md:grid-cols-2">
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Name</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Dein Name" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                   
-                  {/* Währungs-Paket Auswahl */}
-                  <div>
-                    <h3 className="text-lg font-medium mb-4">Währungs-Paket</h3>
-                    <RadioGroup
-                      value={formData.selectedAmount}
-                      onValueChange={(value) => handleSelectChange('selectedAmount', value)}
-                      className="space-y-3"
-                    >
-                      {WAEHRUNG_PAKETE.map((paket) => (
-                        <div key={paket.amount} className="flex items-center space-x-2">
-                          <RadioGroupItem value={paket.amount} id={`amount-${paket.amount}`} />
-                          <Label htmlFor={`amount-${paket.amount}`} className="cursor-pointer">
-                            {paket.label}
-                          </Label>
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>E-Mail</FormLabel>
+                        <FormControl>
+                          <Input placeholder="deine@email.de" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <FormField
+                    control={form.control}
+                    name="whatsapp"
+                    render={({ field }) => (
+                      <FormItem className="md:col-span-2">
+                        <FormLabel>WhatsApp (optional)</FormLabel>
+                        <FormControl>
+                          <Input 
+                            placeholder="Deine WhatsApp Nummer für schnelle Kommunikation" 
+                            {...field} 
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              </CardContent>
+            </Card>
+            
+            {/* Monopoly Go Daten */}
+            <Card>
+              <CardContent className="py-4">
+                <h2 className="text-xl font-bold text-[#0A3A68] mt-0 mb-2">Monopoly Go Daten</h2>
+                
+                <div className="grid gap-4 md:grid-cols-2">
+                  <FormField
+                    control={form.control}
+                    name="ingameName"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>In-Game Name</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Dein Name im Spiel" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <FormField
+                    control={form.control}
+                    name="friendCode"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Freundschaftslink oder -code</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Dein Freundschaftslink oder -code" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              </CardContent>
+            </Card>
+            
+            {/* Rechtliche Hinweise */}
+            <Card>
+              <CardContent className="py-4">
+                <h2 className="text-xl font-bold text-[#0A3A68] mt-0 mb-2">Rechtliche Hinweise</h2>
+                
+                <div className="space-y-4">
+                  <FormField
+                    control={form.control}
+                    name="termsAccepted"
+                    render={({ field }) => (
+                      <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                        <FormControl>
+                          <Checkbox
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                          />
+                        </FormControl>
+                        <div className="space-y-1 leading-none">
+                          <FormLabel>
+                            Ich akzeptiere die <Link href="/agb"><span className="text-[#00CFFF] hover:underline">AGB</span></Link>
+                          </FormLabel>
+                          <FormMessage />
                         </div>
-                      ))}
-                    </RadioGroup>
-                  </div>
+                      </FormItem>
+                    )}
+                  />
                   
-                  {/* Account-Informationen */}
-                  <div>
-                    <h3 className="text-lg font-medium mb-4">Account-Informationen</h3>
-                    
-                    <div className="space-y-4">
-                      <div>
-                        <Label htmlFor="ingameName">Ingame-Name <span className="text-red-500">*</span></Label>
-                        <Input
-                          id="ingameName"
-                          name="accountInfo.ingameName"
-                          value={formData.accountInfo.ingameName}
-                          onChange={handleChange}
-                          className="mt-1"
-                          required
-                        />
-                      </div>
-                      
-                      <div>
-                        <Label>Anmeldemethode <span className="text-red-500">*</span></Label>
-                        <RadioGroup
-                          value={formData.accountInfo.authMethod}
-                          onValueChange={(value) => handleRadioChange('accountInfo.authMethod', value)}
-                          className="space-y-2 mt-2"
-                        >
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="facebook" id="authFacebook" />
-                            <Label htmlFor="authFacebook" className="cursor-pointer">Facebook Login</Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="appleId" id="authAppleId" />
-                            <Label htmlFor="authAppleId" className="cursor-pointer">Apple ID</Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="other" id="authOther" />
-                            <Label htmlFor="authOther" className="cursor-pointer">Andere</Label>
-                          </div>
-                        </RadioGroup>
-                      </div>
-                      
-                      <div>
-                        <Label>Ausführungszeitpunkt <span className="text-red-500">*</span></Label>
-                        <RadioGroup
-                          value={formData.accountInfo.executionTime}
-                          onValueChange={(value) => handleRadioChange('accountInfo.executionTime', value)}
-                          className="space-y-2 mt-2"
-                        >
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="automatic" id="timeAutomatic" />
-                            <Label htmlFor="timeAutomatic" className="cursor-pointer">Automatisch (sobald möglich)</Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <RadioGroupItem value="coordination" id="timeCoordination" />
-                            <Label htmlFor="timeCoordination" className="cursor-pointer">Nach Absprache</Label>
-                          </div>
-                        </RadioGroup>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  {/* Rechtliche Hinweise */}
-                  <div>
-                    <h3 className="text-lg font-medium mb-4">Rechtliche Hinweise</h3>
-                    
-                    <div className="space-y-4">
-                      <div className="flex items-start">
-                        <input
-                          type="checkbox"
-                          id="agreedToTerms"
-                          name="agreedToTerms"
-                          checked={formData.agreedToTerms}
-                          onChange={handleCheckboxChange}
-                          className="mt-1 mr-2"
-                          required
-                        />
-                        <Label htmlFor="agreedToTerms" className="cursor-pointer text-sm">
-                          Ich habe die <a href="/agb" target="_blank" className="text-[#0A3A68] underline">AGB</a> und <a href="/datenschutz" target="_blank" className="text-[#0A3A68] underline">Datenschutzerklärung</a> gelesen und stimme diesen zu. <span className="text-red-500">*</span>
-                        </Label>
-                      </div>
-                      
-                      <div className="flex items-start">
-                        <input
-                          type="checkbox"
-                          id="agreedToWithdrawalNotice"
-                          name="agreedToWithdrawalNotice"
-                          checked={formData.agreedToWithdrawalNotice}
-                          onChange={handleCheckboxChange}
-                          className="mt-1 mr-2"
-                          required
-                        />
-                        <Label htmlFor="agreedToWithdrawalNotice" className="cursor-pointer text-sm">
-                          Ich stimme ausdrücklich zu, dass mit der Ausführung des Vertrags vor Ablauf der Widerrufsfrist begonnen wird und ich mein Widerrufsrecht verliere. <span className="text-red-500">*</span>
-                        </Label>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  {/* Zusammenfassung und Bezahlbutton */}
-                  <div className="border-t pt-6">
-                    <div className="flex justify-between items-center mb-4">
-                      <span className="text-lg">Gesamtpreis:</span>
-                      <span className="text-xl font-bold text-[#FF4C00]">{parseFloat(orderAmount).toFixed(2).replace('.', ',')} €</span>
-                    </div>
-                    
-                    <Button 
-                      type="submit" 
-                      className="w-full bg-[#FF4C00] hover:bg-[#0A3A68]"
-                      disabled={isSubmitting}
-                    >
-                      {isSubmitting ? (
-                        <>
-                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                          Verarbeitung...
-                        </>
-                      ) : (
-                        <>
-                          <span className="material-icons mr-2 text-lg">shopping_cart</span>
-                          Jetzt kostenpflichtig bestellen
-                        </>
-                      )}
-                    </Button>
-                    
-                    <p className="text-sm text-gray-500 mt-4 text-center">
-                      * Pflichtfeld
-                    </p>
-                  </div>
+                  <FormField
+                    control={form.control}
+                    name="withdrawalAccepted"
+                    render={({ field }) => (
+                      <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                        <FormControl>
+                          <Checkbox
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                          />
+                        </FormControl>
+                        <div className="space-y-1 leading-none">
+                          <FormLabel>
+                            Ich stimme ausdrücklich zu, dass mit der Ausführung des Vertrags vor Ablauf der Widerrufsfrist begonnen wird und verzichte gemäß §356 Abs. 5 BGB auf mein <Link href="/widerruf"><span className="text-[#00CFFF] hover:underline">Widerrufsrecht</span></Link>.
+                          </FormLabel>
+                          <FormMessage />
+                        </div>
+                      </FormItem>
+                    )}
+                  />
                 </div>
-              </form>
-            )}
-          </CardContent>
-        </Card>
+              </CardContent>
+            </Card>
+            
+            <div className="flex justify-center">
+              <Button 
+                type="submit" 
+                className="bg-[#FF4C00] hover:bg-[#FF4C00]/90 px-12 py-6 text-lg"
+              >
+                Formular prüfen
+              </Button>
+            </div>
+          </form>
+        </Form>
+        
+        {/* PayPal Payment */}
+        <div className="mt-12 mb-8" id="paypal-button-container">
+          <h2 className="text-xl font-bold text-[#0A3A68] mb-4 text-center">Bezahlen mit PayPal</h2>
+          <div className="max-w-md mx-auto">
+            <PayPalButtonWrapper 
+              amount={calculatePrice(selectedOption).toString()} 
+              currency="EUR" 
+              intent="capture"
+            />
+          </div>
+          <p className="text-center text-sm text-gray-500 mt-4">
+            Nach der erfolgreichen Zahlung erhältst du eine Bestätigungsmail und wir werden uns bei dir melden.
+          </p>
+        </div>
       </div>
     </div>
   );
