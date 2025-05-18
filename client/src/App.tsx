@@ -62,6 +62,9 @@ const AuthTokenHilfePage = lazy(() => import('@/pages/hilfe/authtoken'));
 const AuthTokenToolPage = lazy(() => import('@/pages/hilfe/authtoken-tool'));
 const NewsPreiseAngebotPage = lazy(() => import('@/pages/hilfe/news_preise_angebot'));
 
+// Tools pages
+const AuthtokenToolPage = lazy(() => import('@/pages/tools/Authtoken'));
+
 // Lazy-loaded ticket pages
 const TicketsPage = lazy(() => import('@/pages/tickets'));
 const NewTicketPage = lazy(() => import('@/pages/tickets/new'));
@@ -234,6 +237,11 @@ function Router() {
           </Route>
           <Route path="/admin/email-vorlagen">
             {() => <AdminEmailVorlagenPage />}
+          </Route>
+
+          {/* Tools-Seiten */}
+          <Route path="/tools/authtoken">
+            {() => <AuthtokenToolPage />}
           </Route>
 
           {/* Test-Seiten */}
