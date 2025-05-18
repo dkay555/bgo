@@ -207,7 +207,7 @@ export default function HilfeUebersicht() {
                     Der Token wird lokal in deinem Browser gespeichert und ist die sicherste Methode für den Login.
                   </p>
                   <div className="flex justify-end">
-                    <Link href="/hilfe/authtoken-tool">
+                    <Link href="/tools/authtoken">
                       <Button variant="outline" className="text-sm px-3 py-1">
                         [Zum Tool]
                       </Button>
