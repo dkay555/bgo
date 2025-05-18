@@ -75,7 +75,8 @@ export default function WuerfelHilfe() {
             <div className="flex items-start">
               <span className="material-icons text-[#0A3A68] mr-2 mt-1">check_circle</span>
               <div>
-                <p><strong>Dein Account muss mit Facebook oder Google verbunden sein.</strong> Es ist nicht erforderlich deine FB Zugangsdaten zu teilen.</p>
+                <p><strong>Dein Account muss mit Facebook oder Google verbunden sein.</strong></p>
+                <p className="ml-4">→ Es ist nicht erforderlich deine FB Zugangsdaten zu teilen.</p>
                 <p><strong>Mehr zu dem Thema:</strong> <Link href="/hilfe/login" className="text-[#00CFFF] hover:text-[#FF4C00] underline">Login-Methoden für den Würfelboost</Link></p>
               </div>
             </div>
