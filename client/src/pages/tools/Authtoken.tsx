@@ -190,16 +190,15 @@ export default function AuthTokenTool() {
           <h2 className="text-2xl font-bold text-[#0A3A68] mb-6 text-center">Anleitung</h2>
           
           <div className="mb-8 border border-gray-200 rounded-lg p-4 flex justify-center">
-            <div className="w-full max-w-2xl">
-              <video 
-                className="w-full" 
-                controls
-                preload="auto"
-                playsInline
-              >
-                <source src="/videos/anleitung_tokentool.mp4" type="video/mp4" />
-                Dein Browser unterstützt keine Videos. Bitte sieh dir die schriftliche Anleitung weiter unten an.
-              </video>
+            <div className="w-full max-w-2xl aspect-video">
+              <iframe 
+                className="w-full h-full"
+                src="https://www.youtube.com/embed/yY9RevWbFBg"
+                title="Anleitung zum Auth-Token"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowFullScreen
+              ></iframe>
             </div>
           </div>
           
