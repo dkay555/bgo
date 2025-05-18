@@ -25,20 +25,20 @@ export default function LoginHilfe() {
         </p>
 
         <div className="bg-[#E6F7FF] border-l-4 border-[#00CFFF] p-4 mb-6 rounded-r-md">
-          <h5 className="font-medium text-[#0A3A68] mb-2 text-base">💡 Wichtiger Hinweis</h5>
+          <p className="font-bold text-[#0A3A68] mb-2">💡 Wichtiger Hinweis</p>
           <p className="text-gray-700">Wir verstehen, dass es für manche ein sensibles Thema ist und garantieren, dass wir den Login nur nutzen, um die nötigen Spieldaten zu erhalten. In aller Regel kann das Passwort wenige Minuten nach dem Login von dir geändert werden.</p>
         </div>
         
         <div className="mb-8">
-          <h4 className="text-lg font-bold text-[#0A3A68] mb-4 border-b-2 border-[#00CFFF] pb-2 inline-block">Login-Methoden im Überblick</h4>
+          <p className="font-bold text-[#0A3A68] mb-4 border-b-2 border-[#00CFFF] pb-2 inline-block">Login-Methoden im Überblick</p>
           
           <div className="space-y-6">
             <div className="border border-gray-200 rounded-lg">
               <div className="bg-gray-50 p-4 rounded-t-lg">
-                <h5 className="font-medium text-[#0A3A68] flex items-center text-base">
+                <p className="font-bold text-[#0A3A68] flex items-center">
                   <span className="material-icons mr-2 text-[#00CFFF]">login</span>
                   Methode 1: Facebook: Zugangsdaten
-                </h5>
+                </p>
               </div>
               <div className="p-4 border-t border-gray-200">
                 <p className="text-gray-700 mb-4 font-semibold">Login mit deinen Zugangsdaten</p>
@@ -66,10 +66,10 @@ export default function LoginHilfe() {
             
             <div className="border border-gray-200 rounded-lg">
               <div className="bg-gray-50 p-4 rounded-t-lg">
-                <h5 className="font-medium text-[#0A3A68] flex items-center text-base">
+                <p className="font-bold text-[#0A3A68] flex items-center">
                   <span className="material-icons mr-2 text-[#00CFFF]">token</span>
                   Methode 2: Facebook: Authtoken (empfohlen)
-                </h5>
+                </p>
               </div>
               <div className="p-4 border-t border-gray-200">
                 <p className="text-gray-700 mb-4 font-semibold">Login mit dem Authtoken</p>
@@ -119,10 +119,10 @@ export default function LoginHilfe() {
             
             <div className="border border-gray-200 rounded-lg">
               <div className="bg-gray-50 p-4 rounded-t-lg">
-                <h5 className="font-medium text-[#0A3A68] flex items-center text-base">
+                <p className="font-bold text-[#0A3A68] flex items-center">
                   <span className="material-icons mr-2 text-[#00CFFF]">phone_android</span>
                   Methode 3: Google Play Games: Zugangsdaten
-                </h5>
+                </p>
               </div>
               <div className="p-4 border-t border-gray-200">
                 <p className="text-gray-700 mb-4 font-semibold">Google Play Games</p>
@@ -141,7 +141,7 @@ export default function LoginHilfe() {
         </div>
         
         <div className="bg-[#E6F7FF] border-l-4 border-[#00CFFF] p-4 rounded-r-md">
-          <h5 className="font-medium text-[#0A3A68] mb-2 border-b-2 border-[#00CFFF] pb-2 inline-block text-base">Hast du noch Fragen?</h5>
+          <p className="font-bold text-[#0A3A68] mb-2 border-b-2 border-[#00CFFF] pb-2 inline-block">Hast du noch Fragen?</p>
           <p className="text-gray-700 mb-3">Falls du Hilfe benötigst oder noch Fragen zu dem Thema hast zögere nicht uns anzuschreiben.</p>
           <Link href="/kontakt">
             <button className="bg-[#0A3A68] hover:bg-[#00CFFF] text-white py-2 px-4 rounded-md transition-colors inline-flex items-center">
