@@ -105,9 +105,7 @@ function Router() {
           <Route path="/landing" component={LandingPage} />
           <Route path="/blog" component={BlogPost} />
           <Route path="/news" component={News} />
-          <Route path="/produkte" >
-             {() => <Redirect to="/shop/uebersicht" />}
-          </Route>
+          <Route path="/produkte" component={Produkte} />
           <Route path="/shop" component={Shop} />
           <Route path="/preise">
              {() => <Redirect to="/shop/uebersicht" />}
@@ -133,6 +131,9 @@ function Router() {
           <Route path="/hilfe/race">
             {() => <RaceHilfePage />}
           </Route>
+          <Route path="/hilfe/sticker">
+            {() => <StickerHilfePage />}
+          </Route>
           <Route path="/hilfe/login">
             {() => <LoginHilfePage />}
           </Route>
@@ -154,7 +155,7 @@ function Router() {
             {() => <WuerfelPage />}
           </Route>
           <Route path="/produkte/sticker">
-            {() => <Redirect to="/shop/sticker" />}
+            {() => <StickerPage />}
           </Route>
           <Route path="/produkte/partner">
             {() => <PartnerPage />}
