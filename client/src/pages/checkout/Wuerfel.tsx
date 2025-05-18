@@ -327,58 +327,53 @@ export default function WuerfelCheckout() {
                 
                 <div className="grid gap-6">
                   <div className="border-b border-gray-200 mb-4">
-                    <nav className="-mb-px flex" aria-label="Tabs">
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setLoginMethod('authtoken');
-                          form.setValue("loginMethod", "authtoken");
-                        }}
+                    <div className="flex" role="tablist">
+                      <div
+                        role="tab"
+                        aria-selected={loginMethod === 'authtoken'}
                         className={`
-                          w-1/2 py-4 px-1 text-center border-b-2 font-medium text-sm 
+                          w-1/2 py-4 px-1 text-center border-b-2 font-medium text-sm cursor-pointer
                           ${loginMethod === 'authtoken' 
                             ? 'border-[#00CFFF] text-[#00CFFF]' 
                             : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}
                         `}
+                        onClick={() => {
+                          setLoginMethod('authtoken');
+                          form.setValue("loginMethod", "authtoken");
+                        }}
                       >
                         Facebook Auth-Token
-                      </button>
+                      </div>
                       
                       {/* Nur anzeigen, wenn KEIN Schnupperboost ausgewählt ist */}
-                      {!selectedOption.includes('schnupper') ? (
-                        <button
-                          type="button"
-                          onClick={() => {
+                      <div
+                        role="tab"
+                        aria-selected={loginMethod === 'credentials' && !selectedOption.includes('schnupper')}
+                        aria-disabled={selectedOption.includes('schnupper')}
+                        className={`
+                          w-1/2 py-4 px-1 text-center border-b-2 font-medium text-sm
+                          ${selectedOption.includes('schnupper')
+                            ? 'border-transparent bg-gray-100 text-gray-400 cursor-not-allowed'
+                            : loginMethod === 'credentials'
+                              ? 'border-[#00CFFF] text-[#00CFFF] cursor-pointer'
+                              : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 cursor-pointer'}
+                        `}
+                        onClick={() => {
+                          if (!selectedOption.includes('schnupper')) {
                             setLoginMethod('credentials');
                             form.setValue("loginMethod", "credentials");
-                          }}
-                          className={`
-                            w-1/2 py-4 px-1 text-center border-b-2 font-medium text-sm 
-                            ${loginMethod === 'credentials' 
-                              ? 'border-[#00CFFF] text-[#00CFFF]' 
-                              : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}
-                          `}
-                        >
-                          Facebook Zugangsdaten
-                        </button>
-                      ) : (
-                        <div className="w-1/2 py-4 px-1 text-center border-b-2 border-transparent bg-gray-100 text-gray-400 text-sm">
-                          Facebook Zugangsdaten
-                        </div>
-                      )}
-                    </nav>
+                          }
+                        }}
+                      >
+                        Facebook Zugangsdaten
+                      </div>
+                    </div>
                   </div>
                   
-                  <FormField
-                    control={form.control}
-                    name="loginMethod"
-                    render={({ field }) => (
-                      <FormItem className="hidden">
-                        <FormControl>
-                          <input type="hidden" {...field} value={loginMethod} />
-                        </FormControl>
-                      </FormItem>
-                    )}
+                  <input 
+                    type="hidden" 
+                    {...form.register("loginMethod")} 
+                    value={loginMethod} 
                   />
                   
                   {loginMethod === 'authtoken' && (
