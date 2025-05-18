@@ -143,7 +143,7 @@ export default function TycoonRacers() {
                 Alle Informationen zu Tycoon Racers findest du hier
               </div>
             </Link>
-            <Link href="/hilfe/flaggen" className="text-[#8A2BE2] hover:text-[#7B1FA2] font-medium block">
+            <Link href="/hilfe/race" className="text-[#8A2BE2] hover:text-[#7B1FA2] font-medium block">
               <div className="flex items-center">
                 <span className="material-icons mr-2">article</span>
                 Die Voraussetzungen für Flaggen-Rewards kannst du hier nachlesen

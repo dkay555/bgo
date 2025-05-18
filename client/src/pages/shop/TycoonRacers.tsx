@@ -6,7 +6,7 @@ import SEOHead from '@/components/SEOHead';
 
 export default function ShopTycoonRacers() {
   const [activeSection, setActiveSection] = useState('team');
-  
+
   // Preistabelle für Tycoon Racers
   const tycoonPrices = {
     team: [
@@ -34,7 +34,7 @@ export default function ShopTycoonRacers() {
         customTitle="Tycoon Racers für Monopoly Go | babixGO Shop" 
         customDescription="Team-Slots und Flaggen für Tycoon Racers Events - Sichere dir alle Rundenbelohnungen ohne Aufwand."
       />
-      
+
       {/* Hero Section */}
       <section className="py-6 md:py-8 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-[#0A3A68]/10 to-[#FF4C00]/10 animate-gradient-x"></div>
@@ -44,7 +44,7 @@ export default function ShopTycoonRacers() {
               Tycoon Racers für Monopoly Go
             </h1>
             <p className="text-base md:text-lg mb-6">Sichere dir alle 54 Rundenbelohnungen - ganz ohne Aufwand!</p>
-            
+
             {/* Navigation Buttons */}
             <div className="flex flex-wrap justify-center gap-4 mb-8">
               <Button 
@@ -68,7 +68,7 @@ export default function ShopTycoonRacers() {
       <section className="py-4">
         <div className="max-w-4xl mx-auto">
           <div className="space-y-12">
-            
+
             {/* Teamplätze */}
             <div id="team" className="scroll-mt-20">
               <Card className="overflow-hidden">
@@ -79,14 +79,14 @@ export default function ShopTycoonRacers() {
                 <CardContent className="p-6">
                   <p className="mb-4">
                     Hier findest du weitere Infos zum Event und dem Ablauf:
-                    <Link href="/hilfe/tycoon-racers">
+                    <Link href="/hilfe/race">
                       <span className="text-[#00CFFF] hover:underline ml-1 inline-flex items-center">
                         Hilfsartikel lesen
                         <span className="material-icons text-sm ml-1">help_outline</span>
                       </span>
                     </Link>
                   </p>
-                  
+
                   <div className="my-6">
                     <h3 className="text-lg font-bold mb-2">Preise:</h3>
                     <div className="space-y-2">
@@ -101,7 +101,7 @@ export default function ShopTycoonRacers() {
                       ))}
                     </div>
                   </div>
-                  
+
                   <div className="flex justify-center mt-6">
                     <Link href="/checkout/tycoonracers">
                       <Button className="bg-[#FF4C00] hover:bg-[#FF4C00]/90 text-white px-8">
@@ -112,7 +112,7 @@ export default function ShopTycoonRacers() {
                 </CardContent>
               </Card>
             </div>
-            
+
             {/* Flaggen */}
             <div id="flaggen" className="scroll-mt-20">
               <Card className="overflow-hidden">
@@ -130,7 +130,7 @@ export default function ShopTycoonRacers() {
                       </span>
                     </Link>
                   </p>
-                  
+
                   <div className="my-6">
                     <h3 className="text-lg font-bold mb-2">Preise:</h3>
                     <div className="space-y-2">
@@ -145,7 +145,7 @@ export default function ShopTycoonRacers() {
                       ))}
                     </div>
                   </div>
-                  
+
                   <div className="flex justify-center mt-6">
                     <Link href="/checkout/flaggen">
                       <Button className="bg-[#FF4C00] hover:bg-[#FF4C00]/90 text-white px-8">
@@ -159,12 +159,12 @@ export default function ShopTycoonRacers() {
           </div>
         </div>
       </section>
-      
+
       {/* FAQ Section */}
       <section className="py-12">
         <div className="max-w-4xl mx-auto">
           <h2 className="babix-info-header text-2xl font-bold mb-6 text-center">Häufig gestellte Fragen</h2>
-          
+
           <div className="space-y-4">
             <Card>
               <CardContent className="p-4">
@@ -172,28 +172,28 @@ export default function ShopTycoonRacers() {
                 <p>Wir befüllen jedes Team mit mindestens 2 unserer Accounts. Die restlichen Plätze bieten wir euch an.</p>
               </CardContent>
             </Card>
-            
+
             <Card>
               <CardContent className="p-4">
                 <h3 className="font-bold text-lg mb-2">Wie läuft das ab?</h3>
                 <p>Du bekommst spätestens zum Start des Events den Freundschaftslink und Ingame Namen deines Teampartners mitgeteilt.</p>
               </CardContent>
             </Card>
-            
+
             <Card>
               <CardContent className="p-4">
                 <h3 className="font-bold text-lg mb-2">Was muss ich beachten?</h3>
                 <p>Tritt keinen anderen Team bei und lasse niemand anderen ins Team! Sobald ein Team komplett ist kann man es nicht mehr verlassen.</p>
               </CardContent>
             </Card>
-            
+
             <Card>
               <CardContent className="p-4">
                 <h3 className="font-bold text-lg mb-2">Gewinnen wir ganz sicher?</h3>
                 <p>Nein. Wir erspielen 45.000 Punkte - das wars. Sollte es mal knapp werden legen wir noch etwas nach um Platz 1 zu erreichen, wir beteiligen uns aber nicht an Rennen mit Gegnern die mehrere 100k Punkte pro Rennen erspielen.</p>
               </CardContent>
             </Card>
-            
+
             <Card>
               <CardContent className="p-4">
                 <h3 className="font-bold text-lg mb-2">Wie oft gewinnt ihr?</h3>
