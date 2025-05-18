@@ -27,16 +27,15 @@ import { lazy, Suspense } from "react";
 // Sitemap
 const SitemapPage = lazy(() => import('@/pages/Sitemap'));
 
-// Lazy-loaded product pages
+// Lazy-loaded shop product pages
 const WuerfelPage = lazy(() => import('@/pages/shop/Wuerfel'));
 const StickerPage = lazy(() => import('@/pages/shop/Sticker'));
-const PartnerPage = lazy(() => import('@/pages/produkte/Partner'));
-const TycoonRacersPage = lazy(() => import('@/pages/produkte/TycoonRacers'));
-const WeiterePage = lazy(() => import('@/pages/produkte/Weitere'));
 
 // Shop-specific pages
 const ShopPartnereventPage = lazy(() => import('@/pages/shop/Partnerevent'));
 const ShopTycoonRacersPage = lazy(() => import('@/pages/shop/TycoonRacers'));
+const PartnerPage = lazy(() => import('@/pages/shop/Partnerevent'));
+const TycoonRacersPage = lazy(() => import('@/pages/shop/TycoonRacers'));
 
 // Lazy-loaded checkout pages
 const WuerfelCheckoutPage = lazy(() => import('@/pages/checkout/Wuerfel'));
@@ -148,24 +147,21 @@ function Router() {
             {() => <NewsPreiseAngebotPage />}
           </Route>
 
-          {/* Produkt-Unterseiten */}
+          {/* Redirects für alte Produkt-Pfade */}
           <Route path="/produkte/wuerfel">
-            {() => <WuerfelPage />}
+            {() => <Redirect to="/shop/wuerfel" />}
           </Route>
           <Route path="/produkte/sticker">
-            {() => <StickerPage />}
+            {() => <Redirect to="/shop/sticker" />}
           </Route>
           <Route path="/produkte/partner">
-            {() => <PartnerPage />}
+            {() => <Redirect to="/shop/partnerevent" />}
           </Route>
           <Route path="/produkte/race">
-            {() => <TycoonRacersPage />}
+            {() => <Redirect to="/shop/tycoonracers" />}
           </Route>
           <Route path="/produkte/tycoonracers">
-            {() => <TycoonRacersPage />}
-          </Route>
-          <Route path="/produkte/weitere">
-            {() => <WeiterePage />}
+            {() => <Redirect to="/shop/tycoonracers" />}
           </Route>
 
           {/* Shop-Unterseiten */}

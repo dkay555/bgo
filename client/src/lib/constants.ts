@@ -84,7 +84,7 @@ export const FOOTER_LINKS = [
   { name: 'Sitemap', href: '/sitemap' },
 ];
 
-// Produkt-Kategorien
+// Shop-Kategorien
 export const PRODUCT_CATEGORIES = [
   { 
     name: 'Würfelboost', 
