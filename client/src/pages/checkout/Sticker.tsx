@@ -24,10 +24,10 @@ export default function StickerCheckout() {
 
   // Warenkorb-Daten aus dem Hook laden
   const { cartItems, totalPrice, clearCart } = useStickerCart();
-  
+
   // State für Formular
   const [formError, setFormError] = useState('');
-  
+
   // Initiale Form-Daten
   const getInitialFormData = () => {
     return {
@@ -41,7 +41,7 @@ export default function StickerCheckout() {
       agreedToWithdrawalNotice: false
     };
   };
-  
+
   // Verwende den Hook für die lokale Speicherung der Formulardaten
   // Die Daten werden für 120 Minuten (2 Stunden) gespeichert
   const [formData, setPersistedFormData, clearPersistedFormData] = useFormPersistence(
@@ -49,7 +49,7 @@ export default function StickerCheckout() {
     getInitialFormData(),
     120
   );
-  
+
   // Funktion zum Aktualisieren der Formulardaten
   const setFormData = (newData: typeof formData) => {
     setPersistedFormData(newData);
@@ -58,7 +58,7 @@ export default function StickerCheckout() {
   // Laden der Material Icons und Bestellbetrag setzen
   useEffect(() => {
     document.title = 'Sticker bestellen | babixGO';
-    
+
     const link = document.createElement('link');
     link.href = 'https://fonts.googleapis.com/icon?family=Material+Icons';
     link.rel = 'stylesheet';
@@ -85,29 +85,32 @@ export default function StickerCheckout() {
   const createOrderData = () => {
     // Erstelle eine Liste aller Sticker im Warenkorb für die Bestellzusammenfassung
     const stickerList = cartItems.map(item => `${item.name} (${item.stars}★)`).join(", ");
-    
+
     return {
       // Persönliche Daten
       name: formData.name,
       email: formData.email,
       whatsapp: formData.whatsapp || null,
-      
+
       // Bestelldetails
       productType: 'sticker',
       package: cartItems.length > 0 
         ? `Individuelle Sticker: ${stickerList}`
         : `Sticker Set ${formData.selectedSet}`,
       price: orderAmount, // String anstatt Zahl
-      
+
       // Monopoly Daten
       authMethod: "friendshipLink", // Korrekter Wert für die gewählte Methode
       ingameName: formData.ingameName,
       friendshipLink: formData.friendshipLink,
-      
+      accountData: JSON.stringify({
+        friendshipLink: formData.friendshipLink
+      }),
+
       // Zahlungsdetails
       paymentMethod: "paypal",
       paymentStatus: "pending",
-      
+
       // Zustimmungen
       agreedToTerms: formData.agreedToTerms,
       agreedToWithdrawalNotice: formData.agreedToWithdrawalNotice
@@ -118,25 +121,25 @@ export default function StickerCheckout() {
   const createOrder = async () => {
     try {
       setIsSubmitting(true);
-      
+
       const orderData = createOrderData();
       const response = await apiRequest("POST", "/api/orders", orderData);
-      
+
       if (!response.ok) {
         const errorData = await response.json();
         console.error("Bestellungsfehler:", errorData);
         throw new Error(errorData.message || (errorData.errors && errorData.errors.length > 0 ? errorData.errors[0].message : "Fehler beim Erstellen der Bestellung"));
       }
-      
+
       const data = await response.json();
       setOrderId(data.order.id);
       setShowPayPal(true);
-      
+
       toast({
         title: "Bestellung erstellt",
         description: "Bitte fahren Sie mit der Zahlung fort",
       });
-      
+
       return data.order;
     } catch (error: any) {
       toast({
@@ -152,47 +155,47 @@ export default function StickerCheckout() {
   // Funktion zur Handhabung der Formularübermittlung
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Validierung der Checkboxen
     if (!formData.agreedToTerms || !formData.agreedToWithdrawalNotice) {
       setFormError('Bitte akzeptieren Sie sowohl die AGB als auch den Hinweis zum Widerrufsrecht.');
       return;
     }
-    
+
     // Validiere Pflichtfelder
     if (!formData.ingameName || !formData.friendshipLink) {
       setFormError('Bitte füllen Sie alle Pflichtfelder aus.');
       return;
     }
-    
+
     setFormError('');
     const orderResult = await createOrder();
-    
+
     // Nach erfolgreicher Bestellung die gespeicherten Formulardaten löschen
     if (orderResult) {
       clearPersistedFormData();
     }
   };
-  
+
   // Aktualisiert den Zahlungsstatus einer Bestellung nach erfolgreicher PayPal-Zahlung
   const updateOrderPayment = async (paymentId: string) => {
     if (!orderId) return;
-    
+
     try {
       const response = await apiRequest("PATCH", `/api/orders/${orderId}/payment`, {
         paymentStatus: "completed",
         paymentReference: paymentId
       });
-      
+
       if (!response.ok) {
         throw new Error("Fehler beim Aktualisieren des Zahlungsstatus");
       }
-      
+
       toast({
         title: "Zahlung erfolgreich",
         description: "Vielen Dank für Ihren Einkauf! Wir bearbeiten Ihre Bestellung umgehend.",
       });
-      
+
       // Hier könnte eine Weiterleitung zur Bestellbestätigungsseite erfolgen
     } catch (error: any) {
       toast({
@@ -213,7 +216,7 @@ export default function StickerCheckout() {
           Vervollständige deine Monopoly Go Sticker-Sammlung mit unseren individuellen Angeboten
         </p>
       </div>
-      
+
       {/* Login/Register Hinweis */}
       <div className="bg-gradient-to-r from-[#0A3A68]/10 to-[#00CFFF]/10 p-4 rounded-lg mb-8 max-w-3xl mx-auto">
         <div className="flex items-center gap-3">
@@ -224,7 +227,7 @@ export default function StickerCheckout() {
           </div>
         </div>
       </div>
-      
+
       <form onSubmit={handleSubmit} className="max-w-3xl mx-auto">
         {/* Sticker Auswahl anzeigen */}
         <Card className="mb-6 overflow-hidden">
@@ -276,14 +279,14 @@ export default function StickerCheckout() {
                     ))}
                   </div>
                 </div>
-                
+
                 <div className="bg-[#FF4C00]/10 p-5 rounded-md shadow-sm border border-[#FF4C00]/20">
                   <div className="flex justify-between items-center">
                     <span className="font-bold text-lg">Gesamtbetrag:</span>
                     <span className="font-bold text-[#FF4C00] text-xl">{totalPrice.toFixed(2).replace('.', ',')} €</span>
                   </div>
                 </div>
-                
+
                 <div className="flex justify-between items-center">
                   <Link href="/shop/sticker">
                     <Button variant="outline" className="flex items-center gap-1">
@@ -291,7 +294,7 @@ export default function StickerCheckout() {
                       Zurück zum Shop
                     </Button>
                   </Link>
-                  
+
                   <div className="text-xs text-gray-500">
                     Alle Preise inklusive MwSt.
                   </div>
@@ -300,7 +303,7 @@ export default function StickerCheckout() {
             )}
           </CardContent>
         </Card>
-        
+
         {/* Persönliche Daten */}
         <Card className="mb-6 overflow-hidden">
           <div className="bg-gradient-to-r from-[#00CFFF] to-[#00CFFF]/80 p-6">
@@ -323,7 +326,7 @@ export default function StickerCheckout() {
                   className="border-[#00CFFF]/30 focus:border-[#00CFFF] focus:ring-[#00CFFF] p-2.5 rounded-md"
                 />
               </div>
-              
+
               <div>
                 <Label htmlFor="email" className="text-[#0A3A68] font-medium mb-2 block">E-Mail *</Label>
                 <div className="relative">
@@ -342,7 +345,7 @@ export default function StickerCheckout() {
                   />
                 </div>
               </div>
-              
+
               <div>
                 <Label htmlFor="whatsapp" className="text-[#0A3A68] font-medium mb-2 flex items-center">
                   WhatsApp (optional)
@@ -362,7 +365,7 @@ export default function StickerCheckout() {
                   />
                 </div>
               </div>
-              
+
               <div className="bg-[#00CFFF]/5 p-4 rounded-md mt-2 border border-[#00CFFF]/10">
                 <p className="text-sm text-gray-600">
                   <span className="font-medium text-[#0A3A68]">Datenschutzhinweis:</span> Deine Daten werden vertraulich behandelt und nur für die Bearbeitung deiner Bestellung verwendet.
@@ -371,7 +374,7 @@ export default function StickerCheckout() {
             </div>
           </CardContent>
         </Card>
-        
+
         {/* Monopoly-Account-Daten */}
         <Card className="mb-6 overflow-hidden">
           <div className="bg-gradient-to-r from-[#FF4C00] to-[#FF4C00]/80 p-6">
@@ -399,7 +402,7 @@ export default function StickerCheckout() {
                   />
                 </div>
               </div>
-              
+
               <div>
                 <Label htmlFor="friendshipLink" className="text-[#0A3A68] font-medium mb-2 flex items-center">
                   Freundschaftslink oder Code *
@@ -429,7 +432,7 @@ export default function StickerCheckout() {
             </div>
           </CardContent>
         </Card>
-        
+
         {/* Checkboxen für AGBs und Widerrufsrecht */}
         <Card className="mb-6 overflow-hidden">
           <div className="bg-gradient-to-r from-[#0A3A68] to-[#00CFFF] p-6">
@@ -475,7 +478,7 @@ export default function StickerCheckout() {
                 Ich bin ausdrücklich damit einverstanden, dass mit der Ausführung des Auftrags vor Ablauf der Widerrufsfrist begonnen wird. Mir ist bekannt, dass mein <Link href="/widerruf" className="text-[#00CFFF] hover:underline inline-flex items-center" target="_blank">Widerrufsrecht <span className="material-icons text-xs ml-0.5">open_in_new</span></Link> mit Beginn der Ausführung erlischt.
               </label>
             </div>
-            
+
             {/* Checkbox für AGB */}
             <div 
               className={`flex items-start p-4 rounded-lg border ${formData.agreedToTerms ? 'bg-[#00CFFF]/10 border-[#00CFFF]' : 'border-gray-200'} mb-5 transition-all hover:shadow-sm cursor-pointer`}
@@ -512,7 +515,7 @@ export default function StickerCheckout() {
                 Ich habe die <Link href="/agb" className="text-[#00CFFF] hover:underline" target="_blank">Allgemeinen Geschäftsbedingungen</Link> und <Link href="/datenschutz" className="text-[#00CFFF] hover:underline" target="_blank">Datenschutzbestimmungen</Link> gelesen und akzeptiere diese.
               </label>
             </div>
-            
+
             {/* Fehlermeldung */}
             {formError && (
               <div className="mt-4 p-4 bg-red-50 border border-red-200 text-red-600 rounded-md flex items-start">
@@ -522,7 +525,7 @@ export default function StickerCheckout() {
             )}
           </CardContent>
         </Card>
-        
+
         {/* Zahlung */}
         <Card className="mb-6 overflow-hidden">
           <div className="bg-gradient-to-r from-[#FF4C00] to-[#FF4C00]/80 p-6">
@@ -541,7 +544,7 @@ export default function StickerCheckout() {
                   </p>
                   <p className="text-gray-500 text-sm mt-1">Alle Preise inkl. MwSt.</p>
                 </div>
-                
+
                 <Button 
                   type="submit" 
                   className="w-full bg-[#FF4C00] hover:bg-[#FF4C00]/90 text-white font-bold py-4 text-lg rounded-md shadow-sm"
@@ -564,7 +567,7 @@ export default function StickerCheckout() {
                     </span>
                   )}
                 </Button>
-                
+
                 <div className="flex justify-center space-x-4 items-center">
                   <img src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_37x23.jpg" alt="PayPal" className="h-6" />
                   <div className="relative flex-1">
@@ -586,10 +589,10 @@ export default function StickerCheckout() {
                   <h3 className="font-bold text-lg text-[#0A3A68] mb-2">Bestellung erfolgreich erstellt!</h3>
                   <p className="text-gray-700">Bitte schließe deine Bestellung mit der Zahlung ab.</p>
                 </div>
-                
+
                 <div className="bg-white p-5 rounded-lg border border-gray-200 shadow-sm">
                   <h3 className="font-medium text-[#0A3A68] mb-3 pb-2 border-b">Bestellübersicht</h3>
-                  
+
                   {cartItems.length > 0 ? (
                     <div className="space-y-2 mb-4">
                       {cartItems.map((item, index) => (
@@ -615,14 +618,14 @@ export default function StickerCheckout() {
                       </div>
                     </div>
                   )}
-                  
+
                   <div className="bg-blue-50 p-3 rounded-md border border-blue-100 mb-4 flex items-start">
                     <span className="material-icons text-blue-500 mr-2">info</span>
                     <p className="text-sm text-gray-700">
                       Nach erfolgreicher Zahlung erhältst du eine Bestätigungs-E-Mail mit deinen Bestelldetails.
                     </p>
                   </div>
-                  
+
                   <div className="mt-4">
                     <div className="w-full mx-auto rounded-md overflow-hidden shadow-sm border border-gray-200">
                       <PayPalButtonWrapper 
@@ -635,7 +638,7 @@ export default function StickerCheckout() {
                     </div>
                   </div>
                 </div>
-                
+
                 <div className="text-center text-sm text-gray-500">
                   <p>Hast du Fragen zu deiner Bestellung? <Link href="/kontakt" className="text-[#00CFFF] hover:underline">Kontaktiere uns</Link></p>
                 </div>
