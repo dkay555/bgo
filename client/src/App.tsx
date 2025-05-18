@@ -193,14 +193,15 @@ function Router() {
             {() => <StickerCheckoutPage />}
           </Route>
           <Route path="/checkout/partnerevent">
-            {() => <PartnereventCheckoutPage />}
+            {() => import("./pages/checkout/PartnereventNew").then(module => <module.default />)}
+          </Route>
+          <Route path="/checkout/eventwaehrung">
+            {() => import("./pages/checkout/EventwaehrungNew").then(module => <module.default />)}
           </Route>
           <Route path="/checkout/tycoonracers">
             {() => <TycoonRacersCheckoutPage />}
           </Route>
-          <Route path="/checkout/eventwaehrung">
-            {() => <EventwaehrungCheckoutPage />}
-          </Route>
+
 
           {/* Auth-Routen */}
           <Route path="/auth" component={AuthPage} />
