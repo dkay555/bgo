@@ -59,7 +59,7 @@ const StickerHilfePage = lazy(() => import('@/pages/hilfe/sticker'));
 const LoginHilfePage = lazy(() => import('@/pages/hilfe/login'));
 const AccountsHilfePage = lazy(() => import('@/pages/hilfe/accounts'));
 const AuthTokenHilfePage = lazy(() => import('@/pages/hilfe/authtoken'));
-const AuthTokenToolPage = lazy(() => import('@/pages/hilfe/authtoken-tool'));
+const AuthTokenToolPage = lazy(() => import('@/pages/tools/authtoken'));
 
 // News pages
 const MaiPreisePage = lazy(() => import('@/pages/news/mai_preise'));
@@ -142,7 +142,7 @@ function Router() {
           <Route path="/hilfe/authtoken">
             {() => <AuthTokenHilfePage />}
           </Route>
-          <Route path="/hilfe/authtoken-tool">
+          <Route path="/tools/authtoken">
             {() => <AuthTokenToolPage />}
           </Route>
           {/* News-Unterseiten */}
