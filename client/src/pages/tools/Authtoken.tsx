@@ -193,7 +193,7 @@ export default function AuthTokenTool() {
             <video 
               className="w-full max-w-2xl" 
               controls
-              poster="/images/auth-token/video-poster.jpg"
+              poster="/images/auth-token/step1.webp"
             >
               <source src="/videos/anleitung_tokentool.mp4" type="video/mp4" />
               Dein Browser unterstützt keine Videos. Bitte sieh dir die Anleitung weiter unten an.
