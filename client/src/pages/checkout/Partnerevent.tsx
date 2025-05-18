@@ -1,629 +1,622 @@
-import { useEffect, useState } from 'react';
-import { useLocation } from 'wouter';
-import { useToast } from "@/hooks/use-toast";
-import { apiRequest } from '@/lib/queryClient';
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { PayPalButtonWrapper } from "@/components/PayPalButtonWrapper";
+import { useState, useEffect } from 'react';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 import { Link } from 'wouter';
+import { Button } from '@/components/ui/button';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Checkbox } from '@/components/ui/checkbox';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Label } from '@/components/ui/label';
+import { Card, CardContent } from '@/components/ui/card';
+import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/hooks/use-auth';
+import SEOHead from '@/components/SEOHead';
+import { PayPalButtonWrapper } from '@/components/PayPalButtonWrapper';
+
+// Form schema type
+type LoginMethod = "authtoken" | "credentials";
+
+// Form schema
+const checkoutSchema = z.object({
+  partnerCount: z.string({
+    required_error: "Bitte wähle eine Anzahl von Partnern",
+  }),
+  name: z.string().min(2, {
+    message: "Der Name muss mindestens 2 Zeichen lang sein",
+  }),
+  email: z.string().email({
+    message: "Bitte gib eine gültige E-Mail-Adresse ein",
+  }),
+  whatsapp: z.string().optional(),
+  loginMethod: z.enum(["authtoken", "credentials"] as const, {
+    required_error: "Bitte wähle eine Login-Methode",
+  }),
+  ingameName: z.string().min(2, {
+    message: "Bitte gib deinen In-Game Namen ein",
+  }),
+  friendCode: z.string().min(2, {
+    message: "Bitte gib deinen Freundschaftslink oder -code ein",
+  }),
+  authToken: z.string().optional(),
+  facebookEmail: z.string().optional(),
+  facebookPassword: z.string().optional(),
+  recoveryCode1: z.string().optional(),
+  recoveryCode2: z.string().optional(),
+  termsAccepted: z.boolean().refine(val => val === true, {
+    message: "Du musst die AGB akzeptieren",
+  }),
+  withdrawalAccepted: z.boolean().refine(val => val === true, {
+    message: "Du musst auf dein Widerrufsrecht verzichten",
+  }),
+}).refine((data) => {
+  if (data.loginMethod === "authtoken") {
+    return !!data.authToken;
+  }
+  return true;
+}, {
+  message: "Bitte gib deinen Auth-Token ein",
+  path: ["authToken"],
+}).refine((data) => {
+  if (data.loginMethod === "credentials") {
+    return !!data.facebookEmail && !!data.facebookPassword && !!data.recoveryCode1 && !!data.recoveryCode2;
+  }
+  return true;
+}, {
+  message: "Bitte fülle alle Zugangsdaten aus",
+  path: ["facebookEmail"],
+});
+
+type FormData = z.infer<typeof checkoutSchema>;
 
 export default function PartnereventCheckout() {
-  const [location] = useLocation();
+  const { user } = useAuth();
   const { toast } = useToast();
-  const [orderId, setOrderId] = useState<number | null>(null);
-  const [showPayPal, setShowPayPal] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [orderAmount, setOrderAmount] = useState("25.00");
+  const [selectedOption, setSelectedOption] = useState('1');
+  const [loginMethod, setLoginMethod] = useState<LoginMethod>('authtoken');
 
-  // Parameter aus URL extrahieren (z.B. /checkout/partnerevent?partner=3)
-  const searchParams = new URLSearchParams(location.split('?')[1] || '');
-  const partnerParam = searchParams.get('partner');
-  
-  // Stelle sicher, dass der Parameter einer der erlaubten Werte ist
-  const validatedPartner = ['1', '2', '3', '4'].includes(partnerParam || '') 
-    ? partnerParam || '1'
-    : '1';
-    
-  // Preisberechnung für Partner
-  const getPartnerPrice = (partnerCount: string): string => {
-    switch (partnerCount) {
-      case '1': return '7.00';
-      case '2': return '14.00';
-      case '3': return '21.00';
-      case '4': return '25.00';
-      default: return '7.00';
+  // Versuche, gespeicherte Daten aus localStorage zu laden
+  const getSavedFormData = (): Partial<FormData> => {
+    try {
+      const savedData = localStorage.getItem('partnerevent_checkout_data');
+      if (savedData) {
+        return JSON.parse(savedData);
+      }
+    } catch (error) {
+      console.error('Fehler beim Laden der gespeicherten Formulardaten:', error);
     }
+    return {};
   };
   
-  // Bei Änderungen des Partner-Parameters den Preis aktualisieren
-  useEffect(() => {
-    setOrderAmount(getPartnerPrice(validatedPartner));
-  }, [validatedPartner]);
-  
-  // State für Formular
-  const [formError, setFormError] = useState('');
-  
-  // Initiale Form-Daten
-  const getInitialFormData = () => {
-    return {
-      name: '',
-      email: '',
-      whatsapp: '',
-      selectedPartner: validatedPartner,
-      accountCount: '1',
-      // Erste Account-Daten
-      accounts: [{
-        ingameName: '',
-        friendshipLink: '',
-        partnerCount: validatedPartner
-      }],
-      agreedToTerms: false,
-      agreedToWithdrawalNotice: false
-    };
-  };
-  
-  const [formData, setFormData] = useState(getInitialFormData());
+  const savedData = getSavedFormData();
 
-  // Laden der Material Icons
+  const form = useForm<FormData>({
+    resolver: zodResolver(checkoutSchema),
+    defaultValues: {
+      partnerCount: savedData.partnerCount || "1",
+      name: savedData.name || user?.name || "",
+      email: savedData.email || user?.email || "",
+      whatsapp: savedData.whatsapp || "",
+      loginMethod: savedData.loginMethod || "authtoken",
+      ingameName: savedData.ingameName || "",
+      friendCode: savedData.friendCode || "",
+      authToken: savedData.authToken || "",
+      facebookEmail: savedData.facebookEmail || "",
+      facebookPassword: savedData.facebookPassword || "",
+      recoveryCode1: savedData.recoveryCode1 || "",
+      recoveryCode2: savedData.recoveryCode2 || "",
+      termsAccepted: savedData.termsAccepted || false,
+      withdrawalAccepted: savedData.withdrawalAccepted || false,
+    },
+    mode: "onChange",
+  });
+  
+  // Setze loginMethod und selectedOption basierend auf den gespeicherten Daten
   useEffect(() => {
-    document.title = 'Partnerevent | babixGO';
-    
-    const link = document.createElement('link');
-    link.href = 'https://fonts.googleapis.com/icon?family=Material+Icons';
-    link.rel = 'stylesheet';
-    document.head.appendChild(link);
-
-    return () => {
-      document.head.removeChild(link);
-    };
+    if (savedData.loginMethod) {
+      setLoginMethod(savedData.loginMethod as LoginMethod);
+    }
+    if (savedData.partnerCount) {
+      setSelectedOption(savedData.partnerCount);
+    }
   }, []);
 
-  // Aktualisiert den Bestellbetrag basierend auf der Partneranzahl
-  useEffect(() => {
-    // Preis pro Partner
-    const pricePerPartner = 3.50;
-    const totalPartners = parseInt(formData.selectedPartner);
-    const total = (totalPartners * pricePerPartner).toFixed(2);
-    setOrderAmount(total);
-  }, [formData.selectedPartner]);
+  const handlePartnerCountChange = (value: string) => {
+    setSelectedOption(value);
+    form.setValue("partnerCount", value);
+  };
 
-  // Funktion zur Handhabung von Formulareingaben
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type, checked } = e.target;
-    setFormData({
-      ...formData,
-      [name]: type === 'checkbox' ? checked : value
+  const handleLoginMethodChange = (value: LoginMethod) => {
+    setLoginMethod(value);
+    form.setValue("loginMethod", value);
+  };
+
+  // Berechne den Preis basierend auf der Anzahl der Partner
+  const calculatePrice = (count: string): number => {
+    const partnerCount = parseInt(count);
+    
+    // Preistabelle:
+    if (partnerCount === 1) return 7;
+    if (partnerCount === 2) return 14;
+    if (partnerCount === 3) return 21;
+    if (partnerCount === 4) return 25;
+    if (partnerCount === 5) return 32;
+    if (partnerCount === 6) return 39;
+    if (partnerCount === 7) return 46;
+    if (partnerCount === 8) return 50;
+    
+    // Für höhere Zahlen: 7€ pro Partner, aber nach jedem 4. Partner gibt es einen Rabatt
+    const numberOfDiscounts = Math.floor(partnerCount / 4);
+    return partnerCount * 7 - numberOfDiscounts * 3;
+  };
+
+  const onSubmit: SubmitHandler<FormData> = (data) => {
+    console.log(data);
+    
+    // Speichere die Daten im localStorage für persistenz zwischen Seitenneuladen
+    localStorage.setItem('partnerevent_checkout_data', JSON.stringify(data));
+    
+    toast({
+      title: "Formular validiert",
+      description: "Bitte schließe den Kauf über den PayPal-Button unten ab.",
     });
-  };
-
-  // Funktion zum Aktualisieren von Account-Daten
-  const handleAccountInputChange = (index: number, field: string, value: string) => {
-    const updatedAccounts = [...formData.accounts];
-    if (updatedAccounts[index]) {
-      updatedAccounts[index] = {
-        ...updatedAccounts[index],
-        [field]: value
-      };
-    }
-    setFormData({
-      ...formData,
-      accounts: updatedAccounts
-    });
-  };
-
-  // Aktualisieren der Account-Anzahl wenn sich die Auswahl ändert
-  useEffect(() => {
-    if (formData.accountCount !== '1') {
-      // Mehrere Accounts erstellen
-      const accountCount = parseInt(formData.accountCount);
-      const currentAccounts = [...formData.accounts];
-      const totalPartners = parseInt(formData.selectedPartner);
-      
-      // Berechnen der Partner pro Account (gleichmäßig verteilen)
-      let remainingPartners = totalPartners;
-      const newAccounts = [];
-      
-      for (let i = 0; i < accountCount; i++) {
-        const partnersForThisAccount = Math.ceil(remainingPartners / (accountCount - i));
-        remainingPartners -= partnersForThisAccount;
-        
-        newAccounts.push({
-          ingameName: currentAccounts[i]?.ingameName || '',
-          friendshipLink: currentAccounts[i]?.friendshipLink || '',
-          partnerCount: partnersForThisAccount.toString()
-        });
-      }
-      
-      setFormData({
-        ...formData,
-        accounts: newAccounts
-      });
-    } else {
-      // Nur ein Account
-      const currentAccount = formData.accounts[0] || { ingameName: '', friendshipLink: '', partnerCount: '0' };
-      setFormData({
-        ...formData,
-        accounts: [{
-          ...currentAccount,
-          partnerCount: formData.selectedPartner
-        }]
-      });
-    }
-  }, [formData.accountCount, formData.selectedPartner]);
-
-  // Erzeugt eine strukturierte Order aus den Formulardaten
-  const createOrderData = () => {
-    return {
-      // Persönliche Daten
-      name: formData.name,
-      email: formData.email,
-      whatsapp: formData.whatsapp || null,
-      
-      // Bestelldetails
-      productType: 'partnerevent',
-      package: `${formData.selectedPartner} Partner`,
-      price: parseFloat(orderAmount),
-      
-      // Accountdaten als JSON
-      accountData: JSON.stringify(formData.accounts),
-      
-      // Zahlungsdetails
-      paymentMethod: "paypal",
-      paymentStatus: "pending",
-      
-      // Zustimmungen
-      agreedToTerms: formData.agreedToTerms,
-      agreedToWithdrawalNotice: formData.agreedToWithdrawalNotice
-    };
-  };
-
-  // Sendet die Bestellung an den Server und bereitet PayPal-Zahlung vor
-  const createOrder = async () => {
-    try {
-      setIsSubmitting(true);
-      
-      const orderData = createOrderData();
-      const response = await apiRequest("POST", "/api/orders", orderData);
-      
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Fehler beim Erstellen der Bestellung");
-      }
-      
-      const data = await response.json();
-      setOrderId(data.order.id);
-      setShowPayPal(true);
-      
-      toast({
-        title: "Bestellung erstellt",
-        description: "Bitte fahren Sie mit der Zahlung fort",
-      });
-      
-      return data.order;
-    } catch (error: any) {
-      toast({
-        title: "Fehler",
-        description: error.message || "Etwas ist schiefgelaufen",
-        variant: "destructive",
-      });
-      setIsSubmitting(false);
-      return null;
+    
+    // Scrolle zum PayPal-Button
+    const paypalButton = document.getElementById('paypal-button-container');
+    if (paypalButton) {
+      paypalButton.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
-  // Funktion zur Handhabung der Formularübermittlung
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    // Validierung der Checkboxen
-    if (!formData.agreedToTerms || !formData.agreedToWithdrawalNotice) {
-      setFormError('Bitte akzeptieren Sie sowohl die AGB als auch den Hinweis zum Widerrufsrecht.');
-      return;
-    }
-    
-    // Validiere Account-Daten
-    const isAccountDataValid = formData.accounts.every(account => 
-      account.ingameName.trim() !== '' && account.friendshipLink.trim() !== ''
-    );
-    
-    if (!isAccountDataValid) {
-      setFormError('Bitte füllen Sie für jeden Account alle Felder aus.');
-      return;
-    }
-    
-    setFormError('');
-    await createOrder();
-  };
-  
-  // Aktualisiert den Zahlungsstatus einer Bestellung nach erfolgreicher PayPal-Zahlung
-  const updateOrderPayment = async (paymentId: string) => {
-    if (!orderId) return;
-    
-    try {
-      const response = await apiRequest("PATCH", `/api/orders/${orderId}/payment`, {
-        paymentStatus: "completed",
-        paymentReference: paymentId
-      });
-      
-      if (!response.ok) {
-        throw new Error("Fehler beim Aktualisieren des Zahlungsstatus");
-      }
-      
-      toast({
-        title: "Zahlung erfolgreich",
-        description: "Vielen Dank für Ihren Einkauf! Wir bearbeiten Ihre Bestellung umgehend.",
-      });
-      
-      // Hier könnte eine Weiterleitung zur Bestellbestätigungsseite erfolgen
-    } catch (error: any) {
-      toast({
-        title: "Fehler",
-        description: error.message || "Fehler beim Aktualisieren des Zahlungsstatus",
-        variant: "destructive",
-      });
-    }
-  };
+  const partnerOptions = [
+    { value: "1", label: "1 Partner", price: 7 },
+    { value: "2", label: "2 Partner", price: 14 },
+    { value: "3", label: "3 Partner", price: 21 },
+    { value: "4", label: "4 Partner", price: 25 },
+    { value: "5", label: "5 Partner", price: 32 },
+    { value: "6", label: "6 Partner", price: 39 },
+    { value: "7", label: "7 Partner", price: 46 },
+    { value: "8", label: "8 Partner", price: 50 }
+  ];
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-8 font-['Nunito_Sans'] text-[#0A3A68]">
-      <h1 className="font-['Baloo_2'] font-bold text-2xl md:text-3xl bg-[#00CFFF]/10 px-6 py-3 rounded-xl inline-block mx-auto my-4 border-b-2 border-[#00CFFF] text-[#FF4C00] babix-info-header">
-        Partnerevent buchen
-      </h1>
+    <div className="container mx-auto px-4 py-8">
+      <SEOHead 
+        pageName="Partner buchen - Checkout" 
+        customTitle="Partner buchen - Checkout | babixGO" 
+        customDescription="Partner für Monopoly GO Events buchen - Checkout"
+      />
       
-      <form onSubmit={handleSubmit} className="max-w-3xl mx-auto">
-        {/* Partnerpaket auswählen */}
-        <Card className="mb-6">
-          <CardHeader className="pb-2">
-            <CardTitle className="flex items-center gap-2">
-              <span className="material-icons text-[#00CFFF]">group</span>
-              Partnerpaket auswählen
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <RadioGroup 
-              defaultValue={formData.selectedPartner}
-              onValueChange={(value) => {
-                setFormData({
-                  ...formData,
-                  selectedPartner: value
-                });
-              }}
-              className="grid gap-4"
-            >
-              <div className={`flex items-center space-x-2 p-4 rounded-lg border ${formData.selectedPartner === '1' ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border-gray-200 hover:bg-gray-50'}`}>
-                <RadioGroupItem value="1" id="p-1" className="text-[#00CFFF]" />
-                <Label htmlFor="p-1" className="w-full cursor-pointer flex justify-between">
-                  <span className="font-medium">1 Partner</span>
-                  <span className="font-bold text-[#FF4C00]">3,50 €</span>
-                </Label>
-              </div>
-              
-              <div className={`flex items-center space-x-2 p-4 rounded-lg border ${formData.selectedPartner === '2' ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border-gray-200 hover:bg-gray-50'}`}>
-                <RadioGroupItem value="2" id="p-2" className="text-[#00CFFF]" />
-                <Label htmlFor="p-2" className="w-full cursor-pointer flex justify-between">
-                  <span className="font-medium">2 Partner</span>
-                  <span className="font-bold text-[#FF4C00]">7,00 €</span>
-                </Label>
-              </div>
-              
-              <div className={`flex items-center space-x-2 p-4 rounded-lg border ${formData.selectedPartner === '3' ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border-gray-200 hover:bg-gray-50'}`}>
-                <RadioGroupItem value="3" id="p-3" className="text-[#00CFFF]" />
-                <Label htmlFor="p-3" className="w-full cursor-pointer flex justify-between">
-                  <span className="font-medium">3 Partner</span>
-                  <span className="font-bold text-[#FF4C00]">10,50 €</span>
-                </Label>
-              </div>
-              
-              <div className={`flex items-center space-x-2 p-4 rounded-lg border ${formData.selectedPartner === '5' ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border-gray-200 hover:bg-gray-50'}`}>
-                <RadioGroupItem value="5" id="p-5" className="text-[#00CFFF]" />
-                <Label htmlFor="p-5" className="w-full cursor-pointer flex justify-between">
-                  <span className="font-medium">5 Partner</span>
-                  <span className="font-bold text-[#FF4C00]">17,50 €</span>
-                </Label>
-              </div>
-              
-              <div className={`flex items-center space-x-2 p-4 rounded-lg border ${formData.selectedPartner === '10' ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border-gray-200 hover:bg-gray-50'}`}>
-                <RadioGroupItem value="10" id="p-10" className="text-[#00CFFF]" />
-                <Label htmlFor="p-10" className="w-full cursor-pointer flex justify-between">
-                  <span className="font-medium">10 Partner</span>
-                  <span className="font-bold text-[#FF4C00]">35,00 €</span>
-                </Label>
-              </div>
-            </RadioGroup>
-          </CardContent>
-        </Card>
+      <div className="max-w-4xl mx-auto">
+        <h1 className="babix-info-header font-bold text-3xl md:text-4xl px--2 py-2 text-center mb-8">
+          Checkout
+        </h1>
         
-        {/* Persönliche Daten */}
-        <Card className="mb-6">
-          <CardHeader className="pb-2">
-            <CardTitle className="flex items-center gap-2">
-              <span className="material-icons text-[#00CFFF]">person</span>
-              Persönliche Daten
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid gap-4">
-              <div>
-                <Label htmlFor="name" className="mb-1 block">Name *</Label>
-                <Input 
-                  id="name" 
-                  name="name" 
-                  placeholder="Ihr vollständiger Name" 
-                  value={formData.name} 
-                  onChange={handleInputChange} 
-                  required
-                  className="border-[#00CFFF]/30 focus:border-[#00CFFF] focus:ring-[#00CFFF]"
-                />
-              </div>
-              
-              <div>
-                <Label htmlFor="email" className="mb-1 block">E-Mail *</Label>
-                <Input 
-                  id="email" 
-                  name="email" 
-                  type="email" 
-                  placeholder="ihre.email@beispiel.de" 
-                  value={formData.email} 
-                  onChange={handleInputChange} 
-                  required
-                  className="border-[#00CFFF]/30 focus:border-[#00CFFF] focus:ring-[#00CFFF]"
-                />
-              </div>
-              
-              <div>
-                <Label htmlFor="whatsapp" className="mb-1 block flex items-center">
-                  WhatsApp (optional)
-                  <span className="text-xs text-gray-500 ml-2">Für schnellere Kommunikation</span>
-                </Label>
-                <Input 
-                  id="whatsapp" 
-                  name="whatsapp" 
-                  placeholder="Ihre WhatsApp-Nummer" 
-                  value={formData.whatsapp} 
-                  onChange={handleInputChange}
-                  className="border-[#00CFFF]/30 focus:border-[#00CFFF] focus:ring-[#00CFFF]"
-                />
-              </div>
+        {/* Login Prompt */}
+        {!user && (
+          <div className="bg-blue-50 p-4 rounded-lg mb-8 flex flex-col sm:flex-row justify-between items-center">
+            <div>
+              <p className="text-[#0A3A68] font-semibold mb-2">Logge dich ein zum automatischen Ausfüllen deiner Daten:</p>
             </div>
-          </CardContent>
-        </Card>
-        
-        {/* Account-Verteilung */}
-        {parseInt(formData.selectedPartner) > 1 && (
-          <Card className="mb-6">
-            <CardHeader className="pb-2">
-              <CardTitle className="flex items-center gap-2">
-                <span className="material-icons text-[#00CFFF]">devices</span>
-                Accounts
-              </CardTitle>
-              <div className="text-sm text-gray-600 mt-1">
-                Auf wie viele Accounts sollen die Partner aufgeteilt werden?
-              </div>
-            </CardHeader>
-            <CardContent>
-              <RadioGroup 
-                defaultValue="1"
-                value={formData.accountCount}
-                onValueChange={(value) => {
-                  setFormData({
-                    ...formData,
-                    accountCount: value
-                  });
-                }}
-                className="grid grid-cols-2 sm:grid-cols-3 gap-4"
-              >
-                <div className={`flex items-center space-x-2 p-4 rounded-lg border ${formData.accountCount === '1' ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border-gray-200 hover:bg-gray-50'}`}>
-                  <RadioGroupItem value="1" id="acc-1" className="text-[#00CFFF]" />
-                  <Label htmlFor="acc-1" className="cursor-pointer">1 Account</Label>
-                </div>
-                {parseInt(formData.selectedPartner) >= 2 && (
-                  <div className={`flex items-center space-x-2 p-4 rounded-lg border ${formData.accountCount === '2' ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border-gray-200 hover:bg-gray-50'}`}>
-                    <RadioGroupItem value="2" id="acc-2" className="text-[#00CFFF]" />
-                    <Label htmlFor="acc-2" className="cursor-pointer">2 Accounts</Label>
-                  </div>
-                )}
-                {parseInt(formData.selectedPartner) >= 3 && (
-                  <div className={`flex items-center space-x-2 p-4 rounded-lg border ${formData.accountCount === '3' ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border-gray-200 hover:bg-gray-50'}`}>
-                    <RadioGroupItem value="3" id="acc-3" className="text-[#00CFFF]" />
-                    <Label htmlFor="acc-3" className="cursor-pointer">3 Accounts</Label>
-                  </div>
-                )}
-              </RadioGroup>
-            </CardContent>
-          </Card>
-        )}
-        
-        {/* Monopoly-Account-Daten */}
-        <Card className="mb-6">
-          <CardHeader className="pb-2">
-            <CardTitle className="flex items-center gap-2">
-              <span className="material-icons text-[#00CFFF]">videogame_asset</span>
-              {formData.accountCount === '1' ? 'Monopoly-Daten' : 'Monopoly-Daten für alle Accounts'}
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            {formData.accounts.map((account, index) => (
-              <div key={index} className="mb-6">
-                {formData.accountCount !== '1' && (
-                  <h3 className="font-medium text-lg mb-3 pb-2 border-b">
-                    Account {index + 1} ({account.partnerCount} Partner)
-                  </h3>
-                )}
-                <div className="space-y-4">
-                  <div>
-                    <Label htmlFor={`ingameName-${index}`} className="mb-1 block">Spielername *</Label>
-                    <Input 
-                      id={`ingameName-${index}`}
-                      placeholder="Ihr Name im Spiel" 
-                      value={account.ingameName} 
-                      onChange={(e) => handleAccountInputChange(index, 'ingameName', e.target.value)} 
-                      required
-                      className="border-[#00CFFF]/30 focus:border-[#00CFFF] focus:ring-[#00CFFF]"
-                    />
-                  </div>
-                  
-                  <div>
-                    <Label htmlFor={`friendshipLink-${index}`} className="mb-1 block flex items-center">
-                      Freundschaftslink oder Code *
-                      <span className="text-xs text-gray-500 ml-2">Für die Partnereinladung</span>
-                    </Label>
-                    <Input 
-                      id={`friendshipLink-${index}`}
-                      placeholder="Ihr Freundschaftslink oder Code" 
-                      value={account.friendshipLink} 
-                      onChange={(e) => handleAccountInputChange(index, 'friendshipLink', e.target.value)} 
-                      required
-                      className="border-[#00CFFF]/30 focus:border-[#00CFFF] focus:ring-[#00CFFF]"
-                    />
-                  </div>
-                </div>
-              </div>
-            ))}
-          </CardContent>
-        </Card>
-        
-        {/* Checkboxen für AGBs und Widerrufsrecht */}
-        <Card className="mb-6">
-          <CardContent className="pt-6">
-            {/* Checkbox für Widerrufsrecht */}
-            <div 
-              className={`flex items-start space-x-2 p-3 rounded-lg border ${formData.agreedToWithdrawalNotice ? 'bg-[#00CFFF]/10 border-[#00CFFF]' : 'border-gray-200'} mb-4`}
-              onClick={() => {
-                setFormData(prev => ({
-                  ...prev,
-                  agreedToWithdrawalNotice: !prev.agreedToWithdrawalNotice
-                }));
-              }}
-            >
-              <input 
-                type="checkbox" 
-                id="withdrawalCheck"
-                className="h-4 w-4 mt-1 accent-[#00CFFF]"
-                checked={formData.agreedToWithdrawalNotice}
-                onChange={() => {
-                  setFormData(prev => ({
-                    ...prev,
-                    agreedToWithdrawalNotice: !prev.agreedToWithdrawalNotice
-                  }));
-                }}
-              />
-              <label 
-                htmlFor="withdrawalCheck" 
-                className="text-sm cursor-pointer"
-              >
-                Ich bin ausdrücklich damit einverstanden, dass mit der Ausführung des Auftrags vor Ablauf der Widerrufsfrist begonnen wird. Mir ist bekannt, dass mein <Link href="/widerruf" className="text-[#00CFFF] hover:underline">Widerrufsrecht</Link> mit Beginn der Ausführung erlischt.
-              </label>
-            </div>
-            
-            {/* Checkbox für AGB */}
-            <div 
-              className={`flex items-start space-x-2 p-3 rounded-lg border ${formData.agreedToTerms ? 'bg-[#00CFFF]/10 border-[#00CFFF]' : 'border-gray-200'}`}
-              onClick={() => {
-                setFormData(prev => ({
-                  ...prev,
-                  agreedToTerms: !prev.agreedToTerms
-                }));
-              }}
-            >
-              <input 
-                type="checkbox" 
-                id="termsCheck"
-                className="h-4 w-4 mt-1 accent-[#00CFFF]"
-                checked={formData.agreedToTerms}
-                onChange={() => {
-                  setFormData(prev => ({
-                    ...prev,
-                    agreedToTerms: !prev.agreedToTerms
-                  }));
-                }}
-              />
-              <label 
-                htmlFor="termsCheck" 
-                className="text-sm cursor-pointer"
-              >
-                Ich habe die <Link href="/agb" className="text-[#00CFFF] hover:underline">AGB</Link> und <Link href="/datenschutz" className="text-[#00CFFF] hover:underline">Datenschutzbestimmungen</Link> gelesen und akzeptiere diese.
-              </label>
-            </div>
-            
-            {/* Fehlermeldung */}
-            {formError && (
-              <div className="mt-4 p-3 bg-red-50 border border-red-200 text-red-600 rounded-md text-sm">
-                <span className="material-icons text-red-500 text-sm align-middle mr-1">error</span>
-                {formError}
-              </div>
-            )}
-          </CardContent>
-        </Card>
-        
-        {/* Kaufen Button und PayPal */}
-        <div className="mb-6 grid grid-cols-1 gap-4">
-          {/* Wenn wir noch keine Bestellung erstellt haben, zeigen wir den Bestellbutton an */}
-          {!showPayPal ? (
-            <Button 
-              type="submit" 
-              className="w-full bg-[#FF4C00] hover:bg-[#FF4C00]/80 text-white font-bold py-3"
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? (
-                <span className="flex items-center justify-center">
-                  <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                  </svg>
-                  Wird verarbeitet...
-                </span>
-              ) : 'Jetzt kaufen'}
-            </Button>
-          ) : (
-            /* Wenn wir eine Bestellung erstellt haben, zeigen wir die PayPal-Zahlung an */
-            <div className="mb-4">
-              <div className="bg-[#00CFFF]/10 p-4 border border-[#00CFFF] rounded-lg mb-4 text-center">
-                <h3 className="font-bold text-lg mb-2">Bestellung erstellt!</h3>
-                <p>Bitte schließen Sie Ihre Bestellung durch Zahlung über PayPal ab.</p>
-              </div>
-              
-              <div className="py-4 px-4 border border-gray-200 rounded-lg mb-4">
-                <div className="flex justify-between items-center mb-2 border-b pb-2">
-                  <span className="font-medium">Produkt:</span>
-                  <span>{formData.selectedPartner} Partner für Partnerevent</span>
-                </div>
-                <div className="flex justify-between items-center font-bold text-lg">
-                  <span>Gesamt:</span>
-                  <span className="text-[#FF4C00]">{orderAmount}€</span>
-                </div>
-              </div>
-              
-              <div className="my-4 mx-auto max-w-xs h-12">
-                <PayPalButtonWrapper 
-                  amount={orderAmount} 
-                  currency="EUR" 
-                  intent="CAPTURE" 
-                  orderId={orderId ?? undefined}
-                  onPaymentComplete={updateOrderPayment}
-                />
-              </div>
-            </div>
-          )}
-
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <span className="w-full border-t border-gray-300"></span>
-            </div>
-            <div className="relative flex justify-center text-xs">
-              <span className="bg-white px-2 text-gray-500">oder zahle mit</span>
+            <div className="flex gap-4 mt-3 sm:mt-0">
+              <Link href="/auth">
+                <Button variant="default" className="bg-[#0A3A68]">
+                  Login
+                </Button>
+              </Link>
+              <Link href="/auth?register=true">
+                <Button variant="outline" className="text-[#0A3A68] border-[#0A3A68]">
+                  Registrieren
+                </Button>
+              </Link>
             </div>
           </div>
-          
-          <Button variant="outline" className="w-full" disabled>
-            <span className="material-icons mr-2 text-lg">account_balance</span>
-            Banküberweisung (bald verfügbar)
-          </Button>
+        )}
+        
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            {/* Partner Count Selection */}
+            <Card>
+              <CardContent className="py-4">
+                <h2 className="text-xl font-bold text-[#0A3A68] mt-0 mb-2">Wie viele Partner möchtest du buchen?</h2>
+                
+                <div className="grid gap-2">
+                  <FormField
+                    control={form.control}
+                    name="partnerCount"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <RadioGroup
+                            value={selectedOption}
+                            onValueChange={(val) => {
+                              handlePartnerCountChange(val);
+                            }}
+                            className="grid gap-2"
+                          >
+                            {partnerOptions.map((option) => (
+                              <div key={option.value} className="flex items-center space-x-3 w-full">
+                                <RadioGroupItem value={option.value} id={`partner-${option.value}`} />
+                                <Label htmlFor={`partner-${option.value}`} className="text-gray-900 flex items-center w-full cursor-pointer">
+                                  <span>{option.label}</span>
+                                  <span className="ml-2">👥</span>
+                                  <span className="ml-auto font-semibold text-[#FF4C00]">{option.price}€</span>
+                                </Label>
+                              </div>
+                            ))}
+                          </RadioGroup>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              </CardContent>
+            </Card>
+            
+            {/* Personal Information */}
+            <Card>
+              <CardContent className="py-4">
+                <h2 className="text-xl font-bold text-[#0A3A68] mt-0 mb-2">Persönliche Daten</h2>
+                
+                <div className="grid gap-4 md:grid-cols-2">
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Name</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Dein Name" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>E-Mail</FormLabel>
+                        <FormControl>
+                          <Input placeholder="deine@email.de" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <FormField
+                    control={form.control}
+                    name="whatsapp"
+                    render={({ field }) => (
+                      <FormItem className="md:col-span-2">
+                        <FormLabel>WhatsApp (optional)</FormLabel>
+                        <FormControl>
+                          <Input 
+                            placeholder="Deine WhatsApp Nummer für schnelle Kommunikation" 
+                            {...field} 
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              </CardContent>
+            </Card>
+            
+            {/* Monopoly Go Daten */}
+            <Card>
+              <CardContent className="py-4">
+                <h2 className="text-xl font-bold text-[#0A3A68] mt-0 mb-2">Monopoly Go Daten</h2>
+                
+                <div className="grid gap-4 md:grid-cols-2">
+                  <FormField
+                    control={form.control}
+                    name="ingameName"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>In-Game Name</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Dein Name im Spiel" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <FormField
+                    control={form.control}
+                    name="friendCode"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Freundschaftslink oder -code</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Dein Freundschaftslink oder -code" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              </CardContent>
+            </Card>
+            
+            {/* Login Method */}
+            <Card>
+              <CardContent className="py-4">
+                <div className="flex flex-wrap items-center justify-between mb-2">
+                  <h2 className="text-xl font-bold text-[#0A3A68] mt-0">Wie sollen wir uns einloggen?</h2>
+                  <Link href="/hilfe/loginmoeglichkeiten">
+                    <span className="text-[#00CFFF] text-sm hover:underline">
+                      Du bist dir unsicher? Hier bekommst du mehr Infos dazu
+                    </span>
+                  </Link>
+                </div>
+                
+                <div className="grid gap-6">
+                  <div className="border-b border-gray-200 mb-4">
+                    <div className="flex" role="tablist">
+                      <div
+                        role="tab"
+                        aria-selected={loginMethod === 'authtoken'}
+                        className={`
+                          w-1/2 py-4 px-1 text-center border-b-2 font-medium text-sm cursor-pointer
+                          ${loginMethod === 'authtoken' 
+                            ? 'border-[#00CFFF] text-[#00CFFF]' 
+                            : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}
+                        `}
+                        onClick={() => handleLoginMethodChange('authtoken')}
+                      >
+                        Facebook Auth-Token
+                      </div>
+                      
+                      <div
+                        role="tab"
+                        aria-selected={loginMethod === 'credentials'}
+                        className={`
+                          w-1/2 py-4 px-1 text-center border-b-2 font-medium text-sm cursor-pointer
+                          ${loginMethod === 'credentials' 
+                            ? 'border-[#00CFFF] text-[#00CFFF]' 
+                            : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}
+                        `}
+                        onClick={() => handleLoginMethodChange('credentials')}
+                      >
+                        Zugangsdaten
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Auth Token Method */}
+                  {loginMethod === 'authtoken' && (
+                    <div className="space-y-4">
+                      <div className="space-y-2">
+                        <p className="text-sm text-gray-600">
+                          Wir benötigen deinen Facebook Auth-Token, um ein Partnerevent durchführen zu können. 
+                          Keine Sorge, dies wird nur verwendet, um die Partnerzuteilung vorzunehmen.
+                        </p>
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <FormField
+                          control={form.control}
+                          name="authToken"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Facebook Auth-Token</FormLabel>
+                              <FormControl>
+                                <Input 
+                                  placeholder="EAABb..."
+                                  {...field} 
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        
+                        <div className="pt-2">
+                          <Link href="/hilfe/authtoken">
+                            <span className="text-[#00CFFF] text-sm hover:underline">
+                              Wie erhalte ich meinen Auth-Token? Hier klicken für eine Anleitung
+                            </span>
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {/* Credentials Method */}
+                  {loginMethod === 'credentials' && (
+                    <div className="space-y-4">
+                      <div className="space-y-2">
+                        <p className="text-sm text-gray-600">
+                          Wir benötigen deine Facebook-Zugangsdaten und die Wiederherstellungscodes, 
+                          um ein Partnerevent durchführen zu können.
+                        </p>
+                      </div>
+                      
+                      <div className="space-y-4 border-t border-gray-100 pt-4">
+                        <FormField
+                          control={form.control}
+                          name="facebookEmail"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Facebook E-Mail/Telefon</FormLabel>
+                              <FormControl>
+                                <Input 
+                                  placeholder="Deine Facebook E-Mail oder Telefonnummer"
+                                  {...field} 
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        
+                        <FormField
+                          control={form.control}
+                          name="facebookPassword"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Facebook Passwort</FormLabel>
+                              <FormControl>
+                                <Input 
+                                  type="password"
+                                  placeholder="Dein Facebook Passwort"
+                                  {...field} 
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <FormField
+                            control={form.control}
+                            name="recoveryCode1"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Wiederherstellungscode 1</FormLabel>
+                                <FormControl>
+                                  <Input 
+                                    placeholder="z.B. ABCDEF123"
+                                    {...field} 
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                          
+                          <FormField
+                            control={form.control}
+                            name="recoveryCode2"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Wiederherstellungscode 2</FormLabel>
+                                <FormControl>
+                                  <Input 
+                                    placeholder="z.B. 123ABCDEF"
+                                    {...field} 
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                        
+                        <div className="pt-2">
+                          <Link href="/hilfe/wiederherstellungscodes">
+                            <span className="text-[#00CFFF] text-sm hover:underline">
+                              Wie erhalte ich meine Wiederherstellungscodes? Hier klicken für eine Anleitung
+                            </span>
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+            
+            {/* Rechtliche Hinweise */}
+            <Card>
+              <CardContent className="py-4">
+                <h2 className="text-xl font-bold text-[#0A3A68] mt-0 mb-2">Rechtliche Hinweise</h2>
+                
+                <div className="space-y-4">
+                  <FormField
+                    control={form.control}
+                    name="termsAccepted"
+                    render={({ field }) => (
+                      <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                        <FormControl>
+                          <Checkbox
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                          />
+                        </FormControl>
+                        <div className="space-y-1 leading-none">
+                          <FormLabel>
+                            Ich akzeptiere die <Link href="/agb"><span className="text-[#00CFFF] hover:underline">AGB</span></Link>
+                          </FormLabel>
+                          <FormMessage />
+                        </div>
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <FormField
+                    control={form.control}
+                    name="withdrawalAccepted"
+                    render={({ field }) => (
+                      <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                        <FormControl>
+                          <Checkbox
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                          />
+                        </FormControl>
+                        <div className="space-y-1 leading-none">
+                          <FormLabel>
+                            Ich stimme ausdrücklich zu, dass mit der Ausführung des Vertrags vor Ablauf der Widerrufsfrist begonnen wird und verzichte gemäß §356 Abs. 5 BGB auf mein <Link href="/widerruf"><span className="text-[#00CFFF] hover:underline">Widerrufsrecht</span></Link>.
+                          </FormLabel>
+                          <FormMessage />
+                        </div>
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              </CardContent>
+            </Card>
+            
+            <div className="flex justify-center">
+              <Button 
+                type="submit" 
+                className="bg-[#FF4C00] hover:bg-[#FF4C00]/90 px-12 py-6 text-lg"
+              >
+                Formular prüfen
+              </Button>
+            </div>
+          </form>
+        </Form>
+        
+        {/* PayPal Payment */}
+        <div className="mt-12 mb-8" id="paypal-button-container">
+          <h2 className="text-xl font-bold text-[#0A3A68] mb-4 text-center">Bezahlen mit PayPal</h2>
+          <div className="max-w-md mx-auto">
+            <PayPalButtonWrapper 
+              amount={calculatePrice(selectedOption).toString()} 
+              currency="EUR" 
+              intent="capture"
+            />
+          </div>
+          <p className="text-center text-sm text-gray-500 mt-4">
+            Nach der erfolgreichen Zahlung erhältst du eine Bestätigungsmail und wir werden uns bei dir melden.
+          </p>
         </div>
-      </form>
+      </div>
     </div>
   );
 }
