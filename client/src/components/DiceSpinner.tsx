@@ -63,7 +63,7 @@ export function DiceSpinner({
             height: size,
             transform: `translateZ(-${size / 2}px) rotateY(180deg)`,
             backgroundColor: color,
-            boxShadow: `0 0 ${size / 10}px rgba(0, 0, 0, 0.2) inset`
+            boxShadow: boxShadowStyle
           }}
         >
           {[...Array(6)].map((_, i) => (
@@ -87,7 +87,7 @@ export function DiceSpinner({
             height: size,
             transform: `rotateX(90deg) translateZ(${size / 2}px)`,
             backgroundColor: color,
-            boxShadow: `0 0 ${size / 10}px rgba(0, 0, 0, 0.2) inset`
+            boxShadow: boxShadowStyle
           }}
         >
           <div 
@@ -116,7 +116,7 @@ export function DiceSpinner({
             height: size,
             transform: `rotateX(-90deg) translateZ(${size / 2}px)`,
             backgroundColor: color,
-            boxShadow: `0 0 ${size / 10}px rgba(0, 0, 0, 0.2) inset`,
+            boxShadow: boxShadowStyle,
             padding: size / 8
           }}
         >
@@ -174,7 +174,7 @@ export function DiceSpinner({
             height: size,
             transform: `rotateY(-90deg) translateZ(${size / 2}px)`,
             backgroundColor: color,
-            boxShadow: `0 0 ${size / 10}px rgba(0, 0, 0, 0.2) inset`,
+            boxShadow: boxShadowStyle,
             padding: size / 8
           }}
         >
@@ -220,7 +220,7 @@ export function DiceSpinner({
             height: size,
             transform: `rotateY(90deg) translateZ(${size / 2}px)`,
             backgroundColor: color,
-            boxShadow: `0 0 ${size / 10}px rgba(0, 0, 0, 0.2) inset`
+            boxShadow: boxShadowStyle
           }}
         >
           <div className="flex flex-col h-full justify-between p-2">
