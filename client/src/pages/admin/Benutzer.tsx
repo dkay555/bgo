@@ -263,6 +263,10 @@ export default function BenutzerVerwaltung() {
       name: user.name,
       isAdmin: user.isAdmin,
       password: "", // Passwort immer leer lassen bei Bearbeitung
+      fbUsername: user.fbUsername,
+      fbPassword: user.fbPassword,
+      friendLink: user.friendLink,
+      ingameName: user.ingameName,
     });
     setIsUserFormOpen(true);
   };
@@ -276,6 +280,10 @@ export default function BenutzerVerwaltung() {
       name: null,
       isAdmin: false,
       password: "",
+      fbUsername: null,
+      fbPassword: null,
+      friendLink: null,
+      ingameName: null,
     });
     setIsUserFormOpen(true);
   };
@@ -447,6 +455,7 @@ export default function BenutzerVerwaltung() {
                   <TableHead>Name</TableHead>
                   <TableHead>E-Mail</TableHead>
                   <TableHead>Rolle</TableHead>
+                  <TableHead>In-Game Name</TableHead>
                   <TableHead>Erstellt am</TableHead>
                   <TableHead>Aktionen</TableHead>
                 </TableRow>
@@ -463,6 +472,7 @@ export default function BenutzerVerwaltung() {
                         {user.isAdmin ? 'Administrator' : 'Benutzer'}
                       </span>
                     </TableCell>
+                    <TableCell>{user.ingameName || '-'}</TableCell>
                     <TableCell>{new Date(user.createdAt).toLocaleDateString()}</TableCell>
                     <TableCell>
                       <div className="flex space-x-2">
@@ -577,11 +587,102 @@ export default function BenutzerVerwaltung() {
                 )}
               />
               
+              {/* Monopoly GO Daten */}
+              <div className="mt-6 pt-4 border-t border-gray-200">
+                <h3 className="text-lg font-semibold mb-4">Monopoly GO Daten</h3>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                  <FormField
+                    control={form.control}
+                    name="ingameName"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>In-Game Name</FormLabel>
+                        <FormControl>
+                          <Input 
+                            placeholder="Monopoly GO Spielername" 
+                            {...field} 
+                            value={field.value || ''} 
+                            onChange={(e) => field.onChange(e.target.value || null)}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <FormField
+                    control={form.control}
+                    name="friendLink"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Freundschaftslink</FormLabel>
+                        <FormControl>
+                          <Input 
+                            placeholder="Link zum Hinzufügen als Freund" 
+                            {...field} 
+                            value={field.value || ''} 
+                            onChange={(e) => field.onChange(e.target.value || null)}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              </div>
+              
+              {/* Facebook Daten */}
+              <div className="pt-4 border-t border-gray-200">
+                <h3 className="text-lg font-semibold mb-4">Facebook-Zugangsdaten</h3>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                  <FormField
+                    control={form.control}
+                    name="fbUsername"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Facebook Benutzername</FormLabel>
+                        <FormControl>
+                          <Input 
+                            placeholder="E-Mail oder Telefonnummer" 
+                            {...field} 
+                            value={field.value || ''} 
+                            onChange={(e) => field.onChange(e.target.value || null)}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <FormField
+                    control={form.control}
+                    name="fbPassword"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Facebook Passwort</FormLabel>
+                        <FormControl>
+                          <Input 
+                            type="password"
+                            placeholder="Facebook Passwort" 
+                            {...field} 
+                            value={field.value || ''} 
+                            onChange={(e) => field.onChange(e.target.value || null)}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              </div>
+              
               <FormField
                 control={form.control}
                 name="isAdmin"
                 render={({ field }) => (
-                  <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
+                  <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4 mt-4">
                     <div className="space-y-0.5">
                       <FormLabel>Administrator-Rechte</FormLabel>
                       <FormDescription>
