@@ -21,6 +21,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/hooks/use-auth';
 import SEOHead from '@/components/SEOHead';
 import { PayPalButtonWrapper } from '@/components/PayPalButtonWrapper';
+import { InfoIcon } from 'lucide-react';
 
 // Form schema
 const checkoutSchema = z.object({
@@ -68,7 +69,26 @@ export default function TycoonRacersCheckout() {
     return {};
   };
   
+  // Lade Spielerdaten aus dem Profil
+  const getProfileGameData = (): Partial<FormData> => {
+    try {
+      const profileData = localStorage.getItem('userGameProfile');
+      if (profileData) {
+        const parsedData = JSON.parse(profileData);
+        return {
+          ingameName: parsedData.ingameName || '',
+          friendCode: parsedData.friendLink || '', // Freundschaftslink aus dem Profil
+        };
+      }
+    } catch (error) {
+      console.error('Fehler beim Laden der Profildaten:', error);
+    }
+    return {};
+  };
+  
+  // Kombiniere gespeicherte Checkout-Daten mit Profildaten, wobei Checkout-Daten Vorrang haben
   const savedData = getSavedFormData();
+  const profileData = getProfileGameData();
 
   const form = useForm<FormData>({
     resolver: zodResolver(checkoutSchema),
