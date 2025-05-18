@@ -11,12 +11,11 @@ export default function ShopTycoonRacers() {
   const tycoonPrices = {
     team: [
       { slots: 1, price: 20 },
-      { slots: 2, price: 38 },
       { slots: 3, price: 55 },
     ],
     flags: [
-      { amount: '15.000 Flaggen', price: 30 },
-      { amount: '25.000 Flaggen', price: 40 },
+      { amount: '10.000 Flaggen', price: 25 },
+      { amount: '20.000 Flaggen', price: 45 },
     ]
   };
 

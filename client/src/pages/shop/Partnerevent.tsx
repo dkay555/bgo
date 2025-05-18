@@ -10,15 +10,13 @@ export default function ShopPartnerevent() {
   // Preistabelle für Partner
   const partnerPrices = [
     { count: 1, price: 7 },
-    { count: 2, price: 14 },
-    { count: 3, price: 21 },
     { count: 4, price: 25 }, // Sonderpreis
   ];
   
   // Währungsoptionen
   const waehrungOptions = [
-    { amount: '15.000 Währung', price: 25 },
-    { amount: '25.000 Währung', price: 35 },
+    { amount: '10.000 Währung', price: 20 },
+    { amount: '20.000 Währung', price: 30 },
   ];
 
   const scrollToSection = (section: string) => {
