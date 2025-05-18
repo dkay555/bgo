@@ -82,10 +82,10 @@ export function Header() {
                   >
                     <button
                       onClick={() => toggleDropdown(link.name)}
-                      className="text-white hover:text-[#FF4C00] font-bold px-3 py-2 rounded-md transition duration-300 flex items-center"
+                      className="text-white hover:text-[#FF4C00] font-bold px-2 py-1.5 rounded-md transition duration-300 flex items-center text-sm"
                     >
                       {link.name}
-                      <span className={`material-icons ml-1 transition-transform duration-200 ${openDropdown === link.name ? 'rotate-180' : ''}`}>
+                      <span className={`material-icons ml-0.5 text-sm transition-transform duration-200 ${openDropdown === link.name ? 'rotate-180' : ''}`}>
                         expand_more
                       </span>
                     </button>
@@ -112,7 +112,7 @@ export function Header() {
                   <a 
                     key={link.name}
                     href={link.href} 
-                    className="text-white hover:text-[#FF4C00] font-bold px-3 py-2 rounded-md transition duration-300"
+                    className="text-white hover:text-[#FF4C00] font-bold px-2 py-1.5 rounded-md transition duration-300 text-sm"
                   >
                     {link.name}
                   </a>
@@ -120,7 +120,7 @@ export function Header() {
                   <Link 
                     key={link.name}
                     href={link.href.startsWith('/') ? link.href : `/${link.href}`}
-                    className="text-white hover:text-[#FF4C00] font-bold px-3 py-2 rounded-md transition duration-300"
+                    className="text-white hover:text-[#FF4C00] font-bold px-2 py-1.5 rounded-md transition duration-300 text-sm"
                   >
                     {link.name}
                   </Link>
@@ -128,13 +128,13 @@ export function Header() {
               )}
               
               {/* Benutzerbereich */}
-              <div className="ml-2">
+              <div className="ml-1">
               {user ? (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="relative h-9 w-9 rounded-full ring-2 ring-white text-white hover:text-[#FF4C00] hover:bg-transparent">
-                      <Avatar>
-                        <AvatarFallback className="bg-[#00CFFF]/20 text-white">
+                    <Button variant="ghost" className="relative h-8 w-8 rounded-full ring-1 ring-white text-white hover:text-[#FF4C00] hover:bg-transparent p-0">
+                      <Avatar className="h-7 w-7">
+                        <AvatarFallback className="bg-[#00CFFF]/20 text-white text-xs">
                           {user.name ? user.name.charAt(0).toUpperCase() : 
                            user.username.charAt(0).toUpperCase()}
                         </AvatarFallback>
