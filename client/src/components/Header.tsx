@@ -217,67 +217,67 @@ export function Header() {
         
         {/* Mobile menu sidebar */}
         <div 
-          className={`fixed top-0 left-0 h-full w-72 bg-[#0A3A68] md:hidden z-50 transform transition-transform duration-300 ease-in-out shadow-xl !opacity-100 ${
+          className={`fixed top-0 left-0 h-full w-64 bg-[#0A3A68] md:hidden z-50 transform transition-transform duration-300 ease-in-out shadow-xl !opacity-100 ${
             mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
           }`}
           style={{backgroundColor: '#0A3A68', opacity: 1}}
         >
-          <div className="flex justify-between items-center px-4 pt-4 pb-2 border-b border-white/10">
-            <span className="text-white font-bold text-xl font-['Baloo_2']">babixGO</span>
+          <div className="flex justify-between items-center px-3 pt-2 pb-1 border-b border-white/10">
+            <span className="text-white font-bold text-lg font-['Baloo_2']">babixGO</span>
             <button 
               onClick={toggleMobileMenu}
-              className="text-white p-2 rounded-md hover:bg-white/10 transition duration-300"
+              className="text-white p-1 rounded-md hover:bg-white/10 transition duration-300"
               aria-label="Menü schließen"
             >
-              <span className="material-icons text-[#FF4C00]">close</span>
+              <span className="material-icons text-[#FF4C00] text-base">close</span>
             </button>
           </div>
           
-          <div className="px-2 pt-4 pb-3">
+          <div className="px-2 pt-2 pb-3">
             {/* Hauptnavigation: Start, Hilfe und Kontakt */}
-            <div className="grid grid-cols-3 gap-2 mb-4">
+            <div className="grid grid-cols-3 gap-1 mb-2">
               <Link 
                 href="/"
-                className="text-white hover:bg-white/10 hover:text-[#FF4C00] py-2 px-3 rounded-md font-bold text-center transition duration-300 border border-white/10"
+                className="text-white hover:bg-white/10 hover:text-[#FF4C00] py-1 px-2 rounded-md font-medium text-center transition duration-300 border border-white/10 text-xs"
                 onClick={closeMobileMenu}
               >
-                <span className="material-icons mb-1 text-[#00CFFF] block mx-auto">home</span>
+                <span className="material-icons mb-0.5 text-[#00CFFF] block mx-auto text-sm">home</span>
                 Start
               </Link>
               
               <Link 
                 href="/hilfe"
-                className="text-white hover:bg-white/10 hover:text-[#FF4C00] py-2 px-3 rounded-md font-bold text-center transition duration-300 border border-white/10"
+                className="text-white hover:bg-white/10 hover:text-[#FF4C00] py-1 px-2 rounded-md font-medium text-center transition duration-300 border border-white/10 text-xs"
                 onClick={closeMobileMenu}
               >
-                <span className="material-icons mb-1 text-[#00CFFF] block mx-auto">help</span>
+                <span className="material-icons mb-0.5 text-[#00CFFF] block mx-auto text-sm">help</span>
                 Hilfe
               </Link>
               
               <Link 
                 href="/kontakt"
-                className="text-white hover:bg-white/10 hover:text-[#FF4C00] py-2 px-3 rounded-md font-bold text-center transition duration-300 border border-white/10"
+                className="text-white hover:bg-white/10 hover:text-[#FF4C00] py-1 px-2 rounded-md font-medium text-center transition duration-300 border border-white/10 text-xs"
                 onClick={closeMobileMenu}
               >
-                <span className="material-icons mb-1 text-[#00CFFF] block mx-auto">contact_support</span>
+                <span className="material-icons mb-0.5 text-[#00CFFF] block mx-auto text-sm">contact_support</span>
                 Kontakt
               </Link>
             </div>
             
             {/* Leistungen Kategorie-Überschrift */}
-            <div className="text-white/70 py-1 mb-2 text-sm uppercase tracking-wider border-b border-white/10 text-center font-bold">
+            <div className="text-white/70 py-0.5 mb-1 text-xs uppercase tracking-wider border-b border-white/10 text-center font-medium">
               Leistungen
             </div>
             
             {/* Dienste mit Symbol und Name */}
-            <div className="grid grid-cols-2 gap-2 p-1">
+            <div className="grid grid-cols-3 gap-1 p-0.5">
               {/* Würfel */}
               <Link 
                 href="/shop/wuerfel"
-                className="text-white hover:bg-white/10 hover:text-[#FF4C00] p-2 rounded-md transition duration-300 border border-white/10 flex flex-col items-center"
+                className="text-white hover:bg-white/10 hover:text-[#FF4C00] p-1 rounded-md transition duration-300 border border-white/10 flex flex-col items-center text-xs"
                 onClick={closeMobileMenu}
               >
-                <span className="material-icons text-[#00CFFF] text-xl mb-1">casino</span>
+                <span className="material-icons text-[#00CFFF] text-sm mb-0.5">casino</span>
                 <span className="font-bold">Würfel</span>
               </Link>
               
