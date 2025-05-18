@@ -5,9 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import MainLayout from "@/layouts/MainLayout";
 import NotFound from "@/pages/not-found";
-import LandingPage from "@/pages/LandingPage";
 import StartPage from "@/pages/StartPage";
-import BlogPost from "@/pages/BlogPost";
 import News from "@/pages/News";
 import Kontakt from "@/pages/Kontakt";
 import Impressum from "@/pages/Impressum";
@@ -15,7 +13,6 @@ import Datenschutz from "@/pages/Datenschutz";
 import AGB from "@/pages/AGB";
 import Widerruf from "@/pages/Widerruf";
 
-import Produkte from "@/pages/Produkte";
 import Preise from "@/pages/Preise";
 import Shop from "@/pages/Shop";
 import AuthPage from "@/pages/auth-page";
