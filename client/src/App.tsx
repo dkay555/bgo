@@ -62,6 +62,9 @@ const AuthTokenHilfePage = lazy(() => import('@/pages/hilfe/authtoken'));
 const AuthTokenToolPage = lazy(() => import('@/pages/hilfe/authtoken-tool'));
 const NewsPreiseAngebotPage = lazy(() => import('@/pages/hilfe/news_preise_angebot'));
 
+// News pages
+const MaiPreisePage = lazy(() => import('@/pages/news/mai_preise'));
+
 // Tools pages
 const AuthtokenToolPage = lazy(() => import('@/pages/tools/Authtoken'));
 
@@ -144,7 +147,12 @@ function Router() {
             {() => <AuthTokenToolPage />}
           </Route>
           <Route path="/hilfe/news_preise_angebot.html">
-            {() => <NewsPreiseAngebotPage />}
+            {() => <Redirect to="/news/mai_preise" />}
+          </Route>
+          
+          {/* News-Unterseiten */}
+          <Route path="/news/mai_preise">
+            {() => <MaiPreisePage />}
           </Route>
 
           {/* Redirects für alte Produkt-Pfade */}

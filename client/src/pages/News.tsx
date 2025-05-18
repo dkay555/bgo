@@ -44,7 +44,7 @@ export default function News() {
                   optimierte Pakete mit besserem Preis-Leistungs-Verhältnis anbieten.
                 </p>
                 <div className="flex justify-end">
-                  <Link href="/hilfe/news_preise_angebot.html">
+                  <Link href="/news/mai_preise">
                     <Button variant="outline" className="text-sm px-3 py-1">
                       [Weiterlesen]
                     </Button>
@@ -105,7 +105,7 @@ export default function News() {
                   komplette Sets!
                 </p>
                 <div className="flex justify-end">
-                  <Link href="/produkte/sticker">
+                  <Link href="/shop/sticker">
                     <Button variant="outline" className="text-sm px-3 py-1">
                       [Sticker ansehen]
                     </Button>
