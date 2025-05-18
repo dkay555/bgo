@@ -60,7 +60,6 @@ const LoginHilfePage = lazy(() => import('@/pages/hilfe/login'));
 const AccountsHilfePage = lazy(() => import('@/pages/hilfe/accounts'));
 const AuthTokenHilfePage = lazy(() => import('@/pages/hilfe/authtoken'));
 const AuthTokenToolPage = lazy(() => import('@/pages/hilfe/authtoken-tool'));
-const NewsPreiseAngebotPage = lazy(() => import('@/pages/hilfe/news_preise_angebot'));
 
 // News pages
 const MaiPreisePage = lazy(() => import('@/pages/news/mai_preise'));
@@ -146,30 +145,26 @@ function Router() {
           <Route path="/hilfe/authtoken-tool">
             {() => <AuthTokenToolPage />}
           </Route>
-          <Route path="/hilfe/news_preise_angebot.html">
-            {() => <Redirect to="/news/mai_preise" />}
-          </Route>
-          
           {/* News-Unterseiten */}
           <Route path="/news/mai_preise">
             {() => <MaiPreisePage />}
           </Route>
 
-          {/* Redirects für alte Produkt-Pfade */}
+          {/* Shop-Seiten (alte Pfade direkt überschrieben) */}
           <Route path="/produkte/wuerfel">
-            {() => <Redirect to="/shop/wuerfel" />}
+            {() => <WuerfelPage />}
           </Route>
           <Route path="/produkte/sticker">
-            {() => <Redirect to="/shop/sticker" />}
+            {() => <StickerPage />}
           </Route>
           <Route path="/produkte/partner">
-            {() => <Redirect to="/shop/partnerevent" />}
+            {() => <ShopPartnereventPage />}
           </Route>
           <Route path="/produkte/race">
-            {() => <Redirect to="/shop/tycoonracers" />}
+            {() => <ShopTycoonRacersPage />}
           </Route>
           <Route path="/produkte/tycoonracers">
-            {() => <Redirect to="/shop/tycoonracers" />}
+            {() => <ShopTycoonRacersPage />}
           </Route>
 
           {/* Shop-Unterseiten */}
