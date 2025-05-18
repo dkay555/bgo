@@ -81,6 +81,7 @@ export const FOOTER_LINKS = [
   { name: 'Datenschutz', href: '/datenschutz' },
   { name: 'AGB', href: '/agb' },
   { name: 'Widerruf', href: '/widerruf' },
+  { name: 'Sitemap', href: '/sitemap' },
 ];
 
 // Produkt-Kategorien

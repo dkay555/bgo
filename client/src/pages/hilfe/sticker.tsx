@@ -1,40 +1,23 @@
-import { Link } from 'wouter';
-import { useEffect } from 'react';
+import React from 'react';
+import { Helmet } from 'react-helmet';
 
-export default function StickerHilfe() {
-  useEffect(() => {
-    document.title = 'Sticker Hilfe | babixGO';
-  }, []);
-
+export default function StickerHilfePage() {
   return (
-    <div className="container mx-auto px-4 py-8" id="top">
-      <div className="flex flex-col items-center mb-8">
-        <Link href="/hilfe" className="self-start text-[#0A3A68] hover:text-[#FF4C00] mb-4 inline-flex items-center transition-colors">
-          <span className="material-icons mr-1">arrow_back</span>
-          Zurück zur Hilfe
-        </Link>
-        <h1 className="font-['Baloo_2'] font-bold text-2xl md:text-3xl bg-[#00CFFF]/10 px-6 py-3 rounded-xl inline-block mx-auto mb-4 border-b-2 border-[#00CFFF] text-[#FF4C00]">
-          Sticker - Hilfe & Informationen
-        </h1>
-      </div>
-      
-      <div className="max-w-3xl mx-auto">
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-          <h2 className="babix-info-header mx-auto mb-6">Hilfe zu Stickern</h2>
-          <p className="mb-6">
-            Dieser Bereich wird in Kürze mit detaillierten Hilfe-Informationen zu Stickern gefüllt.
+    <div className="container mx-auto px-4 py-8">
+      <Helmet>
+        <title>Sticker Hilfe - babixGO</title>
+        <meta name="description" content="Hilfebereich für Sticker-Produkte bei babixGO. Hier finden Sie Anleitungen und Tipps zur Verwendung von Stickern im Monopoly Go Spiel." />
+      </Helmet>
+
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-3xl font-bold mb-6">Hilfe zu Stickern</h1>
+        
+        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md mb-8">
+          <h2 className="text-xl font-bold mb-4">Wie funktionieren Sticker?</h2>
+          <p className="mb-4">
+            Dieser Hilfebereich wird bald mit detaillierten Informationen zu unseren Sticker-Produkten gefüllt.
+            Hier werden Sie Anleitungen und Tipps zur Verwendung von Stickern in Monopoly Go finden.
           </p>
-          
-          <div className="bg-[#E6F7FF] border-l-4 border-[#00CFFF] p-4 rounded-r-md">
-            <h4 className="babix-info-header text-[#0A3A68] mb-2">Sticker kaufen</h4>
-            <p className="text-gray-700 mb-3">In der Zwischenzeit können Sie bereits unsere Sticker-Angebote durchsuchen und bestellen.</p>
-            <Link href="/produkte/sticker">
-              <button className="bg-[#0A3A68] hover:bg-[#00CFFF] text-white py-2 px-4 rounded-md transition-colors inline-flex items-center">
-                <span className="material-icons mr-1">shopping_cart</span>
-                Zum Sticker-Shop
-              </button>
-            </Link>
-          </div>
         </div>
       </div>
     </div>
