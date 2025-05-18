@@ -11,6 +11,8 @@ import { Link } from 'wouter';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useFormPersistence } from '@/hooks/use-form-persistence';
 import { SmoothLazyLoad } from '@/components/SmoothLazyLoad';
+import { calculatePrice } from '@/lib/stickerData';
+import { useStickerCart } from '@/hooks/use-sticker-cart';
 
 export default function StickerCheckout() {
   const [location] = useLocation();
@@ -20,14 +22,8 @@ export default function StickerCheckout() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [orderAmount, setOrderAmount] = useState("15.00");
 
-  // Parameter aus URL extrahieren (z.B. /checkout/sticker?set=3)
-  const searchParams = new URLSearchParams(location.split('?')[1] || '');
-  const setParam = searchParams.get('set');
-  
-  // Stelle sicher, dass der Parameter einer der erlaubten Werte ist
-  const validatedSet = ['1', '2', '3', '5', 'full'].includes(setParam || '') 
-    ? setParam || '1'
-    : '1';
+  // Warenkorb-Daten aus dem Hook laden
+  const { cartItems, totalPrice, clearCart } = useStickerCart();
   
   // State für Formular
   const [formError, setFormError] = useState('');
@@ -38,7 +34,7 @@ export default function StickerCheckout() {
       name: '',
       email: '',
       whatsapp: '',
-      selectedSet: validatedSet,
+      selectedSet: 'custom', // Wir verwenden jetzt einen benutzerdefinierten Warenkorb
       ingameName: '',
       friendshipLink: '',
       agreedToTerms: false,
@@ -59,7 +55,7 @@ export default function StickerCheckout() {
     setPersistedFormData(newData);
   };
 
-  // Laden der Material Icons
+  // Laden der Material Icons und Bestellbetrag setzen
   useEffect(() => {
     document.title = 'Sticker bestellen | babixGO';
     
@@ -68,35 +64,13 @@ export default function StickerCheckout() {
     link.rel = 'stylesheet';
     document.head.appendChild(link);
 
+    // Bestellbetrag aus dem Warenkorb setzen
+    setOrderAmount(totalPrice.toFixed(2));
+
     return () => {
       document.head.removeChild(link);
     };
-  }, []);
-
-  // Aktualisiert den Bestellbetrag basierend auf dem ausgewählten Set
-  useEffect(() => {
-    let price;
-    switch(formData.selectedSet) {
-      case '1':
-        price = "15.00";
-        break;
-      case '2':
-        price = "25.00";
-        break;
-      case '3':
-        price = "30.00";
-        break;
-      case '5':
-        price = "40.00";
-        break;
-      case 'full':
-        price = "75.00";
-        break;
-      default:
-        price = "15.00";
-    }
-    setOrderAmount(price);
-  }, [formData.selectedSet]);
+  }, [totalPrice]);
 
   // Funktion zur Handhabung von Formulareingaben
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -109,6 +83,9 @@ export default function StickerCheckout() {
 
   // Erzeugt eine strukturierte Order aus den Formulardaten
   const createOrderData = () => {
+    // Erstelle eine Liste aller Sticker im Warenkorb für die Bestellzusammenfassung
+    const stickerList = cartItems.map(item => `${item.name} (${item.stars}★)`).join(", ");
+    
     return {
       // Persönliche Daten
       name: formData.name,
@@ -117,7 +94,9 @@ export default function StickerCheckout() {
       
       // Bestelldetails
       productType: 'sticker',
-      package: `Sticker Set ${formData.selectedSet}`,
+      package: cartItems.length > 0 
+        ? `Individuelle Sticker: ${stickerList}`
+        : `Sticker Set ${formData.selectedSet}`,
       price: orderAmount, // String anstatt Zahl
       
       // Monopoly Daten
@@ -230,65 +209,66 @@ export default function StickerCheckout() {
       </h1>
       
       <form onSubmit={handleSubmit} className="max-w-3xl mx-auto">
-        {/* Sticker Set auswählen */}
+        {/* Sticker Auswahl anzeigen */}
         <Card className="mb-6">
           <CardHeader className="pb-2">
             <CardTitle className="flex items-center gap-2">
               <span className="material-icons text-[#00CFFF]">collections</span>
-              Sticker Set auswählen
+              Deine Sticker-Auswahl
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <RadioGroup 
-              defaultValue={formData.selectedSet}
-              onValueChange={(value) => {
-                setFormData({
-                  ...formData,
-                  selectedSet: value
-                });
-              }}
-              className="grid gap-4"
-            >
-              <div className={`flex items-center space-x-2 p-4 rounded-lg border ${formData.selectedSet === '1' ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border-gray-200 hover:bg-gray-50'}`}>
-                <RadioGroupItem value="1" id="s-1" className="text-[#00CFFF]" />
-                <Label htmlFor="s-1" className="w-full cursor-pointer flex justify-between">
-                  <span className="font-medium">1 Sticker Set</span>
-                  <span className="font-bold text-[#FF4C00]">15,00 €</span>
-                </Label>
+            {cartItems.length === 0 ? (
+              <div className="p-4 bg-gray-50 rounded-md text-center">
+                <p className="text-gray-500 mb-4">Du hast noch keine Sticker ausgewählt.</p>
+                <Link href="/shop/sticker">
+                  <Button variant="outline" className="mx-auto">
+                    Zurück zum Sticker-Shop
+                  </Button>
+                </Link>
               </div>
-              
-              <div className={`flex items-center space-x-2 p-4 rounded-lg border ${formData.selectedSet === '2' ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border-gray-200 hover:bg-gray-50'}`}>
-                <RadioGroupItem value="2" id="s-2" className="text-[#00CFFF]" />
-                <Label htmlFor="s-2" className="w-full cursor-pointer flex justify-between">
-                  <span className="font-medium">2 Sticker Sets</span>
-                  <span className="font-bold text-[#FF4C00]">25,00 €</span>
-                </Label>
+            ) : (
+              <div className="space-y-4">
+                <div>
+                  <h3 className="text-lg font-medium mb-2">Ausgewählte Sticker:</h3>
+                  <div className="max-h-[300px] overflow-y-auto border border-gray-200 rounded-md divide-y">
+                    {cartItems.map((item, index) => (
+                      <div key={index} className="p-3 flex justify-between items-center">
+                        <div>
+                          <p className="font-medium">{item.name} (Set {Math.ceil(item.id / 9)})</p>
+                          <div className="flex items-center">
+                            {[...Array(item.stars)].map((_, i) => (
+                              <span key={i} className="material-icons text-yellow-500 text-sm">star</span>
+                            ))}
+                            <span className="text-sm text-gray-500 ml-2">
+                              {item.isGold ? 'Goldsticker' : 'Standard'}
+                            </span>
+                          </div>
+                        </div>
+                        <span className="font-bold text-[#FF4C00]">
+                          {calculatePrice(item).toFixed(2).replace('.', ',')} €
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                
+                <div className="bg-gray-50 p-4 rounded-md">
+                  <div className="flex justify-between items-center font-bold">
+                    <span>Gesamtbetrag:</span>
+                    <span className="text-[#FF4C00]">{totalPrice.toFixed(2).replace('.', ',')} €</span>
+                  </div>
+                </div>
+                
+                <div className="flex justify-end">
+                  <Link href="/shop/sticker">
+                    <Button variant="outline" className="text-sm">
+                      Zurück zum Sticker-Shop
+                    </Button>
+                  </Link>
+                </div>
               </div>
-              
-              <div className={`flex items-center space-x-2 p-4 rounded-lg border ${formData.selectedSet === '3' ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border-gray-200 hover:bg-gray-50'}`}>
-                <RadioGroupItem value="3" id="s-3" className="text-[#00CFFF]" />
-                <Label htmlFor="s-3" className="w-full cursor-pointer flex justify-between">
-                  <span className="font-medium">3 Sticker Sets</span>
-                  <span className="font-bold text-[#FF4C00]">30,00 €</span>
-                </Label>
-              </div>
-              
-              <div className={`flex items-center space-x-2 p-4 rounded-lg border ${formData.selectedSet === '5' ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border-gray-200 hover:bg-gray-50'}`}>
-                <RadioGroupItem value="5" id="s-5" className="text-[#00CFFF]" />
-                <Label htmlFor="s-5" className="w-full cursor-pointer flex justify-between">
-                  <span className="font-medium">5 Sticker Sets</span>
-                  <span className="font-bold text-[#FF4C00]">40,00 €</span>
-                </Label>
-              </div>
-              
-              <div className={`flex items-center space-x-2 p-4 rounded-lg border ${formData.selectedSet === 'full' ? 'bg-[#00CFFF]/10 border-2 border-[#00CFFF]' : 'border-gray-200 hover:bg-gray-50'}`}>
-                <RadioGroupItem value="full" id="s-full" className="text-[#00CFFF]" />
-                <Label htmlFor="s-full" className="w-full cursor-pointer flex justify-between">
-                  <span className="font-medium">Komplettes Album</span>
-                  <span className="font-bold text-[#FF4C00]">75,00 €</span>
-                </Label>
-              </div>
-            </RadioGroup>
+            )}
           </CardContent>
         </Card>
         
