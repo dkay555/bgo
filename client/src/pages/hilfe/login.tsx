@@ -30,7 +30,7 @@ export default function LoginHilfe() {
         </div>
         
         <div className="mb-8">
-          <p className="font-bold text-[#0A3A68] mb-4 border-b-2 border-[#00CFFF] pb-2 inline-block">Login-Methoden im Überblick</p>
+          <h2 className="babix-info-header text-[1.4rem] mb-4">Login-Methoden im Überblick</h2>
           
           <div className="space-y-6">
             <div className="border border-gray-200 rounded-lg">
