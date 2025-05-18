@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/hooks/use-auth';
@@ -7,7 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Separator } from '@/components/ui/separator';
-import { Eye, EyeOff, Save, Copy, Check } from 'lucide-react';
+import { Eye, EyeOff, Save, Copy, Check, RefreshCw } from 'lucide-react';
 
 export default function ProfilePage() {
   const { toast } = useToast();
@@ -27,6 +28,7 @@ export default function ProfilePage() {
   const [showAuthToken, setShowAuthToken] = useState(false);
   const [copied, setCopied] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [savingAuthToken, setSavingAuthToken] = useState(false);
 
   useEffect(() => {
     // Lade gespeicherte Daten aus dem localStorage
@@ -48,7 +50,8 @@ export default function ProfilePage() {
       setFormData(prev => ({
         ...prev,
         name: user.name || prev.name,
-        email: user.email || prev.email
+        email: user.email || prev.email,
+        authToken: user.authToken || prev.authToken
       }));
     }
   }, [user]);
@@ -90,6 +93,51 @@ export default function ProfilePage() {
       });
     } finally {
       setSaving(false);
+    }
+  };
+
+  const saveAuthToken = async () => {
+    if (!user || !formData.authToken) {
+      toast({
+        title: "Fehler",
+        description: "Du musst eingeloggt sein und einen gültigen Auth-Token eingeben.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setSavingAuthToken(true);
+    
+    try {
+      const response = await fetch('/api/user/authtoken', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ authToken: formData.authToken }),
+        credentials: 'include'
+      });
+      
+      const data = await response.json();
+      
+      if (data.success) {
+        toast({
+          title: "Auth-Token gespeichert",
+          description: "Dein Auth-Token wurde erfolgreich in deinem Konto gespeichert.",
+          variant: "success"
+        });
+      } else {
+        throw new Error(data.message || "Fehler beim Speichern des Auth-Tokens");
+      }
+    } catch (error) {
+      console.error("Fehler beim Speichern des Auth-Tokens:", error);
+      toast({
+        title: "Fehler beim Speichern",
+        description: error instanceof Error ? error.message : "Dein Auth-Token konnte nicht gespeichert werden.",
+        variant: "destructive"
+      });
+    } finally {
+      setSavingAuthToken(false);
     }
   };
 
@@ -236,6 +284,26 @@ export default function ProfilePage() {
                       Token nicht vorhanden? <a href="/tools/authtoken" className="text-[#00CFFF] hover:text-[#FF4C00]">Hier generieren</a>
                     </p>
                   </div>
+                  
+                  {user && (
+                    <Button 
+                      className="w-full mt-2 bg-[#009FC4] hover:bg-[#00CFFF]" 
+                      onClick={saveAuthToken}
+                      disabled={savingAuthToken || !formData.authToken}
+                    >
+                      {savingAuthToken ? (
+                        <span className="flex items-center gap-2">
+                          <RefreshCw className="animate-spin h-4 w-4" />
+                          Token wird gespeichert...
+                        </span>
+                      ) : (
+                        <span className="flex items-center gap-2">
+                          <Save size={18} />
+                          Auth-Token im Konto speichern
+                        </span>
+                      )}
+                    </Button>
+                  )}
                 </div>
                 
                 <Button 
@@ -245,10 +313,7 @@ export default function ProfilePage() {
                 >
                   {saving ? (
                     <span className="flex items-center gap-2">
-                      <svg className="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                      </svg>
+                      <RefreshCw className="animate-spin h-4 w-4" />
                       Speichern...
                     </span>
                   ) : (
@@ -299,10 +364,7 @@ export default function ProfilePage() {
                 >
                   {saving ? (
                     <span className="flex items-center gap-2">
-                      <svg className="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                      </svg>
+                      <RefreshCw className="animate-spin h-4 w-4" />
                       Speichern...
                     </span>
                   ) : (
