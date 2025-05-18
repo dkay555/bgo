@@ -21,6 +21,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/hooks/use-auth';
 import SEOHead from '@/components/SEOHead';
 import { PayPalButtonWrapper } from '@/components/PayPalButtonWrapper';
+import { InfoIcon } from 'lucide-react';
 
 // Form schema type
 type LoginMethod = "authtoken" | "credentials";
@@ -82,6 +83,7 @@ export default function EventwaehrungCheckout() {
   const { toast } = useToast();
   const [selectedOption, setSelectedOption] = useState('10000');
   const [loginMethod, setLoginMethod] = useState<LoginMethod>('authtoken');
+  const [profileDataLoaded, setProfileDataLoaded] = useState(false);
 
   // Versuche, gespeicherte Daten aus localStorage zu laden
   const getSavedFormData = (): Partial<FormData> => {
@@ -96,7 +98,29 @@ export default function EventwaehrungCheckout() {
     return {};
   };
   
+  // Lade Spielerdaten aus dem Profil
+  const getProfileGameData = (): Partial<FormData> => {
+    try {
+      const profileData = localStorage.getItem('userGameProfile');
+      if (profileData) {
+        const parsedData = JSON.parse(profileData);
+        return {
+          ingameName: parsedData.ingameName || '',
+          authToken: parsedData.authToken || '',
+          facebookEmail: parsedData.phoneNumber || '', // E-Mail/Handynummer für Login
+          facebookPassword: parsedData.fbPassword || '',
+          friendCode: parsedData.friendLink || '', // Freundschaftslink aus dem Profil
+        };
+      }
+    } catch (error) {
+      console.error('Fehler beim Laden der Profildaten:', error);
+    }
+    return {};
+  };
+  
+  // Kombiniere gespeicherte Checkout-Daten mit Profildaten, wobei Checkout-Daten Vorrang haben
   const savedData = getSavedFormData();
+  const profileData = getProfileGameData();
 
   const form = useForm<FormData>({
     resolver: zodResolver(checkoutSchema),
@@ -106,11 +130,11 @@ export default function EventwaehrungCheckout() {
       email: savedData.email || user?.email || "",
       whatsapp: savedData.whatsapp || "",
       loginMethod: savedData.loginMethod || "authtoken",
-      ingameName: savedData.ingameName || "",
-      friendCode: savedData.friendCode || "",
-      authToken: savedData.authToken || "",
-      facebookEmail: savedData.facebookEmail || "",
-      facebookPassword: savedData.facebookPassword || "",
+      ingameName: savedData.ingameName || profileData.ingameName || "",
+      friendCode: savedData.friendCode || profileData.friendCode || "",
+      authToken: savedData.authToken || profileData.authToken || "",
+      facebookEmail: savedData.facebookEmail || profileData.facebookEmail || "",
+      facebookPassword: savedData.facebookPassword || profileData.facebookPassword || "",
       recoveryCode1: savedData.recoveryCode1 || "",
       recoveryCode2: savedData.recoveryCode2 || "",
       termsAccepted: savedData.termsAccepted || false,
