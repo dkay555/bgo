@@ -59,8 +59,21 @@ export default function PayPalButton({
 
   const onApprove = async (data: any) => {
     console.log("onApprove", data);
-    const orderData = await captureOrder(data.orderId);
-    console.log("Capture result", orderData);
+    try {
+      const orderData = await captureOrder(data.orderId);
+      console.log("Capture result", orderData);
+      
+      // Erfolgsbenachrichtigung im Console-Log für Debugging
+      console.log("PayPal Transaktion erfolgreich abgeschlossen", {
+        transactionId: data.orderId,
+        status: orderData?.status || 'completed'
+      });
+      
+      return orderData;
+    } catch (error) {
+      console.error("Fehler beim Capture der PayPal-Bestellung:", error);
+      throw error;
+    }
   };
 
   const onCancel = async (data: any) => {

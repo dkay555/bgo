@@ -182,22 +182,33 @@ export default function StickerCheckout() {
     if (!orderId) return;
 
     try {
+      console.log("Aktualisiere Zahlungsstatus für Bestellung", orderId, "mit PayPal-ID", paymentId);
+      
       const response = await apiRequest("PATCH", `/api/orders/${orderId}/payment`, {
         paymentStatus: "completed",
         paymentReference: paymentId
       });
 
       if (!response.ok) {
-        throw new Error("Fehler beim Aktualisieren des Zahlungsstatus");
+        const errorData = await response.json();
+        console.error("Zahlungsaktualisierung fehlgeschlagen:", errorData);
+        throw new Error(errorData.message || "Fehler beim Aktualisieren des Zahlungsstatus");
       }
 
+      // Warenkorb leeren nach erfolgreicher Zahlung
+      clearCart();
+      
       toast({
         title: "Zahlung erfolgreich",
         description: "Vielen Dank für Ihren Einkauf! Wir bearbeiten Ihre Bestellung umgehend.",
       });
 
-      // Hier könnte eine Weiterleitung zur Bestellbestätigungsseite erfolgen
+      // Weiterleitung zur Startseite nach 3 Sekunden
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 3000);
     } catch (error: any) {
+      console.error("Zahlungsaktualisierung Fehler:", error);
       toast({
         title: "Fehler",
         description: error.message || "Fehler beim Aktualisieren des Zahlungsstatus",
