@@ -21,6 +21,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/hooks/use-auth';
 import SEOHead from '@/components/SEOHead';
 import { PayPalButtonWrapper } from '@/components/PayPalButtonWrapper';
+import { InfoIcon } from 'lucide-react';
 
 // Form schema type
 type LoginMethod = "authtoken" | "credentials";

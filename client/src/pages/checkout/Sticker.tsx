@@ -13,14 +13,18 @@ import { useFormPersistence } from '@/hooks/use-form-persistence';
 import { SmoothLazyLoad } from '@/components/SmoothLazyLoad';
 import { calculatePrice } from '@/lib/stickerData';
 import { useStickerCart } from '@/hooks/use-sticker-cart';
+import { useAuth } from '@/hooks/use-auth';
+import { InfoIcon } from 'lucide-react';
 
 export default function StickerCheckout() {
   const [location] = useLocation();
   const { toast } = useToast();
+  const { user } = useAuth();
   const [orderId, setOrderId] = useState<number | null>(null);
   const [showPayPal, setShowPayPal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [orderAmount, setOrderAmount] = useState("15.00");
+  const [profileDataLoaded, setProfileDataLoaded] = useState(false);
 
   // Warenkorb-Daten aus dem Hook laden
   const { cartItems, totalPrice, clearCart } = useStickerCart();
@@ -28,15 +32,36 @@ export default function StickerCheckout() {
   // State für Formular
   const [formError, setFormError] = useState('');
 
+  // Lade Spielerdaten aus dem Profil
+  const getProfileGameData = () => {
+    try {
+      const profileData = localStorage.getItem('userGameProfile');
+      if (profileData) {
+        const parsedData = JSON.parse(profileData);
+        setProfileDataLoaded(true);
+        return {
+          ingameName: parsedData.ingameName || '',
+          friendshipLink: parsedData.friendLink || '', // Freundschaftslink aus dem Profil
+        };
+      }
+    } catch (error) {
+      console.error('Fehler beim Laden der Profildaten:', error);
+    }
+    return {};
+  };
+
+  // Profildaten abrufen
+  const profileData = getProfileGameData();
+
   // Initiale Form-Daten
   const getInitialFormData = () => {
     return {
-      name: '',
-      email: '',
+      name: user?.name || '',
+      email: user?.email || '',
       whatsapp: '',
       selectedSet: 'custom', // Wir verwenden jetzt einen benutzerdefinierten Warenkorb
-      ingameName: '',
-      friendshipLink: '',
+      ingameName: profileData?.ingameName || '',
+      friendshipLink: profileData?.friendshipLink || '',
       agreedToTerms: false,
       agreedToWithdrawalNotice: false
     };

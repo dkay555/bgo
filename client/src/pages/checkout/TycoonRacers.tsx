@@ -97,8 +97,8 @@ export default function TycoonRacersCheckout() {
       name: savedData.name || user?.name || "",
       email: savedData.email || user?.email || "",
       whatsapp: savedData.whatsapp || "",
-      ingameName: savedData.ingameName || "",
-      friendCode: savedData.friendCode || "",
+      ingameName: savedData.ingameName || profileData.ingameName || "",
+      friendCode: savedData.friendCode || profileData.friendCode || "",
       termsAccepted: savedData.termsAccepted || false,
       withdrawalAccepted: savedData.withdrawalAccepted || false,
     },
@@ -169,8 +169,8 @@ export default function TycoonRacersCheckout() {
           Checkout
         </h1>
         
-        {/* Login Prompt */}
-        {!user && (
+        {/* Login/Profil Prompt */}
+        {!user ? (
           <div className="bg-blue-50 p-4 rounded-lg mb-8 flex flex-col sm:flex-row justify-between items-center">
             <div>
               <p className="text-[#0A3A68] font-semibold mb-2">Logge dich ein zum automatischen Ausfüllen deiner Daten:</p>
@@ -186,6 +186,22 @@ export default function TycoonRacersCheckout() {
                   Registrieren
                 </Button>
               </Link>
+            </div>
+          </div>
+        ) : (
+          <div className="bg-green-50 border border-green-200 p-4 rounded-lg mb-6 flex items-start gap-3">
+            <InfoIcon className="text-green-600 mt-0.5 flex-shrink-0" size={20} />
+            <div>
+              <p className="text-green-800 font-semibold">Spielerdaten aus deinem Profil geladen</p>
+              <p className="text-green-700 text-sm mt-1">
+                Die Formularfelder wurden automatisch mit deinen gespeicherten Spielerdaten ausgefüllt. 
+                Du kannst sie bei Bedarf für diese Bestellung anpassen.
+              </p>
+              <p className="text-green-700 text-sm mt-1">
+                <Link href="/profile" className="text-green-700 underline hover:text-green-800">
+                  Zum Profil
+                </Link> um deine gespeicherten Daten zu bearbeiten.
+              </p>
             </div>
           </div>
         )}
