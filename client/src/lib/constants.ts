@@ -45,21 +45,19 @@ export const SPECIAL_OFFER = {
 
 // Navigation links
 export const NAV_LINKS = [
-  { name: 'Start', href: '/' },
-  { name: 'News', href: '/news' },
+  { name: 'Home', href: '/' },
   { 
     name: 'Shop', 
     href: '/shop',
     isDropdown: true,
     dropdownItems: [
-      { name: 'Übersicht', href: '/shop/uebersicht', icon: 'store' },
       { name: 'Würfel', href: '/shop/wuerfel', icon: 'casino' },
       { name: 'Sticker', href: '/shop/sticker', icon: 'collections_bookmark' },
-      { name: 'Partnerevents', href: '/shop/partnerevent', icon: 'people' },
+      { name: 'Partnerevent', href: '/shop/partnerevent', icon: 'people' },
       { name: 'Tycoon Racers', href: '/shop/tycoonracers', icon: 'emoji_events' },
     ]
   },
-  { name: 'Login', href: '/auth' },
+  { name: 'News', href: '/news' },
   { 
     name: 'Hilfe',
     href: '/hilfe', 
@@ -73,6 +71,7 @@ export const NAV_LINKS = [
     ]
   },
   { name: 'Kontakt', href: '/kontakt' },
+  { name: 'Login', href: '/auth' },
 ];
 
 // Footer links
