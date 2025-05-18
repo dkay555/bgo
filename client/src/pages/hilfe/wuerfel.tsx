@@ -109,28 +109,61 @@ export default function WuerfelHilfe() {
         
         <div className="mb-8" id="ablauf">
           <h2 className="text-xl font-bold text-[#0A3A68] mb-4 border-b-2 border-[#00CFFF] pb-2 inline-block">Ablauf</h2>
-          <ul className="list-disc pl-5 space-y-3 text-gray-700">
-            <li>Wir erstellen eine virtuelle Umgebung für deinen Account. Mit deinem Einverständnis speichern wir diese für den nächsten Boost.</li>
-            <li>Wir informieren dich, dass wir starten.</li>
-          </ul>
           
-          <div className="bg-[#FFEBEB] border-l-4 border-[#FF4C00] p-4 mt-4 mb-4 rounded-r-md">
-            <p className="font-bold text-[#FF4C00] mb-1">Wichtiger Hinweis:</p>
-            <p className="text-gray-700">Während wir uns im Spiel befinden öffne nicht die Monopoly Go App. Dies führt zu einem Abbruch und meist zu einer Verzögerung des Würfelboosts.</p>
+          <div className="flex flex-col space-y-6 mt-4">
+            <div className="flex">
+              <div className="flex flex-col items-center mr-4">
+                <div className="rounded-full bg-[#0A3A68] text-white w-8 h-8 flex items-center justify-center">1</div>
+                <div className="h-full w-0.5 bg-[#0A3A68]/30 mt-2 flex-grow"></div>
+              </div>
+              <div>
+                <p className="font-bold text-[#0A3A68]">Vorbereitung</p>
+                <p className="text-gray-700">Wir erstellen eine virtuelle Umgebung für deinen Account. Mit deinem Einverständnis speichern wir diese für den nächsten Boost.</p>
+              </div>
+            </div>
+            
+            <div className="flex">
+              <div className="flex flex-col items-center mr-4">
+                <div className="rounded-full bg-[#0A3A68] text-white w-8 h-8 flex items-center justify-center">2</div>
+                <div className="h-full w-0.5 bg-[#0A3A68]/30 mt-2 flex-grow"></div>
+              </div>
+              <div>
+                <p className="font-bold text-[#0A3A68]">Start</p>
+                <p className="text-gray-700">Wir informieren dich, dass wir starten.</p>
+                
+                <div className="bg-[#FFEBEB] border-l-4 border-[#FF4C00] p-4 mt-2 mb-2 rounded-r-md">
+                  <p className="font-bold text-[#FF4C00] mb-1">Wichtiger Hinweis:</p>
+                  <p className="text-gray-700">Während wir uns im Spiel befinden öffne nicht die Monopoly Go App. Dies führt zu einem Abbruch und meist zu einer Verzögerung des Würfelboosts.</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="flex">
+              <div className="flex flex-col items-center mr-4">
+                <div className="rounded-full bg-[#0A3A68] text-white w-8 h-8 flex items-center justify-center">3</div>
+                <div className="h-full w-0.5 bg-[#0A3A68]/30 mt-2 flex-grow"></div>
+              </div>
+              <div>
+                <p className="font-bold text-[#0A3A68]">Durchführung</p>
+                <p className="text-gray-700">Nach dem Login erspielen wir die vereinbarten Würfel. Falls wir uns mit deinen Zugangsdaten eingeloggt haben kannst du diese bereits jetzt ändern.</p>
+                
+                <div className="bg-[#E6F7FF] border-l-4 border-[#00CFFF] p-4 mt-2 rounded-r-md flex items-start">
+                  <span className="material-icons text-[#00CFFF] mr-2 mt-1">schedule</span>
+                  <p className="text-gray-700">Der Boost dauert für z.B. 35k Würfel zwischen 15 und 30 Minuten.</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="flex">
+              <div className="flex flex-col items-center mr-4">
+                <div className="rounded-full bg-[#0A3A68] text-white w-8 h-8 flex items-center justify-center">4</div>
+              </div>
+              <div>
+                <p className="font-bold text-[#0A3A68]">Abschluss</p>
+                <p className="text-gray-700">Nach Fertigstellung kontaktieren wir dich per Email/WhatsApp. Du kannst nun wieder ins Spiel gehen.</p>
+              </div>
+            </div>
           </div>
-          
-          <ul className="list-disc pl-5 space-y-3 text-gray-700">
-            <li>Nach dem Login erspielen wir die vereinbarten Würfel. Falls wir uns mit deinen Zugangsdaten eingeloggt haben kannst du diese bereits jetzt ändern.</li>
-          </ul>
-          
-          <div className="bg-[#E6F7FF] border-l-4 border-[#00CFFF] p-4 mt-4 rounded-r-md flex items-start">
-            <span className="material-icons text-[#00CFFF] mr-2 mt-1">schedule</span>
-            <p className="text-gray-700">Der Boost dauert für z.B. 35k Würfel zwischen 15 und 30 Minuten.</p>
-          </div>
-          
-          <ul className="list-disc pl-5 space-y-3 text-gray-700 mt-4">
-            <li>Nach Fertigstellung kontaktieren wir dich per Email/WhatsApp. Du kannst nun wieder ins Spiel gehen.</li>
-          </ul>
         </div>
         
         <div className="mb-8" id="nachBoost">
