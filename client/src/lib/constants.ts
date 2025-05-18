@@ -67,7 +67,7 @@ export const NAV_LINKS = [
       { name: 'Sticker Hilfe', href: '/hilfe/sticker' },
       { name: 'Partnerevents Hilfe', href: '/hilfe/partner' },
       { name: 'Tycoon Racers & Flaggen Hilfe', href: '/hilfe/race' },
-      { name: 'Auth Token Tool', href: '/hilfe/authtoken-tool', icon: 'key' },
+      { name: 'Auth Token Tool', href: '/tools/authtoken', icon: 'key' },
     ]
   },
   { name: 'Kontakt', href: '/kontakt' },
