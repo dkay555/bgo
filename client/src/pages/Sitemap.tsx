@@ -16,26 +16,23 @@ export default function SitemapPage() {
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         {/* Hauptseiten */}
         <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
-          <h2 className="text-xl font-bold mb-4 text-primary">Hauptseiten</h2>
+          <h2 className="text-xl font-bold mb-4 text-primary">Startseite</h2>
           <ul className="space-y-2">
             <li><Link href="/" className="text-blue-600 hover:underline">Startseite</Link></li>
-            <li><Link href="/landing" className="text-blue-600 hover:underline">Landing Page</Link></li>
-            <li><Link href="/blog" className="text-blue-600 hover:underline">Blog</Link></li>
             <li><Link href="/news" className="text-blue-600 hover:underline">News</Link></li>
-            <li><Link href="/produkte" className="text-blue-600 hover:underline">Produkte</Link></li>
-            <li><Link href="/shop" className="text-blue-600 hover:underline">Shop</Link></li>
           </ul>
         </div>
 
-        {/* Rechtliche Seiten */}
+        {/* Shop-Bereich */}
         <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
-          <h2 className="text-xl font-bold mb-4 text-primary">Rechtliches</h2>
+          <h2 className="text-xl font-bold mb-4 text-primary">Shop</h2>
           <ul className="space-y-2">
-            <li><Link href="/kontakt" className="text-blue-600 hover:underline">Kontakt</Link></li>
-            <li><Link href="/impressum" className="text-blue-600 hover:underline">Impressum</Link></li>
-            <li><Link href="/datenschutz" className="text-blue-600 hover:underline">Datenschutz</Link></li>
-            <li><Link href="/agb" className="text-blue-600 hover:underline">AGB</Link></li>
-            <li><Link href="/widerruf" className="text-blue-600 hover:underline">Widerrufsrecht</Link></li>
+            <li><Link href="/shop" className="text-blue-600 hover:underline">Shop Hauptseite</Link></li>
+            <li><Link href="/shop/uebersicht" className="text-blue-600 hover:underline">Preisübersicht</Link></li>
+            <li><Link href="/shop/wuerfel" className="text-blue-600 hover:underline">Würfel kaufen</Link></li>
+            <li><Link href="/shop/sticker" className="text-blue-600 hover:underline">Sticker kaufen</Link></li>
+            <li><Link href="/shop/partnerevent" className="text-blue-600 hover:underline">Partnerevent kaufen</Link></li>
+            <li><Link href="/shop/tycoonracers" className="text-blue-600 hover:underline">Tycoon Racers kaufen</Link></li>
           </ul>
         </div>
 
@@ -52,31 +49,27 @@ export default function SitemapPage() {
             <li><Link href="/hilfe/accounts" className="text-blue-600 hover:underline">Account-Hilfe</Link></li>
             <li><Link href="/hilfe/authtoken" className="text-blue-600 hover:underline">Authtoken-Hilfe</Link></li>
             <li><Link href="/hilfe/authtoken-tool" className="text-blue-600 hover:underline">Authtoken-Tool</Link></li>
+            <li><Link href="/hilfe/news_preise_angebot.html" className="text-blue-600 hover:underline">Neue Preise</Link></li>
           </ul>
         </div>
 
-        {/* Produkt-Unterseiten */}
+        {/* Tools */}
         <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
-          <h2 className="text-xl font-bold mb-4 text-primary">Produkte</h2>
+          <h2 className="text-xl font-bold mb-4 text-primary">Tools</h2>
           <ul className="space-y-2">
-            <li><Link href="/produkte/wuerfel" className="text-blue-600 hover:underline">Würfel</Link></li>
-            <li><Link href="/produkte/sticker" className="text-blue-600 hover:underline">Sticker</Link></li>
-            <li><Link href="/produkte/partner" className="text-blue-600 hover:underline">Partner</Link></li>
-            <li><Link href="/produkte/race" className="text-blue-600 hover:underline">Race</Link></li>
-            <li><Link href="/produkte/tycoonracers" className="text-blue-600 hover:underline">Tycoon Racers</Link></li>
-            <li><Link href="/produkte/weitere" className="text-blue-600 hover:underline">Weitere Produkte</Link></li>
+            <li><Link href="/tools/authtoken" className="text-blue-600 hover:underline">Auth-Token Tool</Link></li>
           </ul>
         </div>
 
-        {/* Shop-Unterseiten */}
+        {/* Kundenkonto */}
         <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
-          <h2 className="text-xl font-bold mb-4 text-primary">Shop</h2>
+          <h2 className="text-xl font-bold mb-4 text-primary">Kundenkonto</h2>
           <ul className="space-y-2">
-            <li><Link href="/shop/uebersicht" className="text-blue-600 hover:underline">Preisübersicht</Link></li>
-            <li><Link href="/shop/wuerfel" className="text-blue-600 hover:underline">Würfel kaufen</Link></li>
-            <li><Link href="/shop/sticker" className="text-blue-600 hover:underline">Sticker kaufen</Link></li>
-            <li><Link href="/shop/partnerevent" className="text-blue-600 hover:underline">Partnerevent kaufen</Link></li>
-            <li><Link href="/shop/tycoonracers" className="text-blue-600 hover:underline">Tycoon Racers kaufen</Link></li>
+            <li><Link href="/auth" className="text-blue-600 hover:underline">Anmelden</Link></li>
+            <li><Link href="/profile" className="text-blue-600 hover:underline">Profil</Link></li>
+            <li><Link href="/order-history" className="text-blue-600 hover:underline">Bestellverlauf</Link></li>
+            <li><Link href="/tickets" className="text-blue-600 hover:underline">Support-Tickets</Link></li>
+            <li><Link href="/tickets/new" className="text-blue-600 hover:underline">Neues Ticket erstellen</Link></li>
           </ul>
         </div>
 
@@ -93,20 +86,26 @@ export default function SitemapPage() {
           </ul>
         </div>
 
-        {/* Account & Tools */}
+        {/* Kontakt */}
         <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
-          <h2 className="text-xl font-bold mb-4 text-primary">Account & Tools</h2>
+          <h2 className="text-xl font-bold mb-4 text-primary">Kontakt</h2>
           <ul className="space-y-2">
-            <li><Link href="/auth" className="text-blue-600 hover:underline">Anmelden</Link></li>
-            <li><Link href="/profile" className="text-blue-600 hover:underline">Profil</Link></li>
-            <li><Link href="/order-history" className="text-blue-600 hover:underline">Bestellverlauf</Link></li>
-            <li><Link href="/tickets" className="text-blue-600 hover:underline">Support-Tickets</Link></li>
-            <li><Link href="/tickets/new" className="text-blue-600 hover:underline">Neues Ticket erstellen</Link></li>
-            <li><Link href="/tools/authtoken" className="text-blue-600 hover:underline">Auth-Token Tool</Link></li>
+            <li><Link href="/kontakt" className="text-blue-600 hover:underline">Kontakt</Link></li>
           </ul>
         </div>
 
-        {/* Admin-Bereich (nicht für normale Nutzer gedacht) */}
+        {/* Rechtliche Seiten */}
+        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
+          <h2 className="text-xl font-bold mb-4 text-primary">Rechtliches</h2>
+          <ul className="space-y-2">
+            <li><Link href="/impressum" className="text-blue-600 hover:underline">Impressum</Link></li>
+            <li><Link href="/datenschutz" className="text-blue-600 hover:underline">Datenschutz</Link></li>
+            <li><Link href="/agb" className="text-blue-600 hover:underline">AGB</Link></li>
+            <li><Link href="/widerruf" className="text-blue-600 hover:underline">Widerrufsrecht</Link></li>
+          </ul>
+        </div>
+
+        {/* Admin-Bereich (nur für Administratoren) */}
         <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md opacity-50">
           <h2 className="text-xl font-bold mb-4 text-primary">Admin-Bereich</h2>
           <p className="mb-2 text-sm italic">Nur für autorisierte Administratoren</p>

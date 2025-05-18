@@ -7,56 +7,78 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://babixgo.de/landing</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://babixgo.de/blog</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://babixgo.de/news</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://babixgo.de/produkte</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://babixgo.de/shop</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
-
-  <!-- Rechtliche Seiten -->
   <url>
-    <loc>https://babixgo.de/kontakt</loc>
+    <loc>https://babixgo.de/sitemap</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
+  </url>
+
+  <!-- Shop-Unterseiten -->
+  <url>
+    <loc>https://babixgo.de/shop/uebersicht</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://babixgo.de/impressum</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
+    <loc>https://babixgo.de/shop/wuerfel</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://babixgo.de/datenschutz</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
+    <loc>https://babixgo.de/shop/sticker</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://babixgo.de/agb</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
+    <loc>https://babixgo.de/shop/partnerevent</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://babixgo.de/widerruf</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
+    <loc>https://babixgo.de/shop/tycoonracers</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Checkout-Seiten -->
+  <url>
+    <loc>https://babixgo.de/checkout/wuerfel</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://babixgo.de/checkout/sticker</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://babixgo.de/checkout/partnerevent</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://babixgo.de/checkout/eventwaehrung</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://babixgo.de/checkout/tycoonracers</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://babixgo.de/checkout/flaggen</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
 
   <!-- Hilfebereich -->
@@ -105,67 +127,20 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
-
-  <!-- Produkt-Unterseiten -->
   <url>
-    <loc>https://babixgo.de/produkte/wuerfel</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://babixgo.de/hilfe/news_preise_angebot.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
+  
+  <!-- Tools -->
   <url>
-    <loc>https://babixgo.de/produkte/sticker</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://babixgo.de/produkte/partner</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://babixgo.de/produkte/race</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://babixgo.de/produkte/tycoonracers</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://babixgo.de/produkte/weitere</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <!-- Shop-Unterseiten -->
-  <url>
-    <loc>https://babixgo.de/shop/uebersicht</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://babixgo.de/shop/wuerfel</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://babixgo.de/shop/sticker</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://babixgo.de/shop/partnerevent</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://babixgo.de/shop/tycoonracers</loc>
-    <changefreq>weekly</changefreq>
+    <loc>https://babixgo.de/tools/authtoken</loc>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
-  <!-- Auth und Profil -->
+  <!-- Kundenkonto -->
   <url>
     <loc>https://babixgo.de/auth</loc>
     <changefreq>monthly</changefreq>
@@ -176,11 +151,46 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
-
-  <!-- Tools -->
   <url>
-    <loc>https://babixgo.de/tools/authtoken</loc>
+    <loc>https://babixgo.de/order-history</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://babixgo.de/tickets</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://babixgo.de/tickets/new</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <!-- Kontakt und Rechtliches -->
+  <url>
+    <loc>https://babixgo.de/kontakt</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://babixgo.de/impressum</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://babixgo.de/datenschutz</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://babixgo.de/agb</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://babixgo.de/widerruf</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
   </url>
 </urlset>
