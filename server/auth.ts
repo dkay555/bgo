@@ -245,7 +245,7 @@ export function setupAuth(app: Express) {
       }
       
       const userId = req.user!.id;
-      const { name, email } = req.body;
+      const { name, email, ingameName, whatsapp, fbUsername } = req.body;
       
       // Überprüfen, ob die E-Mail-Adresse bereits verwendet wird
       if (email && email !== req.user!.email) {
@@ -260,8 +260,11 @@ export function setupAuth(app: Express) {
       
       // Benutzerdaten aktualisieren
       const updatedUser = await storage.updateUserProfile(userId, {
-        name: name || req.user!.name,
-        email: email || req.user!.email
+        name,
+        email,
+        ingameName,
+        whatsapp,
+        fbUsername
       });
       
       if (!updatedUser) {
