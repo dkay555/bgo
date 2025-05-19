@@ -69,6 +69,7 @@ const TicketDetailPage = lazy(() => import('@/pages/tickets/[id]'));
 const ProfilePage = lazy(() => import('@/pages/profile'));
 
 // Admin pages
+const AdminPage = lazy(() => import('@/pages/admin/index'));
 const AdminBestellungenPage = lazy(() => import('@/pages/admin/Bestellungen'));
 const AdminBenutzerPage = lazy(() => import('@/pages/admin/Benutzer'));
 const AdminEmailVorlagenPage = lazy(() => import('@/pages/admin/EmailVorlagen'));
@@ -202,18 +203,12 @@ function Router() {
             {() => <TicketDetailPage />}
           </Route>
 
-          {/* Admin-Bereich */}
-          <Route path="/admin/bestellungen">
-            {() => <AdminBestellungenPage />}
+          {/* Admin-Bereich - zentraler Zugriff mit Tabs */}
+          <Route path="/admin">
+            {() => <AdminPage />}
           </Route>
-          <Route path="/admin/benutzer">
-            {() => <AdminBenutzerPage />}
-          </Route>
-          <Route path="/admin/email-vorlagen">
-            {() => <AdminEmailVorlagenPage />}
-          </Route>
-          <Route path="/admin/kontaktanfragen">
-            {() => <AdminKontaktanfragenPage />}
+          <Route path="/admin/:tab">
+            {() => <AdminPage />}
           </Route>
 
           {/* Tools-Seiten */}
