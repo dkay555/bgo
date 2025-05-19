@@ -64,12 +64,8 @@ interface AdminCredentials {
 
 export default function Bestellungen() {
   const { toast } = useToast();
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  const [credentials, setCredentials] = useState<AdminCredentials>({
-    username: "",
-    password: ""
-  });
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  // Admin-Status wird nun über den ProtectedContent im Haupt-Admin-Bereich verwaltet
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [isDetailOpen, setIsDetailOpen] = useState<boolean>(false);
   const [newStatus, setNewStatus] = useState<string>("");
@@ -83,23 +79,13 @@ export default function Bestellungen() {
     note: ""
   });
 
-  // Abfrage für Bestellungen, aber nur wenn authentifiziert
+  // Abfrage für Bestellungen - Auth wird über Session verwaltet
   const { data: orders, isLoading: ordersLoading, refetch } = useQuery<{ success: boolean, orders: Order[] }>({
     queryKey: ["/api/admin/orders"],
     queryFn: async () => {
-      if (!isAuthenticated) return { success: false, orders: [] };
-      
-      const response = await fetch("/api/admin/orders", {
-        headers: {
-          "Authorization": `Basic ${btoa(`${credentials.username}:${credentials.password}`)}`
-        }
-      });
+      const response = await fetch("/api/admin/orders");
       
       if (!response.ok) {
-        if (response.status === 401) {
-          setIsAuthenticated(false);
-          throw new Error("Nicht authentifiziert");
-        }
         throw new Error("Fehler beim Laden der Bestellungen");
       }
       
