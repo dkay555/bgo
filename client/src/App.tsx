@@ -66,7 +66,7 @@ const NewTicketPage = lazy(() => import('@/pages/tickets/new'));
 const TicketDetailPage = lazy(() => import('@/pages/tickets/[id]'));
 
 // User account pages
-const ProfilePage = lazy(() => import('@/pages/profile'));
+const ProfilePage = lazy(() => import('@/pages/UserProfile'));
 
 // Admin pages
 const AdminPage = lazy(() => import('@/pages/Admin'));
