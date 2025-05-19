@@ -123,12 +123,21 @@ export class DatabaseStorage implements IStorage {
     return updatedUser;
   }
   
-  async updateUserProfile(id: number, userData: { name?: string; email?: string }): Promise<User | undefined> {
+  async updateUserProfile(id: number, userData: { 
+    name?: string; 
+    email?: string; 
+    ingameName?: string;
+    whatsapp?: string;
+    fbUsername?: string;
+  }): Promise<User | undefined> {
     const [updatedUser] = await db
       .update(users)
       .set({ 
         ...(userData.name !== undefined ? { name: userData.name } : {}),
         ...(userData.email !== undefined ? { email: userData.email } : {}),
+        ...(userData.ingameName !== undefined ? { ingameName: userData.ingameName } : {}),
+        ...(userData.whatsapp !== undefined ? { whatsapp: userData.whatsapp } : {}),
+        ...(userData.fbUsername !== undefined ? { fbUsername: userData.fbUsername } : {}),
         updatedAt: new Date()
       })
       .where(eq(users.id, id))

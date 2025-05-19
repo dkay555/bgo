@@ -11,6 +11,9 @@ import { useToast } from "@/hooks/use-toast";
 type ProfileData = {
   name?: string;
   email?: string;
+  ingameName?: string;
+  whatsapp?: string;
+  fbUsername?: string;
 };
 
 type AuthContextType = {
