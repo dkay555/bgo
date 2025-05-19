@@ -103,11 +103,38 @@ export default function ShopPartnerevent() {
                   </div>
                   
                   <div className="flex justify-center mt-6">
-                    <Link href="/checkout/partnerevent">
-                      <Button className="bg-[#FF4C00] hover:bg-[#FF4C00]/90 text-white px-8">
+                    <a 
+                      href="https://www.paypal.com/ncp/payment/MJ97DPNYHAVE2" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="no-underline"
+                    >
+                      <button 
+                        style={{
+                          textAlign: 'center',
+                          border: 'none',
+                          borderRadius: '0.25rem',
+                          minWidth: '11.625rem',
+                          padding: '0 2rem',
+                          height: '2.5rem',
+                          fontWeight: 'bold',
+                          backgroundColor: '#FFD140',
+                          color: '#000000',
+                          fontFamily: '"Helvetica Neue",Arial,sans-serif',
+                          fontSize: '0.875rem',
+                          lineHeight: '1.125rem',
+                          cursor: 'pointer'
+                        }}
+                      >
                         Partner buchen
-                      </Button>
-                    </Link>
+                      </button>
+                      <div className="flex flex-col items-center mt-2 space-y-1">
+                        <img src="https://www.paypalobjects.com/images/Debit_Credit_APM.svg" alt="Zahlungsmethoden" className="h-5" />
+                        <div className="text-xs">
+                          Abgewickelt durch <img src="https://www.paypalobjects.com/paypal-ui/logos/svg/paypal-wordmark-color.svg" alt="PayPal" className="h-3.5 inline align-middle" />
+                        </div>
+                      </div>
+                    </a>
                   </div>
                 </CardContent>
               </Card>
@@ -147,11 +174,38 @@ export default function ShopPartnerevent() {
                   </div>
                   
                   <div className="flex justify-center mt-6">
-                    <Link href="/checkout/eventwaehrung">
-                      <Button className="bg-[#FF4C00] hover:bg-[#FF4C00]/90 text-white px-8">
+                    <a 
+                      href="https://www.paypal.com/ncp/payment/8PSVV4EJQSPXS" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="no-underline"
+                    >
+                      <button 
+                        style={{
+                          textAlign: 'center',
+                          border: 'none',
+                          borderRadius: '0.25rem',
+                          minWidth: '11.625rem',
+                          padding: '0 2rem',
+                          height: '2.5rem',
+                          fontWeight: 'bold',
+                          backgroundColor: '#FFD140',
+                          color: '#000000',
+                          fontFamily: '"Helvetica Neue",Arial,sans-serif',
+                          fontSize: '0.875rem',
+                          lineHeight: '1.125rem',
+                          cursor: 'pointer'
+                        }}
+                      >
                         Jetzt kaufen
-                      </Button>
-                    </Link>
+                      </button>
+                      <div className="flex flex-col items-center mt-2 space-y-1">
+                        <img src="https://www.paypalobjects.com/images/Debit_Credit_APM.svg" alt="Zahlungsmethoden" className="h-5" />
+                        <div className="text-xs">
+                          Abgewickelt durch <img src="https://www.paypalobjects.com/paypal-ui/logos/svg/paypal-wordmark-color.svg" alt="PayPal" className="h-3.5 inline align-middle" />
+                        </div>
+                      </div>
+                    </a>
                   </div>
                 </CardContent>
               </Card>
