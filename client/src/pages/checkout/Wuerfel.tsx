@@ -727,9 +727,23 @@ export default function WuerfelCheckout() {
                           description: "Du erhältst in Kürze eine Bestätigungsmail mit allen Details.",
                         });
                         
+                        // Speichere die Bestelldaten vor der Weiterleitung für die Erfolgsseite
+                        localStorage.setItem('latest_order_data', JSON.stringify({
+                          productName: selectedOption === '25000' ? '25.000 Würfel' : 
+                                      selectedOption === '35000' ? '35.000 Würfel' : 
+                                      selectedOption === '45000' ? '45.000 Würfel' : 
+                                      selectedOption === 'schnupper' ? 'Schnupperboost 10.000 Würfel' : 'Schnupperboost inkl. Events',
+                          amount: selectedOption === '25000' ? '25.00' : 
+                                 selectedOption === '35000' ? '35.00' : 
+                                 selectedOption === '45000' ? '45.00' : 
+                                 selectedOption === 'schnupper' ? '10.00' : '15.00',
+                          gameUsername: formData.ingameName,
+                          boostTime: formData.boostTime
+                        }));
+                        
                         // Kurze Verzögerung vor Weiterleitung
                         setTimeout(() => {
-                          window.location.href = '/checkout/erfolg';
+                          window.location.href = '/checkout/Erfolg';
                         }, 2000);
                       } else {
                         const errorData = await response.json();
