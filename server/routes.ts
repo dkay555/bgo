@@ -164,6 +164,84 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
     }
   });
+  // Formular nach Kauf (Danke-Seite) - öffentlich zugänglich
+  app.post("/api/order-data", async (req, res) => {
+    try {
+      const { 
+        name, 
+        email, 
+        whatsapp, 
+        ingameName, 
+        leistung, 
+        fbMethode,
+        authtoken,
+        sauthtoken,
+        fbemail,
+        fbpass,
+        code1,
+        code2,
+        freundcode
+      } = req.body;
+      
+      // Validiere die wichtigsten Felder
+      if (!name || !email || !ingameName || !leistung) {
+        return res.status(400).json({
+          success: false,
+          message: "Bitte fülle alle Pflichtfelder aus"
+        });
+      }
+      
+      // Generiere ein Ticket für die Support-Abteilung, da dies keine echte Bestellung ist,
+      // sondern ein Nachverfolgen der Daten nach einem erfolgreichen Kauf
+      
+      let message = `Neue Bestelldaten von: ${name}\n\n`;
+      message += `E-Mail: ${email}\n`;
+      message += `WhatsApp: ${whatsapp || 'Nicht angegeben'}\n`;
+      message += `Ingame Name: ${ingameName}\n`;
+      message += `Bestellte Leistung: ${leistung}\n\n`;
+      
+      // Je nach Leistungstyp unterschiedliche Daten hinzufügen
+      if (leistung === 'boost') {
+        message += `FB-Methode: ${fbMethode}\n`;
+        
+        if (fbMethode === 'authtoken') {
+          message += `FB Authtoken: ${authtoken}\n`;
+        } else if (fbMethode === 'logindaten') {
+          message += `FB E-Mail/Telefon: ${fbemail}\n`;
+          message += `FB Passwort: ${fbpass}\n`;
+          message += `Wiederherstellungscode 1: ${code1}\n`;
+          message += `Wiederherstellungscode 2: ${code2}\n`;
+        }
+      } else if (leistung === 'schnupper') {
+        message += `FB Authtoken: ${sauthtoken}\n`;
+      } else if (leistung === 'partner') {
+        message += `Freundschaftslink/-code: ${freundcode}\n`;
+      }
+      
+      // Kontaktanfrage erstellen, die vom Admin-Panel aus eingesehen werden kann
+      const contactData = {
+        name: name,
+        email: email,
+        subject: `Bestelldaten - ${leistung}`,
+        message: message,
+        phone: whatsapp || ''
+      };
+      
+      await storage.createContactMessage(contactData);
+      
+      res.status(201).json({
+        success: true,
+        message: "Vielen Dank! Deine Daten wurden erfolgreich übermittelt."
+      });
+    } catch (error) {
+      console.error("Fehler beim Speichern der Bestelldaten:", error);
+      res.status(500).json({
+        success: false,
+        message: "Ein Fehler ist aufgetreten. Bitte versuche es später erneut oder kontaktiere uns per WhatsApp."
+      });
+    }
+  });
+  
   // Kontaktformular-Route - öffentlich zugänglich
   app.post("/api/contact", async (req, res) => {
     try {
