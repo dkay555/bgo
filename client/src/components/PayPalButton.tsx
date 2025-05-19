@@ -173,15 +173,19 @@ export default function PayPalButton({
         const paypalButton = document.getElementById("paypal-button");
 
         if (paypalButton) {
-          // Entferne alle vorherigen Event-Listener, um doppelte Ausführungen zu vermeiden
-          const newButton = paypalButton.cloneNode(true);
-          if (paypalButton.parentNode) {
-            paypalButton.parentNode.replaceChild(newButton, paypalButton);
-          }
+          // Sicherer Ansatz: Entferne zuerst alle vorhandenen Event-Listener
+          paypalButton.replaceWith(paypalButton.cloneNode(false));
           
-          // Füge Event-Listener zum neuen Button hinzu
-          newButton.addEventListener("click", onClick);
-          console.log("PayPal button initialized successfully");
+          // Hole das neu erstellte Element
+          const refreshedButton = document.getElementById("paypal-button");
+          
+          if (refreshedButton) {
+            // Füge Event-Listener zum neuen Button hinzu
+            refreshedButton.addEventListener("click", onClick);
+            console.log("PayPal button initialized successfully");
+          } else {
+            console.error("PayPal button element not found after refresh");
+          }
         } else {
           console.error("PayPal button element not found");
         }
