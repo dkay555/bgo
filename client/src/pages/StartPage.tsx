@@ -1,64 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Link } from 'wouter';
-import { CONTACT } from '@/lib/constants';
-import { useState } from 'react';
-import { apiRequest } from '@/lib/queryClient';
-import { useToast } from '@/hooks/use-toast';
 
 export default function StartPage() {
-  const { toast } = useToast();
-  const [formState, setFormState] = useState({
-    name: '',
-    email: '',
-    message: '',
-    subject: 'Kontaktanfrage von der Startseite',
-    phone: ''
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  
-  const handleContactSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    
-    try {
-      const response = await apiRequest('POST', '/api/contact', formState);
-      if (response.ok) {
-        toast({
-          title: "Nachricht gesendet",
-          description: "Vielen Dank für deine Nachricht. Wir werden uns so schnell wie möglich bei dir melden.",
-          variant: "default",
-        });
-        // Formular zurücksetzen
-        setFormState({
-          name: '',
-          email: '',
-          message: '',
-          subject: 'Kontaktanfrage von der Startseite',
-          phone: ''
-        });
-      } else {
-        const data = await response.json();
-        toast({
-          title: "Fehler",
-          description: data.message || "Ein Fehler ist aufgetreten. Bitte versuche es später erneut.",
-          variant: "destructive",
-        });
-      }
-    } catch (error) {
-      toast({
-        title: "Fehler",
-        description: "Ein Fehler ist aufgetreten. Bitte versuche es später erneut.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-  
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormState(prev => ({ ...prev, [name]: value }));
-  };
   return (
     <main className="px-4 py-6 md:py-10 flex-grow font-['Nunito_Sans'] text-[#0A3A68]" id="top">
       {/* Hero Section - Überschrift und direkte Links */}
@@ -291,90 +234,7 @@ export default function StartPage() {
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section id="kontakt" className="py-8 scroll-mt-20">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="babix-info-header mx-auto mb-6 text-center">
-            Kontaktiere uns
-          </h2>
-          
-          <div className="bg-white p-6 md:p-8 rounded-xl shadow-md">
-            <form className="space-y-4" onSubmit={handleContactSubmit}>
-              <div>
-                <label htmlFor="name" className="block mb-2 font-medium">Dein Name</label>
-                <input 
-                  id="name" 
-                  name="name" 
-                  type="text" 
-                  className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#00CFFF]" 
-                  required
-                  value={formState.name}
-                  onChange={handleInputChange}
-                />
-              </div>
-              
-              <div>
-                <label htmlFor="email" className="block mb-2 font-medium">Deine E-Mail</label>
-                <input 
-                  id="email" 
-                  name="email" 
-                  type="email" 
-                  className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#00CFFF]" 
-                  required
-                  value={formState.email}
-                  onChange={handleInputChange}
-                />
-              </div>
-
-              <div>
-                <label htmlFor="phone" className="block mb-2 font-medium">Deine Telefonnummer (optional)</label>
-                <input 
-                  id="phone" 
-                  name="phone" 
-                  type="tel" 
-                  className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#00CFFF]"
-                  value={formState.phone}
-                  onChange={handleInputChange} 
-                />
-              </div>
-              
-              <div>
-                <label htmlFor="message" className="block mb-2 font-medium">Deine Nachricht</label>
-                <textarea 
-                  id="message" 
-                  name="message" 
-                  rows={4} 
-                  className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#00CFFF]" 
-                  required
-                  value={formState.message}
-                  onChange={handleInputChange}
-                ></textarea>
-              </div>
-              
-              <Button 
-                variant="orange" 
-                type="submit" 
-                className="flex items-center gap-2 font-bold"
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? (
-                  <>
-                    <span className="animate-spin mr-2">
-                      <span className="material-icons text-base">sync</span>
-                    </span>
-                    Wird gesendet...
-                  </>
-                ) : (
-                  <>
-                    <span className="material-icons text-base">send</span>
-                    Absenden
-                  </>
-                )}
-              </Button>
-            </form>
-          </div>
-        </div>
-      </section>
+      {/* Der Kontaktbereich wurde entfernt, da Kunden jetzt direkt über PayPal kaufen können */}
     </main>
   );
 }
