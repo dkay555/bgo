@@ -104,7 +104,7 @@ export default function WuerfelCheckout() {
     }
     return {};
   };
-  
+
   // Lade Spielerdaten aus dem Profil
   const getProfileGameData = (): Partial<FormData> => {
     try {
@@ -123,7 +123,7 @@ export default function WuerfelCheckout() {
     }
     return {};
   };
-  
+
   // Kombiniere gespeicherte Checkout-Daten mit Profildaten, wobei Checkout-Daten Vorrang haben
   const savedData = getSavedFormData();
   const profileData = getProfileGameData();
@@ -149,7 +149,7 @@ export default function WuerfelCheckout() {
     },
     mode: "onChange",
   });
-  
+
   // Setze loginMethod und selectedOption basierend auf den gespeicherten Daten
   useEffect(() => {
     if (savedData.loginMethod) {
@@ -165,7 +165,7 @@ export default function WuerfelCheckout() {
     if (selectedOption.includes('schnupper') && value !== 'authtoken') {
       return; // Nicht wechseln, wenn Schnupperboost aktiv ist
     }
-    
+
     setLoginMethod(value);
     form.setValue("loginMethod", value);
   };
@@ -173,7 +173,7 @@ export default function WuerfelCheckout() {
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     // Speichere die Daten im localStorage für persistenz zwischen Seitenneuladen
     localStorage.setItem('wuerfel_checkout_data', JSON.stringify(data));
-    
+
     // Speichere die Bestelldaten für die Erfolgsseite
     localStorage.setItem('latest_order_data', JSON.stringify({
       productName: selectedOption === '25000' ? '25.000 Würfel' : 
@@ -188,7 +188,7 @@ export default function WuerfelCheckout() {
       boostTime: data.boostTime,
       paymentMethod: 'Vorkasse/Überweisung'
     }));
-    
+
     try {
       const response = await fetch('/api/orders', {
         method: 'POST',
@@ -223,13 +223,13 @@ export default function WuerfelCheckout() {
                   selectedOption === 'schnupper' ? '10.00' : '15.00'
         }),
       });
-      
+
       if (response.ok) {
         toast({
           title: "Bestellung erfolgreich aufgegeben",
           description: "Wir haben deine Bestellung erhalten und senden dir alle Details per E-Mail.",
         });
-        
+
         // Verzögerung vor Weiterleitung
         setTimeout(() => {
           window.location.href = '/checkout/Erfolg';
@@ -255,12 +255,12 @@ export default function WuerfelCheckout() {
         customTitle="Würfel kaufen - Checkout | babixGO" 
         customDescription="Würfelpakete für Monopoly GO kaufen - Checkout"
       />
-      
+
       <div className="max-w-4xl mx-auto">
         <h1 className="babix-info-header font-bold text-3xl md:text-4xl px--2 py-2 text-center mb-8">
           Checkout
         </h1>
-        
+
         {/* Login/Profil Prompt */}
         {!user ? (
           <div className="bg-blue-50 p-4 rounded-lg mb-8 flex flex-col sm:flex-row justify-between items-center">
@@ -297,14 +297,14 @@ export default function WuerfelCheckout() {
             </div>
           </div>
         )}
-        
+
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             {/* Product Selection */}
             <Card>
               <CardContent className="py-4">
                 <h2 className="text-xl font-bold text-[#0A3A68] mt-0 mb-2">Bitte wähle deine gewünschte Menge:</h2>
-                
+
                 <div className="grid gap-2">
                   <FormField
                     control={form.control}
@@ -317,7 +317,7 @@ export default function WuerfelCheckout() {
                             onValueChange={(val) => {
                               setSelectedOption(val);
                               field.onChange(val);
-                              
+
                               // Bei Schnupperboost nur Auth-Token als Login-Methode erlauben
                               if (val === 'schnupper' || val === 'schnupperEvent') {
                                 setLoginMethod('authtoken');
@@ -334,7 +334,7 @@ export default function WuerfelCheckout() {
                                 <span className="ml-auto font-semibold text-[#FF4C00]">25€</span>
                               </Label>
                             </div>
-                            
+
                             <div className="flex items-center space-x-3 w-full">
                               <RadioGroupItem value="35000" id="35000" />
                               <Label htmlFor="35000" className="text-gray-900 flex items-center w-full cursor-pointer">
@@ -343,7 +343,7 @@ export default function WuerfelCheckout() {
                                 <span className="ml-auto font-semibold text-[#FF4C00]">35€</span>
                               </Label>
                             </div>
-                            
+
                             <div className="flex items-center space-x-3 w-full">
                               <RadioGroupItem value="45000" id="45000" />
                               <Label htmlFor="45000" className="text-gray-900 flex items-center w-full cursor-pointer">
@@ -352,7 +352,7 @@ export default function WuerfelCheckout() {
                                 <span className="ml-auto font-semibold text-[#FF4C00]">45€</span>
                               </Label>
                             </div>
-                            
+
                             <div className="flex items-center space-x-3 w-full">
                               <RadioGroupItem value="schnupper" id="schnupper" />
                               <Label htmlFor="schnupper" className="text-gray-900 flex items-center w-full cursor-pointer">
@@ -360,7 +360,7 @@ export default function WuerfelCheckout() {
                                 <span className="ml-auto font-semibold text-[#FF4C00]">10€</span>
                               </Label>
                             </div>
-                            
+
                             <div className="flex items-center space-x-3 w-full">
                               <RadioGroupItem value="schnupperEvent" id="schnupperEvent" />
                               <Label htmlFor="schnupperEvent" className="text-gray-900 flex items-center w-full cursor-pointer">
@@ -377,12 +377,12 @@ export default function WuerfelCheckout() {
                 </div>
               </CardContent>
             </Card>
-            
+
             {/* Personal Information */}
             <Card>
               <CardContent className="py-4">
                 <h2 className="text-xl font-bold text-[#0A3A68] mt-0 mb-2">Persönliche Daten</h2>
-                
+
                 <div className="grid gap-4 md:grid-cols-2">
                   <FormField
                     control={form.control}
@@ -397,7 +397,7 @@ export default function WuerfelCheckout() {
                       </FormItem>
                     )}
                   />
-                  
+
                   <FormField
                     control={form.control}
                     name="email"
@@ -411,7 +411,7 @@ export default function WuerfelCheckout() {
                       </FormItem>
                     )}
                   />
-                  
+
                   <FormField
                     control={form.control}
                     name="whatsapp"
@@ -431,13 +431,13 @@ export default function WuerfelCheckout() {
                 </div>
               </CardContent>
             </Card>
-            
+
             {/* Login Method */}
             <Card>
               <CardContent className="py-4">
                 <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
                   <h2 className="text-xl font-bold text-[#0A3A68] mt-0">Login-Methode</h2>
-                  
+
                   {!selectedOption.includes('schnupper') && (
                     <div className="flex space-x-2">
                       <Button
@@ -459,7 +459,7 @@ export default function WuerfelCheckout() {
                     </div>
                   )}
                 </div>
-                
+
                 {/* Auth Token Fields */}
                 {loginMethod === 'authtoken' && (
                   <div className="grid gap-4">
@@ -476,7 +476,7 @@ export default function WuerfelCheckout() {
                         </FormItem>
                       )}
                     />
-                    
+
                     <FormField
                       control={form.control}
                       name="authToken"
@@ -497,7 +497,7 @@ export default function WuerfelCheckout() {
                     />
                   </div>
                 )}
-                
+
                 {/* Facebook Login Fields */}
                 {loginMethod === 'credentials' && (
                   <div className="grid gap-4">
@@ -514,7 +514,7 @@ export default function WuerfelCheckout() {
                         </FormItem>
                       )}
                     />
-                    
+
                     <FormField
                       control={form.control}
                       name="facebookEmail"
@@ -528,7 +528,7 @@ export default function WuerfelCheckout() {
                         </FormItem>
                       )}
                     />
-                    
+
                     <FormField
                       control={form.control}
                       name="facebookPassword"
@@ -542,7 +542,7 @@ export default function WuerfelCheckout() {
                         </FormItem>
                       )}
                     />
-                    
+
                     <div className="grid gap-4 md:grid-cols-2">
                       <FormField
                         control={form.control}
@@ -557,7 +557,7 @@ export default function WuerfelCheckout() {
                           </FormItem>
                         )}
                       />
-                      
+
                       <FormField
                         control={form.control}
                         name="recoveryCode2"
@@ -576,12 +576,12 @@ export default function WuerfelCheckout() {
                 )}
               </CardContent>
             </Card>
-            
+
             {/* Boost Time */}
             <Card>
               <CardContent className="py-4">
                 <h2 className="text-xl font-bold text-[#0A3A68] mt-0 mb-2">Wann soll der Boost stattfinden?</h2>
-                
+
                 <FormField
                   control={form.control}
                   name="boostTime"
@@ -599,7 +599,7 @@ export default function WuerfelCheckout() {
                               So schnell wie möglich (innerhalb von 24h)
                             </Label>
                           </div>
-                          
+
                           <div className="flex items-center space-x-3">
                             <RadioGroupItem value="tournament" id="tournament" />
                             <Label htmlFor="tournament" className="cursor-pointer">
@@ -614,12 +614,12 @@ export default function WuerfelCheckout() {
                 />
               </CardContent>
             </Card>
-            
+
             {/* Terms and Conditions */}
             <Card>
               <CardContent className="py-4">
                 <h2 className="text-xl font-bold text-[#0A3A68] mt-0 mb-2">Rechtliches</h2>
-                
+
                 <div className="grid gap-4">
                   <FormField
                     control={form.control}
@@ -641,7 +641,7 @@ export default function WuerfelCheckout() {
                       </FormItem>
                     )}
                   />
-                  
+
                   <FormField
                     control={form.control}
                     name="termsAccepted"
@@ -665,11 +665,11 @@ export default function WuerfelCheckout() {
                 </div>
               </CardContent>
             </Card>
-            
+
             {/* Zahlungsoptionen */}
             <div className="border border-gray-200 rounded-lg p-4 bg-white shadow-sm">
               <h3 className="text-lg font-semibold text-[#0A3A68] mb-4">Zahlungsmethoden</h3>
-              
+
               {/* PayPal Option */}
               <div className="mb-6">
                 <div className="flex items-center mb-2">
@@ -678,13 +678,12 @@ export default function WuerfelCheckout() {
                   </div>
                   <h4 className="font-medium">PayPal oder Kreditkarte</h4>
                 </div>
-                
+
                 <div className="pl-7 mb-4">
                   <p className="text-sm text-gray-600 mb-2">
                     Zahle sicher und schnell mit PayPal oder Kreditkarte.
                   </p>
-                  <div id="paypal-button-container" className="w-full max-w-md mx-auto mb-2">
-                    <PayPalButtonWrapper
+                  <PayPalButtonWrapper
                       amount={selectedOption === '25000' ? '25.00' : 
                             selectedOption === '35000' ? '35.00' : 
                             selectedOption === '45000' ? '45.00' : 
@@ -694,12 +693,12 @@ export default function WuerfelCheckout() {
                       intent="CAPTURE"
                       onPaymentComplete={async (paypalOrderId) => {
                         const formData = form.getValues();
-                        
+
                         toast({
                           title: "Zahlung erfolgreich!",
                           description: `Deine Bestellung wurde erfolgreich bezahlt und wird verarbeitet.`,
                         });
-                        
+
                         // Sende die Bestelldaten zusammen mit der PayPal Transaktion zum Server
                         try {
                           const response = await fetch('/api/orders', {
@@ -736,7 +735,7 @@ export default function WuerfelCheckout() {
                                      selectedOption === 'schnupper' ? '10.00' : '15.00'
                             }),
                           });
-                          
+
                           if (response.ok) {
                             // Speichere die Bestelldaten vor der Weiterleitung für die Erfolgsseite
                             localStorage.setItem('latest_order_data', JSON.stringify({
@@ -752,7 +751,7 @@ export default function WuerfelCheckout() {
                               boostTime: formData.boostTime,
                               paymentMethod: 'PayPal'
                             }));
-                            
+
                             // Kurze Verzögerung vor Weiterleitung
                             setTimeout(() => {
                               window.location.href = '/checkout/Erfolg';
@@ -776,7 +775,7 @@ export default function WuerfelCheckout() {
                   </p>
                 </div>
               </div>
-              
+
               {/* Alternative Zahlungsoption */}
               <div>
                 <div className="flex items-center mb-2">
@@ -785,13 +784,13 @@ export default function WuerfelCheckout() {
                   </div>
                   <h4 className="font-medium">Alternative: Bestellung per Überweisung</h4>
                 </div>
-                
+
                 <div className="pl-7">
                   <p className="text-sm text-gray-600 mb-3">
                     Bestelle jetzt und erhalte die Zahlungsdaten per E-Mail. 
                     Nach Zahlungseingang bearbeiten wir deine Bestellung sofort.
                   </p>
-                  
+
                   <Button 
                     type="submit"
                     className="w-full bg-[#0A3A68] hover:bg-[#072F56] px-6 py-3 font-medium"
