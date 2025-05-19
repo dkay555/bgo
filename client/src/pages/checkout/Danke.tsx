@@ -5,9 +5,12 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Helmet } from 'react-helmet';
 import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/hooks/use-auth';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 
 export default function DankePage() {
   const { toast } = useToast();
+  const { user } = useAuth();
   const [leistung, setLeistung] = useState<string>('');
   const [fbMethode, setFbMethode] = useState<string>('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -28,7 +31,17 @@ export default function DankePage() {
   
   useEffect(() => {
     document.title = 'Danke für deinen Kauf! | babixGO';
-  }, []);
+    
+    // Daten aus dem Benutzerprofil übernehmen, wenn der Benutzer angemeldet ist
+    if (user) {
+      setFormData(prevData => ({
+        ...prevData,
+        name: user.name || '',
+        email: user.email || '',
+        ingameName: user.ingameName || ''
+      }));
+    }
+  }, [user]);
 
   // Form state management
   const updateFields = (value: string) => {
@@ -154,6 +167,45 @@ export default function DankePage() {
 
         {/* Main content */}
         <div className="max-w-lg w-full bg-white rounded-b-2xl shadow-lg p-6">
+          {/* Login Box or Welcome Message */}
+          {user ? (
+            <Card className="mb-6 border-[#00CFFF] border-2">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-lg">Hallo {user.name || user.username}!</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm">Du bist eingeloggt und deine Daten wurden automatisch übernommen.</p>
+                <div className="mt-2 text-sm">
+                  <span className="font-semibold">Name:</span> {user.name || '-'}<br />
+                  <span className="font-semibold">E-Mail:</span> {user.email || '-'}<br />
+                  <span className="font-semibold">Ingame Name:</span> {user.ingameName || '-'}
+                </div>
+              </CardContent>
+              <CardFooter className="pt-2">
+                <Link href="/profile" className="text-[#00CFFF] hover:underline text-sm">
+                  Zum Profil →
+                </Link>
+              </CardFooter>
+            </Card>
+          ) : (
+            <Card className="mb-6 border-gray-300 border">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-lg">Schneller einkaufen mit Konto</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm mb-3">Melde dich an oder erstelle ein Konto, um deine Daten automatisch einzutragen und deine Bestellungen zu verwalten.</p>
+                <div className="flex gap-3">
+                  <Link href="/auth" className="bg-[#00CFFF] hover:bg-[#00A0CC] text-white font-bold py-2 px-4 rounded-lg transition text-sm">
+                    Anmelden
+                  </Link>
+                  <Link href="/auth?tab=register" className="bg-gray-700 hover:bg-gray-800 text-white font-bold py-2 px-4 rounded-lg transition text-sm">
+                    Registrieren
+                  </Link>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
           {/* Introduction with buttons */}
           <div className="bg-[#F5F5F5] rounded-xl p-4 mb-6 text-center">
             <p className="mb-3">
