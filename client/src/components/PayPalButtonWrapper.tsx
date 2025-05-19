@@ -1,5 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PayPalButton from '@/components/PayPalButton';
+import { Button } from '@/components/ui/button';
+import { toast } from '@/hooks/use-toast';
 
 interface PayPalButtonWrapperProps {
   amount: string;
@@ -20,6 +22,39 @@ export function PayPalButtonWrapper({
   orderId,
   onPaymentComplete
 }: PayPalButtonWrapperProps) {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [paypalSetupComplete, setPaypalSetupComplete] = useState(false);
+
+  // Prüfe PayPal-Konfiguration
+  useEffect(() => {
+    const checkPayPalConfig = async () => {
+      try {
+        setIsLoading(true);
+        setError(null);
+        
+        const response = await fetch('/paypal/setup');
+        const data = await response.json();
+        
+        if (!response.ok || !data.isConfigured) {
+          console.error('PayPal configuration error:', data.error);
+          setError(data.error || 'PayPal ist derzeit nicht verfügbar');
+          setPaypalSetupComplete(false);
+        } else {
+          console.log('PayPal configuration successful');
+          setPaypalSetupComplete(true);
+        }
+      } catch (err) {
+        console.error('Error checking PayPal configuration:', err);
+        setError('Fehler bei der PayPal-Verbindung');
+        setPaypalSetupComplete(false);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    
+    checkPayPalConfig();
+  }, []);
 
   // Speichere Bestellungs-ID und registriere Event-Listener
   useEffect(() => {
@@ -37,14 +72,21 @@ export function PayPalButtonWrapper({
 
       if (paypalOrderId && onPaymentComplete) {
         try {
-          // Kurze Verzögerung hinzufügen, um sicherzustellen, dass PayPal die Transaktion abgeschlossen hat
-          setTimeout(async () => {
-            // Callback-Funktion aufrufen, um Bestellstatus zu aktualisieren
-            await onPaymentComplete(paypalOrderId);
-            console.log("Bestellstatus erfolgreich aktualisiert");
-          }, 1000);
+          toast({
+            title: "Zahlung erfolgreich",
+            description: "Ihre Bestellung wird verarbeitet.",
+          });
+          
+          // Callback-Funktion aufrufen, um Bestellstatus zu aktualisieren
+          await onPaymentComplete(paypalOrderId);
+          console.log("Bestellstatus erfolgreich aktualisiert");
         } catch (error) {
           console.error("Fehler beim Aktualisieren des Bestellstatus:", error);
+          toast({
+            title: "Fehler bei der Bestellverarbeitung",
+            description: "Bitte kontaktieren Sie den Support.",
+            variant: "destructive",
+          });
         }
       }
     };
@@ -94,6 +136,38 @@ export function PayPalButtonWrapper({
     };
   }, [orderId]);
 
+  // Wenn die Konfiguration fehlschlägt, zeige eine Fehlermeldung und einen alternativen Zahlungsweg
+  if (error) {
+    return (
+      <div className="space-y-4">
+        <div className="p-4 bg-red-50 border border-red-200 rounded-md text-red-700">
+          <p className="font-medium">PayPal ist derzeit nicht verfügbar</p>
+          <p className="text-sm mt-1">{error}</p>
+          <p className="text-sm mt-2">Sie können alternativ mit Überweisung bezahlen. Bitte kontaktieren Sie uns über das Kontaktformular.</p>
+        </div>
+        <div className="flex justify-center">
+          <Button 
+            variant="outline"
+            onClick={() => window.location.href = '/kontakt'}
+          >
+            Zum Kontaktformular
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  // Zeige einen Ladeindikator während der Initialisierung
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center p-4 h-20">
+        <div className="animate-spin h-5 w-5 border-2 border-blue-500 rounded-full border-t-transparent"></div>
+        <span className="ml-2 text-sm text-gray-500">PayPal wird geladen...</span>
+      </div>
+    );
+  }
+
+  // Wenn PayPal erfolgreich eingerichtet wurde, zeige den Button
   return (
     <PayPalButton
       amount={amount}

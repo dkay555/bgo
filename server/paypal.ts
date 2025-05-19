@@ -170,23 +170,29 @@ export async function capturePaypalOrder(req: Request, res: Response) {
 
 export async function loadPaypalDefault(req: Request, res: Response) {
   if (!isPayPalConfigured) {
+    console.warn("PayPal credentials missing - sending error response to client");
     return res.status(503).json({
-      error: "PayPal is not configured. Please contact the administrator.",
+      error: "PayPal ist nicht konfiguriert. Bitte kontaktieren Sie den Administrator.",
       isConfigured: false
     });
   }
   
   try {
+    console.log("Requesting PayPal client token...");
     const clientToken = await getClientToken();
+    console.log("PayPal client token obtained successfully");
+    
     res.json({
       clientToken,
-      isConfigured: true
+      isConfigured: true,
+      mode: process.env.NODE_ENV === "production" ? "production" : "sandbox"
     });
   } catch (error) {
     console.error("Failed to get client token:", error);
     res.status(500).json({ 
-      error: "Failed to initialize PayPal",
-      isConfigured: false
+      error: "Fehler bei der Initialisierung von PayPal. Bitte versuchen Sie es später erneut.",
+      isConfigured: false,
+      technicalMessage: (error as Error).message
     });
   }
 }

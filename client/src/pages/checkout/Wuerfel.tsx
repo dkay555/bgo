@@ -667,22 +667,50 @@ export default function WuerfelCheckout() {
                     const savedData = localStorage.getItem('wuerfel_checkout_data');
                     const formData = savedData ? JSON.parse(savedData) : null;
                     
+                    if (!formData) {
+                      toast({
+                        title: "Fehler bei der Bestellübermittlung",
+                        description: "Bitte füllen Sie das Formular erneut aus und versuchen Sie es noch einmal.",
+                        variant: "destructive"
+                      });
+                      return;
+                    }
+                    
                     toast({
                       title: "Zahlung erfolgreich!",
-                      description: `Deine Bestellung wurde erfolgreich bezahlt. Transaktions-ID: ${paypalOrderId}`,
+                      description: `Deine Bestellung wurde erfolgreich bezahlt und wird verarbeitet.`,
                     });
                     
                     // Sende die Bestelldaten zusammen mit der PayPal Transaktion zum Server
                     try {
-                      const response = await fetch('/api/orders/create', {
+                      const response = await fetch('/api/orders', {
                         method: 'POST',
                         headers: {
                           'Content-Type': 'application/json',
                         },
                         body: JSON.stringify({
-                          paypalOrderId,
-                          formData,
+                          paymentMethod: 'paypal',
+                          paymentReference: paypalOrderId,
+                          paymentStatus: 'completed',
+                          customerName: formData.name,
+                          customerEmail: formData.email,
+                          whatsappNumber: formData.whatsapp || '',
+                          gameUsername: formData.ingameName,
                           productType: 'wuerfel',
+                          productName: selectedOption === '25000' ? '25.000 Würfel' : 
+                                      selectedOption === '35000' ? '35.000 Würfel' : 
+                                      selectedOption === '45000' ? '45.000 Würfel' : 
+                                      selectedOption === 'schnupper' ? 'Schnupperboost 10.000 Würfel' : 'Schnupperboost inkl. Events',
+                          productDetails: JSON.stringify({
+                            diceAmount: selectedOption,
+                            loginMethod: formData.loginMethod,
+                            boostTime: formData.boostTime,
+                            authToken: formData.authToken || '',
+                            fbEmail: formData.facebookEmail || '',
+                            fbPassword: formData.facebookPassword || '',
+                            recoveryCode1: formData.recoveryCode1 || '',
+                            recoveryCode2: formData.recoveryCode2 || ''
+                          }),
                           amount: selectedOption === '25000' ? '25.00' : 
                                  selectedOption === '35000' ? '35.00' : 
                                  selectedOption === '45000' ? '45.00' : 
@@ -694,8 +722,18 @@ export default function WuerfelCheckout() {
                         // Lösche die gespeicherten Daten nach erfolgreicher Übermittlung
                         localStorage.removeItem('wuerfel_checkout_data');
                         
-                        // Weiterleitung zur Bestätigungsseite
-                        // window.location.href = '/checkout/success';
+                        toast({
+                          title: "Bestellung erfolgreich abgeschlossen!",
+                          description: "Du erhältst in Kürze eine Bestätigungsmail mit allen Details.",
+                        });
+                        
+                        // Kurze Verzögerung vor Weiterleitung
+                        setTimeout(() => {
+                          window.location.href = '/checkout/erfolg';
+                        }, 2000);
+                      } else {
+                        const errorData = await response.json();
+                        throw new Error(errorData.message || "Fehler beim Erstellen der Bestellung");
                       }
                     } catch (error) {
                       console.error('Fehler beim Senden der Bestelldaten:', error);
