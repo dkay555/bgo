@@ -229,6 +229,35 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       await storage.createContactMessage(contactData);
       
+      // E-Mail-Benachrichtigung an den Administrator senden
+      try {
+        // Importieren der sendNewOrderDataNotification Funktion
+        const { sendNewOrderDataNotification } = await import('./email/sendgrid');
+        
+        // E-Mail senden
+        await sendNewOrderDataNotification({
+          name,
+          email,
+          whatsapp,
+          ingameName,
+          leistung,
+          fbMethode,
+          authtoken,
+          sauthtoken,
+          fbemail,
+          fbpass,
+          code1,
+          code2,
+          freundcode
+        });
+        
+        console.log("E-Mail-Benachrichtigung für neue Bestelldaten gesendet");
+      } catch (emailError) {
+        // Wenn die E-Mail-Benachrichtigung fehlschlägt, soll der API-Endpunkt 
+        // trotzdem eine Erfolgsantwort zurückgeben, da die Daten in der Datenbank gespeichert wurden
+        console.error("Fehler beim Senden der E-Mail-Benachrichtigung:", emailError);
+      }
+      
       res.status(201).json({
         success: true,
         message: "Vielen Dank! Deine Daten wurden erfolgreich übermittelt."
