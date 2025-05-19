@@ -64,8 +64,6 @@ interface AdminCredentials {
 
 export default function Bestellungen() {
   const { toast } = useToast();
-  // Admin-Status wird nun über den ProtectedContent im Haupt-Admin-Bereich verwaltet
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [isDetailOpen, setIsDetailOpen] = useState<boolean>(false);
   const [newStatus, setNewStatus] = useState<string>("");
@@ -100,8 +98,7 @@ export default function Bestellungen() {
       const response = await fetch(`/api/orders/${orderId}/payment`, {
         method: "PATCH",
         headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Basic ${btoa(`${credentials.username}:${credentials.password}`)}`
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({ status, reference })
       });
