@@ -31,20 +31,35 @@ export async function comparePasswords(supplied: string, stored: string) {
 // Admin-Benutzer erstellen, falls noch keiner existiert
 async function createAdminUserIfNotExists() {
   try {
-    const existingAdmin = await storage.getUserByUsername("admin");
+    // Prüfen, ob bereits ein Admin existiert (mit besserer Fehlerbehandlung)
+    let existingAdmin;
+    try {
+      existingAdmin = await storage.getUserByUsername("admin");
+    } catch (dbError) {
+      // Falls ein Datenbankfehler auftritt, geben wir eine Warnung aus, aber brechen nicht ab
+      console.warn("Warnung: Konnte nicht prüfen, ob Admin-Benutzer existiert:", dbError.message);
+      return; // Früh zurückkehren, um die weitere Verarbeitung zu überspringen
+    }
+    
+    // Nur fortfahren, wenn wir sicher wissen, dass kein Admin existiert
     if (!existingAdmin) {
       console.log("Erstelle Admin-Benutzer...");
-      await storage.createUser({
-        username: "admin",
-        password: await hashPassword("admin123"), // Temporäres Passwort
-        email: "admin@example.com",
-        name: "Administrator",
-        isAdmin: true
-      });
-      console.log("Admin-Benutzer erstellt. Bitte ändern Sie das Passwort bei der ersten Anmeldung.");
+      try {
+        await storage.createUser({
+          username: "admin",
+          password: await hashPassword("admin123"), // Temporäres Passwort
+          email: "admin@example.com",
+          name: "Administrator",
+          isAdmin: true
+        });
+        console.log("Admin-Benutzer erstellt. Bitte ändern Sie das Passwort bei der ersten Anmeldung.");
+      } catch (createError) {
+        console.warn("Konnte Admin-Benutzer nicht erstellen:", createError.message);
+      }
     }
   } catch (error) {
-    console.error("Fehler beim Erstellen des Admin-Benutzers:", error);
+    console.error("Fehler im Admin-Erstellungsprozess:", error.message);
+    // Fehler protokollieren, aber nicht werfen, damit die App weiterläuft
   }
 }
 
