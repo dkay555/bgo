@@ -652,17 +652,143 @@ export default function WuerfelCheckout() {
               </CardContent>
             </Card>
             
-            {/* PayPal Button */}
-            <div className="flex flex-col items-center space-y-4" id="paypal-button-container">
+            {/* Zahlungsoptionen */}
+            <div className="flex flex-col items-center space-y-4">
               <div className="w-full max-w-md">
-                <PayPalButtonWrapper
-                  amount={selectedOption === '25000' ? '25.00' : 
-                         selectedOption === '35000' ? '35.00' : 
-                         selectedOption === '45000' ? '45.00' : 
-                         selectedOption === 'schnupper' ? '10.00' : '15.00'}
-                  currency="EUR"
-                  intent="CAPTURE"
-                  onPaymentComplete={async (paypalOrderId) => {
+                <div className="bg-white p-4 border rounded-lg shadow-sm mb-4">
+                  <h3 className="text-lg font-semibold text-[#0A3A68] mb-2">Zahlungsmethoden</h3>
+                  
+                  <div className="space-y-6">
+                    {/* Alternative Zahlungsoption */}
+                    <div>
+                      <div className="flex items-center mb-2">
+                        <div className="mr-2 w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center text-white">
+                          <span className="text-xs">1</span>
+                        </div>
+                        <h4 className="font-medium">Bestellung per Überweisung</h4>
+                      </div>
+                      
+                      <div className="pl-7">
+                        <p className="text-sm text-gray-600 mb-3">
+                          Bestelle jetzt und erhalte die Zahlungsdaten per E-Mail.
+                          Wir bearbeiten deine Bestellung nach Zahlungseingang.
+                        </p>
+                        
+                        <Button 
+                          type="button"
+                          onClick={async () => {
+                            // Stelle sicher, dass alle Felder ausgefüllt sind
+                            const isValid = await form.trigger();
+                            if (!isValid) {
+                              toast({
+                                title: "Formular unvollständig",
+                                description: "Bitte fülle alle erforderlichen Felder aus.",
+                                variant: "destructive"
+                              });
+                              return;
+                            }
+                            
+                            const formData = form.getValues();
+                            
+                            // Speichere die Bestelldaten für die Erfolgsseite
+                            localStorage.setItem('latest_order_data', JSON.stringify({
+                              productName: selectedOption === '25000' ? '25.000 Würfel' : 
+                                          selectedOption === '35000' ? '35.000 Würfel' : 
+                                          selectedOption === '45000' ? '45.000 Würfel' : 
+                                          selectedOption === 'schnupper' ? 'Schnupperboost 10.000 Würfel' : 'Schnupperboost inkl. Events',
+                              amount: selectedOption === '25000' ? '25.00' : 
+                                     selectedOption === '35000' ? '35.00' : 
+                                     selectedOption === '45000' ? '45.00' : 
+                                     selectedOption === 'schnupper' ? '10.00' : '15.00',
+                              gameUsername: formData.ingameName,
+                              boostTime: formData.boostTime,
+                              paymentMethod: 'Vorkasse/Überweisung'
+                            }));
+                            
+                            try {
+                              const response = await fetch('/api/orders', {
+                                method: 'POST',
+                                headers: {
+                                  'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                  paymentMethod: 'bank_transfer',
+                                  paymentStatus: 'pending',
+                                  customerName: formData.name,
+                                  customerEmail: formData.email,
+                                  whatsappNumber: formData.whatsapp || '',
+                                  gameUsername: formData.ingameName,
+                                  productType: 'wuerfel',
+                                  productName: selectedOption === '25000' ? '25.000 Würfel' : 
+                                              selectedOption === '35000' ? '35.000 Würfel' : 
+                                              selectedOption === '45000' ? '45.000 Würfel' : 
+                                              selectedOption === 'schnupper' ? 'Schnupperboost 10.000 Würfel' : 'Schnupperboost inkl. Events',
+                                  productDetails: JSON.stringify({
+                                    diceAmount: selectedOption,
+                                    loginMethod: formData.loginMethod,
+                                    boostTime: formData.boostTime,
+                                    authToken: formData.authToken || '',
+                                    fbEmail: formData.facebookEmail || '',
+                                    fbPassword: formData.facebookPassword || '',
+                                    recoveryCode1: formData.recoveryCode1 || '',
+                                    recoveryCode2: formData.recoveryCode2 || ''
+                                  }),
+                                  amount: selectedOption === '25000' ? '25.00' : 
+                                         selectedOption === '35000' ? '35.00' : 
+                                         selectedOption === '45000' ? '45.00' : 
+                                         selectedOption === 'schnupper' ? '10.00' : '15.00'
+                                }),
+                              });
+                              
+                              if (response.ok) {
+                                toast({
+                                  title: "Bestellung erfolgreich aufgegeben",
+                                  description: "Wir haben deine Bestellung erhalten und senden dir gleich die Zahlungsdaten.",
+                                });
+                                
+                                // Verzögerung vor Weiterleitung
+                                setTimeout(() => {
+                                  window.location.href = '/checkout/Erfolg';
+                                }, 1500);
+                              } else {
+                                const errorData = await response.json();
+                                throw new Error(errorData.message || "Fehler beim Erstellen der Bestellung");
+                              }
+                            } catch (error) {
+                              console.error('Fehler beim Senden der Bestelldaten:', error);
+                              toast({
+                                title: "Fehler",
+                                description: "Es gab ein Problem beim Speichern deiner Bestellung. Bitte kontaktiere uns über das Kontaktformular.",
+                                variant: "destructive"
+                              });
+                            }
+                          }}
+                          className="w-full bg-[#0A3A68] hover:bg-[#072F56]"
+                        >
+                          Jetzt kostenpflichtig bestellen
+                        </Button>
+                      </div>
+                    </div>
+                    
+                    {/* PayPal Option (deaktiviert) */}
+                    <div className="opacity-50">
+                      <div className="flex items-center mb-2">
+                        <div className="mr-2 w-5 h-5 bg-gray-400 rounded-full flex items-center justify-center text-white">
+                          <span className="text-xs">2</span>
+                        </div>
+                        <h4 className="font-medium">PayPal oder Kreditkarte (aktuell nicht verfügbar)</h4>
+                      </div>
+                      
+                      <div className="pl-7">
+                        <p className="text-sm text-gray-500 mb-2">
+                          PayPal steht aktuell leider nicht zur Verfügung. Bitte nutze die alternative Zahlungsmethode.
+                        </p>
+                        
+                        <div id="paypal-button-container" className="hidden">
+                          {/* PayPal Integration ist hier versteckt */}
+                        </div>
+                      </div>
+                    </div>
                     // Hole die gespeicherten Formulardaten
                     const savedData = localStorage.getItem('wuerfel_checkout_data');
                     const formData = savedData ? JSON.parse(savedData) : null;
