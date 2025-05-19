@@ -1,13 +1,17 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import SEOHead from '@/components/SEOHead';
+import { Helmet } from 'react-helmet';
 
 export default function DankePage() {
   const [leistung, setLeistung] = useState<string>('');
   const [fbMethode, setFbMethode] = useState<string>('');
+  
+  useEffect(() => {
+    document.title = 'Danke für deinen Kauf! | babixGO';
+  }, []);
 
   // Form state management
   const updateFields = (value: string) => {
@@ -17,11 +21,11 @@ export default function DankePage() {
 
   return (
     <>
-      <SEOHead 
-        pageName="Danke für deinen Kauf"
-        customTitle="Danke für deinen Kauf! | babixGO"
-        description="Danke für deinen Kauf bei babixGO. Gib uns deine Daten um schnellstmöglich starten zu können."
-      />
+      <Helmet>
+        <title>Danke für deinen Kauf! | babixGO</title>
+        <meta name="description" content="Danke für deinen Kauf bei babixGO. Gib uns deine Daten um schnellstmöglich starten zu können." />
+        <meta name="keywords" content="Monopoly Go, babixGO, Danke, Bestellung, Kauf" />
+      </Helmet>
 
       <div className="w-full max-w-lg mx-auto">
         {/* Header section */}
