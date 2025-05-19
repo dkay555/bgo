@@ -131,48 +131,69 @@ export default function PayPalButton({
   }, []);
   const initPayPal = async () => {
     try {
-      const clientToken: string = await fetch("/paypal/setup")
-        .then((res) => res.json())
-        .then((data) => {
-          return data.clientToken;
-        });
-      const sdkInstance = await (window as any).paypal.createInstance({
-        clientToken,
-        components: ["paypal-payments"],
-      });
-
-      const paypalCheckout =
-            sdkInstance.createPayPalOneTimePaymentSession({
-              onApprove,
-              onCancel,
-              onError,
-            });
-
-      const onClick = async () => {
-        try {
-          const checkoutOptionsPromise = createOrder();
-          await paypalCheckout.start(
-            { paymentFlow: "auto" },
-            checkoutOptionsPromise,
-          );
-        } catch (e) {
-          console.error(e);
-        }
-      };
-
-      const paypalButton = document.getElementById("paypal-button");
-
-      if (paypalButton) {
-        paypalButton.addEventListener("click", onClick);
+      const setupResponse = await fetch("/paypal/setup");
+      const setupData = await setupResponse.json();
+      
+      if (!setupResponse.ok || !setupData.clientToken) {
+        console.error("PayPal setup failed:", setupData.error || "No client token returned");
+        setPayPalError(setupData.error || "PayPal ist derzeit nicht verfügbar");
+        setIsPayPalConfigured(false);
+        return;
       }
+      
+      const clientToken = setupData.clientToken;
+      
+      // Nach erfolgreicher Token-Abfrage versuchen, PayPal zu initialisieren
+      try {
+        const sdkInstance = await (window as any).paypal.createInstance({
+          clientToken,
+          components: ["paypal-payments"],
+        });
 
-      return () => {
+        const paypalCheckout =
+              sdkInstance.createPayPalOneTimePaymentSession({
+                onApprove,
+                onCancel,
+                onError,
+              });
+
+        const onClick = async () => {
+          try {
+            console.log("PayPal button clicked, creating order...");
+            const checkoutOptionsPromise = createOrder();
+            await paypalCheckout.start(
+              { paymentFlow: "auto" },
+              checkoutOptionsPromise,
+            );
+          } catch (e) {
+            console.error("Error starting PayPal checkout:", e);
+          }
+        };
+
+        const paypalButton = document.getElementById("paypal-button");
+
         if (paypalButton) {
-          paypalButton.removeEventListener("click", onClick);
+          // Entferne alle vorherigen Event-Listener, um doppelte Ausführungen zu vermeiden
+          const newButton = paypalButton.cloneNode(true);
+          if (paypalButton.parentNode) {
+            paypalButton.parentNode.replaceChild(newButton, paypalButton);
+          }
+          
+          // Füge Event-Listener zum neuen Button hinzu
+          newButton.addEventListener("click", onClick);
+          console.log("PayPal button initialized successfully");
+        } else {
+          console.error("PayPal button element not found");
         }
-      };
+      } catch (sdkError) {
+        console.error("Error initializing PayPal SDK:", sdkError);
+        setPayPalError("Fehler bei der Initialisierung von PayPal");
+        setIsPayPalConfigured(false);
+      }
     } catch (e) {
-      console.error(e);
+      console.error("Fatal error in PayPal initialization:", e);
+      setPayPalError("Kritischer Fehler bei der PayPal-Initialisierung");
+      setIsPayPalConfigured(false);
     }
   };
 
