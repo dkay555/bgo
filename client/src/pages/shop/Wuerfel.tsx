@@ -232,37 +232,10 @@ export default function ShopWuerfel() {
                   </div>
                   
                   <div className="flex justify-center mt-6">
-                    <a 
-                      href="https://www.paypal.com/ncp/payment/J45WB9SDG2J2L" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="no-underline"
-                    >
-                      <button 
-                        style={{
-                          textAlign: 'center',
-                          border: 'none',
-                          borderRadius: '0.25rem',
-                          minWidth: '11.625rem',
-                          padding: '0 2rem',
-                          height: '2.5rem',
-                          fontWeight: 'bold',
-                          backgroundColor: '#FFD140',
-                          color: '#000000',
-                          fontFamily: '"Helvetica Neue",Arial,sans-serif',
-                          fontSize: '0.875rem',
-                          lineHeight: '1.125rem',
-                          cursor: 'pointer'
-                        }}
-                      >
-                        Jetzt kaufen
-                      </button>
-                      <div className="flex flex-col items-center mt-2 space-y-1">
-                        <img src="https://www.paypalobjects.com/images/Debit_Credit_APM.svg" alt="Zahlungsmethoden" className="h-5" />
-                        <div className="text-xs">
-                          Abgewickelt durch <img src="https://www.paypalobjects.com/paypal-ui/logos/svg/paypal-wordmark-color.svg" alt="PayPal" className="h-3.5 inline align-middle" />
-                        </div>
-                      </div>
+                    <a href="https://wa.me/49176xxxxxxxx" target="_blank" rel="noopener noreferrer">
+                      <Button className="bg-[#25D366] hover:bg-[#25D366]/90 text-white px-8">
+                        WhatsApp
+                      </Button>
                     </a>
                   </div>
                 </CardContent>
