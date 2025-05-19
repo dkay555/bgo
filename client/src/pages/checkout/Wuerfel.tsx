@@ -665,19 +665,139 @@ export default function WuerfelCheckout() {
               </CardContent>
             </Card>
             
-            {/* Submit Button - Bank transfer only */}
-            <div className="flex justify-center">
-              <Button 
-                type="submit"
-                className="bg-[#0A3A68] hover:bg-[#072F56] px-8 py-6 font-bold text-lg"
-              >
-                Jetzt kostenpflichtig bestellen
-              </Button>
-            </div>
-            
-            <div className="text-center text-sm text-gray-500 mt-2">
-              <p>Zahlungsabwicklung per Vorkasse/Überweisung</p>
-              <p>Du erhältst die Zahlungsdaten per E-Mail</p>
+            {/* Zahlungsoptionen */}
+            <div className="border border-gray-200 rounded-lg p-4 bg-white shadow-sm">
+              <h3 className="text-lg font-semibold text-[#0A3A68] mb-4">Zahlungsmethoden</h3>
+              
+              {/* PayPal Option */}
+              <div className="mb-6">
+                <div className="flex items-center mb-2">
+                  <div className="mr-2 w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center text-white">
+                    <span className="text-xs">1</span>
+                  </div>
+                  <h4 className="font-medium">PayPal oder Kreditkarte</h4>
+                </div>
+                
+                <div className="pl-7 mb-4">
+                  <p className="text-sm text-gray-600 mb-2">
+                    Zahle sicher und schnell mit PayPal oder Kreditkarte.
+                  </p>
+                  <div id="paypal-button-container" className="w-full max-w-md mx-auto mb-2">
+                    <PayPalButtonWrapper
+                      amount={selectedOption === '25000' ? '25.00' : 
+                            selectedOption === '35000' ? '35.00' : 
+                            selectedOption === '45000' ? '45.00' : 
+                            selectedOption === 'schnupper' ? '10.00' : '15.00'}
+                      currency="EUR"
+                      intent="CAPTURE"
+                      onPaymentComplete={async (paypalOrderId) => {
+                        const formData = form.getValues();
+                        
+                        toast({
+                          title: "Zahlung erfolgreich!",
+                          description: `Deine Bestellung wurde erfolgreich bezahlt und wird verarbeitet.`,
+                        });
+                        
+                        // Sende die Bestelldaten zusammen mit der PayPal Transaktion zum Server
+                        try {
+                          const response = await fetch('/api/orders', {
+                            method: 'POST',
+                            headers: {
+                              'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                              paymentMethod: 'paypal',
+                              paymentReference: paypalOrderId,
+                              paymentStatus: 'completed',
+                              customerName: formData.name,
+                              customerEmail: formData.email,
+                              whatsappNumber: formData.whatsapp || '',
+                              gameUsername: formData.ingameName,
+                              productType: 'wuerfel',
+                              productName: selectedOption === '25000' ? '25.000 Würfel' : 
+                                          selectedOption === '35000' ? '35.000 Würfel' : 
+                                          selectedOption === '45000' ? '45.000 Würfel' : 
+                                          selectedOption === 'schnupper' ? 'Schnupperboost 10.000 Würfel' : 'Schnupperboost inkl. Events',
+                              productDetails: JSON.stringify({
+                                diceAmount: selectedOption,
+                                loginMethod: formData.loginMethod,
+                                boostTime: formData.boostTime,
+                                authToken: formData.authToken || '',
+                                fbEmail: formData.facebookEmail || '',
+                                fbPassword: formData.facebookPassword || '',
+                                recoveryCode1: formData.recoveryCode1 || '',
+                                recoveryCode2: formData.recoveryCode2 || ''
+                              }),
+                              amount: selectedOption === '25000' ? '25.00' : 
+                                     selectedOption === '35000' ? '35.00' : 
+                                     selectedOption === '45000' ? '45.00' : 
+                                     selectedOption === 'schnupper' ? '10.00' : '15.00'
+                            }),
+                          });
+                          
+                          if (response.ok) {
+                            // Speichere die Bestelldaten vor der Weiterleitung für die Erfolgsseite
+                            localStorage.setItem('latest_order_data', JSON.stringify({
+                              productName: selectedOption === '25000' ? '25.000 Würfel' : 
+                                          selectedOption === '35000' ? '35.000 Würfel' : 
+                                          selectedOption === '45000' ? '45.000 Würfel' : 
+                                          selectedOption === 'schnupper' ? 'Schnupperboost 10.000 Würfel' : 'Schnupperboost inkl. Events',
+                              amount: selectedOption === '25000' ? '25.00' : 
+                                     selectedOption === '35000' ? '35.00' : 
+                                     selectedOption === '45000' ? '45.00' : 
+                                     selectedOption === 'schnupper' ? '10.00' : '15.00',
+                              gameUsername: formData.ingameName,
+                              boostTime: formData.boostTime,
+                              paymentMethod: 'PayPal'
+                            }));
+                            
+                            // Kurze Verzögerung vor Weiterleitung
+                            setTimeout(() => {
+                              window.location.href = '/checkout/Erfolg';
+                            }, 2000);
+                          } else {
+                            throw new Error("Fehler beim Erstellen der Bestellung");
+                          }
+                        } catch (error) {
+                          console.error('Fehler beim Senden der Bestelldaten:', error);
+                          toast({
+                            title: "Achtung",
+                            description: "Zahlung erfolgreich, aber es gab ein Problem beim Speichern deiner Bestellung. Bitte kontaktiere uns.",
+                            variant: "destructive"
+                          });
+                        }
+                      }}
+                    />
+                  </div>
+                  <p className="text-xs text-gray-500 text-center">
+                    Mit Klick auf den PayPal-Button wirst du zu PayPal weitergeleitet, um die Zahlung abzuschließen.
+                  </p>
+                </div>
+              </div>
+              
+              {/* Alternative Zahlungsoption */}
+              <div>
+                <div className="flex items-center mb-2">
+                  <div className="mr-2 w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center text-white">
+                    <span className="text-xs">2</span>
+                  </div>
+                  <h4 className="font-medium">Alternative: Bestellung per Überweisung</h4>
+                </div>
+                
+                <div className="pl-7">
+                  <p className="text-sm text-gray-600 mb-3">
+                    Bestelle jetzt und erhalte die Zahlungsdaten per E-Mail. 
+                    Nach Zahlungseingang bearbeiten wir deine Bestellung sofort.
+                  </p>
+                  
+                  <Button 
+                    type="submit"
+                    className="w-full bg-[#0A3A68] hover:bg-[#072F56] px-6 py-3 font-medium"
+                  >
+                    Jetzt per Überweisung bestellen
+                  </Button>
+                </div>
+              </div>
             </div>
           </form>
         </Form>
