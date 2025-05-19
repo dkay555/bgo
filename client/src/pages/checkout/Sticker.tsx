@@ -34,7 +34,7 @@ export default function StickerCheckout() {
 
   // Lade Spielerdaten aus dem Profil
   const [profileData, setProfileData] = useState<{ingameName?: string, friendshipLink?: string}>({});
-
+  
   // Lade Profildaten beim ersten Laden der Komponente
   useEffect(() => {
     try {
@@ -207,7 +207,7 @@ export default function StickerCheckout() {
 
     try {
       console.log("Aktualisiere Zahlungsstatus für Bestellung", orderId, "mit PayPal-ID", paymentId);
-
+      
       const response = await apiRequest("PATCH", `/api/orders/${orderId}/payment`, {
         paymentStatus: "completed",
         paymentReference: paymentId
@@ -221,7 +221,7 @@ export default function StickerCheckout() {
 
       // Warenkorb leeren nach erfolgreicher Zahlung
       clearCart();
-
+      
       toast({
         title: "Zahlung erfolgreich",
         description: "Vielen Dank für Ihren Einkauf! Wir bearbeiten Ihre Bestellung umgehend.",
@@ -652,22 +652,7 @@ export default function StickerCheckout() {
                 <div className="bg-green-50 p-4 border border-green-200 rounded-lg mb-2 text-center">
                   <span className="material-icons text-green-500 text-2xl mb-2">check_circle</span>
                   <h3 className="font-bold text-lg text-[#0A3A68] mb-2">Bestellung erfolgreich erstellt!</h3>
-                  <p className="text-gray-700">Bitte schließe deine Bestellung jetzt mit PayPal ab.</p>
-
-                  {/* PayPal Button mit korrekt formatiertem Preis */}
-                  <div className="mt-4" id="paypal-button-container">
-                    <PayPalButtonWrapper
-                      amount={totalPrice.toFixed(2)} // Sicherstellen, dass der richtige Preis verwendet wird
-                      currency="EUR"
-                      intent="CAPTURE"
-                      orderId={orderId}
-                      onPaymentComplete={async (paypalOrderId: string) => {
-                        // Payment-Completion-Logic
-                      }}
-                    />
-                  </div>
-                </div>
-                  <p>Mit der Zahlung stimme ich zu.</p>
+                  <p className="text-gray-700">Bitte schließe deine Bestellung mit der Zahlung ab.</p>
                 </div>
 
                 <div className="bg-white p-5 rounded-lg border border-gray-200 shadow-sm">

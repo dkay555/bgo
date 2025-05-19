@@ -36,7 +36,7 @@ const sampleProducts: InsertProduct[] = [
     price: "55",
     isActive: true,
   },
-
+  
   // Partnerevent-Produkte
   {
     name: "Partnerevent 1 Partner",
@@ -70,7 +70,7 @@ const sampleProducts: InsertProduct[] = [
     price: "25",
     isActive: true,
   },
-
+  
   // Tycoon Racers Produkte
   {
     name: "Tycoon Racers Bronze",
@@ -96,7 +96,7 @@ const sampleProducts: InsertProduct[] = [
     price: "35",
     isActive: true,
   },
-
+  
   // Sticker-Produkte
   {
     name: "Goldener Sticker",
@@ -131,15 +131,15 @@ export async function seedProducts() {
   try {
     // Prüfen, ob bereits Produkte vorhanden sind
     const existingProducts = await storage.getAllProducts();
-
+    
     if (existingProducts.length === 0) {
       console.log("Erstelle Beispiel-Produkte...");
-
+      
       // Produkte anlegen
       for (const product of sampleProducts) {
         await storage.createProduct(product);
       }
-
+      
       console.log(`${sampleProducts.length} Beispiel-Produkte wurden erfolgreich erstellt.`);
     } else {
       console.log(`Es existieren bereits ${existingProducts.length} Produkte in der Datenbank.`);

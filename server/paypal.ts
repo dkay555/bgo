@@ -39,7 +39,10 @@ if (isPayPalConfigured) {
       oAuthClientSecret: PAYPAL_CLIENT_SECRET!,
     },
     timeout: 0,
-    environment: Environment.Sandbox, // Erstmal Sandbox-Modus für Tests
+    environment:
+                  process.env.NODE_ENV === "production"
+                    ? Environment.Production
+                    : Environment.Sandbox,
     logging: {
       logLevel: LogLevel.Info,
       logRequest: {
@@ -167,29 +170,23 @@ export async function capturePaypalOrder(req: Request, res: Response) {
 
 export async function loadPaypalDefault(req: Request, res: Response) {
   if (!isPayPalConfigured) {
-    console.warn("PayPal credentials missing - sending error response to client");
     return res.status(503).json({
-      error: "PayPal ist nicht konfiguriert. Bitte kontaktieren Sie den Administrator.",
+      error: "PayPal is not configured. Please contact the administrator.",
       isConfigured: false
     });
   }
   
   try {
-    console.log("Requesting PayPal client token...");
     const clientToken = await getClientToken();
-    console.log("PayPal client token obtained successfully");
-    
     res.json({
       clientToken,
-      isConfigured: true,
-      mode: process.env.NODE_ENV === "production" ? "production" : "sandbox"
+      isConfigured: true
     });
   } catch (error) {
     console.error("Failed to get client token:", error);
     res.status(500).json({ 
-      error: "Fehler bei der Initialisierung von PayPal. Bitte versuchen Sie es später erneut.",
-      isConfigured: false,
-      technicalMessage: (error as Error).message
+      error: "Failed to initialize PayPal",
+      isConfigured: false
     });
   }
 }

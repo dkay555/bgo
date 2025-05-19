@@ -506,7 +506,7 @@ export default function EventwaehrungCheckout() {
                             <span className="text-[#00CFFF] text-sm hover:underline">
                               Wie erhalte ich meine Wiederherstellungscodes? Hier klicken für eine Anleitung
                             </span>
-                          </Link>/Link>
+                          </Link>
                         </div>
                       </div>
                     </div>
