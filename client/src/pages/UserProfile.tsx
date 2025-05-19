@@ -51,7 +51,10 @@ export default function UserProfile() {
   const [activeTab, setActiveTab] = useState("ubersicht");
   const [profileData, setProfileData] = useState({
     name: user?.name || "",
-    email: user?.email || ""
+    email: user?.email || "",
+    ingameName: user?.ingameName || "",
+    whatsapp: user?.whatsapp || "",
+    fbUsername: user?.fbUsername || ""
   });
   
   // URL-Pfad aus der aktuellen URL erfassen und Tab aktualisieren
@@ -220,6 +223,34 @@ export default function UserProfile() {
                       type="email" 
                       value={profileData.email} 
                       onChange={(e) => setProfileData({...profileData, email: e.target.value})}
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="ingameName">Ingame Name</Label>
+                    <Input 
+                      id="ingameName" 
+                      value={profileData.ingameName} 
+                      onChange={(e) => setProfileData({...profileData, ingameName: e.target.value})}
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="whatsapp">WhatsApp (optional)</Label>
+                    <Input 
+                      id="whatsapp" 
+                      value={profileData.whatsapp} 
+                      onChange={(e) => setProfileData({...profileData, whatsapp: e.target.value})}
+                      placeholder="+49 123 456789"
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="fbUsername">Facebook Name (optional)</Label>
+                    <Input 
+                      id="fbUsername" 
+                      value={profileData.fbUsername} 
+                      onChange={(e) => setProfileData({...profileData, fbUsername: e.target.value})}
                     />
                   </div>
                   

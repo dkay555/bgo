@@ -22,6 +22,7 @@ export const users = pgTable("users", {
   fbPassword: text("fb_password"),
   friendLink: text("friend_link"),
   ingameName: text("ingame_name"),
+  whatsapp: text("whatsapp"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
