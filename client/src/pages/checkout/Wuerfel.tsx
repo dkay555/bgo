@@ -28,6 +28,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/hooks/use-auth';
 import SEOHead from '@/components/SEOHead';
 import { InfoIcon } from 'lucide-react';
+import { PayPalButtonWrapper } from '@/components/PayPalButtonWrapper';
 
 // Form schema type
 type BoostTime = "asap" | "tournament";
