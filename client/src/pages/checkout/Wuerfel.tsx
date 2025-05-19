@@ -27,7 +27,6 @@ import { Card, CardContent } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/hooks/use-auth';
 import SEOHead from '@/components/SEOHead';
-import { PayPalButtonWrapper } from '@/components/PayPalButtonWrapper';
 import { InfoIcon } from 'lucide-react';
 
 // Form schema type
@@ -91,7 +90,6 @@ export default function WuerfelCheckout() {
   const { toast } = useToast();
   const [selectedOption, setSelectedOption] = useState('25000');
   const [loginMethod, setLoginMethod] = useState<LoginMethod>('authtoken');
-  const [profileDataLoaded, setProfileDataLoaded] = useState(false);
 
   // Versuche, gespeicherte Daten aus localStorage zu laden
   const getSavedFormData = (): Partial<FormData> => {
@@ -161,17 +159,6 @@ export default function WuerfelCheckout() {
     }
   }, []);
 
-  const handleProductChange = (value: string) => {
-    setSelectedOption(value);
-    form.setValue("product", value);
-    
-    // Bei Schnupperboost nur Auth-Token als Login-Methode erlauben
-    if (value === 'schnupper' || value === 'schnupperEvent') {
-      setLoginMethod('authtoken');
-      form.setValue("loginMethod", "authtoken");
-    }
-  };
-
   const handleLoginMethodChange = (value: LoginMethod) => {
     // Bei Schnupperboost nur Auth-Token erlauben
     if (selectedOption.includes('schnupper') && value !== 'authtoken') {
@@ -182,23 +169,81 @@ export default function WuerfelCheckout() {
     form.setValue("loginMethod", value);
   };
 
-  const onSubmit: SubmitHandler<FormData> = (data) => {
-    console.log(data);
-    // Form Validierung erfolgreich - jetzt können wir zum PayPal-Button scrollen
-    // oder andere Aktionen durchführen
-    
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
     // Speichere die Daten im localStorage für persistenz zwischen Seitenneuladen
     localStorage.setItem('wuerfel_checkout_data', JSON.stringify(data));
     
-    toast({
-      title: "Formular validiert",
-      description: "Bitte schließe den Kauf über den PayPal-Button unten ab.",
-    });
+    // Speichere die Bestelldaten für die Erfolgsseite
+    localStorage.setItem('latest_order_data', JSON.stringify({
+      productName: selectedOption === '25000' ? '25.000 Würfel' : 
+                  selectedOption === '35000' ? '35.000 Würfel' : 
+                  selectedOption === '45000' ? '45.000 Würfel' : 
+                  selectedOption === 'schnupper' ? 'Schnupperboost 10.000 Würfel' : 'Schnupperboost inkl. Events',
+      amount: selectedOption === '25000' ? '25.00' : 
+              selectedOption === '35000' ? '35.00' : 
+              selectedOption === '45000' ? '45.00' : 
+              selectedOption === 'schnupper' ? '10.00' : '15.00',
+      gameUsername: data.ingameName,
+      boostTime: data.boostTime,
+      paymentMethod: 'Vorkasse/Überweisung'
+    }));
     
-    // Scrolle zum PayPal-Button
-    const paypalButton = document.getElementById('paypal-button-container');
-    if (paypalButton) {
-      paypalButton.scrollIntoView({ behavior: 'smooth' });
+    try {
+      const response = await fetch('/api/orders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          paymentMethod: 'bank_transfer',
+          paymentStatus: 'pending',
+          customerName: data.name,
+          customerEmail: data.email,
+          whatsappNumber: data.whatsapp || '',
+          gameUsername: data.ingameName,
+          productType: 'wuerfel',
+          productName: selectedOption === '25000' ? '25.000 Würfel' : 
+                      selectedOption === '35000' ? '35.000 Würfel' : 
+                      selectedOption === '45000' ? '45.000 Würfel' : 
+                      selectedOption === 'schnupper' ? 'Schnupperboost 10.000 Würfel' : 'Schnupperboost inkl. Events',
+          productDetails: JSON.stringify({
+            diceAmount: selectedOption,
+            loginMethod: data.loginMethod,
+            boostTime: data.boostTime,
+            authToken: data.authToken || '',
+            fbEmail: data.facebookEmail || '',
+            fbPassword: data.facebookPassword || '',
+            recoveryCode1: data.recoveryCode1 || '',
+            recoveryCode2: data.recoveryCode2 || ''
+          }),
+          amount: selectedOption === '25000' ? '25.00' : 
+                  selectedOption === '35000' ? '35.00' : 
+                  selectedOption === '45000' ? '45.00' : 
+                  selectedOption === 'schnupper' ? '10.00' : '15.00'
+        }),
+      });
+      
+      if (response.ok) {
+        toast({
+          title: "Bestellung erfolgreich aufgegeben",
+          description: "Wir haben deine Bestellung erhalten und senden dir alle Details per E-Mail.",
+        });
+        
+        // Verzögerung vor Weiterleitung
+        setTimeout(() => {
+          window.location.href = '/checkout/Erfolg';
+        }, 1500);
+      } else {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Fehler beim Erstellen der Bestellung");
+      }
+    } catch (error) {
+      console.error('Fehler beim Senden der Bestelldaten:', error);
+      toast({
+        title: "Fehler",
+        description: "Es gab ein Problem beim Speichern deiner Bestellung. Bitte kontaktiere uns über das Kontaktformular.",
+        variant: "destructive"
+      });
     }
   };
 
@@ -389,215 +434,183 @@ export default function WuerfelCheckout() {
             {/* Login Method */}
             <Card>
               <CardContent className="py-4">
-                <div className="flex flex-wrap items-center justify-between mb-2">
-                  <h2 className="text-xl font-bold text-[#0A3A68] mt-0">Wie sollen wir uns einloggen?</h2>
-                  <Link href="/hilfe/loginmoeglichkeiten">
-                    <span className="text-[#00CFFF] text-sm hover:underline">
-                      Du bist dir unsicher? Hier bekommst du mehr Infos dazu
-                    </span>
-                  </Link>
+                <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+                  <h2 className="text-xl font-bold text-[#0A3A68] mt-0">Login-Methode</h2>
+                  
+                  {!selectedOption.includes('schnupper') && (
+                    <div className="flex space-x-2">
+                      <Button
+                        type="button"
+                        variant={loginMethod === 'authtoken' ? "default" : "outline"}
+                        onClick={() => handleLoginMethodChange('authtoken')}
+                        className={loginMethod === 'authtoken' ? "bg-[#0A3A68]" : "text-[#0A3A68] border-[#0A3A68]"}
+                      >
+                        Auth-Token
+                      </Button>
+                      <Button
+                        type="button"
+                        variant={loginMethod === 'credentials' ? "default" : "outline"}
+                        onClick={() => handleLoginMethodChange('credentials')}
+                        className={loginMethod === 'credentials' ? "bg-[#0A3A68]" : "text-[#0A3A68] border-[#0A3A68]"}
+                      >
+                        Facebook-Login
+                      </Button>
+                    </div>
+                  )}
                 </div>
                 
-                <div className="grid gap-6">
-                  <div className="border-b border-gray-200 mb-4">
-                    <div className="flex" role="tablist">
-                      <div
-                        role="tab"
-                        aria-selected={loginMethod === 'authtoken'}
-                        className={`
-                          w-1/2 py-4 px-1 text-center border-b-2 font-medium text-sm cursor-pointer
-                          ${loginMethod === 'authtoken' 
-                            ? 'border-[#00CFFF] text-[#00CFFF]' 
-                            : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}
-                        `}
-                        onClick={() => {
-                          setLoginMethod('authtoken');
-                          form.setValue("loginMethod", "authtoken");
-                        }}
-                      >
-                        Facebook Auth-Token
-                      </div>
+                {/* Auth Token Fields */}
+                {loginMethod === 'authtoken' && (
+                  <div className="grid gap-4">
+                    <FormField
+                      control={form.control}
+                      name="ingameName"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Dein Name im Spiel</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Dein Name im Spiel" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    
+                    <FormField
+                      control={form.control}
+                      name="authToken"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Auth-Token</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Dein Auth-Token (z.B. abcdefg12345)" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                          <p className="text-xs text-gray-500 mt-1">
+                            <Link href="/hilfe/auth-token" className="text-[#00CFFF] hover:underline">
+                              Wie finde ich meinen Auth-Token?
+                            </Link>
+                          </p>
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                )}
+                
+                {/* Facebook Login Fields */}
+                {loginMethod === 'credentials' && (
+                  <div className="grid gap-4">
+                    <FormField
+                      control={form.control}
+                      name="ingameName"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Dein Name im Spiel</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Dein Name im Spiel" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    
+                    <FormField
+                      control={form.control}
+                      name="facebookEmail"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Facebook E-Mail oder Handynummer</FormLabel>
+                          <FormControl>
+                            <Input placeholder="E-Mail oder Handynummer für Facebook Login" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    
+                    <FormField
+                      control={form.control}
+                      name="facebookPassword"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Facebook Passwort</FormLabel>
+                          <FormControl>
+                            <Input type="password" placeholder="Dein Facebook Passwort" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    
+                    <div className="grid gap-4 md:grid-cols-2">
+                      <FormField
+                        control={form.control}
+                        name="recoveryCode1"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Wiederherstellungscode 1</FormLabel>
+                            <FormControl>
+                              <Input placeholder="Erster Code" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
                       
-                      {/* Nur anzeigen, wenn KEIN Schnupperboost ausgewählt ist */}
-                      <div
-                        role="tab"
-                        aria-selected={loginMethod === 'credentials' && !selectedOption.includes('schnupper')}
-                        aria-disabled={selectedOption.includes('schnupper')}
-                        className={`
-                          w-1/2 py-4 px-1 text-center border-b-2 font-medium text-sm
-                          ${selectedOption.includes('schnupper')
-                            ? 'border-transparent bg-gray-100 text-gray-400 cursor-not-allowed'
-                            : loginMethod === 'credentials'
-                              ? 'border-[#00CFFF] text-[#00CFFF] cursor-pointer'
-                              : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 cursor-pointer'}
-                        `}
-                        onClick={() => {
-                          if (!selectedOption.includes('schnupper')) {
-                            setLoginMethod('credentials');
-                            form.setValue("loginMethod", "credentials");
-                          } else {
-                            toast({
-                              title: "Hinweis",
-                              description: "Beim Schnupperboost ist nur der Auth-Token als Login-Methode möglich.",
-                            });
-                          }
-                        }}
-                      >
-                        Facebook Zugangsdaten
-                      </div>
+                      <FormField
+                        control={form.control}
+                        name="recoveryCode2"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Wiederherstellungscode 2</FormLabel>
+                            <FormControl>
+                              <Input placeholder="Zweiter Code" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
                     </div>
                   </div>
-                  
-                  <input 
-                    type="hidden" 
-                    {...form.register("loginMethod")} 
-                    value={loginMethod} 
-                  />
-                  
-                  {loginMethod === 'authtoken' && (
-                    <div className="ml-8 grid gap-4">
-                      <FormField
-                        control={form.control}
-                        name="ingameName"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>In-Game Name</FormLabel>
-                            <FormControl>
-                              <Input placeholder="Dein Name im Spiel" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      
-                      <FormField
-                        control={form.control}
-                        name="authToken"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Auth-Token</FormLabel>
-                            <FormControl>
-                              <Input placeholder="Dein Facebook Auth-Token" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                  )}
-                  
-                  {loginMethod === 'credentials' && (
-                    <div className="ml-8 grid gap-4">
-                      <FormField
-                        control={form.control}
-                        name="ingameName"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>In-Game Name</FormLabel>
-                            <FormControl>
-                              <Input placeholder="Dein Name im Spiel" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      
-                      <FormField
-                        control={form.control}
-                        name="facebookEmail"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Facebook E-Mail / Handynummer</FormLabel>
-                            <FormControl>
-                              <Input placeholder="Deine Facebook E-Mail oder Handynummer" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      
-                      <FormField
-                        control={form.control}
-                        name="facebookPassword"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Facebook Passwort</FormLabel>
-                            <FormControl>
-                              <Input type="password" placeholder="Dein Facebook Passwort" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      
-                      <div className="grid gap-4 md:grid-cols-2">
-                        <FormField
-                          control={form.control}
-                          name="recoveryCode1"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Wiederherstellungscode 1</FormLabel>
-                              <FormControl>
-                                <Input placeholder="Wiederherstellungscode" {...field} />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                        
-                        <FormField
-                          control={form.control}
-                          name="recoveryCode2"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Wiederherstellungscode 2</FormLabel>
-                              <FormControl>
-                                <Input placeholder="Wiederherstellungscode" {...field} />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                    </div>
-                  )}
-                </div>
+                )}
               </CardContent>
             </Card>
             
-            {/* Boost Timing */}
+            {/* Boost Time */}
             <Card>
               <CardContent className="py-4">
-                <h2 className="text-xl font-bold text-[#0A3A68] mt-0 mb-2">Wann soll der Boost erfolgen?</h2>
+                <h2 className="text-xl font-bold text-[#0A3A68] mt-0 mb-2">Wann soll der Boost stattfinden?</h2>
                 
-                <div className="grid gap-4">
-                  <FormField
-                    control={form.control}
-                    name="boostTime"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormControl>
-                          <RadioGroup
-                            value={field.value}
-                            onValueChange={field.onChange}
-                            className="flex flex-col space-y-3"
-                          >
-                            <div className="flex items-center space-x-3">
-                              <RadioGroupItem value="asap" id="asap" />
-                              <Label htmlFor="asap" className="font-normal">Schnellstmöglich</Label>
-                            </div>
-                            
-                            <div className="flex items-center space-x-3">
-                              <RadioGroupItem value="tournament" id="tournament" />
-                              <Label htmlFor="tournament" className="font-normal">Mit dem nächsten Bahnhofsturnier</Label>
-                            </div>
-                          </RadioGroup>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
+                <FormField
+                  control={form.control}
+                  name="boostTime"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <RadioGroup
+                          value={field.value}
+                          onValueChange={field.onChange}
+                          className="grid gap-2"
+                        >
+                          <div className="flex items-center space-x-3">
+                            <RadioGroupItem value="asap" id="asap" />
+                            <Label htmlFor="asap" className="cursor-pointer">
+                              So schnell wie möglich (innerhalb von 24h)
+                            </Label>
+                          </div>
+                          
+                          <div className="flex items-center space-x-3">
+                            <RadioGroupItem value="tournament" id="tournament" />
+                            <Label htmlFor="tournament" className="cursor-pointer">
+                              Am Turniertag (Freitags oder in den Finalrunden)
+                            </Label>
+                          </div>
+                        </RadioGroup>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
               </CardContent>
             </Card>
             
@@ -652,243 +665,19 @@ export default function WuerfelCheckout() {
               </CardContent>
             </Card>
             
-            {/* Zahlungsoptionen */}
-            <div className="flex flex-col items-center space-y-4">
-              <div className="w-full max-w-md">
-                <div className="bg-white p-4 border rounded-lg shadow-sm mb-4">
-                  <h3 className="text-lg font-semibold text-[#0A3A68] mb-2">Zahlungsmethoden</h3>
-                  
-                  <div className="space-y-6">
-                    {/* Alternative Zahlungsoption */}
-                    <div>
-                      <div className="flex items-center mb-2">
-                        <div className="mr-2 w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center text-white">
-                          <span className="text-xs">1</span>
-                        </div>
-                        <h4 className="font-medium">Bestellung per Überweisung</h4>
-                      </div>
-                      
-                      <div className="pl-7">
-                        <p className="text-sm text-gray-600 mb-3">
-                          Bestelle jetzt und erhalte die Zahlungsdaten per E-Mail.
-                          Wir bearbeiten deine Bestellung nach Zahlungseingang.
-                        </p>
-                        
-                        <Button 
-                          type="button"
-                          onClick={async () => {
-                            // Stelle sicher, dass alle Felder ausgefüllt sind
-                            const isValid = await form.trigger();
-                            if (!isValid) {
-                              toast({
-                                title: "Formular unvollständig",
-                                description: "Bitte fülle alle erforderlichen Felder aus.",
-                                variant: "destructive"
-                              });
-                              return;
-                            }
-                            
-                            const formData = form.getValues();
-                            
-                            // Speichere die Bestelldaten für die Erfolgsseite
-                            localStorage.setItem('latest_order_data', JSON.stringify({
-                              productName: selectedOption === '25000' ? '25.000 Würfel' : 
-                                          selectedOption === '35000' ? '35.000 Würfel' : 
-                                          selectedOption === '45000' ? '45.000 Würfel' : 
-                                          selectedOption === 'schnupper' ? 'Schnupperboost 10.000 Würfel' : 'Schnupperboost inkl. Events',
-                              amount: selectedOption === '25000' ? '25.00' : 
-                                     selectedOption === '35000' ? '35.00' : 
-                                     selectedOption === '45000' ? '45.00' : 
-                                     selectedOption === 'schnupper' ? '10.00' : '15.00',
-                              gameUsername: formData.ingameName,
-                              boostTime: formData.boostTime,
-                              paymentMethod: 'Vorkasse/Überweisung'
-                            }));
-                            
-                            try {
-                              const response = await fetch('/api/orders', {
-                                method: 'POST',
-                                headers: {
-                                  'Content-Type': 'application/json',
-                                },
-                                body: JSON.stringify({
-                                  paymentMethod: 'bank_transfer',
-                                  paymentStatus: 'pending',
-                                  customerName: formData.name,
-                                  customerEmail: formData.email,
-                                  whatsappNumber: formData.whatsapp || '',
-                                  gameUsername: formData.ingameName,
-                                  productType: 'wuerfel',
-                                  productName: selectedOption === '25000' ? '25.000 Würfel' : 
-                                              selectedOption === '35000' ? '35.000 Würfel' : 
-                                              selectedOption === '45000' ? '45.000 Würfel' : 
-                                              selectedOption === 'schnupper' ? 'Schnupperboost 10.000 Würfel' : 'Schnupperboost inkl. Events',
-                                  productDetails: JSON.stringify({
-                                    diceAmount: selectedOption,
-                                    loginMethod: formData.loginMethod,
-                                    boostTime: formData.boostTime,
-                                    authToken: formData.authToken || '',
-                                    fbEmail: formData.facebookEmail || '',
-                                    fbPassword: formData.facebookPassword || '',
-                                    recoveryCode1: formData.recoveryCode1 || '',
-                                    recoveryCode2: formData.recoveryCode2 || ''
-                                  }),
-                                  amount: selectedOption === '25000' ? '25.00' : 
-                                         selectedOption === '35000' ? '35.00' : 
-                                         selectedOption === '45000' ? '45.00' : 
-                                         selectedOption === 'schnupper' ? '10.00' : '15.00'
-                                }),
-                              });
-                              
-                              if (response.ok) {
-                                toast({
-                                  title: "Bestellung erfolgreich aufgegeben",
-                                  description: "Wir haben deine Bestellung erhalten und senden dir gleich die Zahlungsdaten.",
-                                });
-                                
-                                // Verzögerung vor Weiterleitung
-                                setTimeout(() => {
-                                  window.location.href = '/checkout/Erfolg';
-                                }, 1500);
-                              } else {
-                                const errorData = await response.json();
-                                throw new Error(errorData.message || "Fehler beim Erstellen der Bestellung");
-                              }
-                            } catch (error) {
-                              console.error('Fehler beim Senden der Bestelldaten:', error);
-                              toast({
-                                title: "Fehler",
-                                description: "Es gab ein Problem beim Speichern deiner Bestellung. Bitte kontaktiere uns über das Kontaktformular.",
-                                variant: "destructive"
-                              });
-                            }
-                          }}
-                          className="w-full bg-[#0A3A68] hover:bg-[#072F56]"
-                        >
-                          Jetzt kostenpflichtig bestellen
-                        </Button>
-                      </div>
-                    </div>
-                    
-                    {/* PayPal Option (deaktiviert) */}
-                    <div className="opacity-50">
-                      <div className="flex items-center mb-2">
-                        <div className="mr-2 w-5 h-5 bg-gray-400 rounded-full flex items-center justify-center text-white">
-                          <span className="text-xs">2</span>
-                        </div>
-                        <h4 className="font-medium">PayPal oder Kreditkarte (aktuell nicht verfügbar)</h4>
-                      </div>
-                      
-                      <div className="pl-7">
-                        <p className="text-sm text-gray-500 mb-2">
-                          PayPal steht aktuell leider nicht zur Verfügung. Bitte nutze die alternative Zahlungsmethode.
-                        </p>
-                        
-                        <div id="paypal-button-container" className="hidden">
-                          {/* PayPal Integration ist hier versteckt */}
-                        </div>
-                      </div>
-                    </div>
-                    // Hole die gespeicherten Formulardaten
-                    const savedData = localStorage.getItem('wuerfel_checkout_data');
-                    const formData = savedData ? JSON.parse(savedData) : null;
-                    
-                    if (!formData) {
-                      toast({
-                        title: "Fehler bei der Bestellübermittlung",
-                        description: "Bitte füllen Sie das Formular erneut aus und versuchen Sie es noch einmal.",
-                        variant: "destructive"
-                      });
-                      return;
-                    }
-                    
-                    toast({
-                      title: "Zahlung erfolgreich!",
-                      description: `Deine Bestellung wurde erfolgreich bezahlt und wird verarbeitet.`,
-                    });
-                    
-                    // Sende die Bestelldaten zusammen mit der PayPal Transaktion zum Server
-                    try {
-                      const response = await fetch('/api/orders', {
-                        method: 'POST',
-                        headers: {
-                          'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                          paymentMethod: 'paypal',
-                          paymentReference: paypalOrderId,
-                          paymentStatus: 'completed',
-                          customerName: formData.name,
-                          customerEmail: formData.email,
-                          whatsappNumber: formData.whatsapp || '',
-                          gameUsername: formData.ingameName,
-                          productType: 'wuerfel',
-                          productName: selectedOption === '25000' ? '25.000 Würfel' : 
-                                      selectedOption === '35000' ? '35.000 Würfel' : 
-                                      selectedOption === '45000' ? '45.000 Würfel' : 
-                                      selectedOption === 'schnupper' ? 'Schnupperboost 10.000 Würfel' : 'Schnupperboost inkl. Events',
-                          productDetails: JSON.stringify({
-                            diceAmount: selectedOption,
-                            loginMethod: formData.loginMethod,
-                            boostTime: formData.boostTime,
-                            authToken: formData.authToken || '',
-                            fbEmail: formData.facebookEmail || '',
-                            fbPassword: formData.facebookPassword || '',
-                            recoveryCode1: formData.recoveryCode1 || '',
-                            recoveryCode2: formData.recoveryCode2 || ''
-                          }),
-                          amount: selectedOption === '25000' ? '25.00' : 
-                                 selectedOption === '35000' ? '35.00' : 
-                                 selectedOption === '45000' ? '45.00' : 
-                                 selectedOption === 'schnupper' ? '10.00' : '15.00'
-                        }),
-                      });
-                      
-                      if (response.ok) {
-                        // Lösche die gespeicherten Daten nach erfolgreicher Übermittlung
-                        localStorage.removeItem('wuerfel_checkout_data');
-                        
-                        toast({
-                          title: "Bestellung erfolgreich abgeschlossen!",
-                          description: "Du erhältst in Kürze eine Bestätigungsmail mit allen Details.",
-                        });
-                        
-                        // Speichere die Bestelldaten vor der Weiterleitung für die Erfolgsseite
-                        localStorage.setItem('latest_order_data', JSON.stringify({
-                          productName: selectedOption === '25000' ? '25.000 Würfel' : 
-                                      selectedOption === '35000' ? '35.000 Würfel' : 
-                                      selectedOption === '45000' ? '45.000 Würfel' : 
-                                      selectedOption === 'schnupper' ? 'Schnupperboost 10.000 Würfel' : 'Schnupperboost inkl. Events',
-                          amount: selectedOption === '25000' ? '25.00' : 
-                                 selectedOption === '35000' ? '35.00' : 
-                                 selectedOption === '45000' ? '45.00' : 
-                                 selectedOption === 'schnupper' ? '10.00' : '15.00',
-                          gameUsername: formData.ingameName,
-                          boostTime: formData.boostTime
-                        }));
-                        
-                        // Kurze Verzögerung vor Weiterleitung
-                        setTimeout(() => {
-                          window.location.href = '/checkout/Erfolg';
-                        }, 2000);
-                      } else {
-                        const errorData = await response.json();
-                        throw new Error(errorData.message || "Fehler beim Erstellen der Bestellung");
-                      }
-                    } catch (error) {
-                      console.error('Fehler beim Senden der Bestelldaten:', error);
-                      toast({
-                        title: "Achtung",
-                        description: "Zahlung erfolgreich, aber es gab ein Problem beim Speichern deiner Bestellung. Bitte kontaktiere uns.",
-                        variant: "destructive"
-                      });
-                    }
-                  }}
-                />
-              </div>
-              <p className="text-sm text-gray-500 text-center">
-                Mit Klick auf "Jetzt kaufen" wirst du zu PayPal weitergeleitet, um die Zahlung abzuschließen.
-              </p>
+            {/* Submit Button - Bank transfer only */}
+            <div className="flex justify-center">
+              <Button 
+                type="submit"
+                className="bg-[#0A3A68] hover:bg-[#072F56] px-8 py-6 font-bold text-lg"
+              >
+                Jetzt kostenpflichtig bestellen
+              </Button>
+            </div>
+            
+            <div className="text-center text-sm text-gray-500 mt-2">
+              <p>Zahlungsabwicklung per Vorkasse/Überweisung</p>
+              <p>Du erhältst die Zahlungsdaten per E-Mail</p>
             </div>
           </form>
         </Form>
