@@ -37,13 +37,7 @@ const ShopTycoonRacersPage = lazy(() => import('@/pages/shop/TycoonRacers'));
 const PartnerPage = lazy(() => import('@/pages/shop/Partnerevent'));
 const TycoonRacersPage = lazy(() => import('@/pages/shop/TycoonRacers'));
 
-// Lazy-loaded checkout pages
-const WuerfelCheckoutPage = lazy(() => import('@/pages/checkout/Wuerfel'));
-const StickerCheckoutPage = lazy(() => import('@/pages/checkout/Sticker'));
-const PartnereventCheckoutPage = lazy(() => import('@/pages/checkout/Partnerevent'));
-const TycoonRacersCheckoutPage = lazy(() => import('@/pages/checkout/TycoonRacers'));
-const EventwaehrungCheckoutPage = lazy(() => import('@/pages/checkout/Eventwaehrung'));
-const FlaggenCheckoutPage = lazy(() => import('@/pages/checkout/Flaggen'));
+// Danke-Seite für Weiterleitung nach PayPal-Zahlungen
 const DankePage = lazy(() => import('@/pages/checkout/Danke'));
 
 // Lazy-loaded shop pages
@@ -185,25 +179,7 @@ function Router() {
             {() => <ShopTycoonRacersPage />}
           </Route>
 
-          {/* Checkout-Seiten */}
-          <Route path="/checkout/wuerfel">
-            {() => <WuerfelCheckoutPage />}
-          </Route>
-          <Route path="/checkout/sticker">
-            {() => <StickerCheckoutPage />}
-          </Route>
-          <Route path="/checkout/partnerevent">
-            {() => <PartnereventCheckoutPage />}
-          </Route>
-          <Route path="/checkout/eventwaehrung">
-            {() => <EventwaehrungCheckoutPage />}
-          </Route>
-          <Route path="/checkout/tycoonracers">
-            {() => <TycoonRacersCheckoutPage />}
-          </Route>
-          <Route path="/checkout/flaggen">
-            {() => <FlaggenCheckoutPage />}
-          </Route>
+          {/* Danke-Seite für PayPal-Rückleitungen */}
           <Route path="/danke">
             {() => <DankePage />}
           </Route>
