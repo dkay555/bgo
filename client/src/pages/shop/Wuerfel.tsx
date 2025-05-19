@@ -104,11 +104,14 @@ export default function ShopWuerfel() {
                   </div>
                   
                   <div className="flex justify-center mt-6">
-                    <Link href="/checkout/wuerfel">
-                      <Button className="bg-[#FF4C00] hover:bg-[#FF4C00]/90 text-white px-8">
-                        Jetzt kaufen
-                      </Button>
-                    </Link>
+                    <div dangerouslySetInnerHTML={{ __html: `
+                      <style>.pp-UGHV3ZNMD7K5N{text-align:center;border:none;border-radius:0.25rem;min-width:11.625rem;padding:0 2rem;height:2rem;font-weight:bold;background-color:#FFD140;color:#000000;font-family:"Helvetica Neue",Arial,sans-serif;font-size:0.875rem;line-height:1.125rem;cursor:pointer;}</style>
+                      <form action="https://www.paypal.com/ncp/payment/UGHV3ZNMD7K5N" method="post" target="_blank" style="display:inline-grid;justify-items:center;align-content:start;gap:0.5rem;">
+                        <input class="pp-UGHV3ZNMD7K5N" type="submit" value="Jetzt kaufen" />
+                        <img src=https://www.paypalobjects.com/images/Debit_Credit_APM.svg alt="cards" />
+                        <section style="font-size: 0.75rem;"> Abgewickelt durch <img src="https://www.paypalobjects.com/paypal-ui/logos/svg/paypal-wordmark-color.svg" alt="paypal" style="height:0.875rem;vertical-align:middle;"/></section>
+                      </form>
+                    ` }} />
                   </div>
                 </CardContent>
               </Card>
