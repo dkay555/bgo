@@ -30,6 +30,16 @@ export function AdminNavigation({ onLogout }: AdminNavigationProps) {
             Bestellungen
           </a>
           <a 
+            href="/admin/kontaktanfragen" 
+            className={`px-4 py-2 rounded-md transition-colors ${
+              isActive("/admin/kontaktanfragen") 
+                ? "bg-blue-100 text-blue-800 font-medium" 
+                : "hover:bg-gray-100"
+            }`}
+          >
+            Kontaktanfragen
+          </a>
+          <a 
             href="/admin/benutzer" 
             className={`px-4 py-2 rounded-md transition-colors ${
               isActive("/admin/benutzer") 
