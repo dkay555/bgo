@@ -150,11 +150,8 @@ export default function StartPage() {
               </div>
               <div className="p-6 pt-8">
                 <p className="mb-6">Ohne sie geht gar nichts bei Monopoly Go: Kaufe Würfel für deinen Monopoly Go Account.</p>
-                <div className="flex flex-col sm:flex-row gap-3">
-                  <Button variant="orange" asChild className="flex-1 font-bold">
-                    <a href={CONTACT.whatsapp} target="_blank" rel="noreferrer">Schreib uns</a>
-                  </Button>
-                  <Button variant="darkblue" asChild className="flex-1 font-bold">
+                <div className="flex justify-center">
+                  <Button variant="darkblue" asChild className="font-bold">
                     <Link href="/produkte/wuerfel#top">Zum Shop</Link>
                   </Button>
                 </div>
@@ -171,11 +168,8 @@ export default function StartPage() {
               </div>
               <div className="p-6 pt-8">
                 <p className="mb-6">Fehlende Sticker? - Nicht mit uns, wir haben sie alle!</p>
-                <div className="flex flex-col sm:flex-row gap-3">
-                  <Button variant="orange" asChild className="flex-1 font-bold">
-                    <a href={CONTACT.whatsapp} target="_blank" rel="noreferrer">Schreib uns</a>
-                  </Button>
-                  <Button variant="darkblue" asChild className="flex-1 font-bold">
+                <div className="flex justify-center">
+                  <Button variant="darkblue" asChild className="font-bold">
                     <Link href="/produkte/sticker#top">Zum Shop</Link>
                   </Button>
                 </div>
@@ -192,11 +186,8 @@ export default function StartPage() {
               </div>
               <div className="p-6 pt-8">
                 <p className="mb-6">Zuverlässige Partner gesucht? Wer, wenn nicht wir?</p>
-                <div className="flex flex-col sm:flex-row gap-3">
-                  <Button variant="orange" asChild className="flex-1 font-bold">
-                    <a href={CONTACT.whatsapp} target="_blank" rel="noreferrer">Schreib uns</a>
-                  </Button>
-                  <Button variant="darkblue" asChild className="flex-1 font-bold">
+                <div className="flex justify-center">
+                  <Button variant="darkblue" asChild className="font-bold">
                     <Link href="/produkte/partner#top">Zum Shop</Link>
                   </Button>
                 </div>
@@ -213,11 +204,8 @@ export default function StartPage() {
               </div>
               <div className="p-6 pt-8">
                 <p className="mb-6">Erreiche höhere Platzierungen bei Tycoon Racers Events und sichere dir exklusive Belohnungen!</p>
-                <div className="flex flex-col sm:flex-row gap-3">
-                  <Button variant="orange" asChild className="flex-1 font-bold">
-                    <a href={CONTACT.whatsapp} target="_blank" rel="noreferrer">Schreib uns</a>
-                  </Button>
-                  <Button variant="darkblue" asChild className="flex-1 font-bold">
+                <div className="flex justify-center">
+                  <Button variant="darkblue" asChild className="font-bold">
                     <Link href="/produkte/race#top">Zum Shop</Link>
                   </Button>
                 </div>
