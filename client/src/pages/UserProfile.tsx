@@ -355,7 +355,23 @@ export default function UserProfile() {
                       <div className="flex justify-between items-center mb-2">
                         <h3 className="font-medium">Account {index + 1}: {account.name}</h3>
                         <div className="flex gap-2">
-                          <Button variant="outline" size="sm">Bearbeiten</Button>
+                          <Button 
+                            variant="destructive" 
+                            size="sm" 
+                            onClick={() => handleDeleteAccount(account.id)}
+                          >
+                            <X className="h-4 w-4 mr-1" /> Löschen
+                          </Button>
+                          <Button 
+                            variant="outline" 
+                            size="sm"
+                            onClick={() => toast({
+                              title: "Hinweis",
+                              description: "Änderungen werden automatisch gespeichert."
+                            })}
+                          >
+                            <Check className="h-4 w-4 mr-1" /> Gespeichert
+                          </Button>
                         </div>
                       </div>
                       
