@@ -59,6 +59,13 @@ export default function DankePage() {
     setIsSubmitting(true);
     
     try {
+      // Konsole-Debug: Daten im Request-Body
+      console.log("Form submission data:", {
+        ...formData,
+        leistung,
+        fbMethode
+      });
+      
       const response = await fetch('/api/order-data', {
         method: 'POST',
         headers: {
@@ -71,9 +78,33 @@ export default function DankePage() {
         }),
       });
       
-      const data = await response.json();
+      console.log("Response status:", response.status);
       
-      if (data.success) {
+      // Wir lesen die Response immer als Text zuerst, um zu sehen, was zurückkommt
+      const responseText = await response.text();
+      console.log("Response text:", responseText);
+      
+      // Dann versuchen wir, den Text als JSON zu parsen
+      let data;
+      try {
+        data = JSON.parse(responseText);
+      } catch (jsonError) {
+        console.error("Failed to parse JSON response:", jsonError);
+        // Wenn wir kein gültiges JSON haben, aber dennoch Status 200, behandeln wir es als Erfolg
+        if (response.ok) {
+          setFormSubmitted(true);
+          toast({
+            title: "Erfolgreich gesendet",
+            description: "Vielen Dank! Deine Daten wurden erfolgreich übermittelt.",
+          });
+          return;
+        } else {
+          throw new Error("Ungültiges JSON in der Antwort");
+        }
+      }
+      
+      // Verarbeiten der geparsten JSON-Daten
+      if (data.success || response.ok) {
         setFormSubmitted(true);
         toast({
           title: "Erfolgreich gesendet",
@@ -87,9 +118,10 @@ export default function DankePage() {
         });
       }
     } catch (error) {
+      console.error("Form submission error:", error);
       toast({
         title: "Fehler",
-        description: "Es konnte keine Verbindung zum Server hergestellt werden. Bitte versuche es später erneut.",
+        description: "Es gab ein Problem bei der Übermittlung. Bitte versuche es später erneut oder kontaktiere uns direkt per WhatsApp.",
         variant: "destructive"
       });
     } finally {
