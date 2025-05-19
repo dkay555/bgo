@@ -32,10 +32,10 @@ export function PayPalButtonWrapper({
       try {
         setIsLoading(true);
         setError(null);
-        
+
         const response = await fetch('/paypal/setup');
         const data = await response.json();
-        
+
         if (!response.ok || !data.isConfigured) {
           console.error('PayPal configuration error:', data.error);
           setError(data.error || 'PayPal ist derzeit nicht verfügbar');
@@ -52,7 +52,7 @@ export function PayPalButtonWrapper({
         setIsLoading(false);
       }
     };
-    
+
     checkPayPalConfig();
   }, []);
 
@@ -76,7 +76,7 @@ export function PayPalButtonWrapper({
             title: "Zahlung erfolgreich",
             description: "Ihre Bestellung wird verarbeitet.",
           });
-          
+
           // Callback-Funktion aufrufen, um Bestellstatus zu aktualisieren
           await onPaymentComplete(paypalOrderId);
           console.log("Bestellstatus erfolgreich aktualisiert");
@@ -170,7 +170,7 @@ export function PayPalButtonWrapper({
   // Wenn PayPal erfolgreich eingerichtet wurde, zeige den Button
   return (
     <PayPalButton
-      amount={amount}
+      amount={parseFloat(amount).toFixed(2)} // Sicherstellen, dass der Preis immer ein gültiges Format hat
       currency={currency}
       intent={intent}
     />
