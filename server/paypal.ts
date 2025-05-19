@@ -39,7 +39,7 @@ if (isPayPalConfigured) {
       oAuthClientSecret: PAYPAL_CLIENT_SECRET!,
     },
     timeout: 0,
-    environment: Environment.Production, // Live-Modus für echte Zahlungen
+    environment: Environment.Sandbox, // Erstmal Sandbox-Modus für Tests
     logging: {
       logLevel: LogLevel.Info,
       logRequest: {
