@@ -689,6 +689,7 @@ export default function WuerfelCheckout() {
                             selectedOption === '35000' ? '35.00' : 
                             selectedOption === '45000' ? '45.00' : 
                             selectedOption === 'schnupper' ? '10.00' : '15.00'}
+                      key={selectedOption} // Key hinzufügen, um Neurendering bei Preisänderung zu erzwingen
                       currency="EUR"
                       intent="CAPTURE"
                       onPaymentComplete={async (paypalOrderId) => {
