@@ -81,9 +81,9 @@ export default function NewTicketPage() {
         variant: "default",
       });
 
-      // Nach 3 Sekunden zur Ticket-Übersicht navigieren
+      // Nach 3 Sekunden zur Ticket-Übersicht im Profil navigieren
       setTimeout(() => {
-        setLocation("/tickets");
+        setLocation("/profile/tickets");
       }, 3000);
     },
     onError: (error: Error) => {
@@ -114,7 +114,7 @@ export default function NewTicketPage() {
               </p>
               <p className="text-gray-500 mb-6">Du wirst in wenigen Sekunden zur Ticket-Übersicht weitergeleitet...</p>
               <Button asChild>
-                <Link href="/tickets">
+                <Link href="/profile/tickets">
                   Zurück zur Ticket-Übersicht
                 </Link>
               </Button>
@@ -129,7 +129,7 @@ export default function NewTicketPage() {
     <div className="container mx-auto py-8">
       <div className="mb-8">
         <Button asChild variant="ghost" className="mb-4">
-          <Link href="/tickets">
+          <Link href="/profile/tickets">
             <ArrowLeft className="h-4 w-4 mr-2" />
             Zurück zur Ticket-Übersicht
           </Link>
