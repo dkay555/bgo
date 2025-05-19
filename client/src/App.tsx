@@ -44,6 +44,7 @@ const PartnereventCheckoutPage = lazy(() => import('@/pages/checkout/Partnereven
 const TycoonRacersCheckoutPage = lazy(() => import('@/pages/checkout/TycoonRacers'));
 const EventwaehrungCheckoutPage = lazy(() => import('@/pages/checkout/Eventwaehrung'));
 const FlaggenCheckoutPage = lazy(() => import('@/pages/checkout/Flaggen'));
+const DankePage = lazy(() => import('@/pages/checkout/Danke'));
 
 // Lazy-loaded shop pages
 const UebersichtPage = lazy(() => import('@/pages/shop/Uebersicht'));
@@ -202,7 +203,9 @@ function Router() {
           <Route path="/checkout/flaggen">
             {() => <FlaggenCheckoutPage />}
           </Route>
-
+          <Route path="/danke">
+            {() => <DankePage />}
+          </Route>
 
           {/* Auth-Routen */}
           <Route path="/auth" component={AuthPage} />
