@@ -187,6 +187,9 @@ function Router() {
           <Route path="/profile">
             {() => <ProfilePage />}
           </Route>
+          <Route path="/profile/:tab">
+            {() => <ProfilePage />}
+          </Route>
 
           {/* Ticket-System */}
           <Route path="/tickets">

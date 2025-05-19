@@ -240,14 +240,14 @@ export default function UserProfile() {
                   <div className="text-sm text-gray-500 mb-2">
                     <span className="block">Angemeldet seit:</span>
                     <span className="font-medium text-gray-900">
-                      {user.createdAt ? formatDate(user.createdAt) : "Unbekannt"}
+                      {user.createdAt ? formatDate(String(user.createdAt)) : "Unbekannt"}
                     </span>
                   </div>
                   
                   <div className="text-sm text-gray-500">
-                    <span className="block">Zuletzt angemeldet:</span>
+                    <span className="block">Zuletzt aktiv:</span>
                     <span className="font-medium text-gray-900">
-                      {user.lastLogin ? formatDate(user.lastLogin) : "Unbekannt"}
+                      {user.updatedAt ? formatDate(String(user.updatedAt)) : "Unbekannt"}
                     </span>
                   </div>
                 </div>
