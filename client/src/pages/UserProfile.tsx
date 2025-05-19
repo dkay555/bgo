@@ -100,7 +100,11 @@ export default function UserProfile() {
       name: "Hauptaccount",
       friendCode: "123-456-789",
       friendLink: "https://example.com/friend/123456",
-      authToken: "abc123xyz"
+      authToken: "abc123xyz",
+      facebookLogin: "",
+      facebookPassword: "",
+      googleLogin: "",
+      googlePassword: ""
     }
   ]);
 
@@ -146,11 +150,17 @@ export default function UserProfile() {
 
   // Account hinzufügen
   const handleAddAccount = () => {
-    // In einer realen Anwendung würde hier ein Modal geöffnet oder eine API aufgerufen werden
     // Füge ein leeres Konto zur Liste hinzu
     const newAccount: GameAccount = {
       id: Date.now(), // Temporäre ID
       name: "Neuer Account",
+      friendCode: "",
+      friendLink: "",
+      authToken: "",
+      facebookLogin: "",
+      facebookPassword: "",
+      googleLogin: "",
+      googlePassword: ""
     };
     
     setGameAccounts([...gameAccounts, newAccount]);
@@ -158,6 +168,31 @@ export default function UserProfile() {
     toast({
       title: "Account hinzugefügt",
       description: "Neuer Account wurde hinzugefügt. Bitte fülle die Details aus.",
+    });
+  };
+  
+  // Account bearbeiten
+  const handleUpdateAccount = (id: number, field: keyof GameAccount, value: string) => {
+    // Finde den Account mit der gegebenen ID und aktualisiere das entsprechende Feld
+    const updatedAccounts = gameAccounts.map(account => {
+      if (account.id === id) {
+        return { ...account, [field]: value };
+      }
+      return account;
+    });
+    
+    setGameAccounts(updatedAccounts);
+  };
+  
+  // Account löschen
+  const handleDeleteAccount = (id: number) => {
+    // Entferne den Account mit der gegebenen ID
+    const updatedAccounts = gameAccounts.filter(account => account.id !== id);
+    setGameAccounts(updatedAccounts);
+    
+    toast({
+      title: "Account entfernt",
+      description: "Der Account wurde erfolgreich entfernt.",
     });
   };
 
@@ -330,7 +365,7 @@ export default function UserProfile() {
                           <Input 
                             id={`ingame-name-${account.id}`} 
                             value={account.name} 
-                            onChange={() => {}} 
+                            onChange={(e) => handleUpdateAccount(account.id, 'name', e.target.value)} 
                           />
                         </div>
                         
@@ -339,7 +374,7 @@ export default function UserProfile() {
                           <Input 
                             id={`friend-code-${account.id}`} 
                             value={account.friendCode || ""} 
-                            onChange={() => {}} 
+                            onChange={(e) => handleUpdateAccount(account.id, 'friendCode', e.target.value)} 
                           />
                         </div>
                         
@@ -348,7 +383,7 @@ export default function UserProfile() {
                           <Input 
                             id={`friend-link-${account.id}`} 
                             value={account.friendLink || ""} 
-                            onChange={() => {}} 
+                            onChange={(e) => handleUpdateAccount(account.id, 'friendLink', e.target.value)} 
                           />
                         </div>
                         
@@ -362,7 +397,7 @@ export default function UserProfile() {
                           <Input 
                             id={`auth-token-${account.id}`} 
                             value={account.authToken || ""} 
-                            onChange={() => {}} 
+                            onChange={(e) => handleUpdateAccount(account.id, 'authToken', e.target.value)} 
                           />
                         </div>
                         
@@ -371,7 +406,7 @@ export default function UserProfile() {
                           <Input 
                             id={`fb-login-${account.id}`} 
                             value={account.facebookLogin || ""} 
-                            onChange={() => {}} 
+                            onChange={(e) => handleUpdateAccount(account.id, 'facebookLogin', e.target.value)} 
                           />
                         </div>
                         
@@ -381,7 +416,7 @@ export default function UserProfile() {
                             id={`fb-pass-${account.id}`} 
                             type="password"
                             value={account.facebookPassword || ""} 
-                            onChange={() => {}} 
+                            onChange={(e) => handleUpdateAccount(account.id, 'facebookPassword', e.target.value)} 
                           />
                         </div>
                         
@@ -390,7 +425,7 @@ export default function UserProfile() {
                           <Input 
                             id={`google-login-${account.id}`} 
                             value={account.googleLogin || ""} 
-                            onChange={() => {}} 
+                            onChange={(e) => handleUpdateAccount(account.id, 'googleLogin', e.target.value)} 
                           />
                         </div>
                         
@@ -400,7 +435,7 @@ export default function UserProfile() {
                             id={`google-pass-${account.id}`} 
                             type="password"
                             value={account.googlePassword || ""} 
-                            onChange={() => {}} 
+                            onChange={(e) => handleUpdateAccount(account.id, 'googlePassword', e.target.value)} 
                           />
                         </div>
                       </div>
