@@ -57,6 +57,19 @@ export default function UserProfile() {
     fbUsername: user?.fbUsername || ""
   });
   
+  // Aktualisiere Profildaten, wenn der User-Objekt sich ändert
+  useEffect(() => {
+    if (user) {
+      setProfileData({
+        name: user.name || "",
+        email: user.email || "",
+        ingameName: user.ingameName || "",
+        whatsapp: user.whatsapp || "",
+        fbUsername: user.fbUsername || ""
+      });
+    }
+  }, [user]);
+  
   // URL-Pfad aus der aktuellen URL erfassen und Tab aktualisieren
   useEffect(() => {
     const path = location;
