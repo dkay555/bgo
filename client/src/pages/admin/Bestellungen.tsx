@@ -775,6 +775,7 @@ export default function Bestellungen() {
                         
                         return null;
                       } catch (e) {
+                        console.error("Error parsing account data:", e);
                         return null;
                       }
                     })()
