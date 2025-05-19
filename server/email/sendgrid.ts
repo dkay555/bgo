@@ -1,5 +1,6 @@
 import { MailService } from '@sendgrid/mail';
 import type { MailDataRequired } from '@sendgrid/mail';
+import type * as SendGrid from '@sendgrid/mail';
 
 if (!process.env.SENDGRID_API_KEY) {
   throw new Error("SENDGRID_API_KEY environment variable must be set");
