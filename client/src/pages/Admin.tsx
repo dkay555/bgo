@@ -1,40 +1,78 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import SEOHead from "@/components/SEOHead";
-import Bestellungen from "./Bestellungen";
-import Benutzer from "./Benutzer";
-import EmailVorlagen from "./EmailVorlagen";
-import Kontaktanfragen from "./Kontaktanfragen";
-import { ProtectedContent } from "@/lib/protected-route";
 import { useAuth } from "@/hooks/use-auth";
 
-function AdminPanel() {
-  const { logoutMutation } = useAuth();
-  const [, setLocation] = useLocation();
+// Lazy load admin components
+import { lazy, Suspense } from 'react';
+const Bestellungen = lazy(() => import('./admin/Bestellungen'));
+const Benutzer = lazy(() => import('./admin/Benutzer'));
+const EmailVorlagen = lazy(() => import('./admin/EmailVorlagen'));
+const Kontaktanfragen = lazy(() => import('./admin/Kontaktanfragen'));
+
+// Loading component
+const AdminTabLoading = () => (
+  <div className="flex items-center justify-center h-[400px]">
+    <div className="text-center">
+      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#00CFFF] mb-4 mx-auto"></div>
+      <p className="text-[#0A3A68]">Lade Inhalt...</p>
+    </div>
+  </div>
+);
+
+export default function AdminPanel() {
+  const { user, logoutMutation, isLoading } = useAuth();
+  const [location, setLocation] = useLocation();
   const [activeTab, setActiveTab] = useState("bestellungen");
-
-  // URL-Pfad aus der aktuellen URL erfassen
-  const getCurrentUrlPathSegment = () => {
-    const path = window.location.pathname;
-    const segments = path.split('/');
-    return segments.length > 2 ? segments[2] : "bestellungen";
-  };
-
-  // Tab basierend auf URL aktualisieren
-  useState(() => {
-    const segment = getCurrentUrlPathSegment();
-    if (segment && ["bestellungen", "kontaktanfragen", "benutzer", "email-vorlagen", "tickets"].includes(segment)) {
-      setActiveTab(segment);
+  
+  // Schütze den Admin-Bereich
+  useEffect(() => {
+    if (!isLoading && (!user || !user.isAdmin)) {
+      setLocation("/");
     }
-  });
+  }, [user, isLoading, setLocation]);
+
+  // URL-Pfad aus der aktuellen URL erfassen und Tab aktualisieren
+  useEffect(() => {
+    const path = location;
+    if (path === "/admin") {
+      setActiveTab("ubersicht");
+      return;
+    }
+
+    const segments = path.split('/');
+    if (segments.length > 2) {
+      const tab = segments[2];
+      if (["ubersicht", "bestellungen", "kontaktanfragen", "benutzer", "email-vorlagen", "tickets"].includes(tab)) {
+        setActiveTab(tab);
+      }
+    }
+  }, [location]);
 
   // Beim Tab-Wechsel URL anpassen
   const handleTabChange = (value: string) => {
     setActiveTab(value);
     setLocation(`/admin/${value}`);
   };
+
+  // Zeige Ladeanzeige während der Authentifizierungsprüfung
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#00CFFF] mb-4 mx-auto"></div>
+          <p className="text-[#0A3A68] font-bold">Zugriff wird überprüft...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Zeige nichts, wenn kein Admin-Benutzer (Weiterleitung erfolgt durch useEffect)
+  if (!user || !user.isAdmin) {
+    return null;
+  }
 
   return (
     <main className="px-4 py-6 md:py-10 max-w-6xl mx-auto">
@@ -152,19 +190,27 @@ function AdminPanel() {
         </TabsContent>
 
         <TabsContent value="bestellungen">
-          <Bestellungen />
+          <Suspense fallback={<AdminTabLoading />}>
+            <Bestellungen />
+          </Suspense>
         </TabsContent>
 
         <TabsContent value="kontaktanfragen">
-          <Kontaktanfragen />
+          <Suspense fallback={<AdminTabLoading />}>
+            <Kontaktanfragen />
+          </Suspense>
         </TabsContent>
 
         <TabsContent value="benutzer">
-          <Benutzer />
+          <Suspense fallback={<AdminTabLoading />}>
+            <Benutzer />
+          </Suspense>
         </TabsContent>
 
         <TabsContent value="email-vorlagen">
-          <EmailVorlagen />
+          <Suspense fallback={<AdminTabLoading />}>
+            <EmailVorlagen />
+          </Suspense>
         </TabsContent>
 
         <TabsContent value="tickets">
@@ -175,13 +221,5 @@ function AdminPanel() {
         </TabsContent>
       </Tabs>
     </main>
-  );
-}
-
-export default function AdminPanelWithAuth() {
-  return (
-    <ProtectedContent adminOnly={true}>
-      <AdminPanel />
-    </ProtectedContent>
   );
 }
