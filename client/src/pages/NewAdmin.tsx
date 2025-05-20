@@ -76,9 +76,11 @@ export default function NewAdminPanel() {
     }
   }, []);
 
-  // Beim Tab-Wechsel die aktive Komponente ändern, ohne die URL zu ändern
+  // Beim Tab-Wechsel die aktive Komponente ändern und URL anpassen
   const handleTabChange = (value: string) => {
     setActiveTab(value);
+    // Aktualisiere die URL
+    setLocation(`/admin/${value}`);
     // Schließen des mobilen Menüs nach Auswahl
     setIsMobileMenuOpen(false);
   };
@@ -148,11 +150,11 @@ export default function NewAdminPanel() {
       
       {/* Mobile menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-blue-800" style={{borderBottom: '1px solid #e5e7eb'}}>
-          <nav className="px-4 py-2 space-y-1">
+        <div className="md:hidden bg-blue-800 shadow-lg" style={{borderBottom: '1px solid rgba(255,255,255,0.1)'}}>
+          <nav className="px-4 py-3 space-y-2">
             <Button 
               variant={activeTab === "dashboard" ? "default" : "ghost"} 
-              className="w-full justify-start my-1 text-white hover:text-white hover:bg-blue-600" 
+              className="w-full justify-start my-1 text-white hover:text-white hover:bg-blue-700 font-medium" 
               onClick={() => handleTabChange("dashboard")}
             >
               <LayoutDashboard className="h-4 w-4 mr-2" />
@@ -160,7 +162,7 @@ export default function NewAdminPanel() {
             </Button>
             <Button 
               variant={activeTab === "bestellungen" ? "default" : "ghost"} 
-              className="w-full justify-start my-1 text-white hover:text-white hover:bg-blue-600" 
+              className="w-full justify-start my-1 text-white hover:text-white hover:bg-blue-700 font-medium" 
               onClick={() => handleTabChange("bestellungen")}
             >
               <Package className="h-4 w-4 mr-2" />
@@ -168,7 +170,7 @@ export default function NewAdminPanel() {
             </Button>
             <Button 
               variant={activeTab === "tickets" ? "default" : "ghost"} 
-              className="w-full justify-start my-1 text-white hover:text-white hover:bg-blue-600" 
+              className="w-full justify-start my-1 text-white hover:text-white hover:bg-blue-700 font-medium" 
               onClick={() => handleTabChange("tickets")}
             >
               <TicketIcon className="h-4 w-4 mr-2" />
@@ -176,7 +178,7 @@ export default function NewAdminPanel() {
             </Button>
             <Button 
               variant={activeTab === "benutzer" ? "default" : "ghost"} 
-              className="w-full justify-start my-1 text-white hover:text-white hover:bg-blue-600" 
+              className="w-full justify-start my-1 text-white hover:text-white hover:bg-blue-700 font-medium" 
               onClick={() => handleTabChange("benutzer")}
             >
               <Users className="h-4 w-4 mr-2" />
@@ -184,20 +186,23 @@ export default function NewAdminPanel() {
             </Button>
             <Button 
               variant={activeTab === "email-vorlagen" ? "default" : "ghost"} 
-              className="w-full justify-start my-1 text-white hover:text-white hover:bg-blue-600" 
+              className="w-full justify-start my-1 text-white hover:text-white hover:bg-blue-700 font-medium" 
               onClick={() => handleTabChange("email-vorlagen")}
             >
               <FileText className="h-4 w-4 mr-2" />
               E-Mail-Vorlagen
             </Button>
             
-            <div className="border-t border-gray-200 my-2 pt-2">
+            <div className="border-t border-white/10 my-2 pt-2">
               <Button 
-                onClick={() => logoutMutation.mutate()} 
+                onClick={() => {
+                  logoutMutation.mutate();
+                  setIsMobileMenuOpen(false);
+                }} 
                 variant="ghost" 
-                className="w-full justify-start text-red-500 hover:text-red-700 hover:bg-red-50"
+                className="w-full justify-start text-white hover:text-red-300 hover:bg-blue-900/60"
               >
-                <LogOut className="h-4 w-4 mr-2" />
+                <LogOut className="h-4 w-4 mr-2 text-red-400" />
                 Abmelden
               </Button>
             </div>
