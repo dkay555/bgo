@@ -5,25 +5,46 @@ import SEOHead from '@/components/SEOHead';
 
 export default function HilfeUebersicht() {
   return (
-    <main className="px-4 py-6 md:py-10 flex-grow font-['Nunito_Sans'] text-[#0A3A68]">
+    <main className="px-0 py-0 md:py-0 flex-grow font-['Nunito_Sans'] text-[#0A3A68] bg-[#e0f7ff]">
       {/* Hero Section */}
       <SEOHead 
         pageName="Hilfe & Support"
-        customTitle="Hilfe & Support | babixGO"
-        customDescription="Hilfestellungen und Anleitungen für alle Funktionen von Monopoly GO und babixGO"
+        customTitle="Hilfe & Tools | babixGO"
+        customDescription="Hilfestellungen, Tools und Anleitungen für alle Funktionen von Monopoly GO und babixGO"
       />
       
-      <section className="py-6 md:py-8 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0A3A68]/10 to-[#00CFFF]/10 animate-gradient-x"></div>
-        <div className="max-w-4xl mx-auto relative px-4">
-          <div className="text-center mb-8">
-            <h1 className="babix-info-header font-bold text-3xl md:text-4xl px--2 py-2">
-              Hilfe & Support
+      {/* Hero Section - im Stil der Startseite */}
+      <section className="py-0 md:py-0 relative overflow-hidden">
+        {/* Gradient Background für Hilfe-Seite */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#78c6f7] via-[#5ba3d9] to-[#e0f7ff] z-0">
+          {/* Hintergrund ohne dekorative Elemente - sauberer Look */}
+        </div>
+
+        {/* Hilfe Hero Image und Box */}
+        <div className="max-w-lg mx-auto pt-0 md:pt-2 pb-0 relative px-4 z-10 flex flex-col h-full">
+          {/* Hilfe & Tools Image */}
+          <div className="w-full max-w-md mx-auto mb-3 mt-2 relative flex justify-center">
+            <img 
+              src="/src/assets/hilfe_hero.png" 
+              alt="Hilfe & Tools" 
+              className="w-full max-w-[320px] md:max-w-[380px] h-auto object-contain"
+            />
+          </div>
+
+          {/* Hilfe Text Box */}
+          <div className="bg-[#b0d6f5] rounded-xl shadow-lg px-4 sm:px-6 md:px-8 pt-1 pb-2 text-center mb-6 sm:mb-8">
+            <h1 className="text-[#FF4C00] font-bold text-2xl sm:text-3xl md:text-4xl mt-0 mb-0">
+              Hilfe & Tools
             </h1>
-            <p className="text-base md:text-lg mb-6">Anleitungen und Erklärungen zu Monopoly GO und unseren Angeboten</p>
+            <p className="text-[#0A3A68] text-base sm:text-lg md:text-xl mt-0 font-bold">
+              Anleitungen, Hilfe und nützliche Tools für dein Monopoly GO Erlebnis
+            </p>
           </div>
         </div>
       </section>
+      
+      {/* Einfacher direkter Übergang ohne Effekte */}
+      <div className="h-4"></div>
 
       {/* Hilfe Content */}
       <section className="py-8">
