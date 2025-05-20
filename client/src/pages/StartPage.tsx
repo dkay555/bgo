@@ -12,7 +12,7 @@ export default function StartPage() {
   return (
     <main className="px-0 py-0 md:py-0 flex-grow font-['Nunito_Sans'] text-[#0A3A68]" id="top">
       {/* Hero Section - Monopoly GO Style */}
-      <section className="py-0 md:py-0 relative overflow-hidden min-h-[500px] md:min-h-[600px]">
+      <section className="py-0 md:py-0 relative overflow-hidden min-h-[520px] md:min-h-[650px]">
         {/* Gradient Background for Monopoly GO */}
         <div className="absolute inset-0 bg-gradient-to-br from-[#78c6f7] via-[#5ba3d9] to-[#7cbff0] z-0">
           {/* Background Monopoly Elements - Hidden on smallest screens */}
@@ -63,7 +63,7 @@ export default function StartPage() {
           </div>
           
           {/* Welcome Text Box - Responsive padding and text */}
-          <div className="bg-[#b0d6f5] rounded-xl shadow-lg px-4 sm:px-6 md:px-8 pt-1 pb-2 text-center mb-4 sm:mb-6">
+          <div className="bg-[#b0d6f5] rounded-xl shadow-lg px-4 sm:px-6 md:px-8 pt-1 pb-2 text-center mb-6 sm:mb-8">
             <h1 className="text-[#FF4C00] font-bold text-2xl sm:text-3xl md:text-4xl mt-0 mb-0">
               Willkommen bei babixGO
             </h1>
@@ -103,14 +103,14 @@ export default function StartPage() {
               <Button variant="darkblue" asChild className="font-bold flex items-center justify-center gap-1 h-10 sm:h-12 w-full text-sm sm:text-base shadow-md">
                 <Link href="/hilfe">
                   <span className="material-icons text-sm sm:text-base">help_outline</span>
-                  Hilfe
+                  <span>Hilfe</span>
                 </Link>
               </Button>
               
               <Button variant="cyan" asChild className="font-bold flex items-center justify-center gap-1 h-10 sm:h-12 w-full text-sm sm:text-base shadow-md">
                 <Link href="/kontakt">
                   <span className="material-icons text-sm sm:text-base">contact_support</span>
-                  Kontakt
+                  <span>Kontakt</span>
                 </Link>
               </Button>
             </div>
