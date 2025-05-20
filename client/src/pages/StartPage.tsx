@@ -1,49 +1,104 @@
 import { Button } from '@/components/ui/button';
 import { Link } from 'wouter';
+import { DiceSpinner } from '@/components/DiceSpinner';
+import { useState, useEffect } from 'react';
 
 export default function StartPage() {
+  const [mounted, setMounted] = useState(false);
+  
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+  
   return (
     <main className="px-4 py-6 md:py-10 flex-grow font-['Nunito_Sans'] text-[#0A3A68]" id="top">
-      {/* Hero Section - Überschrift und direkte Links */}
-      <section className="py-6 md:py-8 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-[#00CFFF]/10 to-[#FF4C00]/10 animate-gradient-x"></div>
-        <div className="max-w-4xl mx-auto relative px-4">
-          <div className="text-center mb-8">
-            <h1 className="babix-info-header font-bold text-3xl md:text-4xl px--2 py-2">
+      {/* Hero Section - Basierend auf dem Design-Bild */}
+      <section className="py-6 md:py-10 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[#e6f9ff] z-0">
+          {/* Background Dice Pattern */}
+          <div className="absolute inset-0 opacity-20">
+            {mounted && (
+              <>
+                <div className="absolute top-[10%] left-[5%] rotate-[15deg]">
+                  <img src="/images/icons/dice.svg" alt="" className="w-16 h-16" />
+                </div>
+                <div className="absolute top-[15%] right-[15%] rotate-[-10deg]">
+                  <img src="/images/icons/boot.svg" alt="" className="w-14 h-14" />
+                </div>
+                <div className="absolute top-[60%] left-[15%] rotate-[5deg]">
+                  <img src="/images/icons/house.svg" alt="" className="w-16 h-16" />
+                </div>
+                <div className="absolute top-[30%] right-[5%] rotate-[20deg]">
+                  <img src="/images/icons/spade.svg" alt="" className="w-14 h-14" />
+                </div>
+                <div className="absolute top-[70%] right-[10%] rotate-[-15deg]">
+                  <img src="/images/icons/dice.svg" alt="" className="w-16 h-16" />
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+        
+        <div className="max-w-4xl mx-auto relative px-4 z-10">
+          <div className="text-center mb-10 relative">
+            <h2 className="font-bold text-[#0A3A68] text-3xl md:text-4xl mb-4">
+              babixGO
+            </h2>
+            
+            <h1 className="babix-info-header font-bold text-4xl md:text-5xl mb-4">
               Willkommen bei babixGO!
             </h1>
-            <p className="text-base md:text-lg mb-6">Würfel, Events, Sticker & mehr – alles für dein Monopoly GO Abenteuer.</p>
             
-            <div className="flex flex-wrap justify-center gap-3 mt-4">
-              <Button variant="darkblue" asChild className="font-bold flex items-center gap-2">
+            <p className="text-base md:text-lg mb-8">
+              Würfel, Events, Sticker & mehr – alles für dein Monopoly GO Abenteuer
+            </p>
+            
+            {/* Dice Illustrations */}
+            <div className="flex justify-center items-end gap-6 my-12 relative">
+              <div className="relative">
+                <img src="/images/icons/pawn.svg" alt="Spielfigur" className="w-16 h-16 md:w-20 md:h-20" />
+              </div>
+              
+              <div className="relative z-10">
+                {mounted && <DiceSpinner size={100} color="#ffffff" secondaryColor="#0A3A68" className="shadow-lg" />}
+              </div>
+              
+              <div className="relative">
+                <img src="/images/icons/house.svg" alt="Haus" className="w-16 h-16 md:w-20 md:h-20" />
+              </div>
+            </div>
+            
+            {/* Navigation Buttons */}
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mt-8 max-w-3xl mx-auto">
+              <Button variant="darkblue" asChild className="font-bold flex items-center justify-center gap-2 h-14 w-full">
                 <Link href="/news">
                   <span className="material-icons">feed</span>
                   News
                 </Link>
               </Button>
               
-              <Button variant="cyan" asChild className="font-bold flex items-center gap-2">
+              <Button variant="cyan" asChild className="font-bold flex items-center justify-center gap-2 h-14 w-full">
                 <Link href="/shop">
                   <span className="material-icons">shopping_cart</span>
                   Shop
                 </Link>
               </Button>
               
-              <Button variant="orange" asChild className="font-bold flex items-center gap-2">
+              <Button variant="orange" asChild className="font-bold flex items-center justify-center gap-2 h-14 w-full">
                 <Link href="/auth">
                   <span className="material-icons">person</span>
                   Login
                 </Link>
               </Button>
               
-              <Button variant="darkblue" asChild className="font-bold flex items-center gap-2">
+              <Button variant="darkblue" asChild className="font-bold flex items-center justify-center gap-2 h-14 w-full">
                 <Link href="/hilfe">
                   <span className="material-icons">help_outline</span>
                   Hilfe
                 </Link>
               </Button>
               
-              <Button variant="cyan" asChild className="font-bold flex items-center gap-2">
+              <Button variant="cyan" asChild className="font-bold flex items-center justify-center gap-2 h-14 w-full md:col-span-1 col-span-2">
                 <Link href="/kontakt">
                   <span className="material-icons">contact_support</span>
                   Kontakt
