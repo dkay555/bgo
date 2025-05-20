@@ -86,15 +86,15 @@ export default function StartPage() {
       </section>
 
       {/* Einfacher direkter Übergang ohne Effekte */}
-      <div className="h-4"></div>
+      <div className="h-2"></div>
 
       {/* News-Sektion mit hellcyan Hintergrund */}
-      <section className="pt-1 pb-6 bg-[#e0f7ff]">
+      <section className="pt-0 pb-6 bg-[#e0f7ff]">
         <div className="max-w-4xl mx-auto px-4">
-          <h2 className="babix-info-header mx-auto mb-4 text-center">News</h2>
+          <h2 className="babix-info-header mx-auto mb-3 text-center">News</h2>
 
-          <div className="bg-white rounded-lg shadow-md p-4">
-            <h3 className="font-bold text-[#0A3A68] text-xl mb-3">Neue Preise für Würfel - Angebotsanpassung</h3>
+          <div className="bg-white rounded-lg shadow-md p-4 pt-3">
+            <h3 className="font-bold text-[#0A3A68] text-xl mb-2">Neue Preise für Würfel - Angebotsanpassung</h3>
             <p className="text-[#0A3A68]/80 mb-3">
               Die letzten Tage war es still um babixGO... Wir haben unser Angebot überarbeitet und optimiert.
             </p>
