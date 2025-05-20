@@ -13,12 +13,13 @@ export default function StartPage() {
     <main className="px-0 py-0 md:py-0 flex-grow font-['Nunito_Sans'] text-[#0A3A68]" id="top">
       {/* Hero Section - Monopoly GO Style */}
       <section className="py-0 md:py-0 relative overflow-hidden min-h-[600px] md:min-h-[700px]">
-        <div className="absolute inset-0 bg-[#1e71b8] z-0">
+        {/* Gradient Background for Monopoly GO */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#78c6f7] via-[#5ba3d9] to-[#7cbff0] z-0">
           {/* Background Monopoly Elements - Hidden on smallest screens */}
           <div className="absolute inset-0 hidden sm:block">
-            <div className="absolute top-[10%] left-[8%] opacity-20">
+            <div className="absolute top-[10%] left-[10%] opacity-30">
               <svg width="120" height="120" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="5" y="5" width="90" height="90" rx="10" fill="#b0d6f5" stroke="#b0d6f5" strokeWidth="2"/>
+                <rect x="5" y="5" width="90" height="90" rx="10" fill="white" stroke="#0A3A68" strokeWidth="2"/>
                 <circle cx="25" cy="25" r="8" fill="#0A3A68"/>
                 <circle cx="75" cy="25" r="8" fill="#0A3A68"/>
                 <circle cx="50" cy="50" r="8" fill="#0A3A68"/>
@@ -26,105 +27,124 @@ export default function StartPage() {
                 <circle cx="75" cy="75" r="8" fill="#0A3A68"/>
               </svg>
             </div>
-            <div className="absolute top-[60%] left-[12%] opacity-20">
-              <svg width="100" height="70" viewBox="0 0 100 70" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M10 10H90V60H10V10Z" fill="#b0d6f5"/>
-                <path d="M20 20H80V50H20V20Z" fill="#1e71b8"/>
-                <path d="M30 30C30 25 70 25 70 30V40C70 45 30 45 30 40V30Z" fill="#b0d6f5"/>
-                <path d="M40 22V50" stroke="#b0d6f5" strokeWidth="2"/>
-                <path d="M60 22V50" stroke="#b0d6f5" strokeWidth="2"/>
-                <rect x="45" y="15" width="10" height="5" fill="#b0d6f5"/>
+            <div className="absolute bottom-[20%] left-[15%] opacity-30">
+              <svg width="100" height="60" viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 10 L30 5 L70 5 L90 10 L90 40 L70 50 L30 50 L10 40 Z" fill="white" stroke="#0A3A68" strokeWidth="2"/>
+                <circle cx="30" cy="20" r="5" fill="#0A3A68"/>
+                <circle cx="70" cy="20" r="5" fill="#0A3A68"/>
+                <path d="M30 35 L70 35" stroke="#0A3A68" strokeWidth="2"/>
               </svg>
             </div>
-            <div className="absolute top-[15%] right-[12%] opacity-20">
-              <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="50" cy="50" r="40" fill="#b0d6f5"/>
-                <path d="M50 10C60 30 80 40 80 60C80 75 65 85 55 80C50 85 50 90 50 90C50 90 50 85 45 80C35 85 20 75 20 60C20 40 40 30 50 10Z" fill="#b0d6f5" stroke="#b0d6f5" strokeWidth="3"/>
+            <div className="absolute top-[15%] right-[15%] opacity-30">
+              <svg width="100" height="60" viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="10" y="10" width="80" height="40" rx="5" fill="#ffcb54" stroke="#c17e0f" strokeWidth="2"/>
+                <text x="50" y="35" textAnchor="middle" fontSize="24" fontWeight="bold" fill="#c17e0f">5</text>
               </svg>
             </div>
-            <div className="absolute bottom-[15%] right-[15%] opacity-20">
-              <svg width="100" height="70" viewBox="0 0 100 70" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M20 20C20 15 30 10 50 10C70 10 80 15 80 20V60C80 65 70 70 50 70C30 70 20 65 20 60V20Z" fill="#b0d6f5"/>
-                <ellipse cx="50" cy="15" rx="25" ry="5" fill="#1e71b8"/>
-                <path d="M30 25H70V45H30V25Z" fill="#1e71b8"/>
-                <path d="M35 35H65" stroke="#b0d6f5" strokeWidth="2"/>
-                <path d="M40 30V40" stroke="#b0d6f5" strokeWidth="2"/>
-                <path d="M60 30V40" stroke="#b0d6f5" strokeWidth="2"/>
+            <div className="absolute bottom-[25%] right-[10%] opacity-30">
+              <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M40 10 C45 10 50 15 50 25 L50 40 C50 50 45 55 40 55 C35 55 30 50 30 40 L30 25 C30 15 35 10 40 10 Z" fill="#0A3A68"/>
+                <rect x="30" y="55" width="20" height="15" fill="#0A3A68"/>
+                <ellipse cx="40" cy="70" rx="15" ry="5" fill="#0A3A68"/>
               </svg>
             </div>
           </div>
         </div>
         
-        {/* Monopoly GO Logo and Character */}
+        {/* Monopoly GO Image - New Version */}
         <div className="max-w-lg mx-auto pt-4 md:pt-6 pb-0 relative px-4 z-10 flex flex-col h-full">
-          <div className="flex flex-col items-center justify-center relative mb-2 md:mb-4">
-            {/* Mr. Monopoly Character - Responsive scaling */}
-            <div className="w-full max-w-[220px] sm:max-w-[260px] md:max-w-[300px] relative flex justify-center mb-0 sm:mb-2">
-              <svg width="260" height="180" viewBox="0 0 260 180" fill="none" xmlns="http://www.w3.org/2000/svg" 
-                   className="z-10 w-[220px] h-[150px] sm:w-[260px] sm:h-[180px] md:w-[280px] md:h-[200px]">
-                {/* Dice - Mobile visibility controlled */}
-                <g className="dice-left hidden sm:inline-block">
-                  <rect x="20" y="50" width="60" height="60" rx="6" fill="#b0d6f5" fillOpacity="0.8"/>
-                  <circle cx="35" cy="65" r="6" fill="#0A3A68"/>
-                  <circle cx="65" cy="65" r="6" fill="#0A3A68"/>
-                  <circle cx="50" cy="80" r="6" fill="#0A3A68"/>
-                  <circle cx="35" cy="95" r="6" fill="#0A3A68"/>
-                  <circle cx="65" cy="95" r="6" fill="#0A3A68"/>
+          {/* Monopoly Character and Logo */}
+          <div className="w-full max-w-md mx-auto mb-4 relative flex justify-center">
+            {/* SVG based on the reference image - Mr. Monopoly with logo */}
+            <svg width="100%" height="100%" viewBox="0 0 500 400" fill="none" xmlns="http://www.w3.org/2000/svg" 
+                className="max-w-[350px] md:max-w-[400px]">
+                
+                {/* Background Elements - Faded */}
+                <g className="background-elements" opacity="0.2">
+                    {/* Dice */}
+                    <g transform="translate(60, 80) rotate(-15)">
+                        <rect width="80" height="80" rx="10" fill="white" stroke="#0A3A68" strokeWidth="2"/>
+                        <circle cx="20" cy="20" r="8" fill="#0A3A68"/>
+                        <circle cx="60" cy="20" r="8" fill="#0A3A68"/>
+                        <circle cx="40" cy="40" r="8" fill="#0A3A68"/>
+                        <circle cx="20" cy="60" r="8" fill="#0A3A68"/>
+                        <circle cx="60" cy="60" r="8" fill="#0A3A68"/>
+                    </g>
+                    
+                    {/* Money */}
+                    <g transform="translate(360, 110) rotate(15)">
+                        <rect width="90" height="60" rx="5" fill="#ffcb54" stroke="#c17e0f" strokeWidth="2"/>
+                        <text x="45" y="38" textAnchor="middle" fontSize="30" fontWeight="bold" fill="#c17e0f">5</text>
+                    </g>
+                    
+                    {/* Top Hat */}
+                    <g transform="translate(380, 220)">
+                        <rect x="0" y="20" width="40" height="20" rx="2" fill="#0A3A68"/>
+                        <rect x="5" y="0" width="30" height="20" rx="1" fill="#0A3A68"/>
+                    </g>
+                    
+                    {/* Car */}
+                    <g transform="translate(80, 220)" opacity="0.6">
+                        <path d="M10,30 L20,10 L70,10 L90,30 L90,40 C90,45 85,50 80,50 L20,50 C15,50 10,45 10,40 Z" fill="#b0d6f5" stroke="#0A3A68"/>
+                        <circle cx="25" cy="50" r="10" fill="#b0d6f5" stroke="#0A3A68"/>
+                        <circle cx="75" cy="50" r="10" fill="#b0d6f5" stroke="#0A3A68"/>
+                        <rect x="30" y="20" width="10" height="15" fill="#b0d6f5"/>
+                        <rect x="60" y="20" width="10" height="15" fill="#b0d6f5"/>
+                    </g>
                 </g>
                 
-                {/* Money/Card - Mobile visibility controlled */}
-                <g className="money-right hidden sm:inline-block">
-                  <rect x="180" y="80" width="50" height="60" rx="6" fill="#ffcb54"/>
-                  <text x="205" y="120" textAnchor="middle" fontSize="32" fontWeight="bold" fill="#c17e0f">5</text>
+                {/* Mr. Monopoly Character */}
+                <g transform="translate(200, 120)">
+                    {/* Top Hat */}
+                    <rect x="-35" y="-80" width="70" height="10" rx="2" fill="#111111"/>
+                    <rect x="-25" y="-100" width="50" height="25" rx="2" fill="#111111"/>
+                    
+                    {/* Face */}
+                    <circle r="40" fill="#ffdccd"/>
+                    
+                    {/* Eyes */}
+                    <circle cx="-15" cy="-10" r="6" fill="white"/>
+                    <circle cx="-13" cy="-10" r="3" fill="black"/>
+                    <circle cx="15" cy="-10" r="6" fill="white"/>
+                    <circle cx="17" cy="-10" r="3" fill="black"/>
+                    <path d="M-20 -15 Q-15 -20 -10 -15" stroke="white" strokeWidth="2" fill="none"/> {/* Eyebrow */}
+                    <path d="M10 -15 Q15 -20 20 -15" stroke="white" strokeWidth="2" fill="none"/> {/* Eyebrow */}
+                    
+                    {/* Mouth */}
+                    <path d="M-10 15 Q0 25 10 15" stroke="black" strokeWidth="2" fill="none"/>
+                    
+                    {/* Mustache */}
+                    <path d="M-20 10 Q0 20 20 10" stroke="white" strokeWidth="12" fill="none"/>
+                    <path d="M-20 10 Q0 20 20 10" stroke="#f8f8f8" strokeWidth="10" fill="none"/>
+                    
+                    {/* Suit */}
+                    <rect x="-25" y="40" width="50" height="60" rx="5" fill="#111111"/>
+                    <rect x="-15" y="40" width="30" height="25" rx="2" fill="white"/>
+                    <rect x="-5" y="40" width="10" height="20" rx="1" fill="#e63946"/> {/* Bow tie */}
+                    
+                    {/* Cane */}
+                    <rect x="-50" y="0" width="5" height="80" rx="2" fill="#111111"/>
+                    <path d="M-50 0 Q-60 -10 -50 -20" stroke="#111111" strokeWidth="5" fill="none"/>
+                    
+                    {/* Arms */}
+                    <path d="M-25 50 Q-40 60 -50 50" stroke="#111111" strokeWidth="8" fill="none"/> {/* Left arm */}
+                    <path d="M25 50 Q50 60 60 30" stroke="#111111" strokeWidth="8" fill="none"/> {/* Right arm */}
+                    <circle cx="60" cy="30" r="8" fill="#ffdccd"/> {/* Hand */}
                 </g>
                 
-                {/* Mr. Monopoly - Always visible */}
-                <g className="mr-monopoly">
-                  {/* Top Hat */}
-                  <rect x="95" y="20" width="70" height="10" rx="2" fill="#080808"/>
-                  <rect x="105" y="10" width="50" height="20" rx="1" fill="#080808"/>
-                  
-                  {/* Face */}
-                  <circle cx="130" cy="60" r="30" fill="#ffdccd"/>
-                  
-                  {/* Eyes */}
-                  <circle cx="120" cy="50" r="5" fill="white"/>
-                  <circle cx="122" cy="50" r="2" fill="black"/>
-                  <circle cx="140" cy="50" r="5" fill="white"/>
-                  <circle cx="142" cy="50" r="2" fill="black"/>
-                  <path d="M115 45 Q120 40 125 45" stroke="white" strokeWidth="2" fill="none"/>
-                  <path d="M135 45 Q140 40 145 45" stroke="white" strokeWidth="2" fill="none"/>
-                  
-                  {/* Mustache */}
-                  <path d="M115 65 Q130 75 145 65" stroke="#ffffff" strokeWidth="10" fill="none"/>
-                  <path d="M115 65 Q130 75 145 65" stroke="#f0f0f0" strokeWidth="8" fill="none"/>
-                  
-                  {/* Mouth */}
-                  <path d="M120 70 Q130 78 140 70" stroke="black" strokeWidth="2" fill="none"/>
-                  
-                  {/* Suit */}
-                  <rect x="110" y="90" width="40" height="50" rx="5" fill="#080808"/>
-                  <rect x="120" y="90" width="20" height="20" rx="2" fill="white"/>
-                  <rect x="125" y="90" width="10" height="15" rx="1" fill="#f03030"/>
-                  
-                  {/* Cane */}
-                  <rect x="85" y="50" width="5" height="80" rx="2" fill="#080808"/>
-                  <path d="M85 50 Q75 40 85 30" stroke="#080808" strokeWidth="5" fill="none"/>
-                  
-                  {/* Arms */}
-                  <path d="M110 100 Q100 110 90 100" stroke="#080808" strokeWidth="6" fill="none"/>
-                  <path d="M150 100 Q170 110 175 90" stroke="#080808" strokeWidth="6" fill="none"/>
+                {/* Monopoly Logo */}
+                <g transform="translate(250, 280)">
+                    {/* MONOPOLY text */}
+                    <rect x="-120" y="-20" width="240" height="40" rx="5" fill="#ec1c24" stroke="white" strokeWidth="3"/>
+                    <text x="0" y="8" textAnchor="middle" fill="white" fontFamily="Arial" fontWeight="bold" fontSize="28">MONOPOLY</text>
+                    
+                    {/* GO! text */}
+                    <g transform="translate(0, 30)">
+                        <rect x="-50" y="-20" width="100" height="40" rx="20" fill="#1e71b8" stroke="white" strokeWidth="3"/>
+                        <text x="0" y="8" textAnchor="middle" fill="white" fontFamily="Arial" fontWeight="bold" fontSize="24">GO!</text>
+                    </g>
                 </g>
-              </svg>
-            </div>
-            
-            {/* Monopoly GO! Logo - Responsive sizes */}
-            <div className="w-full max-w-[200px] sm:max-w-[240px] md:max-w-[280px] bg-[#ec1c24] text-white py-1 sm:py-2 px-2 sm:px-4 rounded-md border-4 border-white shadow-lg -mt-2">
-              <h2 className="text-center font-bold tracking-wider text-xl sm:text-2xl md:text-3xl">MONOPOLY</h2>
-            </div>
-            <div className="w-full max-w-[120px] sm:max-w-[140px] md:max-w-[160px] bg-[#1e71b8] text-white py-0.5 sm:py-1 px-2 sm:px-4 rounded-full border-4 border-white shadow-lg -mt-3 mb-2 md:mb-4">
-              <h2 className="text-center font-bold tracking-wider text-lg sm:text-xl md:text-2xl">GO!</h2>
-            </div>
+            </svg>
           </div>
           
           {/* Welcome Text Box - Responsive padding and text */}
