@@ -61,6 +61,20 @@ export default function NewAdminPanel() {
       }
     }
   }, [location]);
+  
+  // Initialisierung: Bei erstem Laden die korrekte URL setzen
+  useEffect(() => {
+    if (location === "/admin") {
+      // Wir sind auf der Hauptseite, alles ist gut
+      return;
+    }
+    
+    const segments = location.split('/');
+    if (segments.length <= 2) {
+      // Falls wir keine Unterseite haben, zum Dashboard weiterleiten
+      setLocation("/admin/dashboard");
+    }
+  }, []);
 
   // Beim Tab-Wechsel URL anpassen
   const handleTabChange = (value: string) => {

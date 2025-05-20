@@ -536,7 +536,7 @@ export default function Tickets() {
                     
                     {selectedTicket.userEmail && (
                       <div className="flex items-center">
-                        <Mail className="h-4 w-4 mr-2 text-gray-500" />
+                        <MessageCircle className="h-4 w-4 mr-2 text-gray-500" />
                         <span className="font-medium">E-Mail:</span>
                         <span className="ml-2">{selectedTicket.userEmail}</span>
                       </div>
