@@ -99,6 +99,8 @@ export default function AdminDashboard() {
       }));
       
       setRecentActivity(recentActivityData);
+      
+      // Hier könnten wir auch den Status für Tickets aktualisieren, derzeit nur Beispielwerte
     }
   }, [ordersData, usersData]);
   
