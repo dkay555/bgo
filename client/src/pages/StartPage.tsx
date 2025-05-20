@@ -103,7 +103,7 @@ export default function StartPage() {
               </Link>
             </div>
             <p className="text-[#0A3A68]/80 mb-3">
-              In letzter Zeit war es still um babixGO & nun? - Würfel-Preise runter, High Roller weg & kleinere Würfelpakete!
+              In letzter Zeit war es still um babixGO. Dafür haben wir nun was für euch: <span className="font-bold">Niedrigere Preise, High Roller weg & kleinere Würfelpakete!</span>
             </p>
           </div>
         </div>
