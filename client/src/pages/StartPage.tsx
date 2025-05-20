@@ -12,7 +12,7 @@ export default function StartPage() {
   return (
     <main className="px-0 py-0 md:py-0 flex-grow font-['Nunito_Sans'] text-[#0A3A68]" id="top">
       {/* Hero Section - Monopoly GO Style */}
-      <section className="py-0 md:py-0 relative overflow-hidden min-h-[520px] md:min-h-[650px]">
+      <section className="py-0 md:py-0 relative overflow-hidden">
         {/* Gradient Background for Monopoly GO */}
         <div className="absolute inset-0 bg-gradient-to-br from-[#78c6f7] via-[#5ba3d9] to-[#7cbff0] z-0">
           {/* Background Monopoly Elements - Hidden on smallest screens */}
@@ -117,6 +117,9 @@ export default function StartPage() {
           </div>
         </div>
       </section>
+      
+      {/* Padding Element to create space after Hero Section */}
+      <div className="h-4"></div>
       
       {/* News Sektion */}
       <section className="py-6 bg-gray-50">
