@@ -53,7 +53,7 @@ export default function StartPage() {
         
         {/* Monopoly GO Image - New Version */}
         <div className="max-w-lg mx-auto pt-4 md:pt-6 pb-0 relative px-4 z-10 flex flex-col h-full">
-          {/* Monopoly GO Character and Logo - Using the uploaded image */}
+          {/* Monopoly GO Character and Logo - Using the hero image */}
           <div className="w-full max-w-md mx-auto mb-4 relative flex justify-center">
             <img 
               src="/images/hero_startseite.png" 
