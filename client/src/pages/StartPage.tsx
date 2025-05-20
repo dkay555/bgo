@@ -118,53 +118,64 @@ export default function StartPage() {
         </div>
       </section>
       
-      {/* Transition from Hero to News Section - Improved with smoother curve and animation */}
-      <div className="relative bg-gradient-to-br from-[#78c6f7] via-[#5ba3d9] to-[#7cbff0] overflow-hidden">
-        {/* Wave transition effect with improved curve */}
+      {/* Neuer, sanfterer Übergang zwischen Hero und News Section */}
+      <div className="relative bg-gradient-to-b from-[#7cbff0] to-gray-50 overflow-hidden">
+        {/* Doppelwellen-Effekt für weicheren Übergang */}
         <div className="absolute bottom-0 left-0 right-0 w-full z-10">
-          <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="w-full h-20 text-gray-50">
-            <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" 
-                  fill="currentColor" 
-                  opacity="1"
+          <svg viewBox="0 0 1200 100" preserveAspectRatio="none" className="w-full h-14 text-gray-50">
+            <path d="M0,0V30c200,40 400,-60 600,-25c200,35 400,80 600,20V0Z" 
+                  fill="rgba(249,250,251,0.6)" 
+                  opacity="0.9">
+            </path>
+            <path d="M0,0V15c150,20 350,-20 500,15c150,35 350,20 700,-15V0Z" 
+                  fill="rgba(249,250,251,0.9)" 
+                  opacity="0.8"
                   className="animate-pulse"
-                  style={{animationDuration: '3s'}}>
+                  style={{animationDuration: '6s'}}>
             </path>
           </svg>
         </div>
         
-        {/* Decorative dice elements with animation */}
-        <div className="absolute bottom-2 left-1/4 transform -translate-x-1/2 z-20 hidden sm:block animate-bounce" style={{animationDuration: '2s'}}>
-          <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="5" y="5" width="90" height="90" rx="10" fill="#FF4C00" stroke="#0A3A68" strokeWidth="2"/>
-            <circle cx="25" cy="25" r="6" fill="white"/>
-            <circle cx="75" cy="75" r="6" fill="white"/>
-          </svg>
+        {/* Dekorative Monopoly-Elemente im Übergang */}
+        <div className="absolute bottom-6 left-1/5 transform -translate-x-1/2 z-20 hidden sm:block">
+          <div className="relative animate-bounce" style={{animationDuration: '3s'}}>
+            <svg width="34" height="34" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="5" y="5" width="90" height="90" rx="10" fill="#FF4C00" stroke="#0A3A68" strokeWidth="2"/>
+              <circle cx="25" cy="25" r="6" fill="white"/>
+              <circle cx="75" cy="75" r="6" fill="white"/>
+            </svg>
+            <div className="absolute -top-1 -right-1 w-2 h-2 bg-white rounded-full animate-ping"></div>
+          </div>
         </div>
         
-        <div className="absolute bottom-4 right-1/3 transform translate-x-1/2 z-20 hidden sm:block animate-bounce" style={{animationDuration: '2.5s', animationDelay: '0.5s'}}>
-          <svg width="30" height="30" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="5" y="5" width="90" height="90" rx="10" fill="#4BB1F8" stroke="#0A3A68" strokeWidth="2"/>
-            <circle cx="50" cy="50" r="6" fill="white"/>
-          </svg>
+        <div className="absolute bottom-10 right-1/4 transform translate-x-1/2 z-20 hidden sm:block">
+          <div className="relative animate-float" style={{animationDuration: '4s'}}>
+            <svg width="28" height="28" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="5" y="5" width="90" height="90" rx="10" fill="#4BB1F8" stroke="#0A3A68" strokeWidth="2"/>
+              <circle cx="50" cy="50" r="6" fill="white"/>
+            </svg>
+            <div className="absolute -top-1 -right-1 w-1.5 h-1.5 bg-white rounded-full animate-ping" style={{animationDelay: '1s'}}></div>
+          </div>
+        </div>
+
+        {/* Stilisiertes Spielgeld im Übergang */}
+        <div className="absolute bottom-4 right-1/3 z-20 hidden sm:block">
+          <div className="rotate-12 animate-float" style={{animationDuration: '5s', animationDelay: '0.3s'}}>
+            <svg width="40" height="22" viewBox="0 0 120 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="5" y="5" width="110" height="50" rx="4" fill="#ffcb54" stroke="#c17e0f" strokeWidth="1"/>
+              <circle cx="25" cy="30" r="12" fill="#c17e0f" stroke="#ffcb54" strokeWidth="1"/>
+              <rect x="45" y="20" width="50" height="8" rx="2" fill="#c17e0f"/>
+              <rect x="45" y="32" width="30" height="8" rx="2" fill="#c17e0f"/>
+            </svg>
+          </div>
         </div>
         
-        {/* Additional decorative elements */}
-        <div className="absolute top-0 right-1/5 transform -translate-y-1/2 z-20 hidden sm:block">
-          <svg width="25" height="25" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="rotate-12 animate-float" style={{animationDuration: '3s'}}>
-            <rect x="5" y="5" width="90" height="90" rx="10" fill="#0A3A68" stroke="#4BB1F8" strokeWidth="2"/>
-            <circle cx="25" cy="25" r="6" fill="white"/>
-            <circle cx="25" cy="75" r="6" fill="white"/>
-            <circle cx="75" cy="25" r="6" fill="white"/>
-            <circle cx="75" cy="75" r="6" fill="white"/>
-          </svg>
-        </div>
-        
-        {/* Height spacer to give the transition more room */}
-        <div className="h-24"></div>
+        {/* Sanfter Farbverlauf über den gesamten Übergang */}
+        <div className="h-24 bg-gradient-to-b from-transparent to-gray-50"></div>
       </div>
       
-      {/* News Sektion with improved top margin */}
-      <section className="pt-6 pb-6 bg-gray-50">
+      {/* News-Sektion mit verbessertem Aussehen */}
+      <section className="pt-2 pb-6 bg-gray-50">
         <div className="max-w-4xl mx-auto">
           <h2 className="babix-info-header mx-auto mb-8 text-center">News</h2>
           

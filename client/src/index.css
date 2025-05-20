@@ -218,6 +218,20 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* Wellen-Animation für Übergänge */
+@keyframes wave {
+  0% { transform: translateX(0) translateY(0); }
+  50% { transform: translateX(2%) translateY(-15%); }
+  100% { transform: translateX(0) translateY(0); }
+}
+
+/* Sanftes Schweben für UI-Elemente */
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+  100% { transform: translateY(0); }
+}
+
 /* Würfel-Animation */
 @keyframes dice-spin {
   0% {
