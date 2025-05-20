@@ -116,25 +116,12 @@ export default function StartPage() {
             Was wir dir bieten:
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
             {/* Würfelboost Karte */}
             <div className="bg-white rounded-lg shadow-md overflow-hidden text-center p-5">
               <div className="flex justify-center mb-4">
                 <div className="w-24 h-24 flex items-center justify-center">
-                  <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <g transform="rotate(15, 50, 50)">
-                      <rect x="10" y="10" width="80" height="80" rx="15" fill="#E9F2FA" />
-                      <circle cx="30" cy="30" r="5" fill="#0A3A68" />
-                      <circle cx="50" cy="30" r="5" fill="#0A3A68" />
-                      <circle cx="70" cy="30" r="5" fill="#0A3A68" />
-                      <circle cx="30" cy="50" r="5" fill="#0A3A68" />
-                      <circle cx="50" cy="50" r="5" fill="#0A3A68" />
-                      <circle cx="70" cy="50" r="5" fill="#0A3A68" />
-                      <circle cx="30" cy="70" r="5" fill="#0A3A68" />
-                      <circle cx="50" cy="70" r="5" fill="#0A3A68" />
-                      <circle cx="70" cy="70" r="5" fill="#0A3A68" />
-                    </g>
-                  </svg>
+                  <img src="/images/Shop-Kategorien/kategorie_wuerfel_trans.png" alt="Würfelboosts" className="h-24 object-contain" />
                 </div>
               </div>
               <h3 className="text-[#0A3A68] text-2xl font-bold mb-2">Würfelboost</h3>
@@ -148,11 +135,7 @@ export default function StartPage() {
             <div className="bg-white rounded-lg shadow-md overflow-hidden text-center p-5">
               <div className="flex justify-center mb-4">
                 <div className="w-24 h-24 flex items-center justify-center">
-                  <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="10" y="10" width="80" height="80" rx="10" fill="#FF4C00" />
-                    <path d="M50 30L60 50L50 70L40 50L50 30Z" fill="#FFD700" />
-                    <rect x="40" y="40" width="20" height="20" fill="#FFD700" />
-                  </svg>
+                  <img src="/images/Shop-Kategorien/kategorie_sticker_trans.png" alt="Sticker" className="h-24 object-contain" />
                 </div>
               </div>
               <h3 className="text-[#0A3A68] text-2xl font-bold mb-2">Sticker</h3>
@@ -166,20 +149,27 @@ export default function StartPage() {
             <div className="bg-white rounded-lg shadow-md overflow-hidden text-center p-5">
               <div className="flex justify-center mb-4">
                 <div className="w-24 h-24 flex items-center justify-center">
-                  <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <g transform="rotate(-15, 50, 50)">
-                      <rect x="15" y="25" width="70" height="50" rx="5" fill="#FFB700" />
-                      <path d="M50 45C53.866 45 57 41.866 57 38C57 34.134 53.866 31 50 31C46.134 31 43 34.134 43 38C43 41.866 46.134 45 50 45Z" fill="#0A3A68" />
-                      <path d="M35 55H65V65H35V55Z" fill="#0A3A68" />
-                      <path d="M40 60H60" stroke="#FFB700" strokeWidth="2" />
-                    </g>
-                  </svg>
+                  <img src="/images/Shop-Kategorien/kategorie_partner_trans.png" alt="Partnerevents" className="h-24 object-contain" />
                 </div>
               </div>
               <h3 className="text-[#0A3A68] text-2xl font-bold mb-2">Partnerevent</h3>
               <p className="text-gray-700 mb-4">Gemeinsam mehr erreichen</p>
               <Button variant="orange" asChild className="w-full font-bold">
                 <Link href="/produkte/partner#top">Jetzt entdecken</Link>
+              </Button>
+            </div>
+            
+            {/* Tycoon Racers Karte */}
+            <div className="bg-white rounded-lg shadow-md overflow-hidden text-center p-5">
+              <div className="flex justify-center mb-4">
+                <div className="w-24 h-24 flex items-center justify-center">
+                  <img src="/images/Shop-Kategorien/kategorie_racers_trans.png" alt="Tycoon Racers" className="h-24 object-contain" />
+                </div>
+              </div>
+              <h3 className="text-[#0A3A68] text-2xl font-bold mb-2">Tycoon Racers</h3>
+              <p className="text-gray-700 mb-4">Top-Platzierungen sichern</p>
+              <Button variant="orange" asChild className="w-full font-bold">
+                <Link href="/produkte/race#top">Jetzt entdecken</Link>
               </Button>
             </div>
           </div>
