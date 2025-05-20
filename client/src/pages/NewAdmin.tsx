@@ -76,13 +76,10 @@ export default function NewAdminPanel() {
     }
   }, []);
 
-  // Beim Tab-Wechsel URL anpassen
+  // Beim Tab-Wechsel die aktive Komponente ändern, ohne die URL zu ändern
   const handleTabChange = (value: string) => {
     setActiveTab(value);
-    // Statt zur Unterseite zu navigieren, bleiben wir auf der Admin-Seite und zeigen den Tab direkt an
-    if (location !== "/admin") {
-      setLocation(`/admin`);
-    }
+    // Schließen des mobilen Menüs nach Auswahl
     setIsMobileMenuOpen(false);
   };
 
