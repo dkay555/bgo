@@ -93,8 +93,8 @@ export default function StartPage() {
         <div className="max-w-4xl mx-auto px-4">
           <h2 className="babix-info-header mx-auto mb-3 text-center">News</h2>
 
-          <div className="bg-white rounded-lg shadow-md p-4 pt-3">
-            <h3 className="font-bold text-[#0A3A68] text-xl mb-2">Neue Preise für Würfel - Angebotsanpassung</h3>
+          <div className="bg-white rounded-lg shadow-md p-3 pb-4">
+            <h3 className="font-bold text-[#0A3A68] text-xl mb-1 mt-0">Neue Preise für Würfel - Angebotsanpassung</h3>
             <p className="text-[#0A3A68]/80 mb-3">
               Die letzten Tage war es still um babixGO... Wir haben unser Angebot überarbeitet und optimiert.
             </p>
