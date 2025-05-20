@@ -116,59 +116,59 @@ export default function StartPage() {
             Was wir dir bieten:
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+          <div className="grid grid-cols-2 gap-4 md:gap-6 max-w-4xl mx-auto">
             {/* Würfelboost Karte */}
-            <div className="bg-white rounded-lg shadow-md overflow-hidden text-center p-5">
-              <div className="flex justify-center mb-4">
-                <div className="w-24 h-24 flex items-center justify-center">
-                  <img src="/images/Shop-Kategorien/kategorie_wuerfel_trans.png" alt="Würfelboosts" className="h-24 object-contain" />
+            <div className="bg-white rounded-lg shadow-md overflow-hidden text-center p-3 p-md-5">
+              <div className="flex justify-center mb-2 md:mb-4">
+                <div className="w-16 h-16 md:w-24 md:h-24 flex items-center justify-center">
+                  <img src="/images/Shop-Kategorien/kategorie_wuerfel_trans.png" alt="Würfelboosts" className="h-16 md:h-24 object-contain" />
                 </div>
               </div>
-              <h3 className="text-[#0A3A68] text-2xl font-bold mb-2">Würfelboost</h3>
-              <p className="text-gray-700 mb-4">Mehr Würfel, schneller Fortschritt!</p>
-              <Button variant="orange" asChild className="w-full font-bold">
+              <h3 className="text-[#0A3A68] text-xl md:text-2xl font-bold mb-1 md:mb-2">Würfelboost</h3>
+              <p className="text-gray-700 mb-3 md:mb-4 text-sm md:text-base">Mehr Würfel, schneller Fortschritt!</p>
+              <Button variant="orange" asChild className="w-full font-bold text-sm md:text-base">
                 <Link href="/produkte/wuerfel#top">Jetzt entdecken</Link>
               </Button>
             </div>
 
             {/* Sticker Karte */}
-            <div className="bg-white rounded-lg shadow-md overflow-hidden text-center p-5">
-              <div className="flex justify-center mb-4">
-                <div className="w-24 h-24 flex items-center justify-center">
-                  <img src="/images/Shop-Kategorien/kategorie_sticker_trans.png" alt="Sticker" className="h-24 object-contain" />
+            <div className="bg-white rounded-lg shadow-md overflow-hidden text-center p-3 p-md-5">
+              <div className="flex justify-center mb-2 md:mb-4">
+                <div className="w-16 h-16 md:w-24 md:h-24 flex items-center justify-center">
+                  <img src="/images/Shop-Kategorien/kategorie_sticker_trans.png" alt="Sticker" className="h-16 md:h-24 object-contain" />
                 </div>
               </div>
-              <h3 className="text-[#0A3A68] text-2xl font-bold mb-2">Sticker</h3>
-              <p className="text-gray-700 mb-4">Besondere Sticker für dein Album</p>
-              <Button variant="orange" asChild className="w-full font-bold">
+              <h3 className="text-[#0A3A68] text-xl md:text-2xl font-bold mb-1 md:mb-2">Sticker</h3>
+              <p className="text-gray-700 mb-3 md:mb-4 text-sm md:text-base">Besondere Sticker für dein Album</p>
+              <Button variant="orange" asChild className="w-full font-bold text-sm md:text-base">
                 <Link href="/produkte/sticker#top">Jetzt entdecken</Link>
               </Button>
             </div>
 
             {/* Partner Event Karte */}
-            <div className="bg-white rounded-lg shadow-md overflow-hidden text-center p-5">
-              <div className="flex justify-center mb-4">
-                <div className="w-24 h-24 flex items-center justify-center">
-                  <img src="/images/Shop-Kategorien/kategorie_partner_trans.png" alt="Partnerevents" className="h-24 object-contain" />
+            <div className="bg-white rounded-lg shadow-md overflow-hidden text-center p-3 p-md-5">
+              <div className="flex justify-center mb-2 md:mb-4">
+                <div className="w-16 h-16 md:w-24 md:h-24 flex items-center justify-center">
+                  <img src="/images/Shop-Kategorien/kategorie_partner_trans.png" alt="Partnerevents" className="h-16 md:h-24 object-contain" />
                 </div>
               </div>
-              <h3 className="text-[#0A3A68] text-2xl font-bold mb-2">Partnerevent</h3>
-              <p className="text-gray-700 mb-4">Gemeinsam mehr erreichen</p>
-              <Button variant="orange" asChild className="w-full font-bold">
+              <h3 className="text-[#0A3A68] text-xl md:text-2xl font-bold mb-1 md:mb-2">Partnerevent</h3>
+              <p className="text-gray-700 mb-3 md:mb-4 text-sm md:text-base">Gemeinsam mehr erreichen</p>
+              <Button variant="orange" asChild className="w-full font-bold text-sm md:text-base">
                 <Link href="/produkte/partner#top">Jetzt entdecken</Link>
               </Button>
             </div>
             
             {/* Tycoon Racers Karte */}
-            <div className="bg-white rounded-lg shadow-md overflow-hidden text-center p-5">
-              <div className="flex justify-center mb-4">
-                <div className="w-24 h-24 flex items-center justify-center">
-                  <img src="/images/Shop-Kategorien/kategorie_racers_trans.png" alt="Tycoon Racers" className="h-24 object-contain" />
+            <div className="bg-white rounded-lg shadow-md overflow-hidden text-center p-3 p-md-5">
+              <div className="flex justify-center mb-2 md:mb-4">
+                <div className="w-16 h-16 md:w-24 md:h-24 flex items-center justify-center">
+                  <img src="/images/Shop-Kategorien/kategorie_racers_trans.png" alt="Tycoon Racers" className="h-16 md:h-24 object-contain" />
                 </div>
               </div>
-              <h3 className="text-[#0A3A68] text-2xl font-bold mb-2">Tycoon Racers</h3>
-              <p className="text-gray-700 mb-4">Top-Platzierungen sichern</p>
-              <Button variant="orange" asChild className="w-full font-bold">
+              <h3 className="text-[#0A3A68] text-xl md:text-2xl font-bold mb-1 md:mb-2">Tycoon Racers</h3>
+              <p className="text-gray-700 mb-3 md:mb-4 text-sm md:text-base">Top-Platzierungen sichern</p>
+              <Button variant="orange" asChild className="w-full font-bold text-sm md:text-base">
                 <Link href="/produkte/race#top">Jetzt entdecken</Link>
               </Button>
             </div>
