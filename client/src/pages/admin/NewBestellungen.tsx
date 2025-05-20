@@ -628,13 +628,13 @@ export default function NewBestellungen() {
                           <span className="ml-2">{selectedOrder.whatsapp}</span>
                         </div>
                       )}
-                      {selectedOrder.fbUsername && (
+                      {/* Facebook-Nutzername ist nicht im Schema definiert 
                         <div className="flex items-center">
                           <Facebook className="h-4 w-4 mr-2 text-gray-500" />
                           <span className="font-medium">Facebook:</span>
-                          <span className="ml-2">{selectedOrder.fbUsername}</span>
+                          <span className="ml-2">-</span>
                         </div>
-                      )}
+                      */}
                       <div className="flex items-center">
                         <Key className="h-4 w-4 mr-2 text-gray-500" />
                         <span className="font-medium">Spielername:</span>
