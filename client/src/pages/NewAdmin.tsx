@@ -148,7 +148,7 @@ export default function NewAdminPanel() {
       
       {/* Mobile menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden" style={{backgroundColor: '#1e40af', borderBottom: '1px solid #e5e7eb', opacity: 1}}>
+        <div className="md:hidden bg-blue-800" style={{borderBottom: '1px solid #e5e7eb'}}>
           <nav className="px-4 py-2 space-y-1">
             <Button 
               variant={activeTab === "dashboard" ? "default" : "ghost"} 
