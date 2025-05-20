@@ -13,8 +13,8 @@ export default function StartPage() {
     <main className="px-0 py-0 md:py-0 flex-grow font-['Nunito_Sans'] text-[#0A3A68] bg-gradient-to-b from-[#78c6f7] via-[#e6eef8] to-white" id="top">
       {/* Hero Section - Monopoly GO Style */}
       <section className="py-0 md:py-0 relative overflow-hidden">
-        {/* Gradient Background for Monopoly GO */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#78c6f7] via-[#5ba3d9] to-[#7cbff0] z-0">
+        {/* Gradient Background for Monopoly GO - Fading to light cyan at bottom */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#78c6f7] via-[#5ba3d9] to-[#8fdfff] z-0">
           {/* Background Monopoly Elements - Hidden on smallest screens */}
           <div className="absolute inset-0 hidden sm:block">
             <div className="absolute top-[10%] left-[10%] opacity-30">
@@ -171,11 +171,11 @@ export default function StartPage() {
         </div>
 
         {/* Sanfter Farbverlauf über den gesamten Übergang - von Cyan zu Cyan */}
-        <div className="h-24 bg-gradient-to-b from-[#8fdfff]/60 to-[#8fdfff]/30"></div>
+        <div className="h-24 bg-gradient-to-b from-[#8fdfff] to-[#e6eef8]"></div>
       </div>
 
       {/* News-Sektion mit Cyan-Hintergrund */}
-      <section className="pt-2 pb-6">
+      <section className="pt-2 pb-6 bg-[#e6eef8]">
         <div className="max-w-4xl mx-auto">
           <h2 className="babix-info-header mx-auto mb-8 text-center">News</h2>
 
