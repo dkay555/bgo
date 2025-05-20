@@ -10,7 +10,7 @@ export default function StartPage() {
   }, []);
 
   return (
-    <main className="px-0 py-0 md:py-0 flex-grow font-['Nunito_Sans'] text-[#0A3A68] bg-gradient-to-b from-[#78c6f7] via-[#e6eef8] to-white" id="top">
+    <main className="px-0 py-0 md:py-0 flex-grow font-['Nunito_Sans'] text-[#0A3A68] bg-[#e0f7ff]" id="top">
       {/* Hero Section - Monopoly GO Style */}
       <section className="py-0 md:py-0 relative overflow-hidden">
         {/* Gradient Background for Monopoly GO - Fading to very light cyan at bottom */}
@@ -109,8 +109,8 @@ export default function StartPage() {
         </div>
       </section>
 
-      {/* Products Section mit Farbverlauf */}
-      <section id="angebote" className="py-8 scroll-mt-20 bg-gradient-to-b from-transparent to-[#e6eef8]">
+      {/* Products Section mit einheitlichem Hintergrund */}
+      <section id="angebote" className="py-8 scroll-mt-20 bg-[#e0f7ff]">
         <div className="max-w-6xl mx-auto">
           <h2 className="babix-info-header mx-auto mb-8 text-center">
             Was wir dir bieten:
@@ -192,8 +192,8 @@ export default function StartPage() {
         </div>
       </section>
 
-      {/* About Section mit dunkleren Farbverlauf */}
-      <section id="ueber" className="py-8 bg-gradient-to-b from-[#e6eef8] to-[#d0dff0] my-12 rounded-xl scroll-mt-20">
+      {/* About Section mit einheitlichem Hintergrund */}
+      <section id="ueber" className="py-8 bg-[#e0f7ff] my-12 rounded-xl scroll-mt-20">
         <div className="max-w-4xl mx-auto px-4">
           <h2 className="babix-info-header mx-auto mb-6 text-center">
             Warum du babixGO wählen solltest
