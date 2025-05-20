@@ -79,7 +79,10 @@ export default function NewAdminPanel() {
   // Beim Tab-Wechsel URL anpassen
   const handleTabChange = (value: string) => {
     setActiveTab(value);
-    setLocation(`/admin/${value}`);
+    // Statt zur Unterseite zu navigieren, bleiben wir auf der Admin-Seite und zeigen den Tab direkt an
+    if (location !== "/admin") {
+      setLocation(`/admin`);
+    }
     setIsMobileMenuOpen(false);
   };
 
@@ -207,7 +210,7 @@ export default function NewAdminPanel() {
       
       <div className="flex flex-1">
         {/* Side navigation */}
-        <aside className="w-64 bg-white border-r border-gray-200 hidden md:block" style={{backgroundColor: 'white'}}>
+        <aside className="w-64 hidden md:block" style={{backgroundColor: 'white', borderRight: '1px solid #e5e7eb', opacity: 1}}>
           <nav className="p-4 space-y-1">
             <Button 
               variant={activeTab === "dashboard" ? "default" : "ghost"} 

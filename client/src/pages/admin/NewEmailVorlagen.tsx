@@ -471,13 +471,13 @@ export default function NewEmailVorlagen() {
                   <div className="bg-gray-100 border-b px-3 py-2 flex justify-between items-center">
                     <span className="text-sm font-medium">HTML-Inhalt</span>
                     <div className="text-xs text-gray-500">
-                      Verwenden Sie Platzhalter wie {{name}}, {{email}}, usw.
+                      Verwenden Sie Platzhalter wie %name%, %email%, usw.
                     </div>
                   </div>
                   <textarea
                     id="body"
-                    value={templateData.body}
-                    onChange={(e) => setTemplateData({...templateData, body: e.target.value})}
+                    value={templateData.content}
+                    onChange={(e) => setTemplateData({...templateData, content: e.target.value})}
                     placeholder="HTML-Inhalt der E-Mail"
                     className="w-full p-3 min-h-[300px] font-mono text-sm"
                   />
@@ -490,13 +490,13 @@ export default function NewEmailVorlagen() {
                     <div className="ml-3">
                       <h3 className="font-medium text-blue-800">Verfügbare Platzhalter:</h3>
                       <div className="mt-2 text-blue-700 grid grid-cols-2 gap-2">
-                        <code>{{name}}</code>
-                        <code>{{email}}</code>
-                        <code>{{orderId}}</code>
-                        <code>{{orderDate}}</code>
-                        <code>{{amount}}</code>
-                        <code>{{product}}</code>
-                        <code>{{ingameName}}</code>
+                        <div><code>%name%</code></div>
+                        <div><code>%email%</code></div>
+                        <div><code>%orderId%</code></div>
+                        <div><code>%orderDate%</code></div>
+                        <div><code>%amount%</code></div>
+                        <div><code>%product%</code></div>
+                        <div><code>%ingameName%</code></div>
                       </div>
                     </div>
                   </div>
