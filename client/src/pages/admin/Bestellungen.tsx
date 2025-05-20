@@ -61,6 +61,7 @@ import { AdminNavigation } from "@/components/AdminNavigation";
 export default function Bestellungen() {
   const { toast } = useToast();
   const { user } = useAuth();
+  const isAuthenticated = !!user && user.isAdmin === true;
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [isDetailOpen, setIsDetailOpen] = useState<boolean>(false);
   const [newStatus, setNewStatus] = useState<string>("");
@@ -86,7 +87,7 @@ export default function Bestellungen() {
       
       return response.json();
     },
-    enabled: true
+    enabled: isAuthenticated
   });
 
   // Mutation zum Aktualisieren des Zahlungsstatus
