@@ -10,7 +10,6 @@ import { lazy, Suspense } from 'react';
 const Bestellungen = lazy(() => import('./admin/Bestellungen'));
 const Benutzer = lazy(() => import('./admin/Benutzer'));
 const EmailVorlagen = lazy(() => import('./admin/EmailVorlagen'));
-const Kontaktanfragen = lazy(() => import('./admin/Kontaktanfragen'));
 
 // Loading component
 const AdminTabLoading = () => (
@@ -45,7 +44,7 @@ export default function AdminPanel() {
     const segments = path.split('/');
     if (segments.length > 2) {
       const tab = segments[2];
-      if (["bestellungen", "kontaktanfragen", "benutzer", "email-vorlagen", "tickets"].includes(tab)) {
+      if (["bestellungen", "benutzer", "email-vorlagen", "tickets"].includes(tab)) {
         setActiveTab(tab);
       }
     }
@@ -102,12 +101,6 @@ export default function AdminPanel() {
         <TabsContent value="bestellungen">
           <Suspense fallback={<AdminTabLoading />}>
             <Bestellungen />
-          </Suspense>
-        </TabsContent>
-
-        <TabsContent value="kontaktanfragen">
-          <Suspense fallback={<AdminTabLoading />}>
-            <Kontaktanfragen />
           </Suspense>
         </TabsContent>
 
