@@ -63,11 +63,11 @@ export default function StartPage() {
           </div>
           
           {/* Welcome Text Box - Responsive padding and text */}
-          <div className="bg-[#b0d6f5] rounded-xl shadow-lg px-4 sm:px-6 md:px-8 py-2 sm:py-3 text-center mb-4 sm:mb-6">
-            <h1 className="text-[#FF4C00] font-bold text-2xl sm:text-3xl md:text-4xl mb-0 md:mb-1">
+          <div className="bg-[#b0d6f5] rounded-xl shadow-lg px-4 sm:px-6 md:px-8 pt-1 pb-2 text-center mb-4 sm:mb-6">
+            <h1 className="text-[#FF4C00] font-bold text-2xl sm:text-3xl md:text-4xl mt-0 mb-0">
               Willkommen bei babixGO
             </h1>
-            <p className="text-[#0A3A68] text-base sm:text-lg md:text-xl">
+            <p className="text-[#0A3A68] text-base sm:text-lg md:text-xl mt-0">
               Würfel, Events, Sticker & mehr – alles für dein Monopoly GO Abenteuer
             </p>
           </div>
