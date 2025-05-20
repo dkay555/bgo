@@ -111,82 +111,76 @@ export default function StartPage() {
 
       {/* Products Section mit einheitlichem Hintergrund */}
       <section id="angebote" className="py-8 scroll-mt-20 bg-[#e0f7ff]">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-6xl mx-auto px-4">
           <h2 className="babix-info-header mx-auto mb-8 text-center">
             Was wir dir bieten:
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {/* Product Card 1 */}
-            <div className="bg-[#00CFFF]/20 rounded-md overflow-hidden shadow-lg transition-transform duration-300 hover:-translate-y-1">
-              <div className="relative">
-                <img src="/images/Shop-Kategorien/kategorie_wuerfel_trans.png" alt="Würfelboosts" className="w-full h-40 object-contain" />
-                <span className="absolute bottom-0 left-4 transform translate-y-1/2 bg-[#0A3A68]/70 text-white font-['Baloo_2'] font-bold px-4 py-2 rounded-md shadow-md">
-                  Würfelboosts
-                </span>
-              </div>
-              <div className="p-6 pt-8">
-                <p className="mb-6">Ohne sie geht gar nichts bei Monopoly Go: Kaufe Würfel für deinen Monopoly Go Account.</p>
-                <div className="flex justify-center">
-                  <Button variant="darkblue" asChild className="font-bold">
-                    <Link href="/produkte/wuerfel#top">Zum Shop</Link>
-                  </Button>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            {/* Würfelboost Karte */}
+            <div className="bg-white rounded-lg shadow-md overflow-hidden text-center p-5">
+              <div className="flex justify-center mb-4">
+                <div className="w-24 h-24 flex items-center justify-center">
+                  <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g transform="rotate(15, 50, 50)">
+                      <rect x="10" y="10" width="80" height="80" rx="15" fill="#E9F2FA" />
+                      <circle cx="30" cy="30" r="5" fill="#0A3A68" />
+                      <circle cx="50" cy="30" r="5" fill="#0A3A68" />
+                      <circle cx="70" cy="30" r="5" fill="#0A3A68" />
+                      <circle cx="30" cy="50" r="5" fill="#0A3A68" />
+                      <circle cx="50" cy="50" r="5" fill="#0A3A68" />
+                      <circle cx="70" cy="50" r="5" fill="#0A3A68" />
+                      <circle cx="30" cy="70" r="5" fill="#0A3A68" />
+                      <circle cx="50" cy="70" r="5" fill="#0A3A68" />
+                      <circle cx="70" cy="70" r="5" fill="#0A3A68" />
+                    </g>
+                  </svg>
                 </div>
               </div>
+              <h3 className="text-[#0A3A68] text-2xl font-bold mb-2">Würfelboost</h3>
+              <p className="text-gray-700 mb-4">Mehr Würfel, schneller Fortschritt!</p>
+              <Button variant="orange" asChild className="w-full font-bold">
+                <Link href="/produkte/wuerfel#top">Jetzt entdecken</Link>
+              </Button>
             </div>
 
-            {/* Product Card 2 */}
-            <div className="bg-[#00CFFF]/20 rounded-md overflow-hidden shadow-lg transition-transform duration-300 hover:-translate-y-1">
-              <div className="relative">
-                <img src="/images/Shop-Kategorien/kategorie_sticker_trans.png" alt="Sticker" className="w-full h-40 object-contain" />
-                <span className="absolute bottom-0 left-4 transform translate-y-1/2 bg-[#0A3A68]/70 text-white font-['Baloo_2'] font-bold px-4 py-2 rounded-md shadow-md">
-                  Sticker
-                </span>
-              </div>
-              <div className="p-6 pt-8">
-                <p className="mb-6">Fehlende Sticker? - Nicht mit uns, wir haben sie alle!</p>
-                <div className="flex justify-center">
-                  <Button variant="darkblue" asChild className="font-bold">
-                    <Link href="/produkte/sticker#top">Zum Shop</Link>
-                  </Button>
+            {/* Sticker Karte */}
+            <div className="bg-white rounded-lg shadow-md overflow-hidden text-center p-5">
+              <div className="flex justify-center mb-4">
+                <div className="w-24 h-24 flex items-center justify-center">
+                  <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="10" y="10" width="80" height="80" rx="10" fill="#FF4C00" />
+                    <path d="M50 30L60 50L50 70L40 50L50 30Z" fill="#FFD700" />
+                    <rect x="40" y="40" width="20" height="20" fill="#FFD700" />
+                  </svg>
                 </div>
               </div>
+              <h3 className="text-[#0A3A68] text-2xl font-bold mb-2">Sticker</h3>
+              <p className="text-gray-700 mb-4">Besondere Sticker für dein Album</p>
+              <Button variant="orange" asChild className="w-full font-bold">
+                <Link href="/produkte/sticker#top">Jetzt entdecken</Link>
+              </Button>
             </div>
 
-            {/* Product Card 3 */}
-            <div className="bg-[#00CFFF]/20 rounded-md overflow-hidden shadow-lg transition-transform duration-300 hover:-translate-y-1">
-              <div className="relative">
-                <img src="/images/Shop-Kategorien/kategorie_partner_trans.png" alt="Partnerevents" className="w-full h-40 object-contain" />
-                <span className="absolute bottom-0 left-4 transform translate-y-1/2 bg-[#0A3A68]/70 text-white font-['Baloo_2'] font-bold px-4 py-2 rounded-md shadow-md">
-                  Partnerevents
-                </span>
-              </div>
-              <div className="p-6 pt-8">
-                <p className="mb-6">Zuverlässige Partner gesucht? Wer, wenn nicht wir?</p>
-                <div className="flex justify-center">
-                  <Button variant="darkblue" asChild className="font-bold">
-                    <Link href="/produkte/partner#top">Zum Shop</Link>
-                  </Button>
+            {/* Partner Event Karte */}
+            <div className="bg-white rounded-lg shadow-md overflow-hidden text-center p-5">
+              <div className="flex justify-center mb-4">
+                <div className="w-24 h-24 flex items-center justify-center">
+                  <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g transform="rotate(-15, 50, 50)">
+                      <rect x="15" y="25" width="70" height="50" rx="5" fill="#FFB700" />
+                      <path d="M50 45C53.866 45 57 41.866 57 38C57 34.134 53.866 31 50 31C46.134 31 43 34.134 43 38C43 41.866 46.134 45 50 45Z" fill="#0A3A68" />
+                      <path d="M35 55H65V65H35V55Z" fill="#0A3A68" />
+                      <path d="M40 60H60" stroke="#FFB700" strokeWidth="2" />
+                    </g>
+                  </svg>
                 </div>
               </div>
-            </div>
-
-            {/* Product Card 4 - Tycoon Racers */}
-            <div className="bg-[#00CFFF]/20 rounded-md overflow-hidden shadow-lg transition-transform duration-300 hover:-translate-y-1">
-              <div className="relative">
-                <img src="/images/Shop-Kategorien/kategorie_racers_trans.png" alt="Tycoon Racers" className="w-full h-40 object-contain" />
-                <span className="absolute bottom-0 left-4 transform translate-y-1/2 bg-[#0A3A68]/70 text-white font-['Baloo_2'] font-bold px-4 py-2 rounded-md shadow-md">
-                  Tycoon Racers
-                </span>
-              </div>
-              <div className="p-6 pt-8">
-                <p className="mb-6">Erreiche höhere Platzierungen bei Tycoon Racers Events und sichere dir exklusive Belohnungen!</p>
-                <div className="flex justify-center">
-                  <Button variant="darkblue" asChild className="font-bold">
-                    <Link href="/produkte/race#top">Zum Shop</Link>
-                  </Button>
-                </div>
-              </div>
+              <h3 className="text-[#0A3A68] text-2xl font-bold mb-2">Partnerevent</h3>
+              <p className="text-gray-700 mb-4">Gemeinsam mehr erreichen</p>
+              <Button variant="orange" asChild className="w-full font-bold">
+                <Link href="/produkte/partner#top">Jetzt entdecken</Link>
+              </Button>
             </div>
           </div>
         </div>
