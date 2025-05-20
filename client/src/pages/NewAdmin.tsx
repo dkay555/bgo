@@ -210,11 +210,11 @@ export default function NewAdminPanel() {
       
       <div className="flex flex-1">
         {/* Side navigation */}
-        <aside className="w-64 hidden md:block" style={{backgroundColor: 'white', borderRight: '1px solid #e5e7eb', opacity: 1}}>
+        <aside className="w-64 hidden md:block" style={{backgroundColor: '#1e40af', borderRight: '1px solid #e5e7eb', opacity: 1}}>
           <nav className="p-4 space-y-1">
             <Button 
               variant={activeTab === "dashboard" ? "default" : "ghost"} 
-              className="w-full justify-start" 
+              className="w-full justify-start text-white hover:text-white hover:bg-blue-700" 
               onClick={() => handleTabChange("dashboard")}
             >
               <LayoutDashboard className="h-4 w-4 mr-2" />
@@ -222,7 +222,7 @@ export default function NewAdminPanel() {
             </Button>
             <Button 
               variant={activeTab === "bestellungen" ? "default" : "ghost"} 
-              className="w-full justify-start" 
+              className="w-full justify-start text-white hover:text-white hover:bg-blue-700" 
               onClick={() => handleTabChange("bestellungen")}
             >
               <Package className="h-4 w-4 mr-2" />
@@ -230,7 +230,7 @@ export default function NewAdminPanel() {
             </Button>
             <Button 
               variant={activeTab === "tickets" ? "default" : "ghost"} 
-              className="w-full justify-start" 
+              className="w-full justify-start text-white hover:text-white hover:bg-blue-700" 
               onClick={() => handleTabChange("tickets")}
             >
               <TicketIcon className="h-4 w-4 mr-2" />
@@ -238,7 +238,7 @@ export default function NewAdminPanel() {
             </Button>
             <Button 
               variant={activeTab === "benutzer" ? "default" : "ghost"} 
-              className="w-full justify-start" 
+              className="w-full justify-start text-white hover:text-white hover:bg-blue-700" 
               onClick={() => handleTabChange("benutzer")}
             >
               <Users className="h-4 w-4 mr-2" />
@@ -246,7 +246,7 @@ export default function NewAdminPanel() {
             </Button>
             <Button 
               variant={activeTab === "email-vorlagen" ? "default" : "ghost"} 
-              className="w-full justify-start" 
+              className="w-full justify-start text-white hover:text-white hover:bg-blue-700" 
               onClick={() => handleTabChange("email-vorlagen")}
             >
               <FileText className="h-4 w-4 mr-2" />
