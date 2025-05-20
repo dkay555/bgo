@@ -25,7 +25,7 @@ export default function Shop() {
           {/* Shop Image */}
           <div className="w-full max-w-md mx-auto mb-3 mt-2 relative flex justify-center">
             <img 
-              src="/assets/shop_hero.png" 
+              src="/images/hero/hero_shop.png" 
               alt="Monopoly GO Shop" 
               className="w-full max-w-[320px] md:max-w-[380px] h-auto object-contain"
             />
