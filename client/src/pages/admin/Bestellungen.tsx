@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { Order } from "@shared/schema";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/hooks/use-auth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { 
@@ -57,13 +58,9 @@ import {
 } from "lucide-react";
 import { AdminNavigation } from "@/components/AdminNavigation";
 
-interface AdminCredentials {
-  username: string;
-  password: string;
-}
-
 export default function Bestellungen() {
   const { toast } = useToast();
+  const { user } = useAuth();
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [isDetailOpen, setIsDetailOpen] = useState<boolean>(false);
   const [newStatus, setNewStatus] = useState<string>("");
@@ -132,8 +129,7 @@ export default function Bestellungen() {
       const response = await fetch(`/api/orders/${orderId}/email`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Basic ${btoa(`${credentials.username}:${credentials.password}`)}`
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({ subject, message })
       });
@@ -165,8 +161,7 @@ export default function Bestellungen() {
       const response = await fetch(`/api/orders/${orderId}/status`, {
         method: "PATCH",
         headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Basic ${btoa(`${credentials.username}:${credentials.password}`)}`
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({ status, note })
       });
