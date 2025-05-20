@@ -193,41 +193,7 @@ export default function Bestellungen() {
     }
   });
 
-  // Handle Login
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    
-    try {
-      const response = await fetch("/api/admin/orders", {
-        headers: {
-          "Authorization": `Basic ${btoa(`${credentials.username}:${credentials.password}`)}`
-        }
-      });
-      
-      if (response.ok) {
-        setIsAuthenticated(true);
-        toast({
-          title: "Erfolgreich angemeldet",
-          description: "Willkommen im Admin-Bereich."
-        });
-      } else {
-        toast({
-          title: "Anmeldung fehlgeschlagen",
-          description: "Ungültige Anmeldedaten.",
-          variant: "destructive"
-        });
-      }
-    } catch (error) {
-      toast({
-        title: "Fehler",
-        description: "Bei der Anmeldung ist ein Fehler aufgetreten.",
-        variant: "destructive"
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  // Die Login-Logik wurde in die Hauptkomponente verschoben
 
   // Handle Status Change
   const handleStatusChange = (orderId: number) => {
@@ -249,11 +215,10 @@ export default function Bestellungen() {
 
   // Handle Logout
   const handleLogout = () => {
-    setIsAuthenticated(false);
-    setCredentials({ username: "", password: "" });
+    // Diese Funktion wird jetzt von der Hauptadmin-Komponente übernommen
     toast({
-      title: "Abgemeldet",
-      description: "Sie wurden erfolgreich abgemeldet."
+      title: "Hinweis",
+      description: "Abmelden erfolgt über die Hauptnavigation."
     });
   };
 
@@ -396,7 +361,7 @@ export default function Bestellungen() {
 
   // Login-Formular wurde in die Hauptadmin-Komponente verschoben
 
-  // Render Admin-Bereich, wenn authentifiziert
+  // Render Admin-Bereich
   return (
     <div className="container mx-auto p-4">
       {/* Admin-Navigation */}
