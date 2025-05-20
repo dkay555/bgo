@@ -54,56 +54,62 @@ export default function StartPage() {
             </p>
             
             {/* Dice Illustrations */}
-            <div className="flex justify-center items-end gap-6 my-12 relative">
+            <div className="flex justify-center items-end gap-6 my-8 relative">
               <div className="relative">
-                <img src="/images/icons/pawn.svg" alt="Spielfigur" className="w-16 h-16 md:w-20 md:h-20" />
+                <img src="/images/icons/pawn.svg" alt="Spielfigur" className="w-10 h-10 md:w-14 md:h-14" />
               </div>
               
               <div className="relative z-10">
-                {mounted && <DiceSpinner size={100} color="#ffffff" secondaryColor="#0A3A68" className="shadow-lg" />}
+                {mounted && <DiceSpinner size={70} color="#ffffff" secondaryColor="#0A3A68" className="shadow-lg" />}
               </div>
               
               <div className="relative">
-                <img src="/images/icons/house.svg" alt="Haus" className="w-16 h-16 md:w-20 md:h-20" />
+                <img src="/images/icons/house.svg" alt="Haus" className="w-10 h-10 md:w-14 md:h-14" />
               </div>
             </div>
             
-            {/* Navigation Buttons */}
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mt-8 max-w-3xl mx-auto">
-              <Button variant="darkblue" asChild className="font-bold flex items-center justify-center gap-2 h-14 w-full">
-                <Link href="/news">
-                  <span className="material-icons">feed</span>
-                  News
-                </Link>
-              </Button>
+            {/* Navigation Buttons - 2 Rows (3+2) */}
+            <div className="flex flex-col gap-3 mt-6 max-w-lg mx-auto">
+              {/* First Row - 3 Buttons */}
+              <div className="grid grid-cols-3 gap-3">
+                <Button variant="darkblue" asChild className="font-bold flex items-center justify-center gap-1 h-12 w-full text-sm">
+                  <Link href="/news">
+                    <span className="material-icons text-base">feed</span>
+                    News
+                  </Link>
+                </Button>
+                
+                <Button variant="cyan" asChild className="font-bold flex items-center justify-center gap-1 h-12 w-full text-sm">
+                  <Link href="/shop">
+                    <span className="material-icons text-base">shopping_cart</span>
+                    Shop
+                  </Link>
+                </Button>
+                
+                <Button variant="orange" asChild className="font-bold flex items-center justify-center gap-1 h-12 w-full text-sm">
+                  <Link href="/auth">
+                    <span className="material-icons text-base">person</span>
+                    Login
+                  </Link>
+                </Button>
+              </div>
               
-              <Button variant="cyan" asChild className="font-bold flex items-center justify-center gap-2 h-14 w-full">
-                <Link href="/shop">
-                  <span className="material-icons">shopping_cart</span>
-                  Shop
-                </Link>
-              </Button>
-              
-              <Button variant="orange" asChild className="font-bold flex items-center justify-center gap-2 h-14 w-full">
-                <Link href="/auth">
-                  <span className="material-icons">person</span>
-                  Login
-                </Link>
-              </Button>
-              
-              <Button variant="darkblue" asChild className="font-bold flex items-center justify-center gap-2 h-14 w-full">
-                <Link href="/hilfe">
-                  <span className="material-icons">help_outline</span>
-                  Hilfe
-                </Link>
-              </Button>
-              
-              <Button variant="cyan" asChild className="font-bold flex items-center justify-center gap-2 h-14 w-full md:col-span-1 col-span-2">
-                <Link href="/kontakt">
-                  <span className="material-icons">contact_support</span>
-                  Kontakt
-                </Link>
-              </Button>
+              {/* Second Row - 2 Buttons */}
+              <div className="grid grid-cols-2 gap-3">
+                <Button variant="darkblue" asChild className="font-bold flex items-center justify-center gap-1 h-12 w-full text-sm">
+                  <Link href="/hilfe">
+                    <span className="material-icons text-base">help_outline</span>
+                    Hilfe
+                  </Link>
+                </Button>
+                
+                <Button variant="cyan" asChild className="font-bold flex items-center justify-center gap-1 h-12 w-full text-sm">
+                  <Link href="/kontakt">
+                    <span className="material-icons text-base">contact_support</span>
+                    Kontakt
+                  </Link>
+                </Button>
+              </div>
             </div>
           </div>
         </div>
