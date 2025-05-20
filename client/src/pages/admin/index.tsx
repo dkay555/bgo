@@ -6,7 +6,6 @@ import SEOHead from "@/components/SEOHead";
 import Bestellungen from "./Bestellungen";
 import Benutzer from "./Benutzer";
 import EmailVorlagen from "./EmailVorlagen";
-import Kontaktanfragen from "./Kontaktanfragen";
 import { ProtectedContent } from "@/lib/protected-route";
 import { useAuth } from "@/hooks/use-auth";
 
@@ -25,7 +24,7 @@ function AdminPanel() {
   // Tab basierend auf URL aktualisieren
   useState(() => {
     const segment = getCurrentUrlPathSegment();
-    if (segment && ["bestellungen", "kontaktanfragen", "benutzer", "email-vorlagen", "tickets"].includes(segment)) {
+    if (segment && ["ubersicht", "bestellungen", "benutzer", "email-vorlagen", "tickets"].includes(segment)) {
       setActiveTab(segment);
     }
   });
@@ -135,9 +134,6 @@ function AdminPanel() {
               <Button variant="outline" size="sm" onClick={() => handleTabChange("bestellungen")}>
                 Bestellungen
               </Button>
-              <Button variant="outline" size="sm" onClick={() => handleTabChange("kontaktanfragen")}>
-                Kontaktanfragen
-              </Button>
               <Button variant="outline" size="sm" onClick={() => handleTabChange("tickets")}>
                 Tickets
               </Button>
@@ -153,10 +149,6 @@ function AdminPanel() {
 
         <TabsContent value="bestellungen">
           <Bestellungen />
-        </TabsContent>
-
-        <TabsContent value="kontaktanfragen">
-          <Kontaktanfragen />
         </TabsContent>
 
         <TabsContent value="benutzer">
