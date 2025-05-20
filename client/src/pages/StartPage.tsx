@@ -106,47 +106,40 @@ export default function StartPage() {
               Würfel, Events, Sticker & mehr – alles für dein Monopoly GO Abenteuer.
             </p>
           
-          {/* Welcome Text Box - Responsive padding and text */}
-          <div className="bg-[#b0d6f5] rounded-xl shadow-lg px-4 sm:px-6 md:px-8 py-4 sm:py-6 text-center mb-4 sm:mb-6">
-            <h1 className="text-[#FF4C00] font-bold text-2xl sm:text-3xl md:text-4xl mb-1 md:mb-2">
-              Willkommen bei babixGO
-            </h1>
-            <p className="text-[#0A3A68] text-base sm:text-lg md:text-xl">
-              Würfel, Events, Sticker & mehr – alles für dein Monopoly GO Abenteuer
-            </p>
+            {/* Navigation Buttons - Mobile optimized layout */}
+            <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 max-w-md mx-auto mb-5">
+              {/* On mobile: Full width buttons stacked */}
+              <Button variant="darkblue" asChild className="font-bold flex items-center justify-center gap-2 h-12 sm:h-14 w-full text-base sm:text-lg shadow-md">
+                <Link href="/news">
+                  <span className="material-icons">feed</span>
+                  News
+                </Link>
+              </Button>
+              
+              <Button variant="orange" asChild className="font-bold flex items-center justify-center gap-2 h-12 sm:h-14 w-full text-base sm:text-lg shadow-md">
+                <Link href="/shop">
+                  <span className="material-icons">shopping_cart</span>
+                  Shop
+                </Link>
+              </Button>
+              
+              <Button variant="darkblue" asChild className="font-bold flex items-center justify-center gap-2 h-12 sm:h-14 w-full text-base sm:text-lg shadow-md">
+                <Link href="/hilfe">
+                  <span className="material-icons">help_outline</span>
+                  Hilfe
+                </Link>
+              </Button>
+              
+              <Button variant="cyan" asChild className="font-bold flex items-center justify-center gap-2 h-12 sm:h-14 w-full text-base sm:text-lg shadow-md">
+                <Link href="/kontakt">
+                  <span className="material-icons">contact_support</span>
+                  Kontakt
+                </Link>
+              </Button>
+            </div>
           </div>
-          
-          {/* Navigation Buttons - Mobile optimized layout */}
-          <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 max-w-md mx-auto mb-5">
-            {/* On mobile: Full width buttons stacked */}
-            <Button variant="darkblue" asChild className="font-bold flex items-center justify-center gap-2 h-12 sm:h-14 w-full text-base sm:text-lg shadow-md">
-              <Link href="/news">
-                <span className="material-icons">feed</span>
-                News
-              </Link>
-            </Button>
-            
-            <Button variant="orange" asChild className="font-bold flex items-center justify-center gap-2 h-12 sm:h-14 w-full text-base sm:text-lg shadow-md">
-              <Link href="/shop">
-                <span className="material-icons">shopping_cart</span>
-                Shop
-              </Link>
-            </Button>
-            
-            <Button variant="darkblue" asChild className="font-bold flex items-center justify-center gap-2 h-12 sm:h-14 w-full text-base sm:text-lg shadow-md">
-              <Link href="/hilfe">
-                <span className="material-icons">help_outline</span>
-                Hilfe
-              </Link>
-            </Button>
-            
-            <Button variant="cyan" asChild className="font-bold flex items-center justify-center gap-2 h-12 sm:h-14 w-full text-base sm:text-lg shadow-md">
-              <Link href="/kontakt">
-                <span className="material-icons">contact_support</span>
-                Kontakt
-              </Link>
-            </Button>
-          </div>
+        </div>
+      </section>
         </div>
       </section>
       
