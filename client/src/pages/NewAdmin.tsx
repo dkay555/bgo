@@ -155,7 +155,7 @@ export default function NewAdminPanel() {
           <nav className="px-4 py-2 space-y-1">
             <Button 
               variant={activeTab === "dashboard" ? "default" : "ghost"} 
-              className="w-full justify-start my-1" 
+              className="w-full justify-start my-1 text-white hover:text-white hover:bg-blue-600" 
               onClick={() => handleTabChange("dashboard")}
             >
               <LayoutDashboard className="h-4 w-4 mr-2" />
@@ -163,7 +163,7 @@ export default function NewAdminPanel() {
             </Button>
             <Button 
               variant={activeTab === "bestellungen" ? "default" : "ghost"} 
-              className="w-full justify-start my-1" 
+              className="w-full justify-start my-1 text-white hover:text-white hover:bg-blue-600" 
               onClick={() => handleTabChange("bestellungen")}
             >
               <Package className="h-4 w-4 mr-2" />
@@ -171,7 +171,7 @@ export default function NewAdminPanel() {
             </Button>
             <Button 
               variant={activeTab === "tickets" ? "default" : "ghost"} 
-              className="w-full justify-start my-1" 
+              className="w-full justify-start my-1 text-white hover:text-white hover:bg-blue-600" 
               onClick={() => handleTabChange("tickets")}
             >
               <TicketIcon className="h-4 w-4 mr-2" />
@@ -179,7 +179,7 @@ export default function NewAdminPanel() {
             </Button>
             <Button 
               variant={activeTab === "benutzer" ? "default" : "ghost"} 
-              className="w-full justify-start my-1" 
+              className="w-full justify-start my-1 text-white hover:text-white hover:bg-blue-600" 
               onClick={() => handleTabChange("benutzer")}
             >
               <Users className="h-4 w-4 mr-2" />
@@ -187,7 +187,7 @@ export default function NewAdminPanel() {
             </Button>
             <Button 
               variant={activeTab === "email-vorlagen" ? "default" : "ghost"} 
-              className="w-full justify-start my-1" 
+              className="w-full justify-start my-1 text-white hover:text-white hover:bg-blue-600" 
               onClick={() => handleTabChange("email-vorlagen")}
             >
               <FileText className="h-4 w-4 mr-2" />
