@@ -168,19 +168,19 @@ export default function HilfeUebersicht() {
                   <CardTitle className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <span className="material-icons text-[#00CFFF]">shield</span>
-                      <span>Kontosicherheit: So schützt du dein Spiel</span>
+                      <span>Monopoly Go Accounts kaufen - was du wissen solltest</span>
                     </div>
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="pt-4">
                   <p className="mb-4">
-                    Die Sicherheit deines Kontos hat für uns höchste Priorität. Hier erfährst du, welche Maßnahmen wir ergreifen,
-                    um dein Konto zu schützen, und was du selbst tun kannst, um deine Daten zu sichern.
+                    Du überlegst einen Monopoly Go Account zu kaufen? Hier findest du wichtige Informationen,
+                    worauf du achten solltest und welche Vor- und Nachteile diese Option bietet.
                   </p>
                   <div className="flex justify-end">
                     <Link href="/hilfe/accounts">
                       <Button variant="outline" className="text-sm px-3 py-1">
-                        [Sicherheitstipps]
+                        [Mehr erfahren]
                       </Button>
                     </Link>
                   </div>
@@ -199,8 +199,8 @@ export default function HilfeUebersicht() {
                 </CardHeader>
                 <CardContent className="pt-4">
                   <p className="mb-4">
-                    Mit unserem Auth-Token Tool kannst du deinen Facebook-Zugriffstoken für Monopoly GO schnell und einfach generieren.
-                    Der Token wird lokal in deinem Browser gespeichert und ist die sicherste Methode für den Login.
+                    Mit unserem Auth-Token Tool kannst du deinen Facebook-Zugriffstoken für Monopoly GO schnell und einfach generieren. 
+                    Der Token wird lokal in deinem Browser gespeichert und ist die Methode für den Login bei der kein Passwort weitergegeben werden muss.
                   </p>
                   <div className="flex justify-end">
                     <Link href="/tools/authtoken">
