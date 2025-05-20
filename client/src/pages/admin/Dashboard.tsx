@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useLocation } from 'wouter';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -21,6 +22,7 @@ interface RecentActivity {
 export default function AdminDashboard() {
   const { toast } = useToast();
   const { user } = useAuth();
+  const [, setLocation] = useLocation();
   const [stats, setStats] = useState({
     orders: 0,
     users: 0,
@@ -83,7 +85,17 @@ export default function AdminDashboard() {
         .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
         .slice(0, 5);
       
-      setRecentActivity(recentOrders as RecentActivity[]);
+      // Konvertiere zu RecentActivity-Objekten
+      const recentActivityData = recentOrders.map(order => ({
+        id: order.id,
+        name: order.name || "Unbekannt",
+        package: order.productType || "Produkt",
+        price: order.price || "0.00",
+        createdAt: order.createdAt ? order.createdAt.toString() : new Date().toString(),
+        paymentStatus: order.paymentStatus || "pending"
+      }));
+      
+      setRecentActivity(recentActivityData);
     }
   }, [ordersData, usersData]);
   
@@ -219,7 +231,13 @@ export default function AdminDashboard() {
             </div>
           </CardContent>
           <CardFooter>
-            <Button variant="outline" className="w-full">Alle Bestellungen ansehen</Button>
+            <Button 
+              variant="outline" 
+              className="w-full"
+              onClick={() => window.location.href = "/admin/bestellungen"}
+            >
+              Alle Bestellungen ansehen
+            </Button>
           </CardFooter>
         </Card>
         
