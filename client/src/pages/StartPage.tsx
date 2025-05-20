@@ -17,25 +17,51 @@ export default function StartPage() {
         <div className="absolute inset-0 bg-[#e6f9ff] z-0">
           {/* Background Dice Pattern */}
           <div className="absolute inset-0 opacity-20">
-            {mounted && (
-              <>
-                <div className="absolute top-[10%] left-[5%] rotate-[15deg]">
-                  <img src="/images/icons/dice.svg" alt="" className="w-16 h-16" />
-                </div>
-                <div className="absolute top-[15%] right-[15%] rotate-[-10deg]">
-                  <img src="/images/icons/boot.svg" alt="" className="w-14 h-14" />
-                </div>
-                <div className="absolute top-[60%] left-[15%] rotate-[5deg]">
-                  <img src="/images/icons/house.svg" alt="" className="w-16 h-16" />
-                </div>
-                <div className="absolute top-[30%] right-[5%] rotate-[20deg]">
-                  <img src="/images/icons/spade.svg" alt="" className="w-14 h-14" />
-                </div>
-                <div className="absolute top-[70%] right-[10%] rotate-[-15deg]">
-                  <img src="/images/icons/dice.svg" alt="" className="w-16 h-16" />
-                </div>
-              </>
-            )}
+            <div className="absolute top-[10%] left-[5%] rotate-[15deg]">
+              <svg width="50" height="50" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="5" y="5" width="90" height="90" rx="10" fill="#ffffff" stroke="#0A3A68" strokeWidth="4"/>
+                <circle cx="25" cy="25" r="8" fill="#0A3A68"/>
+                <circle cx="75" cy="25" r="8" fill="#0A3A68"/>
+                <circle cx="50" cy="50" r="8" fill="#0A3A68"/>
+                <circle cx="25" cy="75" r="8" fill="#0A3A68"/>
+                <circle cx="75" cy="75" r="8" fill="#0A3A68"/>
+              </svg>
+            </div>
+            <div className="absolute top-[15%] right-[15%] rotate-[-10deg]">
+              <svg width="50" height="50" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M30 80C30 80 20 50 20 40C20 30 30 25 35 25C40 25 40 30 45 30C55 30 70 15 75 15C80 15 85 20 80 25C75 30 65 40 65 40L80 60C80 60 85 70 80 75C75 80 30 80 30 80Z" fill="#00CFFF" stroke="#0A3A68" strokeWidth="3"/>
+                <path d="M35 25C35 25 40 35 45 30" stroke="#0A3A68" strokeWidth="2"/>
+                <path d="M65 40L75 50" stroke="#0A3A68" strokeWidth="2"/>
+                <path d="M30 80H80C80 80 85 85 80 90C75 95 35 95 30 90C25 85 30 80 30 80Z" fill="#0A3A68"/>
+                <circle cx="50" cy="35" r="5" fill="#ffffff" fillOpacity="0.6"/>
+              </svg>
+            </div>
+            <div className="absolute top-[60%] left-[15%] rotate-[5deg]">
+              <svg width="50" height="50" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 50V90H90V50L50 15L10 50Z" fill="#00CFFF" stroke="#0A3A68" strokeWidth="4"/>
+                <path d="M5 50L50 10L95 50" stroke="#0A3A68" strokeWidth="4" strokeLinecap="round"/>
+                <rect x="40" y="60" width="20" height="30" fill="#0A3A68"/>
+                <rect x="65" y="60" width="15" height="15" fill="#ffffff" stroke="#0A3A68" strokeWidth="2"/>
+                <rect x="20" y="60" width="15" height="15" fill="#ffffff" stroke="#0A3A68" strokeWidth="2"/>
+              </svg>
+            </div>
+            <div className="absolute top-[30%] right-[5%] rotate-[20deg]">
+              <svg width="50" height="50" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M50 10C60 30 85 40 85 60C85 75 70 85 60 80C55 85 50 90 50 90C50 90 45 85 40 80C30 85 15 75 15 60C15 40 40 30 50 10Z" fill="#00CFFF" stroke="#0A3A68" strokeWidth="3"/>
+                <path d="M45 80C45 80 50 90 50 90C50 90 55 80 55 80" stroke="#0A3A68" strokeWidth="3" strokeLinecap="round"/>
+                <circle cx="40" cy="50" r="5" fill="#ffffff" fillOpacity="0.6"/>
+              </svg>
+            </div>
+            <div className="absolute top-[70%] right-[10%] rotate-[-15deg]">
+              <svg width="50" height="50" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="5" y="5" width="90" height="90" rx="10" fill="#ffffff" stroke="#0A3A68" strokeWidth="4"/>
+                <circle cx="25" cy="25" r="8" fill="#0A3A68"/>
+                <circle cx="75" cy="25" r="8" fill="#0A3A68"/>
+                <circle cx="50" cy="50" r="8" fill="#0A3A68"/>
+                <circle cx="25" cy="75" r="8" fill="#0A3A68"/>
+                <circle cx="75" cy="75" r="8" fill="#0A3A68"/>
+              </svg>
+            </div>
           </div>
         </div>
         
@@ -56,7 +82,19 @@ export default function StartPage() {
             {/* Dice Illustrations */}
             <div className="flex justify-center items-end gap-6 my-8 relative">
               <div className="relative">
-                <img src="/images/icons/pawn.svg" alt="Spielfigur" className="w-10 h-10 md:w-14 md:h-14" />
+                <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  {/* Base */}
+                  <ellipse cx="50" cy="85" rx="30" ry="10" fill="#0A3A68"/>
+                  
+                  {/* Stem */}
+                  <path d="M40 85V55C40 45 60 45 60 55V85" fill="#00CFFF" stroke="#0A3A68" strokeWidth="3"/>
+                  
+                  {/* Head */}
+                  <circle cx="50" cy="35" r="20" fill="#00CFFF" stroke="#0A3A68" strokeWidth="3"/>
+                  
+                  {/* Highlight */}
+                  <circle cx="45" cy="30" r="5" fill="#ffffff" fillOpacity="0.6"/>
+                </svg>
               </div>
               
               <div className="relative z-10">
@@ -64,7 +102,20 @@ export default function StartPage() {
               </div>
               
               <div className="relative">
-                <img src="/images/icons/house.svg" alt="Haus" className="w-10 h-10 md:w-14 md:h-14" />
+                <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  {/* House Base */}
+                  <path d="M10 50V90H90V50L50 15L10 50Z" fill="#00CFFF" stroke="#0A3A68" strokeWidth="4"/>
+                  
+                  {/* Roof */}
+                  <path d="M5 50L50 10L95 50" stroke="#0A3A68" strokeWidth="4" strokeLinecap="round"/>
+                  
+                  {/* Door */}
+                  <rect x="40" y="60" width="20" height="30" fill="#0A3A68"/>
+                  
+                  {/* Window */}
+                  <rect x="65" y="60" width="15" height="15" fill="#ffffff" stroke="#0A3A68" strokeWidth="2"/>
+                  <rect x="20" y="60" width="15" height="15" fill="#ffffff" stroke="#0A3A68" strokeWidth="2"/>
+                </svg>
               </div>
             </div>
             
