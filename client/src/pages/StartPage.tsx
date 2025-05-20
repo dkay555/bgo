@@ -80,9 +80,9 @@ export default function StartPage() {
             </p>
             
             {/* Dice Illustrations */}
-            <div className="flex justify-center items-end gap-6 my-8 relative">
-              <div className="relative">
-                <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <div className="flex justify-center items-end gap-10 my-8 relative">
+              <div className="relative bg-white rounded-full p-2 shadow-md">
+                <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="scale-125">
                   {/* Base */}
                   <ellipse cx="50" cy="85" rx="30" ry="10" fill="#0A3A68"/>
                   
@@ -101,8 +101,8 @@ export default function StartPage() {
                 {mounted && <DiceSpinner size={70} color="#ffffff" secondaryColor="#0A3A68" className="shadow-lg" />}
               </div>
               
-              <div className="relative">
-                <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <div className="relative bg-white rounded-md p-2 shadow-md">
+                <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="scale-125">
                   {/* House Base */}
                   <path d="M10 50V90H90V50L50 15L10 50Z" fill="#00CFFF" stroke="#0A3A68" strokeWidth="4"/>
                   
