@@ -219,7 +219,7 @@ export default function NewEmailVorlagen() {
       id: 0,
       name: "",
       subject: "",
-      body: "",
+      content: "",
       templateKey: ""
     });
     setIsCreatingNew(true);
@@ -229,7 +229,7 @@ export default function NewEmailVorlagen() {
   
   // Funktion zum Speichern einer Vorlage
   const handleSaveTemplate = async () => {
-    if (!templateData.name || !templateData.subject || !templateData.body || !templateData.templateKey) {
+    if (!templateData.name || !templateData.subject || !templateData.content || !templateData.templateKey) {
       toast({
         title: "Fehlende Daten",
         description: "Bitte füllen Sie alle Pflichtfelder aus.",
@@ -243,7 +243,7 @@ export default function NewEmailVorlagen() {
         await createTemplateMutation.mutateAsync({
           name: templateData.name,
           subject: templateData.subject,
-          body: templateData.body,
+          body: templateData.content,
           templateKey: templateData.templateKey
         });
       } else {
@@ -251,7 +251,7 @@ export default function NewEmailVorlagen() {
           id: templateData.id,
           name: templateData.name,
           subject: templateData.subject,
-          body: templateData.body,
+          body: templateData.content,
           templateKey: templateData.templateKey
         });
       }
