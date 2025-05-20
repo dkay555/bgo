@@ -139,7 +139,7 @@ export default function StartPage() {
                 </div>
               </div>
               <h3 className="text-[#0A3A68] text-xl md:text-2xl font-bold mb-1 md:mb-2">Sticker</h3>
-              <p className="text-gray-700 mb-3 md:mb-4 text-sm md:text-base">Wir haben sie alle!</p>
+              <p className="text-gray-700 mb-3 md:mb-4 text-sm md:text-base">Wir haben sie selbstverständlich alle!</p>
               <Button variant="orange" asChild className="w-full font-bold text-sm md:text-base">
                 <Link href="/produkte/sticker#top">Jetzt entdecken</Link>
               </Button>
