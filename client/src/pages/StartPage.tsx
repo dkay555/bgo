@@ -12,7 +12,7 @@ export default function StartPage() {
   return (
     <main className="px-0 py-0 md:py-0 flex-grow font-['Nunito_Sans'] text-[#0A3A68]" id="top">
       {/* Hero Section - Monopoly GO Style */}
-      <section className="py-0 md:py-0 relative overflow-hidden min-h-[600px] md:min-h-[700px]">
+      <section className="py-0 md:py-0 relative overflow-hidden min-h-[500px] md:min-h-[600px]">
         {/* Gradient Background for Monopoly GO */}
         <div className="absolute inset-0 bg-gradient-to-br from-[#78c6f7] via-[#5ba3d9] to-[#7cbff0] z-0">
           {/* Background Monopoly Elements - Hidden on smallest screens */}
@@ -52,13 +52,13 @@ export default function StartPage() {
         </div>
         
         {/* Monopoly GO Image - New Version */}
-        <div className="max-w-lg mx-auto pt-4 md:pt-6 pb-0 relative px-4 z-10 flex flex-col h-full">
+        <div className="max-w-lg mx-auto pt-0 md:pt-2 pb-0 relative px-4 z-10 flex flex-col h-full">
           {/* Monopoly GO Character and Logo - Using the hero image */}
-          <div className="w-full max-w-md mx-auto mb-4 relative flex justify-center">
+          <div className="w-full max-w-md mx-auto mb-3 mt-2 relative flex justify-center">
             <img 
               src="/src/assets/hero_startseite.png" 
               alt="Monopoly GO" 
-              className="w-full max-w-[350px] md:max-w-[400px] h-auto object-contain"
+              className="w-full max-w-[320px] md:max-w-[380px] h-auto object-contain"
             />
           </div>
           
