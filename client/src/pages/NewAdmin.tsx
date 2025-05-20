@@ -148,13 +148,18 @@ export default function NewAdminPanel() {
         </div>
       </header>
       
+      {/* Spacer für Mobile Menü wenn es geöffnet ist */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden h-[300px]"></div>
+      )}
+      
       {/* Mobile menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-blue-800 shadow-lg" style={{borderBottom: '1px solid rgba(255,255,255,0.1)'}}>
+        <div className="md:hidden bg-blue-800 shadow-lg fixed w-full z-40" style={{borderBottom: '1px solid rgba(255,255,255,0.1)'}}>
           <nav className="px-4 py-3 space-y-2">
             <Button 
               variant={activeTab === "dashboard" ? "default" : "ghost"} 
-              className="w-full justify-start my-1 text-white hover:text-white hover:bg-blue-700 font-medium" 
+              className="w-full justify-start my-1 text-white hover:text-white hover:bg-blue-700 font-medium cursor-pointer active:scale-95 active:bg-blue-600" 
               onClick={() => handleTabChange("dashboard")}
             >
               <LayoutDashboard className="h-4 w-4 mr-2" />
