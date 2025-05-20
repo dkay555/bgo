@@ -94,17 +94,17 @@ export default function StartPage() {
           <h2 className="babix-info-header mx-auto mb-3 text-center">News</h2>
 
           <div className="bg-white rounded-lg shadow-md p-3 pb-4">
-            <h3 className="font-bold text-[#0A3A68] text-xl mb-1 mt-0">Neue Preise für Würfel - Angebotsanpassung</h3>
-            <p className="text-[#0A3A68]/80 mb-3">
-              Die letzten Tage war es still um babixGO... Wir haben unser Angebot überarbeitet und optimiert.
-            </p>
-            <div className="flex justify-end">
+            <div className="flex justify-between items-center mb-1">
+              <h3 className="font-bold text-[#0A3A68] text-xl mt-0">Neue Preise für Würfel - Angebotsanpassung</h3>
               <Link href="/hilfe/news_preise_angebot.html">
-                <Button variant="darkblue" className="text-sm px-3 py-1">
-                  [weiterlesen]
+                <Button variant="darkblue" className="text-xs px-2 py-0.5 h-auto whitespace-nowrap ml-2">
+                  weiterlesen →
                 </Button>
               </Link>
             </div>
+            <p className="text-[#0A3A68]/80 mb-3">
+              Die letzten Tage war es still um babixGO... Wir haben unser Angebot überarbeitet und optimiert.
+            </p>
           </div>
         </div>
       </section>
