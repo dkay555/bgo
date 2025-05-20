@@ -118,11 +118,36 @@ export default function StartPage() {
         </div>
       </section>
       
-      {/* Padding Element to create space after Hero Section */}
-      <div className="h-4"></div>
+      {/* Transition from Hero to News Section */}
+      <div className="relative">
+        {/* Wave transition effect */}
+        <div className="absolute w-full -top-1 left-0 right-0 z-10 overflow-hidden">
+          <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="w-full h-10 md:h-16 text-gray-50">
+            <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" 
+                  fill="currentColor">
+            </path>
+          </svg>
+        </div>
+        
+        {/* Decorative dice elements */}
+        <div className="absolute -top-6 left-1/4 transform -translate-x-1/2 z-20 hidden sm:block">
+          <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="5" y="5" width="90" height="90" rx="10" fill="#FF4C00" stroke="#0A3A68" strokeWidth="2"/>
+            <circle cx="25" cy="25" r="6" fill="white"/>
+            <circle cx="75" cy="75" r="6" fill="white"/>
+          </svg>
+        </div>
+        
+        <div className="absolute -top-8 right-1/3 transform translate-x-1/2 z-20 hidden sm:block">
+          <svg width="30" height="30" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="5" y="5" width="90" height="90" rx="10" fill="#4BB1F8" stroke="#0A3A68" strokeWidth="2"/>
+            <circle cx="50" cy="50" r="6" fill="white"/>
+          </svg>
+        </div>
+      </div>
       
       {/* News Sektion */}
-      <section className="py-6 bg-gray-50">
+      <section className="pt-8 pb-6 bg-gray-50">
         <div className="max-w-4xl mx-auto">
           <h2 className="babix-info-header mx-auto mb-8 text-center">News</h2>
           
