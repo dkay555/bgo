@@ -18,7 +18,7 @@ export default function News() {
           {/* News Image */}
           <div className="w-full max-w-md mx-auto mb-3 mt-2 relative flex justify-center">
             <img 
-              src="/images/hero/hero_news.png" 
+              src="/images/hero/news_hero.png" 
               alt="Monopoly GO News" 
               className="w-full max-w-[320px] md:max-w-[380px] h-auto object-contain"
             />

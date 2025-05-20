@@ -25,7 +25,7 @@ export default function HilfeUebersicht() {
           {/* Hilfe & Tools Image */}
           <div className="w-full max-w-md mx-auto mb-3 mt-2 relative flex justify-center">
             <img 
-              src="/images/hero/hero_hilfe.png" 
+              src="/images/hero/hilfe_hero_final.png" 
               alt="Hilfe & Tools" 
               className="w-full max-w-[320px] md:max-w-[380px] h-auto object-contain"
             />
