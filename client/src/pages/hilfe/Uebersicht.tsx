@@ -161,31 +161,6 @@ export default function HilfeUebersicht() {
                   </div>
                 </CardContent>
               </Card>
-
-              {/* Auth Token */}
-              <Card className="overflow-hidden">
-                <CardHeader className="bg-[#00CFFF]/10 border-b border-[#00CFFF]/20">
-                  <CardTitle className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <span className="material-icons text-[#00CFFF]">key</span>
-                      <span>Facebook Auth-Token: So funktioniert's</span>
-                    </div>
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="pt-4">
-                  <p className="mb-4">
-                    Der Facebook Auth-Token ist die sicherste Methode, mit der wir uns in deinem Namen bei Monopoly GO anmelden können. 
-                    Erfahre, wie du deinen Auth-Token ganz einfach findest und warum diese Methode so sicher ist.
-                  </p>
-                  <div className="flex justify-end">
-                    <Link href="/hilfe/authtoken">
-                      <Button variant="outline" className="text-sm px-3 py-1">
-                        [Zur Anleitung]
-                      </Button>
-                    </Link>
-                  </div>
-                </CardContent>
-              </Card>
               
               {/* Kontosicherheit */}
               <Card className="overflow-hidden">
