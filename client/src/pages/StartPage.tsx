@@ -4,11 +4,11 @@ import { useState, useEffect } from 'react';
 
 export default function StartPage() {
   const [mounted, setMounted] = useState(false);
-  
+
   useEffect(() => {
     setMounted(true);
   }, []);
-  
+
   return (
     <main className="px-0 py-0 md:py-0 flex-grow font-['Nunito_Sans'] text-[#0A3A68] bg-gradient-to-b from-[#78c6f7] via-[#e6eef8] to-white" id="top">
       {/* Hero Section - Monopoly GO Style */}
@@ -50,7 +50,7 @@ export default function StartPage() {
             </div>
           </div>
         </div>
-        
+
         {/* Monopoly GO Image - New Version */}
         <div className="max-w-lg mx-auto pt-0 md:pt-2 pb-0 relative px-4 z-10 flex flex-col h-full">
           {/* Monopoly GO Character and Logo - Using the hero image */}
@@ -61,7 +61,7 @@ export default function StartPage() {
               className="w-full max-w-[320px] md:max-w-[380px] h-auto object-contain"
             />
           </div>
-          
+
           {/* Welcome Text Box - Responsive padding and text */}
           <div className="bg-[#b0d6f5] rounded-xl shadow-lg px-4 sm:px-6 md:px-8 pt-1 pb-2 text-center mb-6 sm:mb-8">
             <h1 className="text-[#FF4C00] font-bold text-2xl sm:text-3xl md:text-4xl mt-0 mb-0">
@@ -71,7 +71,7 @@ export default function StartPage() {
               Würfel, Events, Sticker & mehr – alles für dein Monopoly GO Abenteuer
             </p>
           </div>
-          
+
           {/* Navigation Buttons - Mobile optimized layout */}
           <div className="w-full max-w-md mx-auto mb-5">
             {/* Erste Reihe: 3 Buttons */}
@@ -82,14 +82,14 @@ export default function StartPage() {
                   News
                 </Link>
               </Button>
-              
+
               <Button variant="orange" asChild className="font-bold flex items-center justify-center gap-1 h-10 sm:h-12 w-full text-sm sm:text-base shadow-md">
                 <Link href="/shop">
                   <span className="material-icons text-sm sm:text-base">shopping_cart</span>
                   Shop
                 </Link>
               </Button>
-              
+
               <Button variant="cyan" asChild className="font-bold flex items-center justify-center gap-1 h-10 sm:h-12 w-full text-sm sm:text-base shadow-md">
                 <Link href="/auth-page">
                   <span className="material-icons text-sm sm:text-base">login</span>
@@ -97,7 +97,7 @@ export default function StartPage() {
                 </Link>
               </Button>
             </div>
-            
+
             {/* Zweite Reihe: 2 Buttons */}
             <div className="grid grid-cols-2 gap-2">
               <Button variant="darkblue" asChild className="font-bold flex items-center justify-center gap-1 h-10 sm:h-12 w-full text-sm sm:text-base shadow-md">
@@ -106,7 +106,7 @@ export default function StartPage() {
                   <span>Hilfe</span>
                 </Link>
               </Button>
-              
+
               <Button variant="cyan" asChild className="font-bold flex items-center justify-center gap-1 h-10 sm:h-12 w-full text-sm sm:text-base shadow-md">
                 <Link href="/kontakt">
                   <span className="material-icons text-sm sm:text-base">contact_support</span>
@@ -117,7 +117,7 @@ export default function StartPage() {
           </div>
         </div>
       </section>
-      
+
       {/* Fließender Übergang zwischen Hero und News Section */}
       <div className="relative overflow-hidden">
         {/* Subtiler Wellen-Effekt für weicheren Übergang */}
@@ -135,7 +135,7 @@ export default function StartPage() {
             </path>
           </svg>
         </div>
-        
+
         {/* Dekorative Monopoly-Elemente im Übergang */}
         <div className="absolute bottom-6 left-1/5 transform -translate-x-1/2 z-20 hidden sm:block">
           <div className="relative animate-bounce" style={{animationDuration: '3s'}}>
@@ -147,7 +147,7 @@ export default function StartPage() {
             <div className="absolute -top-1 -right-1 w-2 h-2 bg-white rounded-full animate-ping"></div>
           </div>
         </div>
-        
+
         <div className="absolute bottom-10 right-1/4 transform translate-x-1/2 z-20 hidden sm:block">
           <div className="relative animate-float" style={{animationDuration: '4s'}}>
             <svg width="28" height="28" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -169,16 +169,16 @@ export default function StartPage() {
             </svg>
           </div>
         </div>
-        
-        {/* Sanfter Farbverlauf über den gesamten Übergang */}
-        <div className="h-24 bg-gradient-to-b from-transparent to-gray-50"></div>
+
+        {/* Sanfter Farbverlauf über den gesamten Übergang - von Cyan zu Cyan */}
+        <div className="h-24 bg-gradient-to-b from-[#8fdfff]/60 to-[#8fdfff]/30"></div>
       </div>
-      
-      {/* News-Sektion mit transparentem Hintergrund */}
+
+      {/* News-Sektion mit Cyan-Hintergrund */}
       <section className="pt-2 pb-6">
         <div className="max-w-4xl mx-auto">
           <h2 className="babix-info-header mx-auto mb-8 text-center">News</h2>
-          
+
           <div className="bg-white rounded-lg shadow-md p-5">
             <h3 className="font-bold text-[#0A3A68] text-xl mb-3">Neue Preise für Würfel - Angebotsanpassung</h3>
             <p className="text-[#0A3A68]/80 mb-3">
@@ -201,7 +201,7 @@ export default function StartPage() {
           <h2 className="babix-info-header mx-auto mb-8 text-center">
             Was wir dir bieten:
           </h2>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {/* Product Card 1 */}
             <div className="bg-[#00CFFF]/20 rounded-md overflow-hidden shadow-lg transition-transform duration-300 hover:-translate-y-1">
@@ -256,7 +256,7 @@ export default function StartPage() {
                 </div>
               </div>
             </div>
-            
+
             {/* Product Card 4 - Tycoon Racers */}
             <div className="bg-[#00CFFF]/20 rounded-md overflow-hidden shadow-lg transition-transform duration-300 hover:-translate-y-1">
               <div className="relative">
@@ -286,7 +286,7 @@ export default function StartPage() {
           </h2>
           <div className="bg-white p-6 rounded-xl shadow-md">
             <p className="mb-4">Es ist kein Geheimnis: Am Ende gewinnt immer die Bank. Daran können wir auch nichts ändern. Was wir allerdings können: Den Wert der Würfel soweit verschieben, dass Event-, Set- und Albumabschlüsse für jeden möglich sind.</p>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
               <div className="space-y-4">
                 <div>
@@ -296,7 +296,7 @@ export default function StartPage() {
                   </h3>
                   <p className="ml-8 text-[#0A3A68]/80">Würfelboosts, Sticker, Solo-, Team- und Partnerevents sowie komplette Accounts – und das alles an einem Ort.</p>
                 </div>
-                
+
                 <div>
                   <h3 className="font-bold text-[#0A3A68] text-lg flex items-center">
                     <span className="material-icons text-[#FF4C00] mr-2">check_circle</span>
@@ -304,7 +304,7 @@ export default function StartPage() {
                   </h3>
                   <p className="ml-8 text-[#0A3A68]/80">Direkter Kontakt, individuelle Betreuung und schnelle Antworten. Bei babixGO bekommst du den Service, den du verdienst.</p>
                 </div>
-                
+
                 <div>
                   <h3 className="font-bold text-[#0A3A68] text-lg flex items-center">
                     <span className="material-icons text-[#FF4C00] mr-2">check_circle</span>
@@ -312,7 +312,7 @@ export default function StartPage() {
                   </h3>
                   <p className="ml-8 text-[#0A3A68]/80">Mit fundiertem Wissen über die Spielmechaniken, Sicherheitsmaßnahmen und Tracking-Funktionen sorgen wir dafür, dass dein Account in sicheren Händen bleibt.</p>
                 </div>
-                
+
                 <div>
                   <h3 className="font-bold text-[#0A3A68] text-lg flex items-center">
                     <span className="material-icons text-[#FF4C00] mr-2">check_circle</span>
@@ -321,10 +321,10 @@ export default function StartPage() {
                   <p className="ml-8 text-[#0A3A68]/80">Seit dem Release von Monopoly Go ist babixGO am Puls der Zeit und bringt fast zwei Jahre Erfahrung und Leidenschaft für das Spiel mit.</p>
                 </div>
               </div>
-              
+
               <div className="space-y-4">
                 <h3 className="font-bold text-[#0A3A68] text-xl mb-2">Dein Vorteil:</h3>
-                
+
                 <div>
                   <h3 className="font-bold text-[#0A3A68] text-lg flex items-center">
                     <span className="material-icons text-[#FF4C00] mr-2">check_circle</span>
@@ -332,7 +332,7 @@ export default function StartPage() {
                   </h3>
                   <p className="ml-8 text-[#0A3A68]/80">Wir legen großen Wert darauf, dir einen fairen und erschwinglichen Preis anzubieten - für jedes Budget ist etwas passendes dabei. Durch Gewinnspiele können wir auch an die etwas geben, die kein Geld für Monopoly Go ausgeben möchten.</p>
                 </div>
-                
+
                 <div>
                   <h3 className="font-bold text-[#0A3A68] text-lg flex items-center">
                     <span className="material-icons text-[#FF4C00] mr-2">check_circle</span>
@@ -340,7 +340,7 @@ export default function StartPage() {
                   </h3>
                   <p className="ml-8 text-[#0A3A68]/80">Wir reagieren schnell auf Änderungen im Spiel. Durch unser inzwischen großes Netzwerk bemerken wir Änderungen früh und können dadurch schon Lösungen präsentieren bevor überhaupt alle Accounts betroffen sind.</p>
                 </div>
-                
+
                 <div>
                   <h3 className="font-bold text-[#0A3A68] text-lg flex items-center">
                     <span className="material-icons text-[#FF4C00] mr-2">check_circle</span>
