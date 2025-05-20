@@ -67,41 +67,53 @@ export default function StartPage() {
             <h1 className="text-[#FF4C00] font-bold text-2xl sm:text-3xl md:text-4xl mt-0 mb-0">
               Willkommen bei babixGO
             </h1>
-            <p className="text-[#0A3A68] text-base sm:text-lg md:text-xl mt-0">
+            <p className="text-[#0A3A68] text-base sm:text-lg md:text-xl mt-0 font-bold">
               Würfel, Events, Sticker & mehr – alles für dein Monopoly GO Abenteuer
             </p>
           </div>
           
           {/* Navigation Buttons - Mobile optimized layout */}
-          <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 max-w-md mx-auto mb-5">
-            {/* On mobile: Full width buttons stacked */}
-            <Button variant="darkblue" asChild className="font-bold flex items-center justify-center gap-2 h-12 sm:h-14 w-full text-base sm:text-lg shadow-md">
-              <Link href="/news">
-                <span className="material-icons">feed</span>
-                News
-              </Link>
-            </Button>
+          <div className="w-full max-w-md mx-auto mb-5">
+            {/* Erste Reihe: 3 Buttons */}
+            <div className="grid grid-cols-3 gap-2 mb-2">
+              <Button variant="darkblue" asChild className="font-bold flex items-center justify-center gap-1 h-10 sm:h-12 w-full text-sm sm:text-base shadow-md">
+                <Link href="/news">
+                  <span className="material-icons text-sm sm:text-base">feed</span>
+                  News
+                </Link>
+              </Button>
+              
+              <Button variant="orange" asChild className="font-bold flex items-center justify-center gap-1 h-10 sm:h-12 w-full text-sm sm:text-base shadow-md">
+                <Link href="/shop">
+                  <span className="material-icons text-sm sm:text-base">shopping_cart</span>
+                  Shop
+                </Link>
+              </Button>
+              
+              <Button variant="cyan" asChild className="font-bold flex items-center justify-center gap-1 h-10 sm:h-12 w-full text-sm sm:text-base shadow-md">
+                <Link href="/auth-page">
+                  <span className="material-icons text-sm sm:text-base">login</span>
+                  Login
+                </Link>
+              </Button>
+            </div>
             
-            <Button variant="orange" asChild className="font-bold flex items-center justify-center gap-2 h-12 sm:h-14 w-full text-base sm:text-lg shadow-md">
-              <Link href="/shop">
-                <span className="material-icons">shopping_cart</span>
-                Shop
-              </Link>
-            </Button>
-            
-            <Button variant="darkblue" asChild className="font-bold flex items-center justify-center gap-2 h-12 sm:h-14 w-full text-base sm:text-lg shadow-md">
-              <Link href="/hilfe">
-                <span className="material-icons">help_outline</span>
-                Hilfe
-              </Link>
-            </Button>
-            
-            <Button variant="cyan" asChild className="font-bold flex items-center justify-center gap-2 h-12 sm:h-14 w-full text-base sm:text-lg shadow-md">
-              <Link href="/kontakt">
-                <span className="material-icons">contact_support</span>
-                Kontakt
-              </Link>
-            </Button>
+            {/* Zweite Reihe: 2 Buttons */}
+            <div className="grid grid-cols-2 gap-2">
+              <Button variant="darkblue" asChild className="font-bold flex items-center justify-center gap-1 h-10 sm:h-12 w-full text-sm sm:text-base shadow-md">
+                <Link href="/hilfe">
+                  <span className="material-icons text-sm sm:text-base">help_outline</span>
+                  Hilfe
+                </Link>
+              </Button>
+              
+              <Button variant="cyan" asChild className="font-bold flex items-center justify-center gap-1 h-10 sm:h-12 w-full text-sm sm:text-base shadow-md">
+                <Link href="/kontakt">
+                  <span className="material-icons text-sm sm:text-base">contact_support</span>
+                  Kontakt
+                </Link>
+              </Button>
+            </div>
           </div>
         </div>
       </section>
