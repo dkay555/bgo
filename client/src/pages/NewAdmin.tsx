@@ -207,7 +207,7 @@ export default function NewAdminPanel() {
       
       <div className="flex flex-1">
         {/* Side navigation */}
-        <aside className="w-64 bg-white border-r border-gray-200 hidden md:block">
+        <aside className="w-64 bg-white border-r border-gray-200 hidden md:block" style={{backgroundColor: 'white'}}>
           <nav className="p-4 space-y-1">
             <Button 
               variant={activeTab === "dashboard" ? "default" : "ghost"} 

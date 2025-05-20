@@ -22,10 +22,7 @@ interface RecentActivity {
 export default function AdminDashboard() {
   const { toast } = useToast();
   const { user } = useAuth();
-  // Navigationsfunktion für Links
-  const handleNavigation = (path: string) => {
-    window.location.href = path;
-  };
+  const [, setLocation] = useLocation();
   const [stats, setStats] = useState({
     orders: 0,
     users: 0,
@@ -237,7 +234,7 @@ export default function AdminDashboard() {
             <Button 
               variant="outline" 
               className="w-full"
-              onClick={() => handleNavigation("/admin/bestellungen")}
+              onClick={() => window.location.href = "/admin/bestellungen"}
             >
               Alle Bestellungen ansehen
             </Button>
