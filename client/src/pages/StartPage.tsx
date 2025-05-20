@@ -118,20 +118,22 @@ export default function StartPage() {
         </div>
       </section>
       
-      {/* Transition from Hero to News Section */}
-      <div className="relative h-16 bg-gradient-to-br from-[#78c6f7] via-[#5ba3d9] to-[#7cbff0]">
-        {/* Wave transition effect */}
+      {/* Transition from Hero to News Section - Improved with smoother curve and animation */}
+      <div className="relative bg-gradient-to-br from-[#78c6f7] via-[#5ba3d9] to-[#7cbff0] overflow-hidden">
+        {/* Wave transition effect with improved curve */}
         <div className="absolute bottom-0 left-0 right-0 w-full z-10">
-          <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="w-full h-16 text-gray-50">
+          <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="w-full h-20 text-gray-50">
             <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" 
                   fill="currentColor" 
-                  opacity="1">
+                  opacity="1"
+                  className="animate-pulse"
+                  style={{animationDuration: '3s'}}>
             </path>
           </svg>
         </div>
         
-        {/* Decorative dice elements */}
-        <div className="absolute bottom-2 left-1/4 transform -translate-x-1/2 z-20 hidden sm:block">
+        {/* Decorative dice elements with animation */}
+        <div className="absolute bottom-2 left-1/4 transform -translate-x-1/2 z-20 hidden sm:block animate-bounce" style={{animationDuration: '2s'}}>
           <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect x="5" y="5" width="90" height="90" rx="10" fill="#FF4C00" stroke="#0A3A68" strokeWidth="2"/>
             <circle cx="25" cy="25" r="6" fill="white"/>
@@ -139,16 +141,30 @@ export default function StartPage() {
           </svg>
         </div>
         
-        <div className="absolute bottom-4 right-1/3 transform translate-x-1/2 z-20 hidden sm:block">
+        <div className="absolute bottom-4 right-1/3 transform translate-x-1/2 z-20 hidden sm:block animate-bounce" style={{animationDuration: '2.5s', animationDelay: '0.5s'}}>
           <svg width="30" height="30" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect x="5" y="5" width="90" height="90" rx="10" fill="#4BB1F8" stroke="#0A3A68" strokeWidth="2"/>
             <circle cx="50" cy="50" r="6" fill="white"/>
           </svg>
         </div>
+        
+        {/* Additional decorative elements */}
+        <div className="absolute top-0 right-1/5 transform -translate-y-1/2 z-20 hidden sm:block">
+          <svg width="25" height="25" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="rotate-12 animate-float" style={{animationDuration: '3s'}}>
+            <rect x="5" y="5" width="90" height="90" rx="10" fill="#0A3A68" stroke="#4BB1F8" strokeWidth="2"/>
+            <circle cx="25" cy="25" r="6" fill="white"/>
+            <circle cx="25" cy="75" r="6" fill="white"/>
+            <circle cx="75" cy="25" r="6" fill="white"/>
+            <circle cx="75" cy="75" r="6" fill="white"/>
+          </svg>
+        </div>
+        
+        {/* Height spacer to give the transition more room */}
+        <div className="h-24"></div>
       </div>
       
-      {/* News Sektion */}
-      <section className="pt-4 pb-6 bg-gray-50">
+      {/* News Sektion with improved top margin */}
+      <section className="pt-6 pb-6 bg-gray-50">
         <div className="max-w-4xl mx-auto">
           <h2 className="babix-info-header mx-auto mb-8 text-center">News</h2>
           
