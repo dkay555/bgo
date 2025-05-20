@@ -52,7 +52,7 @@ export default function HilfeUebersicht() {
           
           {/* Hilfe zu unseren Leistungen */}
           <div className="mb-12">
-            <h2 className="text-2xl font-bold text-[#0A3A68] mb-6 border-b-2 border-[#00CFFF] pb-2 inline-block">Hilfe zu unseren Leistungen</h2>
+            <h2 className="babix-info-header mx-auto mb-8 text-center">Hilfe zu unseren Leistungen</h2>
             
             <div className="grid gap-6 md:gap-8">
               {/* Würfelboost */}
@@ -134,7 +134,7 @@ export default function HilfeUebersicht() {
           
           {/* Weiterführende Hilfe */}
           <div>
-            <h2 className="text-2xl font-bold text-[#0A3A68] mb-6 border-b-2 border-[#00CFFF] pb-2 inline-block">Weiterführende Hilfe</h2>
+            <h2 className="babix-info-header mx-auto mb-8 text-center">Weiterführende Hilfe</h2>
             
             <div className="grid gap-6 md:gap-8">
               {/* Login Möglichkeiten */}
