@@ -89,7 +89,7 @@ export default function Bestellungen() {
       
       return response.json();
     },
-    enabled: isAuthenticated
+    enabled: true
   });
 
   // Mutation zum Aktualisieren des Zahlungsstatus
@@ -394,60 +394,7 @@ export default function Bestellungen() {
     }
   };
 
-  // Render Login-Formular, wenn nicht authentifiziert
-  if (!isAuthenticated) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-100">
-        <Card className="w-[400px]">
-          <CardHeader>
-            <CardTitle>Admin Login</CardTitle>
-            <CardDescription>
-              Bitte melden Sie sich an, um auf den Admin-Bereich zuzugreifen.
-            </CardDescription>
-          </CardHeader>
-          <form onSubmit={handleLogin}>
-            <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <label htmlFor="username" className="text-sm font-medium">
-                  Benutzername
-                </label>
-                <Input
-                  id="username"
-                  type="text"
-                  value={credentials.username}
-                  onChange={(e) => setCredentials({ ...credentials, username: e.target.value })}
-                  required
-                />
-              </div>
-              <div className="space-y-2">
-                <label htmlFor="password" className="text-sm font-medium">
-                  Passwort
-                </label>
-                <Input
-                  id="password"
-                  type="password"
-                  value={credentials.password}
-                  onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
-                  required
-                />
-              </div>
-            </CardContent>
-            <CardFooter>
-              <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading ? (
-                  <>
-                    <RefreshCw className="mr-2 h-4 w-4 animate-spin" /> Anmelden...
-                  </>
-                ) : (
-                  "Anmelden"
-                )}
-              </Button>
-            </CardFooter>
-          </form>
-        </Card>
-      </div>
-    );
-  }
+  // Login-Formular wurde in die Hauptadmin-Komponente verschoben
 
   // Render Admin-Bereich, wenn authentifiziert
   return (
