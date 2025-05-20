@@ -143,7 +143,7 @@ export default function HilfeUebersicht() {
                   <CardTitle className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <span className="material-icons text-[#00CFFF]">login</span>
-                      <span>Login-Möglichkeiten: Auth-Token vs. Zugangsdaten</span>
+                      <span>Loginmöglichkeiten für den Würfelboost</span>
                     </div>
                   </CardTitle>
                 </CardHeader>
