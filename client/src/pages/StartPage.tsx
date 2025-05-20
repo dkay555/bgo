@@ -63,8 +63,8 @@ export default function StartPage() {
           </div>
           
           {/* Welcome Text Box - Responsive padding and text */}
-          <div className="bg-[#b0d6f5] rounded-xl shadow-lg px-4 sm:px-6 md:px-8 py-4 sm:py-6 text-center mb-4 sm:mb-6">
-            <h1 className="text-[#FF4C00] font-bold text-2xl sm:text-3xl md:text-4xl mb-1 md:mb-2">
+          <div className="bg-[#b0d6f5] rounded-xl shadow-lg px-4 sm:px-6 md:px-8 py-2 sm:py-3 text-center mb-4 sm:mb-6">
+            <h1 className="text-[#FF4C00] font-bold text-2xl sm:text-3xl md:text-4xl mb-0 md:mb-1">
               Willkommen bei babixGO
             </h1>
             <p className="text-[#0A3A68] text-base sm:text-lg md:text-xl">
