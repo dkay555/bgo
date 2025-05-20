@@ -13,133 +13,96 @@ export default function StartPage() {
     <main className="px-0 py-0 md:py-0 flex-grow font-['Nunito_Sans'] text-[#0A3A68]" id="top">
       {/* Hero Section - Monopoly GO Style */}
       <section className="py-0 md:py-0 relative overflow-hidden min-h-[600px] md:min-h-[700px]">
-        {/* Monopoly GO Board Background */}
-        <div className="absolute inset-0 bg-[#43B7BE] z-0">
-          {/* Background Game Board Grid */}
-          <div className="absolute inset-0">
-            <svg width="100%" height="100%" viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-              {/* Grid lines */}
-              <pattern id="boardGrid" width="100" height="100" patternUnits="userSpaceOnUse">
-                <path d="M 100 0 L 0 0 0 100" fill="none" stroke="#2D9CA6" strokeWidth="2"/>
-              </pattern>
-              <rect width="800" height="800" fill="url(#boardGrid)" />
-              
-              {/* Colored squares */}
-              <rect x="300" y="100" width="100" height="100" fill="#F7A14C" fillOpacity="0.7"/>
-              <rect x="500" y="200" width="100" height="100" fill="#F7A14C" fillOpacity="0.7"/>
-              <rect x="100" y="400" width="100" height="100" fill="#F7A14C" fillOpacity="0.7"/>
-              <rect x="600" y="500" width="100" height="100" fill="#F7A14C" fillOpacity="0.7"/>
-            </svg>
+        {/* Gradient Background for Monopoly GO */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#78c6f7] via-[#5ba3d9] to-[#7cbff0] z-0">
+          {/* Background Monopoly Elements - Hidden on smallest screens */}
+          <div className="absolute inset-0 hidden sm:block">
+            <div className="absolute top-[10%] left-[10%] opacity-30">
+              <svg width="120" height="120" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="5" y="5" width="90" height="90" rx="10" fill="white" stroke="#0A3A68" strokeWidth="2"/>
+                <circle cx="25" cy="25" r="8" fill="#0A3A68"/>
+                <circle cx="75" cy="25" r="8" fill="#0A3A68"/>
+                <circle cx="50" cy="50" r="8" fill="#0A3A68"/>
+                <circle cx="25" cy="75" r="8" fill="#0A3A68"/>
+                <circle cx="75" cy="75" r="8" fill="#0A3A68"/>
+              </svg>
+            </div>
+            <div className="absolute bottom-[20%] left-[15%] opacity-30">
+              <svg width="100" height="60" viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 10 L30 5 L70 5 L90 10 L90 40 L70 50 L30 50 L10 40 Z" fill="white" stroke="#0A3A68" strokeWidth="2"/>
+                <circle cx="30" cy="20" r="5" fill="#0A3A68"/>
+                <circle cx="70" cy="20" r="5" fill="#0A3A68"/>
+                <path d="M30 35 L70 35" stroke="#0A3A68" strokeWidth="2"/>
+              </svg>
+            </div>
+            <div className="absolute top-[15%] right-[15%] opacity-30">
+              <svg width="100" height="60" viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="10" y="10" width="80" height="40" rx="5" fill="#ffcb54" stroke="#c17e0f" strokeWidth="2"/>
+                <text x="50" y="35" textAnchor="middle" fontSize="24" fontWeight="bold" fill="#c17e0f">5</text>
+              </svg>
+            </div>
+            <div className="absolute bottom-[25%] right-[10%] opacity-30">
+              <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M40 10 C45 10 50 15 50 25 L50 40 C50 50 45 55 40 55 C35 55 30 50 30 40 L30 25 C30 15 35 10 40 10 Z" fill="#0A3A68"/>
+                <rect x="30" y="55" width="20" height="15" fill="#0A3A68"/>
+                <ellipse cx="40" cy="70" rx="15" ry="5" fill="#0A3A68"/>
+              </svg>
+            </div>
           </div>
         </div>
         
-        {/* Monopoly GO Content */}
+        {/* Monopoly GO Image - New Version */}
         <div className="max-w-lg mx-auto pt-4 md:pt-6 pb-0 relative px-4 z-10 flex flex-col h-full">
-          {/* Game Elements Container */}
-          <div className="w-full max-w-md mx-auto mb-4 relative">
-            <div className="w-full relative h-[300px] sm:h-[350px]">
-              {/* Happy Dice */}
-              <div className="absolute right-[10%] top-[10%] w-[150px] h-[150px] md:w-[180px] md:h-[180px]">
-                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                  {/* Dice body with shadow */}
-                  <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
-                    <feDropShadow dx="4" dy="4" stdDeviation="5" floodOpacity="0.3"/>
-                  </filter>
-                  <rect x="10" y="10" width="180" height="180" rx="20" fill="white" filter="url(#shadow)"/>
-                  
-                  {/* Dice dots */}
-                  <circle cx="50" cy="50" r="12" fill="#333333"/>
-                  <circle cx="150" cy="50" r="12" fill="#333333"/>
-                  <circle cx="50" cy="150" r="12" fill="#333333"/>
-                  <circle cx="150" cy="150" r="12" fill="#333333"/>
-                  <circle cx="100" cy="100" r="12" fill="#333333"/>
-                  
-                  {/* Happy face */}
-                  <path d="M70 100 Q100 130 130 100" stroke="#333333" strokeWidth="8" fill="none"/>
-                </svg>
-              </div>
-              
-              {/* Coins */}
-              <div className="absolute left-[5%] top-[20%] w-[80px] h-[80px] md:w-[100px] md:h-[100px]">
-                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                  <filter id="coinShadow" x="-20%" y="-20%" width="140%" height="140%">
-                    <feDropShadow dx="2" dy="2" stdDeviation="2" floodOpacity="0.3"/>
-                  </filter>
-                  <circle cx="50" cy="50" r="45" fill="#FFBE16" filter="url(#coinShadow)"/>
-                  <circle cx="50" cy="50" r="40" fill="#FFD756"/>
-                  <text x="50" y="60" textAnchor="middle" fontSize="40" fontWeight="bold" fill="#C17E0F">$</text>
-                </svg>
-              </div>
-              
-              <div className="absolute left-[25%] top-[10%] w-[70px] h-[70px] md:w-[90px] md:h-[90px]">
-                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="50" cy="50" r="45" fill="#FFBE16" filter="url(#coinShadow)"/>
-                  <circle cx="50" cy="50" r="40" fill="#FFD756"/>
-                  <text x="50" y="60" textAnchor="middle" fontSize="40" fontWeight="bold" fill="#C17E0F">$</text>
-                </svg>
-              </div>
-              
-              <div className="absolute left-[15%] bottom-[35%] w-[60px] h-[60px] md:w-[80px] md:h-[80px]">
-                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="50" cy="50" r="45" fill="#FFBE16" filter="url(#coinShadow)"/>
-                  <circle cx="50" cy="50" r="40" fill="#FFD756"/>
-                  <text x="50" y="60" textAnchor="middle" fontSize="40" fontWeight="bold" fill="#C17E0F">$</text>
-                </svg>
-              </div>
-              
-              {/* Game cards in background */}
-              <div className="absolute right-[15%] bottom-[25%] w-[70px] h-[70px] rotate-12">
-                <svg viewBox="0 0 80 100" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="5" y="5" width="70" height="90" rx="5" fill="#E9F7F8" stroke="#2D9CA6" strokeWidth="2" filter="url(#shadow)"/>
-                  <text x="40" y="55" textAnchor="middle" fontSize="14" fontWeight="bold" fill="#2D9CA6">CHANCE</text>
-                </svg>
-              </div>
-            </div>
+          {/* Monopoly GO Character and Logo - Using the uploaded image */}
+          <div className="w-full max-w-md mx-auto mb-4 relative flex justify-center">
+            <img 
+              src="/images/monopoly-go-hero.jpg" 
+              alt="Monopoly GO" 
+              className="w-full max-w-[350px] md:max-w-[400px] h-auto object-contain"
+            />
           </div>
           
-          {/* Welcome Box with Buttons */}
-          <div className="bg-[rgba(228,247,250,0.8)] backdrop-blur-sm rounded-xl shadow-lg px-5 py-6 text-center mb-6 max-w-md mx-auto">
-            <h1 className="text-[#FF4C00] font-bold text-3xl sm:text-4xl md:text-5xl mb-2">
-              Willkommen bei babixGO!
+          {/* Welcome Text Box - Responsive padding and text */}
+          <div className="bg-[#b0d6f5] rounded-xl shadow-lg px-4 sm:px-6 md:px-8 py-4 sm:py-6 text-center mb-4 sm:mb-6">
+            <h1 className="text-[#FF4C00] font-bold text-2xl sm:text-3xl md:text-4xl mb-1 md:mb-2">
+              Willkommen bei babixGO
             </h1>
-            <p className="text-[#0A3A68] text-base sm:text-lg md:text-xl mb-6">
-              Würfel, Events, Sticker & mehr – alles für dein Monopoly GO Abenteuer.
+            <p className="text-[#0A3A68] text-base sm:text-lg md:text-xl">
+              Würfel, Events, Sticker & mehr – alles für dein Monopoly GO Abenteuer
             </p>
-          
-            {/* Navigation Buttons - Mobile optimized layout */}
-            <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 max-w-md mx-auto mb-5">
-              {/* On mobile: Full width buttons stacked */}
-              <Button variant="darkblue" asChild className="font-bold flex items-center justify-center gap-2 h-12 sm:h-14 w-full text-base sm:text-lg shadow-md">
-                <Link href="/news">
-                  <span className="material-icons">feed</span>
-                  News
-                </Link>
-              </Button>
-              
-              <Button variant="orange" asChild className="font-bold flex items-center justify-center gap-2 h-12 sm:h-14 w-full text-base sm:text-lg shadow-md">
-                <Link href="/shop">
-                  <span className="material-icons">shopping_cart</span>
-                  Shop
-                </Link>
-              </Button>
-              
-              <Button variant="darkblue" asChild className="font-bold flex items-center justify-center gap-2 h-12 sm:h-14 w-full text-base sm:text-lg shadow-md">
-                <Link href="/hilfe">
-                  <span className="material-icons">help_outline</span>
-                  Hilfe
-                </Link>
-              </Button>
-              
-              <Button variant="cyan" asChild className="font-bold flex items-center justify-center gap-2 h-12 sm:h-14 w-full text-base sm:text-lg shadow-md">
-                <Link href="/kontakt">
-                  <span className="material-icons">contact_support</span>
-                  Kontakt
-                </Link>
-              </Button>
-            </div>
           </div>
-        </div>
-      </section>
+          
+          {/* Navigation Buttons - Mobile optimized layout */}
+          <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 max-w-md mx-auto mb-5">
+            {/* On mobile: Full width buttons stacked */}
+            <Button variant="darkblue" asChild className="font-bold flex items-center justify-center gap-2 h-12 sm:h-14 w-full text-base sm:text-lg shadow-md">
+              <Link href="/news">
+                <span className="material-icons">feed</span>
+                News
+              </Link>
+            </Button>
+            
+            <Button variant="orange" asChild className="font-bold flex items-center justify-center gap-2 h-12 sm:h-14 w-full text-base sm:text-lg shadow-md">
+              <Link href="/shop">
+                <span className="material-icons">shopping_cart</span>
+                Shop
+              </Link>
+            </Button>
+            
+            <Button variant="darkblue" asChild className="font-bold flex items-center justify-center gap-2 h-12 sm:h-14 w-full text-base sm:text-lg shadow-md">
+              <Link href="/hilfe">
+                <span className="material-icons">help_outline</span>
+                Hilfe
+              </Link>
+            </Button>
+            
+            <Button variant="cyan" asChild className="font-bold flex items-center justify-center gap-2 h-12 sm:h-14 w-full text-base sm:text-lg shadow-md">
+              <Link href="/kontakt">
+                <span className="material-icons">contact_support</span>
+                Kontakt
+              </Link>
+            </Button>
+          </div>
         </div>
       </section>
       
