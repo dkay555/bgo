@@ -20,6 +20,7 @@ const Dashboard = lazy(() => import('./admin/Dashboard'));
 const NewBestellungen = lazy(() => import('./admin/NewBestellungen'));
 const NewBenutzer = lazy(() => import('./admin/NewBenutzer'));
 const NewEmailVorlagen = lazy(() => import('./admin/NewEmailVorlagen'));
+const Tickets = lazy(() => import('./admin/Tickets'));
 
 // Loading component
 const AdminTabLoading = () => (
@@ -284,12 +285,9 @@ export default function NewAdminPanel() {
             )}
             
             {activeTab === "tickets" && (
-              <div className="bg-white border rounded-lg p-6 shadow-sm">
-                <h2 className="text-xl font-medium mb-4">Support-Tickets</h2>
-                <p className="text-gray-600">
-                  Hier werden die Support-Tickets zur Bearbeitung angezeigt. Dieser Bereich wird noch entwickelt.
-                </p>
-              </div>
+              <Suspense fallback={<AdminTabLoading />}>
+                <Tickets />
+              </Suspense>
             )}
           </div>
         </main>

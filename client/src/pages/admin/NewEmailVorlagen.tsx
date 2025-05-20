@@ -68,11 +68,12 @@ export default function NewEmailVorlagen() {
   const [isTemplateOpen, setIsTemplateOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isCreatingNew, setIsCreatingNew] = useState(false);
+  // Anpassung an das tatsächliche EmailTemplate-Schema
   const [templateData, setTemplateData] = useState({
     id: 0,
     name: "",
     subject: "",
-    body: "",
+    content: "",
     templateKey: ""
   });
   const [previewMode, setPreviewMode] = useState(false);
@@ -203,7 +204,7 @@ export default function NewEmailVorlagen() {
       id: template.id,
       name: template.name,
       subject: template.subject,
-      body: template.body,
+      content: template.content,
       templateKey: template.templateKey
     });
     setIsCreatingNew(false);
@@ -284,7 +285,7 @@ export default function NewEmailVorlagen() {
 
   // Vorschau der E-Mail-Vorlage mit Platzhalterersetzung
   const getPreviewWithPlaceholders = () => {
-    let preview = templateData.body;
+    let preview = templateData.content;
     
     // Ersetze Platzhalter mit Beispieldaten
     preview = preview.replace(/\{\{name\}\}/g, "Max Mustermann");
