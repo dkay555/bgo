@@ -95,7 +95,7 @@ export default function StartPage() {
 
           <div className="bg-white rounded-lg shadow-md p-3 pb-4">
             <div className="flex justify-between items-center mb-1">
-              <h3 className="font-bold text-[#0A3A68] text-xl mt-0">Neue Preise für Würfel - Angebotsanpassung</h3>
+              <h3 className="font-bold text-[#0A3A68] text-xl mt-0">Wir haben das was für euch</h3>
               <Link href="/hilfe/news_preise_angebot.html">
                 <Button variant="darkblue" className="text-xs px-2 py-0.5 h-auto whitespace-nowrap ml-2">
                   weiterlesen →
@@ -103,7 +103,7 @@ export default function StartPage() {
               </Link>
             </div>
             <p className="text-[#0A3A68]/80 mb-3">
-              Die letzten Tage war es still um babixGO... Wir haben unser Angebot überarbeitet und optimiert.
+              In letzter Zeit war es still um babixGO & nun? - Würfel-Preise runter, High Roller weg & kleinere Würfelpakete!
             </p>
           </div>
         </div>
