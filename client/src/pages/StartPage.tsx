@@ -12,10 +12,10 @@ export default function StartPage() {
   return (
     <main className="px-0 py-0 md:py-0 flex-grow font-['Nunito_Sans'] text-[#0A3A68]" id="top">
       {/* Hero Section - Monopoly GO Style */}
-      <section className="py-0 md:py-0 relative overflow-hidden">
+      <section className="py-0 md:py-0 relative overflow-hidden min-h-[600px] md:min-h-[700px]">
         <div className="absolute inset-0 bg-[#1e71b8] z-0">
-          {/* Background Monopoly Elements */}
-          <div className="absolute inset-0">
+          {/* Background Monopoly Elements - Hidden on smallest screens */}
+          <div className="absolute inset-0 hidden sm:block">
             <div className="absolute top-[10%] left-[8%] opacity-20">
               <svg width="120" height="120" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect x="5" y="5" width="90" height="90" rx="10" fill="#b0d6f5" stroke="#b0d6f5" strokeWidth="2"/>
@@ -56,13 +56,14 @@ export default function StartPage() {
         </div>
         
         {/* Monopoly GO Logo and Character */}
-        <div className="max-w-lg mx-auto pt-6 pb-0 relative px-4 z-10">
-          <div className="flex flex-col items-center justify-center relative mb-4">
-            {/* Mr. Monopoly Character */}
-            <div className="w-full max-w-[300px] relative flex justify-center mb-2">
-              <svg width="260" height="180" viewBox="0 0 260 180" fill="none" xmlns="http://www.w3.org/2000/svg" className="z-10">
-                {/* Dice */}
-                <g className="dice-left">
+        <div className="max-w-lg mx-auto pt-4 md:pt-6 pb-0 relative px-4 z-10 flex flex-col h-full">
+          <div className="flex flex-col items-center justify-center relative mb-2 md:mb-4">
+            {/* Mr. Monopoly Character - Responsive scaling */}
+            <div className="w-full max-w-[220px] sm:max-w-[260px] md:max-w-[300px] relative flex justify-center mb-0 sm:mb-2">
+              <svg width="260" height="180" viewBox="0 0 260 180" fill="none" xmlns="http://www.w3.org/2000/svg" 
+                   className="z-10 w-[220px] h-[150px] sm:w-[260px] sm:h-[180px] md:w-[280px] md:h-[200px]">
+                {/* Dice - Mobile visibility controlled */}
+                <g className="dice-left hidden sm:inline-block">
                   <rect x="20" y="50" width="60" height="60" rx="6" fill="#b0d6f5" fillOpacity="0.8"/>
                   <circle cx="35" cy="65" r="6" fill="#0A3A68"/>
                   <circle cx="65" cy="65" r="6" fill="#0A3A68"/>
@@ -71,13 +72,13 @@ export default function StartPage() {
                   <circle cx="65" cy="95" r="6" fill="#0A3A68"/>
                 </g>
                 
-                {/* Money/Card */}
-                <g className="money-right">
+                {/* Money/Card - Mobile visibility controlled */}
+                <g className="money-right hidden sm:inline-block">
                   <rect x="180" y="80" width="50" height="60" rx="6" fill="#ffcb54"/>
                   <text x="205" y="120" textAnchor="middle" fontSize="32" fontWeight="bold" fill="#c17e0f">5</text>
                 </g>
                 
-                {/* Mr. Monopoly */}
+                {/* Mr. Monopoly - Always visible */}
                 <g className="mr-monopoly">
                   {/* Top Hat */}
                   <rect x="95" y="20" width="70" height="10" rx="2" fill="#080808"/>
@@ -117,49 +118,50 @@ export default function StartPage() {
               </svg>
             </div>
             
-            {/* Monopoly GO! Logo */}
-            <div className="w-full max-w-[280px] bg-[#ec1c24] text-white py-2 px-4 rounded-md border-4 border-white shadow-lg -mt-2">
-              <h2 className="text-center font-bold tracking-wider text-3xl">MONOPOLY</h2>
+            {/* Monopoly GO! Logo - Responsive sizes */}
+            <div className="w-full max-w-[200px] sm:max-w-[240px] md:max-w-[280px] bg-[#ec1c24] text-white py-1 sm:py-2 px-2 sm:px-4 rounded-md border-4 border-white shadow-lg -mt-2">
+              <h2 className="text-center font-bold tracking-wider text-xl sm:text-2xl md:text-3xl">MONOPOLY</h2>
             </div>
-            <div className="w-full max-w-[160px] bg-[#1e71b8] text-white py-1 px-4 rounded-full border-4 border-white shadow-lg -mt-3 mb-4">
-              <h2 className="text-center font-bold tracking-wider text-2xl">GO!</h2>
+            <div className="w-full max-w-[120px] sm:max-w-[140px] md:max-w-[160px] bg-[#1e71b8] text-white py-0.5 sm:py-1 px-2 sm:px-4 rounded-full border-4 border-white shadow-lg -mt-3 mb-2 md:mb-4">
+              <h2 className="text-center font-bold tracking-wider text-lg sm:text-xl md:text-2xl">GO!</h2>
             </div>
           </div>
           
-          {/* Welcome Text Box */}
-          <div className="bg-[#b0d6f5] rounded-xl shadow-lg px-8 py-6 text-center mb-6">
-            <h1 className="text-[#FF4C00] font-bold text-4xl mb-2">
+          {/* Welcome Text Box - Responsive padding and text */}
+          <div className="bg-[#b0d6f5] rounded-xl shadow-lg px-4 sm:px-6 md:px-8 py-4 sm:py-6 text-center mb-4 sm:mb-6">
+            <h1 className="text-[#FF4C00] font-bold text-2xl sm:text-3xl md:text-4xl mb-1 md:mb-2">
               Willkommen bei babixGO
             </h1>
-            <p className="text-[#0A3A68] text-xl">
+            <p className="text-[#0A3A68] text-base sm:text-lg md:text-xl">
               Würfel, Events, Sticker & mehr – alles für dein Monopoly GO Abenteuer
             </p>
           </div>
           
-          {/* Navigation Buttons - 2 Rows */}
-          <div className="grid grid-cols-2 gap-4 max-w-md mx-auto mb-5">
-            <Button variant="darkblue" asChild className="font-bold flex items-center justify-center gap-2 h-14 w-full text-lg shadow-md">
+          {/* Navigation Buttons - Mobile optimized layout */}
+          <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 max-w-md mx-auto mb-5">
+            {/* On mobile: Full width buttons stacked */}
+            <Button variant="darkblue" asChild className="font-bold flex items-center justify-center gap-2 h-12 sm:h-14 w-full text-base sm:text-lg shadow-md">
               <Link href="/news">
                 <span className="material-icons">feed</span>
                 News
               </Link>
             </Button>
             
-            <Button variant="orange" asChild className="font-bold flex items-center justify-center gap-2 h-14 w-full text-lg shadow-md">
+            <Button variant="orange" asChild className="font-bold flex items-center justify-center gap-2 h-12 sm:h-14 w-full text-base sm:text-lg shadow-md">
               <Link href="/shop">
                 <span className="material-icons">shopping_cart</span>
                 Shop
               </Link>
             </Button>
             
-            <Button variant="darkblue" asChild className="font-bold flex items-center justify-center gap-2 h-14 w-full text-lg shadow-md">
+            <Button variant="darkblue" asChild className="font-bold flex items-center justify-center gap-2 h-12 sm:h-14 w-full text-base sm:text-lg shadow-md">
               <Link href="/hilfe">
                 <span className="material-icons">help_outline</span>
                 Hilfe
               </Link>
             </Button>
             
-            <Button variant="cyan" asChild className="font-bold flex items-center justify-center gap-2 h-14 w-full text-lg shadow-md">
+            <Button variant="cyan" asChild className="font-bold flex items-center justify-center gap-2 h-12 sm:h-14 w-full text-base sm:text-lg shadow-md">
               <Link href="/kontakt">
                 <span className="material-icons">contact_support</span>
                 Kontakt
