@@ -285,3 +285,21 @@
 .animation-delay-600 {
   animation-delay: 600ms;
 }
+
+/* Gradient Backgrounds */
+.bg-gradient-light {
+  background: linear-gradient(180deg, #78c6f7 0%, #e6eef8 35%, #ffffff 100%);
+}
+
+.bg-gradient-medium {
+  background: linear-gradient(180deg, #5ba3d9 0%, #d0dff0 50%, #e6eef8 100%);
+}
+
+.bg-gradient-dark {
+  background: linear-gradient(180deg, #0A3A68 0%, #5ba3d9 50%, #78c6f7 100%);
+}
+
+/* Smooth Transitions */
+.transition-background {
+  transition: background-color 0.5s ease-in-out;
+}

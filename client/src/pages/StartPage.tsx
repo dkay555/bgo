@@ -10,7 +10,7 @@ export default function StartPage() {
   }, []);
   
   return (
-    <main className="px-0 py-0 md:py-0 flex-grow font-['Nunito_Sans'] text-[#0A3A68]" id="top">
+    <main className="px-0 py-0 md:py-0 flex-grow font-['Nunito_Sans'] text-[#0A3A68] bg-gradient-to-b from-[#78c6f7] via-[#e6eef8] to-white" id="top">
       {/* Hero Section - Monopoly GO Style */}
       <section className="py-0 md:py-0 relative overflow-hidden">
         {/* Gradient Background for Monopoly GO */}
@@ -118,17 +118,17 @@ export default function StartPage() {
         </div>
       </section>
       
-      {/* Neuer, sanfterer Übergang zwischen Hero und News Section */}
-      <div className="relative bg-gradient-to-b from-[#7cbff0] to-gray-50 overflow-hidden">
-        {/* Doppelwellen-Effekt für weicheren Übergang */}
+      {/* Fließender Übergang zwischen Hero und News Section */}
+      <div className="relative overflow-hidden">
+        {/* Subtiler Wellen-Effekt für weicheren Übergang */}
         <div className="absolute bottom-0 left-0 right-0 w-full z-10">
-          <svg viewBox="0 0 1200 100" preserveAspectRatio="none" className="w-full h-14 text-gray-50">
+          <svg viewBox="0 0 1200 100" preserveAspectRatio="none" className="w-full h-14">
             <path d="M0,0V30c200,40 400,-60 600,-25c200,35 400,80 600,20V0Z" 
-                  fill="rgba(249,250,251,0.6)" 
+                  fill="rgba(230,238,248,0.6)" 
                   opacity="0.9">
             </path>
             <path d="M0,0V15c150,20 350,-20 500,15c150,35 350,20 700,-15V0Z" 
-                  fill="rgba(249,250,251,0.9)" 
+                  fill="rgba(230,238,248,0.7)" 
                   opacity="0.8"
                   className="animate-pulse"
                   style={{animationDuration: '6s'}}>
@@ -174,8 +174,8 @@ export default function StartPage() {
         <div className="h-24 bg-gradient-to-b from-transparent to-gray-50"></div>
       </div>
       
-      {/* News-Sektion mit verbessertem Aussehen */}
-      <section className="pt-2 pb-6 bg-gray-50">
+      {/* News-Sektion mit transparentem Hintergrund */}
+      <section className="pt-2 pb-6">
         <div className="max-w-4xl mx-auto">
           <h2 className="babix-info-header mx-auto mb-8 text-center">News</h2>
           
@@ -195,8 +195,8 @@ export default function StartPage() {
         </div>
       </section>
 
-      {/* Products Section */}
-      <section id="angebote" className="py-8 scroll-mt-20">
+      {/* Products Section mit Farbverlauf */}
+      <section id="angebote" className="py-8 scroll-mt-20 bg-gradient-to-b from-transparent to-[#e6eef8]">
         <div className="max-w-6xl mx-auto">
           <h2 className="babix-info-header mx-auto mb-8 text-center">
             Was wir dir bieten:
@@ -278,8 +278,8 @@ export default function StartPage() {
         </div>
       </section>
 
-      {/* About Section */}
-      <section id="ueber" className="py-8 bg-gray-100 my-12 rounded-xl scroll-mt-20">
+      {/* About Section mit dunkleren Farbverlauf */}
+      <section id="ueber" className="py-8 bg-gradient-to-b from-[#e6eef8] to-[#d0dff0] my-12 rounded-xl scroll-mt-20">
         <div className="max-w-4xl mx-auto px-4">
           <h2 className="babix-info-header mx-auto mb-6 text-center">
             Warum du babixGO wählen solltest
