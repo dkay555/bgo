@@ -1,17 +1,25 @@
 import { useState, useEffect } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import SEOHead from "@/components/SEOHead";
 import { useAuth } from "@/hooks/use-auth";
-import { LayoutDashboard, Package, Users, FileText, TicketIcon, LogOut } from "lucide-react";
+import { 
+  LayoutDashboard, 
+  Package, 
+  Users, 
+  FileText, 
+  TicketIcon, 
+  LogOut,
+  Menu,
+  X
+} from "lucide-react";
 
 // Lazy load admin components
 import { lazy, Suspense } from 'react';
-const Bestellungen = lazy(() => import('./admin/Bestellungen'));
-const Benutzer = lazy(() => import('./admin/Benutzer'));
-const EmailVorlagen = lazy(() => import('./admin/EmailVorlagen'));
-const AdminDashboard = lazy(() => import('./admin/Dashboard'));
+const Dashboard = lazy(() => import('./admin/Dashboard'));
+const NewBestellungen = lazy(() => import('./admin/NewBestellungen'));
+const NewBenutzer = lazy(() => import('./admin/NewBenutzer'));
+const NewEmailVorlagen = lazy(() => import('./admin/NewEmailVorlagen'));
 
 // Loading component
 const AdminTabLoading = () => (
@@ -23,10 +31,11 @@ const AdminTabLoading = () => (
   </div>
 );
 
-export default function AdminPanel() {
+export default function NewAdminPanel() {
   const { user, logoutMutation, isLoading } = useAuth();
   const [location, setLocation] = useLocation();
   const [activeTab, setActiveTab] = useState("dashboard");
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   
   // Schütze den Admin-Bereich
   useEffect(() => {
@@ -56,6 +65,7 @@ export default function AdminPanel() {
   const handleTabChange = (value: string) => {
     setActiveTab(value);
     setLocation(`/admin/${value}`);
+    setIsMobileMenuOpen(false);
   };
 
   // Zeige Ladeanzeige während der Authentifizierungsprüfung
@@ -90,7 +100,21 @@ export default function AdminPanel() {
             <span className="text-[#0A3A68] font-bold text-xl">babixGO</span>
             <span className="bg-blue-100 text-blue-800 text-xs font-medium px-2 py-0.5 rounded">Admin</span>
           </div>
-          <div className="flex items-center space-x-4">
+          
+          {/* Mobile menu toggle */}
+          <button 
+            className="md:hidden p-2" 
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label={isMobileMenuOpen ? "Menü schließen" : "Menü öffnen"}
+          >
+            {isMobileMenuOpen ? (
+              <X className="h-6 w-6 text-gray-700" />
+            ) : (
+              <Menu className="h-6 w-6 text-gray-700" />
+            )}
+          </button>
+          
+          <div className="hidden md:flex items-center space-x-4">
             <span className="text-sm text-gray-600">
               Willkommen, {user.username}
             </span>
@@ -107,12 +131,71 @@ export default function AdminPanel() {
         </div>
       </header>
       
+      {/* Mobile menu */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden bg-white border-b border-gray-200 shadow-sm">
+          <nav className="px-4 py-2 space-y-1">
+            <Button 
+              variant={activeTab === "dashboard" ? "default" : "ghost"} 
+              className="w-full justify-start my-1" 
+              onClick={() => handleTabChange("dashboard")}
+            >
+              <LayoutDashboard className="h-4 w-4 mr-2" />
+              Dashboard
+            </Button>
+            <Button 
+              variant={activeTab === "bestellungen" ? "default" : "ghost"} 
+              className="w-full justify-start my-1" 
+              onClick={() => handleTabChange("bestellungen")}
+            >
+              <Package className="h-4 w-4 mr-2" />
+              Bestellungen
+            </Button>
+            <Button 
+              variant={activeTab === "tickets" ? "default" : "ghost"} 
+              className="w-full justify-start my-1" 
+              onClick={() => handleTabChange("tickets")}
+            >
+              <TicketIcon className="h-4 w-4 mr-2" />
+              Tickets
+            </Button>
+            <Button 
+              variant={activeTab === "benutzer" ? "default" : "ghost"} 
+              className="w-full justify-start my-1" 
+              onClick={() => handleTabChange("benutzer")}
+            >
+              <Users className="h-4 w-4 mr-2" />
+              Benutzer
+            </Button>
+            <Button 
+              variant={activeTab === "email-vorlagen" ? "default" : "ghost"} 
+              className="w-full justify-start my-1" 
+              onClick={() => handleTabChange("email-vorlagen")}
+            >
+              <FileText className="h-4 w-4 mr-2" />
+              E-Mail-Vorlagen
+            </Button>
+            
+            <div className="border-t border-gray-200 my-2 pt-2">
+              <Button 
+                onClick={() => logoutMutation.mutate()} 
+                variant="ghost" 
+                className="w-full justify-start text-red-500 hover:text-red-700 hover:bg-red-50"
+              >
+                <LogOut className="h-4 w-4 mr-2" />
+                Abmelden
+              </Button>
+            </div>
+          </nav>
+        </div>
+      )}
+      
       <div className="flex flex-1">
         {/* Side navigation */}
         <aside className="w-64 bg-white border-r border-gray-200 hidden md:block">
           <nav className="p-4 space-y-1">
             <Button 
-              variant={activeTab === "dashboard" ? "secondary" : "ghost"} 
+              variant={activeTab === "dashboard" ? "default" : "ghost"} 
               className="w-full justify-start" 
               onClick={() => handleTabChange("dashboard")}
             >
@@ -120,7 +203,7 @@ export default function AdminPanel() {
               Dashboard
             </Button>
             <Button 
-              variant={activeTab === "bestellungen" ? "secondary" : "ghost"} 
+              variant={activeTab === "bestellungen" ? "default" : "ghost"} 
               className="w-full justify-start" 
               onClick={() => handleTabChange("bestellungen")}
             >
@@ -128,7 +211,7 @@ export default function AdminPanel() {
               Bestellungen
             </Button>
             <Button 
-              variant={activeTab === "tickets" ? "secondary" : "ghost"} 
+              variant={activeTab === "tickets" ? "default" : "ghost"} 
               className="w-full justify-start" 
               onClick={() => handleTabChange("tickets")}
             >
@@ -136,7 +219,7 @@ export default function AdminPanel() {
               Tickets
             </Button>
             <Button 
-              variant={activeTab === "benutzer" ? "secondary" : "ghost"} 
+              variant={activeTab === "benutzer" ? "default" : "ghost"} 
               className="w-full justify-start" 
               onClick={() => handleTabChange("benutzer")}
             >
@@ -144,7 +227,7 @@ export default function AdminPanel() {
               Benutzer
             </Button>
             <Button 
-              variant={activeTab === "email-vorlagen" ? "secondary" : "ghost"} 
+              variant={activeTab === "email-vorlagen" ? "default" : "ghost"} 
               className="w-full justify-start" 
               onClick={() => handleTabChange("email-vorlagen")}
             >
@@ -153,34 +236,6 @@ export default function AdminPanel() {
             </Button>
           </nav>
         </aside>
-        
-        {/* Mobile navigation */}
-        <div className="md:hidden w-full bg-white border-b border-gray-200 px-4 py-2">
-          <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
-            <TabsList className="grid grid-cols-5 w-full">
-              <TabsTrigger value="dashboard" className="flex items-center justify-center gap-1">
-                <LayoutDashboard className="h-4 w-4" />
-                <span className="hidden sm:inline">Dashboard</span>
-              </TabsTrigger>
-              <TabsTrigger value="bestellungen" className="flex items-center justify-center gap-1">
-                <Package className="h-4 w-4" />
-                <span className="hidden sm:inline">Bestellungen</span>
-              </TabsTrigger>
-              <TabsTrigger value="tickets" className="flex items-center justify-center gap-1">
-                <TicketIcon className="h-4 w-4" />
-                <span className="hidden sm:inline">Tickets</span>
-              </TabsTrigger>
-              <TabsTrigger value="benutzer" className="flex items-center justify-center gap-1">
-                <Users className="h-4 w-4" />
-                <span className="hidden sm:inline">Benutzer</span>
-              </TabsTrigger>
-              <TabsTrigger value="email-vorlagen" className="flex items-center justify-center gap-1">
-                <FileText className="h-4 w-4" />
-                <span className="hidden sm:inline">E-Mails</span>
-              </TabsTrigger>
-            </TabsList>
-          </Tabs>
-        </div>
         
         {/* Main content area */}
         <main className="flex-1 p-4 md:p-6 overflow-auto">
@@ -206,25 +261,25 @@ export default function AdminPanel() {
             {/* Tab contents */}
             {activeTab === "dashboard" && (
               <Suspense fallback={<AdminTabLoading />}>
-                <AdminDashboard />
+                <Dashboard />
               </Suspense>
             )}
             
             {activeTab === "bestellungen" && (
               <Suspense fallback={<AdminTabLoading />}>
-                <Bestellungen />
+                <NewBestellungen />
               </Suspense>
             )}
             
             {activeTab === "benutzer" && (
               <Suspense fallback={<AdminTabLoading />}>
-                <Benutzer />
+                <NewBenutzer />
               </Suspense>
             )}
             
             {activeTab === "email-vorlagen" && (
               <Suspense fallback={<AdminTabLoading />}>
-                <EmailVorlagen />
+                <NewEmailVorlagen />
               </Suspense>
             )}
             
